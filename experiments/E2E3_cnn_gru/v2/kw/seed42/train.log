@@ -25,3 +25,4 @@
   epoch   1  train loss 0.00913  val RMSE 2.092 kW (raw 2.695)  *  lr 9.9e-05  |g|p99 0.63  (120s)
   epoch   2  train loss 0.00462  val RMSE 1.831 kW (raw 1.929)  *  lr 9.6e-05  |g|p99 0.33  (108s)
   epoch   3  train loss 0.00417  val RMSE 1.805 kW (raw 1.876)  *  lr 9.0e-05  |g|p99 0.25  (119s)
+  epoch   4  train loss 0.00394  val RMSE 1.799 kW (raw 1.919)  *  lr 8.3e-05  |g|p99 0.31  (193s)

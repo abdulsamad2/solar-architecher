@@ -216,5 +216,30 @@ Architecture option `pool='spatial'`: keeps a 4×4 grid before the projection (p
 ## E2/E3 v2 (experiments/E2E3_cnn_gru/v2)
 Launched 2026-10-19 at commit 9a0681d: avg pool, lr 1e-4 cosine over 15 epochs, clip 1.0, EMA 0.999, patience 5, seed 42, 5 blocked folds.
 
+## E3b: POST-HOC DIAGNOSTIC EXTENSION (experiments/E3b_csi_inputs/v2)
+**Why it was added:** E3, as pre-specified, changes only the target. Its PV-history input stays in raw kW, with no time-of-day or clear-sky input, so the model must infer the current clear-sky level from images to predict K. That confounds the test of physical normalisation.
+
+**E3b:** as E3, but the history input is K(t − j), computed with the same fold-fitted anchor. Everything else is identical:
+- architecture, average pooling, optimiser, schedule, clipping, EMA, seed, batch, early stopping;
+- evaluation samples, K definition, 1 kW floor.
+
+It was decided after seeing E3 folds 0 and 1. It is therefore reported as a diagnostic, not as a pre-registered experiment.
+
+Launch: a watcher starts E3b only after both E2 and E3 write summary.json, and only if `src.audit_e3b` passes (commit 9b8dd69).
+
+### E3b pre-training audit (experiments/E3b_csi_inputs/v2/audit.json): PASS on all 5 folds
+- **Leakage:**
+  - The anchor refitted with all non-training PV replaced by uniform noise gives bit-identical coefficients.
+  - The model's history input equals K at exactly the 16 history rows, all ≤ origin; the target is strictly after.
+- **Extreme K:**
+  - Input K: median 0.993, p99 1.50, p99.9 2.03, max 3.34 (16 of ~2.6 M values > 3).
+  - Target K: max 2.95, with 194 targets > 2 in fold 2.
+  - All below the pre-registered abort limit, K > 5.
+- **Low-sun denominators:**
+  - The 1 kW floor is active for 4.3% of input records and 3.3% of targets, almost all at 06–07 h (100% at 06 h, 21% at 07 h) and 18–19 h (5% and 44%).
+  - Only 30 of 194 K > 2 targets have the floor active. The tail is mostly genuine enhancement or anchor error, not denominator blow-up.
+
+Comparison tool: `src/compare.py`. It asserts identical validation samples across models. It reports per-fold and pooled RMSE (overall / clear / cloudy) and 95% CIs for paired RMSE differences, from a day-block bootstrap stratified by clear/cloudy day. Validation folds only; the official test set is not read.
+
 ## Open items
 - SUNSET reproduction keeps its own shuffled day-block folds; all E2+ experiments use the blocked folds above.
