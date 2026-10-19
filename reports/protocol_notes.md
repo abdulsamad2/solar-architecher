@@ -256,6 +256,27 @@ Pooled validation RMSE in kW over 164,362 identical samples. Δ vs E2 is the pai
 - Seeds 123 and 456 are needed before final claims.
 - The shared weakness is clear days, where both models lose to persistence by about 0.34 kW.
 
+## E4 pre-registration (fixed 2026-10-19, before any E4 result; experiments/E4_quantile/v1)
+- **E4-A:** raw kW. PV/30 history in, kW/30 quantiles out (E2 representation).
+- **E4-B:** clear-sky index. K history in, K quantiles out, reconstructed to kW with the fold-fitted P_clear at the target time (E3b representation).
+  - Multiplication by a positive P_clear preserves quantile order.
+- **Identical between them:**
+  - CNN-GRU backbone (avg pool, 64 features, hidden 64) and non-crossing quantile head (64 → 9).
+  - Levels {0.05, 0.10, 0.20, 0.30, 0.50, 0.70, 0.80, 0.90, 0.95}; pinball loss.
+  - AdamW lr 1e-4 cosine over 15 epochs, clip 1.0, EMA 0.999, batch 128, patience 5.
+  - Seed 42 first; 5 blocked folds; same validation samples as E2/E3b.
+- **Checkpoint selection:** pooled validation CRPS in kW (point models used RMSE).
+- **CRPS:** the CRPS of the piecewise-linear quantile function through the 9 levels, held constant beyond 0.05 and 0.95, by midpoint rule on 200 levels (`src.metrics.crps_quantile_interp`).
+  - It reduces exactly to |error| for point forecasts, so persistence and point models are on the same scale.
+  - Gaussian check: 1.1% above the exact CRPS (the naive 2·mean-pinball gives 1.9%).
+- **Gate 2 primary metric:** pooled **cloudy-day CRPS (kW)**, with a paired day-block bootstrap CI.
+- **Also reported, overall, sunny and cloudy:**
+  - 50/80/90% central-interval coverage and width (50% uses interpolated Q.25/Q.75);
+  - per-level reliability;
+  - median MAE and mean-based RMSE;
+  - CRPS skill vs smart persistence as a point mass.
+- **Scope:** no official test-set access. Persistence-residual forecasting is a separate follow-up, not part of E4.
+
 Comparison tool: `src/compare.py`. It asserts identical validation samples across models. It reports per-fold and pooled RMSE (overall / clear / cloudy) and 95% CIs for paired RMSE differences, from a day-block bootstrap stratified by clear/cloudy day. Validation folds only; the official test set is not read.
 
 ## Open items
