@@ -239,6 +239,23 @@ Launch: a watcher starts E3b only after both E2 and E3 write summary.json, and o
   - The 1 kW floor is active for 4.3% of input records and 3.3% of targets, almost all at 06–07 h (100% at 06 h, 21% at 07 h) and 18–19 h (5% and 44%).
   - Only 30 of 194 K > 2 targets have the floor active. The tail is mostly genuine enhancement or anchor error, not denominator blow-up.
 
+### Results, 2026-10-19 (reports/E2_E3_E3b_comparison.md)
+Pooled validation RMSE in kW over 164,362 identical samples. Δ vs E2 is the paired day-block bootstrap 95% CI.
+
+| | Overall | Clear | Cloudy | Δ overall vs E2 |
+|---|---|---|---|---|
+| E2 (kW in, kW out) | **2.074** | 0.726 | **2.643** | – |
+| E3 (kW in, K out) | 2.329 | 0.919 | 2.947 | +0.255 [+0.19, +0.33] |
+| E3b (K in, K out), post-hoc | 2.087 | 0.727 | 2.661 | +0.013 [−0.02, +0.05] |
+| Smart persistence | 2.289 | **0.390** | 2.977 | – |
+
+**Gate 1 decision:** the criterion is not met.
+- Do not claim that normalisation improves accuracy.
+- Never use target-only normalisation.
+- Keep the consistent K representation (E3b) as a representation choice, and carry kW and K variants into E4.
+- Seeds 123 and 456 are needed before final claims.
+- The shared weakness is clear days, where both models lose to persistence by about 0.34 kW.
+
 Comparison tool: `src/compare.py`. It asserts identical validation samples across models. It reports per-fold and pooled RMSE (overall / clear / cloudy) and 95% CIs for paired RMSE differences, from a day-block bootstrap stratified by clear/cloudy day. Validation folds only; the official test set is not read.
 
 ## Open items
