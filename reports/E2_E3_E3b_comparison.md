@@ -96,3 +96,32 @@ Negative = first model better. Fold wins (first model lower RMSE):
   - Normalisation (E3b) is declared to **improve** on E2 only if pooled cloudy RMSE(E3b) − RMSE(E2) < 0 **and** its 95% day-bootstrap CI excludes 0, in at least 2 of the 3 seeds.
   - It must also show no sunny regression: the sunny-day difference CI must not lie entirely above 0 in 2 or more seeds.
   - If the improvement condition fails, Gate 1 closes as "**no detectable benefit**". E3b is then kept only as a representation choice (see the recommendation above), and no accuracy claim is made.
+
+## Gate 1 replication results (seeds 42, 123, 456)
+
+### Pooled validation RMSE (kW) per seed
+
+| Seed | E2 overall / sunny / cloudy | E3b overall / sunny / cloudy | Best epochs E2 | Best epochs E3b |
+|---|---|---|---|---|
+| 42 | 2.074 / 0.726 / 2.643 | 2.087 / 0.727 / 2.661 | [5, 4, 4, 5, 4] | [2, 3, 1, 3, 3] |
+| 123 | 2.087 / 0.775 / 2.652 | 2.047 / 0.652 / 2.621 | [4, 5, 5, 6, 8] | [2, 2, 1, 3, 4] |
+| 456 | 2.113 / 0.824 / 2.676 | 2.043 / 0.577 / 2.629 | [5, 4, 4, 4, 5] | [2, 3, 1, 3, 3] |
+
+### Seed variation (across seeds; separate from bootstrap uncertainty)
+
+| Quantity | Overall mean ± SD [min, max] | Sunny | Cloudy |
+|---|---|---|---|
+| E2 | 2.091 ± 0.020 [2.074, 2.113] | 0.775 ± 0.049 [0.726, 0.824] | 2.657 ± 0.017 [2.643, 2.676] |
+| E3b | 2.059 ± 0.025 [2.043, 2.087] | 0.652 ± 0.075 [0.577, 0.727] | 2.637 ± 0.021 [2.621, 2.661] |
+| persistence | 2.289 ± 0.000 [2.289, 2.289] | 0.390 ± 0.000 [0.390, 0.390] | 2.977 ± 0.000 [2.977, 2.977] |
+| E3b - E2 | -0.032 ± 0.042 [-0.070, 0.013] | -0.123 ± 0.124 [-0.248, 0.001] | -0.020 ± 0.034 [-0.047, 0.018] |
+
+### Paired E3b − E2 per seed: 95% day-block bootstrap CI (within-seed sampling uncertainty)
+
+| Seed | Overall | Sunny | Cloudy | Folds where E3b < E2 (overall / sunny / cloudy) |
+|---|---|---|---|---|
+| 42 | +0.013 [-0.022, +0.053] | +0.001 [-0.064, +0.066] | +0.018 [-0.029, +0.068] | 3/5, 1/5, 3/5 |
+| 123 | -0.041 [-0.073, -0.004] | -0.123 [-0.193, -0.051] | -0.031 [-0.073, +0.018] | 3/5, 3/5, 3/5 |
+| 456 | -0.070 [-0.107, -0.030] | -0.248 [-0.299, -0.195] | -0.047 [-0.096, +0.006] | 3/5, 5/5, 3/5 |
+
+**Closing rule applied:** 0/3 seeds show a cloudy improvement with CI below 0 (required ≥ 2); 0/3 seeds show a sunny regression with CI above 0 (allowed < 2). **Verdict: NO DETECTABLE BENEFIT.**
