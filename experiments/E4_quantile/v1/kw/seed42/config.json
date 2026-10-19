@@ -27,7 +27,7 @@
     0.9,
     0.95
   ],
-  "git_commit": "bc87a1d1bab4ec5a233657b9e56ee137a3e6ca83",
+  "git_commit": "51c46ee8b58979b6a21121d7e426be5729f1958c",
   "src_dirty": false,
   "target": "kw",
   "manifest": "data/manifests/forecast_tol30_v2.npz",

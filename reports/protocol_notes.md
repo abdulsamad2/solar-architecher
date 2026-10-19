@@ -281,6 +281,9 @@ Pooled validation RMSE in kW over 164,362 identical samples. Δ vs E2 is the pai
   - **Fix:** `NonCrossingQuantileHead.init_from_targets` sets the head to the empirical quantiles of the fold's **training** targets (base = Q.05, increments = empirical gaps, weights × 0.01). Same procedure for E4-A and E4-B, each in its own target units.
   - **After the fix (smoke):** a sane start at climatology, with coverage near nominal.
   - **Test:** `test_quantile_head_initialises_at_training_climatology`.
+- **Run note:** the E4 train.log files each contain one extra "fold 0" header.
+  - Source: the stopped Gate 1→E4 pipeline launched E4 seconds before it was stopped, and those processes were killed before completing an epoch.
+  - Verified: 5 epoch-1 lines per log and no artefacts from the killed run. All E4 results come from the launch at commit 51c46ee.
 
 Comparison tool: `src/compare.py`. It asserts identical validation samples across models. It reports per-fold and pooled RMSE (overall / clear / cloudy) and 95% CIs for paired RMSE differences, from a day-block bootstrap stratified by clear/cloudy day. Validation folds only; the official test set is not read.
 
