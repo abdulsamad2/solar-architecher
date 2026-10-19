@@ -146,7 +146,12 @@ def main(a):
         log_f.flush()
 
     folds_doc = json.loads(Path(a.folds).read_text())
-    (out_root / "config.json").write_text(json.dumps({**cfg, "target": a.target, "manifest": a.manifest,
+    import subprocess
+
+    commit = subprocess.run(["git", "rev-parse", "HEAD"], capture_output=True, text=True).stdout.strip()
+    dirty = bool(subprocess.run(["git", "status", "--porcelain", "src"], capture_output=True, text=True).stdout.strip())
+    (out_root / "config.json").write_text(json.dumps({**cfg, "git_commit": commit, "src_dirty": dirty,
+                                                      "target": a.target, "manifest": a.manifest,
                                                       "folds": a.folds, "folds_sha256": folds_doc["content_sha256"]}, indent=2))
     device = torch.device("cuda")
     torch.backends.cuda.matmul.allow_tf32 = True
