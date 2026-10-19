@@ -86,3 +86,13 @@ Negative = first model better. Fold wins (first model lower RMSE):
 - **For E4 (direct quantiles), carry both representations** (kW as in E2, and K as in E3b) with identical heads. Decide on cloudy CRPS and calibration at Gate 2.
 - **Before final claims:** repeat E2 and E3b with seeds 123 and 456, as the roadmap requires. A ~0.01 kW difference is well within plausible seed-to-seed variation.
 - **Suggested follow-up for the shared sunny weakness** (not yet run): predict the residual from smart persistence instead of the absolute value. Under such a formulation, a model that cannot improve on a clear-sky trajectory defaults to it.
+
+## Gate 1 replication protocol (fixed 2026-10-19, before any seed-123/456 results existed)
+- **Runs:** E2 and E3b repeated with seeds 123 and 456. Same folds, manifests, samples, configuration and budget as seed 42. No hyperparameter changes, and no seed is selected or dropped.
+- **Two separate uncertainty sources are reported:**
+  - *seed variation*: mean, SD and range of pooled RMSE across the 3 seeds;
+  - *day-bootstrap uncertainty*: the paired 95% CI within each seed.
+- **Closing rule** (the existing criterion "improves cloudy error without unacceptable sunny regression", made concrete):
+  - Normalisation (E3b) is declared to **improve** on E2 only if pooled cloudy RMSE(E3b) − RMSE(E2) < 0 **and** its 95% day-bootstrap CI excludes 0, in at least 2 of the 3 seeds.
+  - It must also show no sunny regression: the sunny-day difference CI must not lie entirely above 0 in 2 or more seeds.
+  - If the improvement condition fails, Gate 1 closes as "**no detectable benefit**". E3b is then kept only as a representation choice (see the recommendation above), and no accuracy claim is made.
