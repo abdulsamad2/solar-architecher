@@ -11,7 +11,9 @@ import torch.nn.functional as F
 class SmallSkyEncoder(nn.Module):
     """Shared per-frame CNN -> concat PV history -> GRU -> final hidden state."""
 
-    def __init__(self, in_channels: int = 3, image_features: int = 64, hidden_size: int = 64):
+    def __init__(self, in_channels: int = 3, image_features: int = 64, hidden_size: int = 64, pool: str = "avg"):
+        """pool='avg': global average (discards where clouds are relative to the sun);
+        pool='spatial': keep a 4x4 grid and flatten (position-aware, like SUNSET's flatten)."""
         super().__init__()
 
         def block(cin, cout):
@@ -19,17 +21,22 @@ class SmallSkyEncoder(nn.Module):
                 nn.Conv2d(cin, cout, 3, padding=1), nn.BatchNorm2d(cout), nn.ReLU(inplace=True), nn.MaxPool2d(2)
             )
 
+        grid = {"avg": 1, "spatial": 4}[pool]
         self.cnn = nn.Sequential(
             block(in_channels, 16), block(16, 32), block(32, 64), block(64, 64),
-            nn.AdaptiveAvgPool2d(1), nn.Flatten(), nn.Linear(64, image_features), nn.ReLU(inplace=True),
+            nn.AdaptiveAvgPool2d(grid), nn.Flatten(), nn.Linear(64 * grid * grid, image_features), nn.ReLU(inplace=True),
         )
         self.gru = nn.GRU(image_features + 1, hidden_size, batch_first=True)
         self.hidden_size = hidden_size
+        self.cnn_bf16 = False  # bf16 autocast for the CNN only; GRU and heads stay fp32
 
     def forward(self, images: torch.Tensor, pv_history: torch.Tensor) -> torch.Tensor:
         b, t = images.shape[:2]
-        feats = self.cnn(images.flatten(0, 1)).view(b, t, -1)
+        with torch.autocast("cuda", dtype=torch.bfloat16, enabled=self.cnn_bf16 and images.is_cuda):
+            feats = self.cnn(images.flatten(0, 1))
+        feats = feats.float().view(b, t, -1)
         seq = torch.cat([feats, pv_history.unsqueeze(-1)], dim=-1)
+        self.gru.flatten_parameters()  # needed after deepcopy (e.g. EMA copies)
         _, h = self.gru(seq)
         return h[-1]
 

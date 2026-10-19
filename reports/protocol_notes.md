@@ -162,5 +162,41 @@ Run 2026-10-19 on forecast_tol30_v2 and folds_blocked5_v1: **7/7 passed** in 65 
 
 Observation: a small tail of K up to ~3 exists; these are probably low-sun records where P_clear is floored at 1 kW. It is finite, so it is allowed, but it adds squared-error weight to E3's K loss. Check where these occur if E3 underperforms.
 
+## E2/E3 v1 pilot: stopped, then diagnosed (2026-10-19)
+The v1 recipe (lr 3e-4 constant, no clipping, bf16 autocast, global-average-pool encoder) was stopped on fold 1.
+Validation RMSE swung epoch to epoch (E2: 2.94 → 3.98 → 2.94; E3: 3.28 → 5.90) while train loss fell smoothly.
+Fold 0 v1 results, kept as a record:
+
+| | Sunny | Cloudy | Overall |
+|---|---|---|---|
+| E2 | 0.747 | 2.226 | 1.819 |
+| E3 | 0.960 | 2.569 | 2.115 |
+| Smart persistence | 0.460 | 2.515 | 2.009 |
+
+Diagnostics:
+- **Data path:** the GPU batches equal the reference Dataset samples exactly (64 random samples). No bug.
+- **Fold difficulty:** fold 1 (Sep 2017 to May 2018, mostly winter) is much harder; smart persistence is 3.434 vs 2.009 on fold 0. So v1 E2's 2.94 on fold 1 was already 14% skill. The problem is instability, not the level.
+- **BN mode and bf16 at inference:** no effect (2.927 kW in all four combinations).
+- **Visual check** (reports/visual_check_sequences.png): the sun moves left (morning) to lower right (afternoon); input windows and targets sit correctly on the day's PV curve.
+- **Sensor faults:** 35 flat-PV runs of ≥ 10 records above 1 kW (554 records, 0.16%; longest 38 min on 2017-03-09). 66 one-minute jumps above 15 kW (max 22 kW), plausible cloud edges. Kept as-is, like the official pipeline.
+- **Image/PV pairing offset (finding):** on cloudy dev days, image-brightness changes correlate best with PV changes **one minute earlier**.
+  - Whole-image mean: r = 0.058 at +1 vs 0.031 at 0.
+  - Sun-patch tracker: r = 0.068 at +1 vs 0.020 at 0. Sunny days show no signal.
+  - Signals are weak (sun saturation, auto-exposure) but consistent across two proxies.
+  - Likely cause: PV logged as 1-min averages labelled at interval start.
+  - Kept the official pairing for comparability. Event-arrival labels (Phase 6) carry ±1 min timing uncertainty; a "shift images by 1 min" ablation is a cheap later check.
+
+Fixes, now trainer defaults (v2) applied identically to E2 and E3:
+- fp32 instead of bf16 autocast;
+- lr 1e-4 with per-step cosine decay;
+- grad-norm clipping at 1.0;
+- EMA of weights and BN buffers (decay 0.999 with (1+n)/(10+n) warm-up), used for validation and checkpoints.
+
+Bugs found while adding these:
+- **EMA without warm-up** left 37% of the random init after 1,000 steps; fixed.
+- **GRU weights non-contiguous after the EMA deepcopy;** `flatten_parameters()` is now called in forward.
+
+Architecture option `pool='spatial'`: keeps a 4×4 grid before the projection (position-aware, like SUNSET's flatten) instead of a global average that discards where clouds are relative to the sun. It is compared on fold 1 before adoption.
+
 ## Open items
 - SUNSET reproduction keeps its own shuffled day-block folds; all E2+ experiments use the blocked folds above.

@@ -9,6 +9,7 @@ budget; model selection on validation RMSE in kW.
 """
 from __future__ import annotations
 
+import itertools
 import json
 import time
 from pathlib import Path
@@ -41,8 +42,31 @@ class GpuSeq:
 
 
 def build_model(cfg) -> torch.nn.Module:
-    enc = SmallSkyEncoder(image_features=cfg["image_features"], hidden_size=cfg["hidden_size"])
+    enc = SmallSkyEncoder(image_features=cfg["image_features"], hidden_size=cfg["hidden_size"],
+                          pool=cfg.get("pool", "avg"))
     return Forecaster(enc, PointHead(cfg["hidden_size"], 1))
+
+
+class Ema:
+    """EMA of float params and buffers with warm-up d_n = min(decay, (1+n)/(10+n)); fused foreach update."""
+
+    def __init__(self, model: torch.nn.Module, decay: float):
+        import copy
+
+        self.module = copy.deepcopy(model).eval()
+        self.decay, self.n = decay, 0
+        self._pairs = [(e, m) for e, m in zip(itertools.chain(self.module.parameters(), self.module.buffers()),
+                                              itertools.chain(model.parameters(), model.buffers()))]
+        self._float = [(e, m) for e, m in self._pairs if e.dtype.is_floating_point]
+        self._other = [(e, m) for e, m in self._pairs if not e.dtype.is_floating_point]
+
+    @torch.no_grad()
+    def update_parameters(self, model: torch.nn.Module) -> None:
+        self.n += 1
+        d = min(self.decay, (1.0 + self.n) / (10.0 + self.n))
+        torch._foreach_lerp_([e for e, _ in self._float], [m.detach() for _, m in self._float], 1.0 - d)
+        for e, m in self._other:
+            e.copy_(m)
 
 
 @torch.no_grad()
@@ -78,41 +102,61 @@ def run_fold(ds, data, fold, target_kind, cfg, out_dir: Path, log) -> dict:
 
     torch.manual_seed(cfg["seed"])
     model = build_model(cfg).to(device)
+    model.encoder.cnn_bf16 = cfg["cnn_bf16"]
     opt = torch.optim.AdamW(model.parameters(), lr=cfg["lr"], weight_decay=cfg["weight_decay"])
+    steps_per_epoch = -(-len(tr) // cfg["batch_size"])
+    sched = (torch.optim.lr_scheduler.CosineAnnealingLR(opt, T_max=cfg["max_epochs"] * steps_per_epoch)
+             if cfg["schedule"] == "cosine" else None)
+    # EMA of weights and BN buffers; the EMA copy is what gets validated and checkpointed
+    ema = Ema(model, cfg["ema_decay"]) if cfg["ema_decay"] else None
+    eval_model = ema.module if ema is not None else model
     gen = torch.Generator(device=device).manual_seed(cfg["seed"])
     tr_t, va_t = torch.as_tensor(tr, device=device), torch.as_tensor(va, device=device)
 
-    best, wait, hist = float("inf"), 0, {"train_loss": [], "val_rmse_kw": []}
+    def val_rmse_of(m) -> float:
+        val_kw = to_kw(predict_raw(m, data, va_t).cpu().numpy().astype(float), va)
+        return float(np.sqrt(np.mean((val_kw - y_kw[va]) ** 2)))
+
+    best, wait = float("inf"), 0
+    hist = {"train_loss": [], "val_rmse_kw": [], "val_rmse_kw_raw_weights": [], "grad_norm_p99": []}
     for epoch in range(cfg["max_epochs"]):
         t0 = time.time()
         model.train()
         perm = tr_t[torch.randperm(len(tr_t), generator=gen, device=device)]
-        tot, n = 0.0, 0
+        tot, n, gnorms = 0.0, 0, []
         for s in range(0, len(perm), cfg["batch_size"]):
             b = perm[s:s + cfg["batch_size"]]
-            with torch.autocast("cuda", dtype=torch.bfloat16, enabled=cfg["amp"]):
-                pred = model(*data(b)).squeeze(-1)
-            loss = F.mse_loss(pred.float(), y_t[b])
+            pred = model(*data(b)).squeeze(-1)
+            loss = F.mse_loss(pred, y_t[b])
             opt.zero_grad(set_to_none=True)
             loss.backward()
+            gnorms.append(torch.nn.utils.clip_grad_norm_(model.parameters(), cfg["clip"] or float("inf")))
             opt.step()
+            if sched is not None:
+                sched.step()
+            if ema is not None:
+                ema.update_parameters(model)
             tot += loss.item() * len(b)
             n += len(b)
-        val_kw = to_kw(predict_raw(model, data, va_t).cpu().numpy().astype(float), va)
-        val_rmse = float(np.sqrt(np.mean((val_kw - y_kw[va]) ** 2)))
+        val_rmse = val_rmse_of(eval_model)
+        raw_rmse = val_rmse_of(model) if ema is not None else val_rmse
         hist["train_loss"].append(tot / n)
         hist["val_rmse_kw"].append(val_rmse)
+        hist["val_rmse_kw_raw_weights"].append(raw_rmse)
+        hist["grad_norm_p99"].append(float(torch.quantile(torch.stack(gnorms).float(), 0.99)))
         improved = val_rmse < best
         if improved:
             best, wait = val_rmse, 0
-            torch.save(model.state_dict(), out_dir / "best.pt")
+            torch.save(eval_model.state_dict(), out_dir / "best.pt")
         else:
             wait += 1
-        log(f"  epoch {epoch + 1:3d}  train loss {tot / n:.5f}  val RMSE {val_rmse:.3f} kW{'  *' if improved else ''}"
+        log(f"  epoch {epoch + 1:3d}  train loss {tot / n:.5f}  val RMSE {val_rmse:.3f} kW (raw {raw_rmse:.3f})"
+            f"{'  *' if improved else ''}  lr {opt.param_groups[0]['lr']:.1e}  |g|p99 {hist['grad_norm_p99'][-1]:.2f}"
             f"  ({time.time() - t0:.0f}s)")
         if wait >= cfg["patience"]:
             break
 
+    model = eval_model
     model.load_state_dict(torch.load(out_dir / "best.pt", map_location=device))
     pred_kw = to_kw(predict_raw(model, data, va_t).cpu().numpy().astype(float), va)
     pv_now = ds.pv.numpy()[ds.hist_rows[va, -1]].astype(float)
@@ -134,8 +178,9 @@ def run_fold(ds, data, fold, target_kind, cfg, out_dir: Path, log) -> dict:
 
 
 def main(a):
-    cfg = {"seed": a.seed, "lr": 3e-4, "weight_decay": 1e-4, "batch_size": a.batch_size, "max_epochs": a.max_epochs,
-           "patience": a.patience, "image_features": 64, "hidden_size": 64, "min_clear_kw": 1.0, "amp": not a.no_amp}
+    cfg = {"seed": a.seed, "lr": a.lr, "weight_decay": 1e-4, "batch_size": a.batch_size, "max_epochs": a.max_epochs,
+           "patience": a.patience, "image_features": 64, "hidden_size": 64, "min_clear_kw": 1.0, "cnn_bf16": not a.fp32_cnn,
+           "schedule": a.schedule, "clip": a.clip, "ema_decay": a.ema_decay, "pool": a.pool}
     out_root = Path(a.out) / a.target / f"seed{a.seed}"
     out_root.mkdir(parents=True, exist_ok=True)
     log_f = open(out_root / "train.log", "a", encoding="utf-8")
@@ -187,7 +232,12 @@ if __name__ == "__main__":
     p.add_argument("--batch-size", type=int, default=128)
     p.add_argument("--max-epochs", type=int, default=50)
     p.add_argument("--patience", type=int, default=10)
-    p.add_argument("--no-amp", action="store_true")
+    p.add_argument("--fp32-cnn", action="store_true", help="disable bf16 for the CNN (7x slower); GRU/head are always fp32")
+    p.add_argument("--lr", type=float, default=1e-4)
+    p.add_argument("--schedule", choices=["cosine", "constant"], default="cosine")
+    p.add_argument("--clip", type=float, default=1.0, help="grad-norm clip; 0 disables")
+    p.add_argument("--ema-decay", type=float, default=0.999, help="0 disables")
+    p.add_argument("--pool", choices=["avg", "spatial"], default="avg")
     p.add_argument("--subset-days", type=int, default=0, help="debug: limit train/val days per fold")
     p.add_argument("--h5", default="data/raw/2017_2019_images_pv_processed.hdf5")
     p.add_argument("--manifest", default="data/manifests/forecast_tol30_v2.npz")
