@@ -1,0 +1,205 @@
+{
+  "abort_rule": "any K > 5.0",
+  "fold_0": {
+    "pass": true,
+    "clear_sky_fit_isolated_from_nontrain_pv": true,
+    "model_input_equals_history_K": true,
+    "history_before_origin_target_after": true,
+    "K_input": {
+      "0.001": 0.0389,
+      "0.01": 0.1325,
+      "0.5": 1.0035,
+      "0.99": 1.5043,
+      "0.999": 2.0557,
+      "max": 3.337,
+      "min": 0.0,
+      "n_gt_2": 3350,
+      "n_gt_3": 16
+    },
+    "K_target": {
+      "0.001": 0.0223,
+      "0.01": 0.1275,
+      "0.5": 1.0057,
+      "0.99": 1.5316,
+      "0.999": 2.0598,
+      "max": 2.976,
+      "min": 0.001,
+      "n_gt_2": 215,
+      "n_gt_3": 0
+    },
+    "floor_active_share_input": 0.04412,
+    "floor_active_share_target": 0.03343,
+    "floor_active_target_share_by_hour": {
+      "6": 1.0,
+      "7": 0.2184,
+      "16": 0.0031,
+      "17": 0.0192,
+      "18": 0.0521,
+      "19": 0.4442
+    },
+    "K_target_gt2_when_floor_active": 34,
+    "K_target_gt2_total": 215
+  },
+  "fold_1": {
+    "pass": true,
+    "clear_sky_fit_isolated_from_nontrain_pv": true,
+    "model_input_equals_history_K": true,
+    "history_before_origin_target_after": true,
+    "K_input": {
+      "0.001": 0.0388,
+      "0.01": 0.1319,
+      "0.5": 1.0013,
+      "0.99": 1.5046,
+      "0.999": 2.036,
+      "max": 3.32,
+      "min": 0.0,
+      "n_gt_2": 3094,
+      "n_gt_3": 16
+    },
+    "K_target": {
+      "0.001": 0.0222,
+      "0.01": 0.1268,
+      "0.5": 1.0035,
+      "0.99": 1.5319,
+      "0.999": 2.0461,
+      "max": 2.935,
+      "min": 0.001,
+      "n_gt_2": 203,
+      "n_gt_3": 0
+    },
+    "floor_active_share_input": 0.04372,
+    "floor_active_share_target": 0.03294,
+    "floor_active_target_share_by_hour": {
+      "6": 1.0,
+      "7": 0.2088,
+      "8": 0.0001,
+      "16": 0.0031,
+      "17": 0.0194,
+      "18": 0.0529,
+      "19": 0.4402
+    },
+    "K_target_gt2_when_floor_active": 30,
+    "K_target_gt2_total": 203
+  },
+  "fold_2": {
+    "pass": true,
+    "clear_sky_fit_isolated_from_nontrain_pv": true,
+    "model_input_equals_history_K": true,
+    "history_before_origin_target_after": true,
+    "K_input": {
+      "0.001": 0.0389,
+      "0.01": 0.1318,
+      "0.5": 0.9932,
+      "0.99": 1.4953,
+      "0.999": 2.0349,
+      "max": 3.335,
+      "min": 0.0,
+      "n_gt_2": 3045,
+      "n_gt_3": 16
+    },
+    "K_target": {
+      "0.001": 0.0223,
+      "0.01": 0.1268,
+      "0.5": 0.9953,
+      "0.99": 1.5226,
+      "0.999": 2.0354,
+      "max": 2.952,
+      "min": 0.001,
+      "n_gt_2": 194,
+      "n_gt_3": 0
+    },
+    "floor_active_share_input": 0.04356,
+    "floor_active_share_target": 0.03279,
+    "floor_active_target_share_by_hour": {
+      "6": 1.0,
+      "7": 0.2079,
+      "16": 0.0031,
+      "17": 0.0192,
+      "18": 0.0523,
+      "19": 0.4374
+    },
+    "K_target_gt2_when_floor_active": 30,
+    "K_target_gt2_total": 194
+  },
+  "fold_3": {
+    "pass": true,
+    "clear_sky_fit_isolated_from_nontrain_pv": true,
+    "model_input_equals_history_K": true,
+    "history_before_origin_target_after": true,
+    "K_input": {
+      "0.001": 0.0385,
+      "0.01": 0.1311,
+      "0.5": 0.9917,
+      "0.99": 1.4916,
+      "0.999": 2.0273,
+      "max": 3.3,
+      "min": 0.0,
+      "n_gt_2": 2942,
+      "n_gt_3": 16
+    },
+    "K_target": {
+      "0.001": 0.0221,
+      "0.01": 0.126,
+      "0.5": 0.9938,
+      "0.99": 1.5177,
+      "0.999": 2.032,
+      "max": 2.929,
+      "min": 0.001,
+      "n_gt_2": 189,
+      "n_gt_3": 0
+    },
+    "floor_active_share_input": 0.04331,
+    "floor_active_share_target": 0.03246,
+    "floor_active_target_share_by_hour": {
+      "6": 1.0,
+      "7": 0.2036,
+      "16": 0.003,
+      "17": 0.019,
+      "18": 0.0522,
+      "19": 0.4379
+    },
+    "K_target_gt2_when_floor_active": 28,
+    "K_target_gt2_total": 189
+  },
+  "fold_4": {
+    "pass": true,
+    "clear_sky_fit_isolated_from_nontrain_pv": true,
+    "model_input_equals_history_K": true,
+    "history_before_origin_target_after": true,
+    "K_input": {
+      "0.001": 0.0389,
+      "0.01": 0.1317,
+      "0.5": 0.9863,
+      "0.99": 1.4888,
+      "0.999": 2.0292,
+      "max": 3.342,
+      "min": 0.0,
+      "n_gt_2": 2966,
+      "n_gt_3": 16
+    },
+    "K_target": {
+      "0.001": 0.0222,
+      "0.01": 0.1268,
+      "0.5": 0.9883,
+      "0.99": 1.5128,
+      "0.999": 2.0285,
+      "max": 2.949,
+      "min": 0.001,
+      "n_gt_2": 185,
+      "n_gt_3": 0
+    },
+    "floor_active_share_input": 0.04319,
+    "floor_active_share_target": 0.03244,
+    "floor_active_target_share_by_hour": {
+      "6": 1.0,
+      "7": 0.2045,
+      "16": 0.0031,
+      "17": 0.0191,
+      "18": 0.0524,
+      "19": 0.4362
+    },
+    "K_target_gt2_when_floor_active": 30,
+    "K_target_gt2_total": 185
+  },
+  "pass": true
+}

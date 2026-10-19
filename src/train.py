@@ -6,6 +6,9 @@ E3 target: clear-sky index K(t+15) = PV / max(P_clear, min_clear); reconstructed
            TRAINING days only.
 Both: identical inputs (16 chronological 64x64 frames + PV history / 30), identical model, optimiser and
 budget; model selection on validation RMSE in kW.
+
+E3b (post-hoc diagnostic extension, --target csi --input csi): as E3, but the PV-history input is
+replaced by the clear-sky-index history K(t-j) computed with the same fold-fitted anchor.
 """
 from __future__ import annotations
 
@@ -27,18 +30,27 @@ PV_SCALE = 30.0  # kW, ~nameplate; input/target scaling only
 
 
 class GpuSeq:
-    """GPU-resident chronological stacks: images [B,16,3,64,64], pv history [B,16], target index."""
+    """GPU-resident chronological stacks: images [B,16,3,64,64], history feature [B,16].
+
+    The per-record history feature defaults to PV / 30; ``set_history_feature`` swaps it (e.g. to K)
+    and must be called per fold when it depends on fold-fitted quantities.
+    """
 
     def __init__(self, ds: SkippdForecastDataset, device):
         self.images = ds.images.to(device)
         self.pv = ds.pv.to(device)
         self.hist = torch.from_numpy(ds.hist_rows).to(device)
         self.tgt = torch.from_numpy(ds.target_rows).to(device)
+        self.hist_feat = self.pv / PV_SCALE
+
+    def set_history_feature(self, per_record: np.ndarray | None) -> None:
+        self.hist_feat = (self.pv / PV_SCALE if per_record is None
+                          else torch.as_tensor(per_record, dtype=torch.float32, device=self.pv.device))
 
     def __call__(self, idx):
         rows = self.hist[idx]
         x = self.images[rows].permute(0, 1, 4, 2, 3).float().div_(255.0)
-        return x, self.pv[rows] / PV_SCALE
+        return x, self.hist_feat[rows]
 
 
 def build_model(cfg) -> torch.nn.Module:
@@ -96,6 +108,9 @@ def run_fold(ds, data, fold, target_kind, cfg, out_dir: Path, log) -> dict:
     else:
         y = clear_sky_index(y_kw, pclear_tgt, cfg["min_clear_kw"])
     y_t = torch.tensor(y, dtype=torch.float32, device=device)
+    # history input: PV/30 (E2, E3) or K from the same fold-fitted anchor (E3b); only records <= origin are used
+    data.set_history_feature(
+        clear_sky_index(ds.pv.numpy().astype(float), pclear_rec, cfg["min_clear_kw"]) if cfg["input"] == "csi" else None)
 
     def to_kw(raw: np.ndarray, idx: np.ndarray) -> np.ndarray:
         return raw * PV_SCALE if target_kind == "kw" else from_clear_sky_index(raw, pclear_tgt[idx], cfg["min_clear_kw"])
@@ -180,7 +195,8 @@ def run_fold(ds, data, fold, target_kind, cfg, out_dir: Path, log) -> dict:
 def main(a):
     cfg = {"seed": a.seed, "lr": a.lr, "weight_decay": 1e-4, "batch_size": a.batch_size, "max_epochs": a.max_epochs,
            "patience": a.patience, "image_features": 64, "hidden_size": 64, "min_clear_kw": 1.0, "cnn_bf16": not a.fp32_cnn,
-           "schedule": a.schedule, "clip": a.clip, "ema_decay": a.ema_decay, "pool": a.pool}
+           "schedule": a.schedule, "clip": a.clip, "ema_decay": a.ema_decay, "pool": a.pool, "input": a.input,
+           "label": a.label}
     out_root = Path(a.out) / a.target / f"seed{a.seed}"
     out_root.mkdir(parents=True, exist_ok=True)
     log_f = open(out_root / "train.log", "a", encoding="utf-8")
@@ -227,6 +243,8 @@ if __name__ == "__main__":
 
     p = argparse.ArgumentParser(description="E2 (kW) / E3 (clear-sky index) CNN-GRU on blocked folds")
     p.add_argument("--target", choices=["kw", "csi"], required=True)
+    p.add_argument("--input", choices=["pv", "csi"], default="pv", help="history input: PV/30 or clear-sky index K")
+    p.add_argument("--label", default="", help="free-text experiment label stored in config.json")
     p.add_argument("--fold-ids", type=int, nargs="+", default=[0, 1, 2, 3, 4])
     p.add_argument("--seed", type=int, default=42)
     p.add_argument("--batch-size", type=int, default=128)

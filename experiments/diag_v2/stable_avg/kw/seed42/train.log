@@ -1,0 +1,10 @@
+[kw] fold 1: val ['2017-09-13', '2018-05-15']
+  epoch   1  train loss 0.00741  val RMSE 3.168 kW (raw 3.147)  *  lr 9.6e-05  |g|p99 0.52  (121s)
+  epoch   2  train loss 0.00330  val RMSE 3.023 kW (raw 3.964)  *  lr 8.5e-05  |g|p99 0.31  (121s)
+  epoch   3  train loss 0.00291  val RMSE 3.001 kW (raw 3.049)  *  lr 6.9e-05  |g|p99 0.23  (121s)
+  epoch   4  train loss 0.00274  val RMSE 2.995 kW (raw 3.079)  *  lr 5.0e-05  |g|p99 0.25  (120s)
+  epoch   5  train loss 0.00258  val RMSE 3.006 kW (raw 3.031)  lr 3.1e-05  |g|p99 0.23  (121s)
+  epoch   6  train loss 0.00245  val RMSE 3.013 kW (raw 3.053)  lr 1.5e-05  |g|p99 0.22  (120s)
+  epoch   7  train loss 0.00234  val RMSE 3.029 kW (raw 3.021)  lr 3.8e-06  |g|p99 0.19  (120s)
+  epoch   8  train loss 0.00230  val RMSE 3.027 kW (raw 3.043)  lr 0.0e+00  |g|p99 0.19  (121s)
+[kw] fold 1 done: best epoch 4  RMSE sunny 0.716 (pers 0.382)  cloudy 3.467 (pers 3.999)  overall 2.995 (pers 3.434)

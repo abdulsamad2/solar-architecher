@@ -187,7 +187,9 @@ Diagnostics:
   - Kept the official pairing for comparability. Event-arrival labels (Phase 6) carry ±1 min timing uncertainty; a "shift images by 1 min" ablation is a cheap later check.
 
 Fixes, now trainer defaults (v2) applied identically to E2 and E3:
-- fp32 instead of bf16 autocast;
+- bf16 for the CNN only; GRU and output head always fp32, so the regression output is not bf16-quantised.
+  - Full fp32 was tried first but is 7× slower on this GPU (220 vs 33 ms/step, batch 128).
+  - Global bf16 did not cause the instability: inference RMSE was identical in bf16 and fp32.
 - lr 1e-4 with per-step cosine decay;
 - grad-norm clipping at 1.0;
 - EMA of weights and BN buffers (decay 0.999 with (1+n)/(10+n) warm-up), used for validation and checkpoints.
@@ -197,6 +199,22 @@ Bugs found while adding these:
 - **GRU weights non-contiguous after the EMA deepcopy;** `flatten_parameters()` is now called in forward.
 
 Architecture option `pool='spatial'`: keeps a 4×4 grid before the projection (position-aware, like SUNSET's flatten) instead of a global average that discards where clouds are relative to the sun. It is compared on fold 1 before adoption.
+
+### Fold-1 check of the v2 recipe (kW target, 8 epochs, cosine over 8; experiments/diag_v2)
+| | Best val RMSE (epoch) | EMA val curve | Sunny | Cloudy |
+|---|---|---|---|---|
+| v2, avg pool | **2.995** (4) | 3.17, 3.02, 3.00, 2.995, 3.01, 3.01, 3.03, 3.03 | 0.716 | 3.467 |
+| v2, spatial pool | 3.119 (3) | 3.20, 3.14, 3.12, 3.12, 3.13, 3.14, 3.16, 3.17 | 1.060 | 3.583 |
+| v1 | 2.943 (3), noisy | 3.03, 3.98, 2.94, 3.13, 2.96, 3.13 | – | – |
+| Smart persistence | 3.434 | – | 0.382 | 3.999 |
+
+- **Instability resolved:** the EMA curve is smooth while the raw weights still swing (3.96 at epoch 2).
+- **Pooling:** spatial pooling overfits (lower train loss, worse val), so avg pooling is kept.
+- **Training length:** peaks at epochs 3 to 4. Full runs therefore use max 15 epochs (cosine over 15) and patience 5.
+- **Sunny days:** the CNN-GRU is worse than smart persistence (0.72 vs 0.38), as SUNSET is.
+
+## E2/E3 v2 (experiments/E2E3_cnn_gru/v2)
+Launched 2026-10-19 at commit 9a0681d: avg pool, lr 1e-4 cosine over 15 epochs, clip 1.0, EMA 0.999, patience 5, seed 42, 5 blocked folds.
 
 ## Open items
 - SUNSET reproduction keeps its own shuffled day-block folds; all E2+ experiments use the blocked folds above.
