@@ -5,7 +5,7 @@ import torch
 from PIL import Image
 from torch.utils.data import DataLoader
 
-from src.clear_sky import clear_sky_index, smart_persistence
+from src.clear_sky import clear_sky_index, from_clear_sky_index, smart_persistence
 from src.data import SkyPVDataset, validate_manifest, window_indices
 from src.metrics import crps_ensemble, crps_from_quantiles, day_bootstrap_diff, pinball_loss
 from src.models import EventSeverityHead, Forecaster, NonCrossingQuantileHead, SmallSkyEncoder
@@ -109,7 +109,8 @@ def test_persistence_and_ramp_labels():
     sp = smart_persistence([10.0, 0.5], [20.0, 0.1], [25.0, 0.3], min_clear_kw=1.0)
     assert np.allclose(sp, [12.5, 0.5])  # second sample falls back to plain persistence
     k = clear_sky_index([10.0, 1.0, 22.0], [20.0, 0.1, 20.0], min_clear_kw=1.0)
-    assert k[0] == 0.5 and np.isnan(k[1]) and k[2] > 1.0  # cloud enhancement not clipped
+    assert k[0] == 0.5 and k[1] == 1.0 and k[2] > 1.0  # floored denominator; enhancement not clipped
+    assert np.allclose(from_clear_sky_index(k, [20.0, 0.1, 20.0], 1.0), [10.0, 1.0, 22.0])
 
     k_future = np.full((3, 15), 0.9)
     k_future[0, 7:] = 0.4   # drop at minute 8
