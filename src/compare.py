@@ -23,6 +23,11 @@ def load(exp_dir: Path, folds) -> dict:
     return out
 
 
+def _fold_slice(arr, folds, ref, k):
+    start = sum(len(ref[f]["target"]) for f in folds[:list(folds).index(k)])
+    return arr[start:start + len(ref[k]["target"])]
+
+
 def rmse(e) -> float:
     return float(np.sqrt(np.mean(e ** 2)))
 
@@ -31,11 +36,17 @@ def masks(clear):
     return {"overall": np.ones_like(clear, bool), "sunny": clear, "cloudy": ~clear}
 
 
-def bootstrap_diff(err_a, err_b, day, clear, n_boot=2000, seed=0):
-    """CI of RMSE(a) - RMSE(b) over resampled days, stratified by day label."""
+def bootstrap_diff(err_a, err_b, day, clear, n_boot=2000, seed=0, kind="rmse"):
+    """CI of score(a) - score(b) over resampled days, stratified by day label.
+
+    kind='rmse': inputs are errors, score = sqrt(mean(err^2)); kind='mean': inputs are per-sample scores
+    (e.g. CRPS), score = mean.
+    """
     days, inv = np.unique(day, return_inverse=True)
-    sa = np.bincount(inv, weights=err_a ** 2)
-    sb = np.bincount(inv, weights=err_b ** 2)
+    f = (lambda e: e ** 2) if kind == "rmse" else (lambda e: e)
+    g = np.sqrt if kind == "rmse" else (lambda v: v)
+    sa = np.bincount(inv, weights=f(err_a))
+    sb = np.bincount(inv, weights=f(err_b))
     cnt = np.bincount(inv)
     day_clear = np.zeros(len(days), bool)
     day_clear[inv] = clear
@@ -44,8 +55,8 @@ def bootstrap_diff(err_a, err_b, day, clear, n_boot=2000, seed=0):
     boots = np.empty(n_boot)
     for b in range(n_boot):
         idx = np.concatenate([rng.choice(g, len(g)) for g in groups if len(g)])
-        boots[b] = np.sqrt(sa[idx].sum() / cnt[idx].sum()) - np.sqrt(sb[idx].sum() / cnt[idx].sum())
-    point = np.sqrt(sa.sum() / cnt.sum()) - np.sqrt(sb.sum() / cnt.sum())
+        boots[b] = g(sa[idx].sum() / cnt[idx].sum()) - g(sb[idx].sum() / cnt[idx].sum())
+    point = g(sa.sum() / cnt.sum()) - g(sb.sum() / cnt.sum())
     lo, hi = np.quantile(boots, [0.025, 0.975])
     return float(point), float(lo), float(hi)
 
@@ -85,6 +96,21 @@ def compare(exps: dict[str, Path], folds=(0, 1, 2, 3, 4), out_md: Path | None = 
     result = {"experiments": {n: str(p) for n, p in exps.items()}, "per_fold": per_fold, "pooled": pooled,
               "paired_rmse_diff_ci95": diffs, "fold_wins": wins, "n_samples": int(len(target)),
               "n_days": int(len(np.unique(day)))}
+
+    # CRPS (kW) when every model has quantile predictions; persistence is a point mass (CRPS = |error|)
+    if all("pred_q" in data[n][folds[0]] for n in names):
+        from src.metrics import crps_quantile_interp
+
+        crps = {n: np.concatenate([crps_quantile_interp(data[n][k]["pred_q"], data[n][k]["target"],
+                                                        data[n][k]["quantile_levels"]) for k in folds]) for n in names}
+        crps["persistence"] = np.abs(err["persistence"])
+        result["crps_per_fold"] = {
+            k: {n: {g: float(np.mean(_fold_slice(crps[n], folds, ref, k)[masks(ref[k]["clear_day"])[g]]))
+                    for g in GROUPS} for n in crps} for k in folds}
+        result["crps_pooled"] = {n: {g: float(c[ms[g]].mean()) for g in GROUPS} for n, c in crps.items()}
+        result["paired_crps_diff_ci95"] = {
+            f"{a} - {b}": {g: bootstrap_diff(crps[a][ms[g]], crps[b][ms[g]], day[ms[g]], clear[ms[g]], kind="mean")
+                           for g in GROUPS} for a, b in pairs}
     if out_md:
         out_md.write_text(to_markdown(result, names, folds))
         out_md.with_suffix(".json").write_text(json.dumps(result, indent=2, default=str))
@@ -116,6 +142,18 @@ def to_markdown(r, names, folds) -> str:
     lines += ["", "Negative = first model better. Fold wins (first model lower RMSE):", ""]
     for pair, w in r["fold_wins"].items():
         lines.append(f"- {pair}: overall {w['overall']}/{len(folds)}, clear {w['sunny']}/{len(folds)}, cloudy {w['cloudy']}/{len(folds)}")
+    if "crps_pooled" in r:
+        cols = list(r["crps_pooled"])
+        lines += ["", "## CRPS (kW, interpolated-quantile; persistence = point mass) per fold", "",
+                  "| Fold | " + " | ".join(f"{c} overall / clear / cloudy" for c in cols) + " |", "|---" * (len(cols) + 1) + "|"]
+        for k in folds:
+            lines.append(f"| {k} | " + " | ".join(
+                " / ".join(f"{r['crps_per_fold'][k][c][g]:.3f}" for g in GROUPS) for c in cols) + " |")
+        lines.append("| pooled | " + " | ".join(" / ".join(f"{r['crps_pooled'][c][g]:.3f}" for g in GROUPS) for c in cols) + " |")
+        lines += ["", "## Paired pooled CRPS differences, 95% day-block bootstrap CI", "",
+                  "| Comparison | Overall | Clear days | Cloudy days |", "|---|---|---|---|"]
+        for pair, d in r["paired_crps_diff_ci95"].items():
+            lines.append(f"| {pair} | " + " | ".join(f"{d[g][0]:+.3f} [{d[g][1]:+.3f}, {d[g][2]:+.3f}]" for g in GROUPS) + " |")
     return "\n".join(lines) + "\n"
 
 

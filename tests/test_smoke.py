@@ -96,6 +96,15 @@ def test_scores_match_toy_examples():
     pred_q = np.array([[NormalDist().inv_cdf(v) for v in q]])
     exact_normal_crps_at_0 = 2 * NormalDist().pdf(0) - 1 / np.sqrt(np.pi)
     assert abs(crps_from_quantiles(pred_q, [0.0], q)[0] - exact_normal_crps_at_0) < 0.01
+    # interpolated-quantile CRPS: point forecast -> |error|; 9-level Gaussian -> close to exact CRPS
+    from src.metrics import crps_quantile_interp, quantile_reliability
+    lv = [0.05, 0.10, 0.20, 0.30, 0.50, 0.70, 0.80, 0.90, 0.95]
+    assert np.allclose(crps_quantile_interp(np.full((2, 9), 3.0), [1.0, 4.0], lv), [2.0, 1.0])
+    g9 = np.array([[NormalDist().inv_cdf(v) for v in lv]])
+    approx = crps_quantile_interp(g9, [0.0], lv, n_grid=2000)[0]
+    assert abs(approx - exact_normal_crps_at_0) / exact_normal_crps_at_0 < 0.05
+    rel = quantile_reliability(np.tile(g9, (4000, 1)), rng.normal(size=4000))
+    assert np.allclose(rel, lv, atol=0.03)
     # bootstrap: deterministic, and CI contains the point estimate
     loss_a, loss_b = rng.random(200) + 0.1, rng.random(200)
     day = np.repeat(np.arange(20), 10)

@@ -23,10 +23,13 @@ import torch.nn.functional as F
 
 from src.baselines import split_scores
 from src.clear_sky import ClearSkyPV, clear_sky_index, from_clear_sky_index, smart_persistence
-from src.models import Forecaster, PointHead, SmallSkyEncoder
+from src.metrics import (crps_quantile_interp, interval_coverage, interval_width, pinball_loss, quantile_function,
+                         quantile_reliability)
+from src.models import Forecaster, NonCrossingQuantileHead, PointHead, SmallSkyEncoder
 from src.skippd import SkippdForecastDataset
 
 PV_SCALE = 30.0  # kW, ~nameplate; input/target scaling only
+QUANTILES = [0.05, 0.10, 0.20, 0.30, 0.50, 0.70, 0.80, 0.90, 0.95]  # roadmap Step 5.1
 
 
 class GpuSeq:
@@ -56,7 +59,14 @@ class GpuSeq:
 def build_model(cfg) -> torch.nn.Module:
     enc = SmallSkyEncoder(image_features=cfg["image_features"], hidden_size=cfg["hidden_size"],
                           pool=cfg.get("pool", "avg"))
+    if cfg.get("head", "point") == "quantile":
+        return Forecaster(enc, NonCrossingQuantileHead(cfg["hidden_size"], 1, QUANTILES))
     return Forecaster(enc, PointHead(cfg["hidden_size"], 1))
+
+
+def _out(pred: torch.Tensor) -> torch.Tensor:
+    """Point head [B,1] -> [B]; quantile head [B,1,Q] -> [B,Q]."""
+    return pred[:, 0, :] if pred.ndim == 3 else pred.squeeze(-1)
 
 
 class Ema:
@@ -84,7 +94,36 @@ class Ema:
 @torch.no_grad()
 def predict_raw(model, data, idx, batch=1024):
     model.eval()
-    return torch.cat([model(*data(idx[s:s + batch])).squeeze(-1) for s in range(0, len(idx), batch)])
+    return torch.cat([_out(model(*data(idx[s:s + batch]))) for s in range(0, len(idx), batch)])
+
+
+def probabilistic_scores(pred_q: np.ndarray, y: np.ndarray, persistence: np.ndarray, clear: np.ndarray) -> dict:
+    """kW-space scores for a quantile forecast, overall / sunny (clear day) / cloudy.
+
+    CRPS: interpolated-quantile CRPS (src.metrics.crps_quantile_interp); persistence is a point mass, so
+    its CRPS equals its MAE. Central intervals: 90% = [Q.05, Q.95], 80% = [Q.10, Q.90],
+    50% = [Q.25, Q.75] from the interpolated quantile function.
+    """
+    qf = lambda tau: quantile_function(pred_q, QUANTILES, [tau])[:, 0]
+    bounds = {"50": (qf(0.25), qf(0.75)), "80": (qf(0.10), qf(0.90)), "90": (qf(0.05), qf(0.95))}
+    mean_fc = quantile_function(pred_q, QUANTILES, (np.arange(200) + 0.5) / 200).mean(axis=1)
+    crps = crps_quantile_interp(pred_q, y, QUANTILES)
+    out = {}
+    for g, m in (("overall", np.ones_like(clear, bool)), ("sunny", clear), ("cloudy", ~clear)):
+        if not m.any():
+            continue
+        out[g] = {
+            "n": int(m.sum()),
+            "crps_kw": float(crps[m].mean()),
+            "persistence_crps_kw": float(np.abs(persistence[m] - y[m]).mean()),
+            "median_mae_kw": float(np.abs(pred_q[m, QUANTILES.index(0.5)] - y[m]).mean()),
+            "mean_rmse_kw": float(np.sqrt(np.mean((mean_fc[m] - y[m]) ** 2))),
+            "coverage": {k: interval_coverage(lo[m], hi[m], y[m]) for k, (lo, hi) in bounds.items()},
+            "width_kw": {k: interval_width(lo[m], hi[m]) for k, (lo, hi) in bounds.items()},
+            "reliability": dict(zip(map(str, QUANTILES), quantile_reliability(pred_q[m], y[m]).round(4).tolist())),
+        }
+        out[g]["crps_skill_vs_persistence"] = 1 - out[g]["crps_kw"] / out[g]["persistence_crps_kw"]
+    return out
 
 
 def run_fold(ds, data, fold, target_kind, cfg, out_dir: Path, log) -> dict:
@@ -113,7 +152,19 @@ def run_fold(ds, data, fold, target_kind, cfg, out_dir: Path, log) -> dict:
         clear_sky_index(ds.pv.numpy().astype(float), pclear_rec, cfg["min_clear_kw"]) if cfg["input"] == "csi" else None)
 
     def to_kw(raw: np.ndarray, idx: np.ndarray) -> np.ndarray:
-        return raw * PV_SCALE if target_kind == "kw" else from_clear_sky_index(raw, pclear_tgt[idx], cfg["min_clear_kw"])
+        """Model output -> kW. For quantiles, multiplying by a positive P_clear preserves their order."""
+        if target_kind == "kw":
+            return raw * PV_SCALE
+        pc = pclear_tgt[idx][:, None] if raw.ndim == 2 else pclear_tgt[idx]
+        return from_clear_sky_index(raw, pc, cfg["min_clear_kw"])
+
+    quantile = cfg.get("head", "point") == "quantile"
+    sel_key = "val_crps_kw" if quantile else "val_rmse_kw"
+
+    def val_score(kw: np.ndarray) -> float:
+        if quantile:
+            return float(crps_quantile_interp(kw, y_kw[va], QUANTILES).mean())
+        return float(np.sqrt(np.mean((kw - y_kw[va]) ** 2)))
 
     torch.manual_seed(cfg["seed"])
     model = build_model(cfg).to(device)
@@ -128,12 +179,11 @@ def run_fold(ds, data, fold, target_kind, cfg, out_dir: Path, log) -> dict:
     gen = torch.Generator(device=device).manual_seed(cfg["seed"])
     tr_t, va_t = torch.as_tensor(tr, device=device), torch.as_tensor(va, device=device)
 
-    def val_rmse_of(m) -> float:
-        val_kw = to_kw(predict_raw(m, data, va_t).cpu().numpy().astype(float), va)
-        return float(np.sqrt(np.mean((val_kw - y_kw[va]) ** 2)))
+    def val_score_of(m) -> float:
+        return val_score(to_kw(predict_raw(m, data, va_t).cpu().numpy().astype(float), va))
 
     best, wait = float("inf"), 0
-    hist = {"train_loss": [], "val_rmse_kw": [], "val_rmse_kw_raw_weights": [], "grad_norm_p99": []}
+    hist = {"train_loss": [], sel_key: [], f"{sel_key}_raw_weights": [], "grad_norm_p99": []}
     for epoch in range(cfg["max_epochs"]):
         t0 = time.time()
         model.train()
@@ -141,8 +191,8 @@ def run_fold(ds, data, fold, target_kind, cfg, out_dir: Path, log) -> dict:
         tot, n, gnorms = 0.0, 0, []
         for s in range(0, len(perm), cfg["batch_size"]):
             b = perm[s:s + cfg["batch_size"]]
-            pred = model(*data(b)).squeeze(-1)
-            loss = F.mse_loss(pred, y_t[b])
+            pred = _out(model(*data(b)))
+            loss = pinball_loss(pred, y_t[b], QUANTILES) if quantile else F.mse_loss(pred, y_t[b])
             opt.zero_grad(set_to_none=True)
             loss.backward()
             gnorms.append(torch.nn.utils.clip_grad_norm_(model.parameters(), cfg["clip"] or float("inf")))
@@ -153,19 +203,20 @@ def run_fold(ds, data, fold, target_kind, cfg, out_dir: Path, log) -> dict:
                 ema.update_parameters(model)
             tot += loss.item() * len(b)
             n += len(b)
-        val_rmse = val_rmse_of(eval_model)
-        raw_rmse = val_rmse_of(model) if ema is not None else val_rmse
+        val_s = val_score_of(eval_model)
+        raw_s = val_score_of(model) if ema is not None else val_s
         hist["train_loss"].append(tot / n)
-        hist["val_rmse_kw"].append(val_rmse)
-        hist["val_rmse_kw_raw_weights"].append(raw_rmse)
+        hist[sel_key].append(val_s)
+        hist[f"{sel_key}_raw_weights"].append(raw_s)
         hist["grad_norm_p99"].append(float(torch.quantile(torch.stack(gnorms).float(), 0.99)))
-        improved = val_rmse < best
+        improved = val_s < best
         if improved:
-            best, wait = val_rmse, 0
+            best, wait = val_s, 0
             torch.save(eval_model.state_dict(), out_dir / "best.pt")
         else:
             wait += 1
-        log(f"  epoch {epoch + 1:3d}  train loss {tot / n:.5f}  val RMSE {val_rmse:.3f} kW (raw {raw_rmse:.3f})"
+        log(f"  epoch {epoch + 1:3d}  train loss {tot / n:.5f}  val {'CRPS' if quantile else 'RMSE'} {val_s:.3f} kW"
+            f" (raw {raw_s:.3f})"
             f"{'  *' if improved else ''}  lr {opt.param_groups[0]['lr']:.1e}  |g|p99 {hist['grad_norm_p99'][-1]:.2f}"
             f"  ({time.time() - t0:.0f}s)")
         if wait >= cfg["patience"]:
@@ -173,20 +224,30 @@ def run_fold(ds, data, fold, target_kind, cfg, out_dir: Path, log) -> dict:
 
     model = eval_model
     model.load_state_dict(torch.load(out_dir / "best.pt", map_location=device))
-    pred_kw = to_kw(predict_raw(model, data, va_t).cpu().numpy().astype(float), va)
+    out_kw = to_kw(predict_raw(model, data, va_t).cpu().numpy().astype(float), va)
     pv_now = ds.pv.numpy()[ds.hist_rows[va, -1]].astype(float)
     pers = smart_persistence(pv_now, pclear_now[va], pclear_tgt[va], cfg["min_clear_kw"])
     labels = np.array([fold["day_labels"][d] for d in day_str[va]])
+    extra = {}
+    if quantile:
+        pred_q = out_kw
+        pred_kw = pred_q[:, QUANTILES.index(0.5)]  # median as the point forecast
+        extra["pred_q"] = pred_q
+    else:
+        pred_kw = out_kw
     metrics = {
-        "best_epoch": int(np.argmin(hist["val_rmse_kw"])) + 1, "epochs_run": len(hist["val_rmse_kw"]),
-        "clear_sky_coef": cs.coef.tolist(),
+        "best_epoch": int(np.argmin(hist[sel_key])) + 1, "epochs_run": len(hist[sel_key]),
+        "selection_metric": sel_key, "clear_sky_coef": cs.coef.tolist(),
         "model": split_scores(pred_kw, y_kw[va], labels),
         "smart_persistence": split_scores(pers, y_kw[va], labels),
     }
     metrics["skill_vs_smart_persistence"] = {
         g: 1 - metrics["model"][g]["rmse_kw"] / metrics["smart_persistence"][g]["rmse_kw"] for g in metrics["model"]}
+    if quantile:
+        metrics["probabilistic"] = probabilistic_scores(pred_q, y_kw[va], pers, labels)
     np.savez_compressed(out_dir / "preds_val.npz", sample_ids=ds.sample_ids[va], target=y_kw[va], pred=pred_kw,
-                        persistence=pers, day=day_str[va], clear_day=labels)
+                        persistence=pers, day=day_str[va], clear_day=labels, quantile_levels=np.array(QUANTILES),
+                        **extra)
     (out_dir / "history.json").write_text(json.dumps(hist, indent=2))
     (out_dir / "metrics.json").write_text(json.dumps(metrics, indent=2))
     return metrics
@@ -196,7 +257,7 @@ def main(a):
     cfg = {"seed": a.seed, "lr": a.lr, "weight_decay": 1e-4, "batch_size": a.batch_size, "max_epochs": a.max_epochs,
            "patience": a.patience, "image_features": 64, "hidden_size": 64, "min_clear_kw": 1.0, "cnn_bf16": not a.fp32_cnn,
            "schedule": a.schedule, "clip": a.clip, "ema_decay": a.ema_decay, "pool": a.pool, "input": a.input,
-           "label": a.label}
+           "label": a.label, "head": a.head, "quantiles": QUANTILES if a.head == "quantile" else None}
     out_root = Path(a.out) / a.target / f"seed{a.seed}"
     out_root.mkdir(parents=True, exist_ok=True)
     log_f = open(out_root / "train.log", "a", encoding="utf-8")
@@ -245,6 +306,8 @@ if __name__ == "__main__":
     p.add_argument("--target", choices=["kw", "csi"], required=True)
     p.add_argument("--input", choices=["pv", "csi"], default="pv", help="history input: PV/30 or clear-sky index K")
     p.add_argument("--label", default="", help="free-text experiment label stored in config.json")
+    p.add_argument("--head", choices=["point", "quantile"], default="point",
+                   help="point (MSE) or non-crossing quantile head (pinball); quantile selects on val CRPS in kW")
     p.add_argument("--fold-ids", type=int, nargs="+", default=[0, 1, 2, 3, 4])
     p.add_argument("--seed", type=int, default=42)
     p.add_argument("--batch-size", type=int, default=128)

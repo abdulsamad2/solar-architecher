@@ -53,6 +53,37 @@ def crps_from_quantiles(pred_q, obs, quantiles: Sequence[float]) -> np.ndarray:
     return 2 * np.maximum(q * err, (q - 1) * err).mean(-1)
 
 
+def quantile_function(pred_q, levels: Sequence[float], taus) -> np.ndarray:
+    """Piecewise-linear quantile function through (levels, pred_q), constant beyond the end levels.
+
+    pred_q [N, Q] (non-decreasing along Q) -> [N, len(taus)].
+    """
+    pred_q = np.asarray(pred_q, float)
+    levels = np.asarray(levels, float)
+    taus = np.clip(np.asarray(taus, float), levels[0], levels[-1])
+    j = np.clip(np.searchsorted(levels, taus, side="right") - 1, 0, len(levels) - 2)
+    w = (taus - levels[j]) / (levels[j + 1] - levels[j])
+    return pred_q[:, j] * (1 - w) + pred_q[:, j + 1] * w
+
+
+def crps_quantile_interp(pred_q, obs, levels: Sequence[float], n_grid: int = 200) -> np.ndarray:
+    """CRPS of the distribution whose quantile function is ``quantile_function(pred_q, levels)``.
+
+    CRPS = 2 * int_0^1 pinball_tau(y, Q(tau)) dtau, by the midpoint rule on ``n_grid`` levels.
+    A point forecast (all quantiles equal) gives exactly |y - x|, so deterministic models are scored on
+    the same scale. Tails beyond the outermost levels are held constant (a documented approximation).
+    """
+    taus = (np.arange(n_grid) + 0.5) / n_grid
+    qf = quantile_function(pred_q, levels, taus)
+    err = np.asarray(obs, float)[:, None] - qf
+    return 2 * np.maximum(taus * err, (taus - 1) * err).mean(axis=1)
+
+
+def quantile_reliability(pred_q, obs) -> np.ndarray:
+    """Observed frequency of y <= Q_tau for each predicted level (ideal: equals tau)."""
+    return (np.asarray(obs, float)[:, None] <= np.asarray(pred_q, float)).mean(axis=0)
+
+
 def interval_coverage(lower, upper, obs) -> float:
     obs = np.asarray(obs)
     return float(np.mean((obs >= np.asarray(lower)) & (obs <= np.asarray(upper))))
