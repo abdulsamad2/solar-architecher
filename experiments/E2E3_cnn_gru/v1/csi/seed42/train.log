@@ -1,0 +1,7 @@
+[csi] fold 0: val ['2017-03-09', '2017-09-12']
+  epoch   1  train loss 0.03872  val RMSE 2.558 kW  *  (113s)
+  epoch   2  train loss 0.02664  val RMSE 2.115 kW  *  (113s)
+  epoch   3  train loss 0.02288  val RMSE 2.343 kW  (113s)
+  epoch   4  train loss 0.02049  val RMSE 2.715 kW  (113s)
+  epoch   5  train loss 0.01846  val RMSE 2.704 kW  (113s)
+  epoch   6  train loss 0.01680  val RMSE 2.702 kW  (114s)

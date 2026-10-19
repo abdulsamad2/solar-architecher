@@ -1,0 +1,18 @@
+{
+  "seed": 42,
+  "lr": 0.0003,
+  "weight_decay": 0.0001,
+  "batch_size": 128,
+  "max_epochs": 50,
+  "patience": 10,
+  "image_features": 64,
+  "hidden_size": 64,
+  "min_clear_kw": 1.0,
+  "amp": true,
+  "git_commit": "0781e4cc764fd52d8d16828d20ded77a9218362a",
+  "src_dirty": false,
+  "target": "csi",
+  "manifest": "data/manifests/forecast_tol30_v2.npz",
+  "folds": "data/manifests/folds_blocked5_v1.json",
+  "folds_sha256": "ad4ba6a27a2f0e20b722ee2197a95433a19942de833dd5c9aae180fd915a239a"
+}

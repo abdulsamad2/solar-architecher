@@ -114,6 +114,53 @@ The epoch is one full pass, and val loss is the exact fold MSE. Output: experime
 - **Gate 0 judgement:** the pipeline reproduces the published benchmark closely enough to proceed. The remaining deviations are listed above.
 - **Finding to carry forward:** SUNSET is far worse than persistence on sunny days, in both the original and the port.
 
+## Clear-sky PV anchor v1 (src/clear_sky.py, ClearSkyPV)
+Pipeline: Ineichen clear-sky irradiance → Hay-Davies POA (tilt 22.5°, az 195°) → physical IAM on the beam component → P_clear = scale(doy) · POA_eff.
+- `scale(doy) = a + b·cos + c·sin` (annual harmonic). Fitted on training days only: the per-day median of PV/POA (POA ≥ 300 W/m²), iteratively dropping days > 8% below the envelope.
+- **Fallback:** a constant scale when training covers fewer than 10 calendar months. The fit raises an error if the scale is not positive.
+- **Timestamp audit (dev only):** on 200 clear dev days, the best PV vs clear-sky alignment is a **0 min shift**, in both DST and standard-time months. Naive-local → America/Los_Angeles localisation produced no NaT.
+- **Constant-scale v0, rejected:** clear-day K showed a seasonal drift from 1.01 (Feb) to 0.85 (Aug), consistent with missing cell temperature. The harmonic replaces it.
+- **Harmonic, fitted on the first 70% of dev days:** clear-day K by month is 0.97 to 1.04. Median clear-day K is 1.001 on fit days and 0.972 on later held-out days, a slow drift (soiling/degradation?) to watch.
+- **K distribution:** all dev records with P_clear ≥ 1 kW give median 0.986, 1st percentile 0.135, 99th percentile 1.50, and 6.6% above 1.2. Cloud enhancement and low-sun records; K is not clipped.
+- **K definition:** K = P / max(P_clear, 1 kW), which is invertible everywhere and is the prespecified dawn/dusk handling.
+- **Known limitation:** no temperature model, and the altitude (30 m) is assumed.
+
+## Temporally blocked dev folds (src/folds.py → data/manifests/folds_blocked5_v1.json, sha256 ad4ba6a2…)
+- **Folds:** 5 contiguous chronological blocks of 99 or 100 days, with a 1-calendar-day purge either side. The official test days are asserted absent.
+- **Day sky label** (dev stratification only, never an input): sunny ⇔ corr(PV, clear-sky POA) > 0.995 and mean |ΔPV| < 0.15 kW/min.
+  - It is scale-free, so nothing is fitted on validation days.
+  - It **matches the official labels on 20/20 test days**. 200 of 497 dev days are sunny.
+  - "Cloudy" in dev therefore means "not clear all day", which is broader than the official cloudy test days.
+
+| Fold | Validation span | Sunny val days | Val days after 2019-05-22 (camera hypothesis) |
+|---|---|---|---|
+| 0 | 2017-03-09 → 2017-09-12 | 38/100 | 0 |
+| 1 | 2017-09-13 → 2018-05-15 | 26/100 | 0 |
+| 2 | 2018-05-16 → 2018-09-21 | 47/99 | 0 |
+| 3 | 2018-09-22 → 2019-07-16 | 30/99 | 51 |
+| 4 | 2019-07-17 → 2019-10-26 | 59/99 | 99 |
+
+## E2/E3 pilot (src/train.py → experiments/E2E3_cnn_gru/v1)
+- **Model:** CNN-GRU (SmallSkyEncoder, 64 features, hidden 64) with a point head. Inputs are 16 chronological frames plus PV/30 history.
+- **Training:** AdamW at lr 3e-4 and weight decay 1e-4, max 50 epochs, patience 10, seed 42, bf16 autocast.
+- **Batch 128, not the roadmap's 16,** for GPU throughput; this is a starting value, not tuned.
+- **E2:** MSE on kW/30. **E3:** MSE on K, reconstructed with P_clear at the target time. Selection in both is val RMSE in kW.
+- **Reference:** smart persistence with the same fold-fitted anchor.
+
+## Phase 2.6 preprocessing audit on real data (tests/test_real_data_audit.py, `pytest -m realdata`)
+Run 2026-10-19 on forecast_tol30_v2 and folds_blocked5_v1: **7/7 passed** in 65 s.
+
+| Check | What is asserted | Result |
+|---|---|---|
+| Image readability | Referenced rows in range, shape 64×64×3 uint8. No blank (std < 1) or saturated (mean > 250) frame anywhere. | 0 bad of 363,375 images |
+| Time ordering and gap policy | Column 0 is the origin; frames strictly decreasing; each frame within ±30 s of t − j min; origins unique | pass |
+| Forecast leakage | Target after every history frame; target within ±30 s of t + 15 min | pass |
+| Day and split leakage | All frames and the target on the origin's day; no dev/test record mixing; test flags = official days. Folds: train/val/purge disjoint, every dev day has a role, no train day inside a val span, each day validated once. | pass |
+| Units | PV finite, in [0, 35) kW; targets finite and ≥ 0 | pass |
+| Clear-sky stability | Anchor fitted per fold on training days. P_clear finite and ≥ 0; K finite for every dev target; all 5 fits seasonal. | median K 0.99 to 1.01; p99 1.51 to 1.53; max ≈ 2.95; 0.11 to 0.13% of targets have K > 2 |
+| Determinism | Rebuilding the manifest and the folds reproduces both stored hashes | pass |
+
+Observation: a small tail of K up to ~3 exists; these are probably low-sun records where P_clear is floored at 1 kW. It is finite, so it is allowed, but it adds squared-error weight to E3's K loss. Check where these occur if E3 underperforms.
+
 ## Open items
-- Our dev folds must be temporally blocked (roadmap). SUNSET reproduction needs its shuffled day-block folds.
-- Clear-sky PV anchor: needs site coordinates and array geometry, read from `Relative_op_func.py`.
+- SUNSET reproduction keeps its own shuffled day-block folds; all E2+ experiments use the blocked folds above.
