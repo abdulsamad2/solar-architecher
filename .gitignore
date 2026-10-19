@@ -1,0 +1,15 @@
+.venv/
+__pycache__/
+.pytest_cache/
+*.pyc
+
+# data and run outputs are not versioned; manifests are reproducible from data/raw + code
+data/
+checkpoints/
+experiments/**/*.pt
+experiments/**/*.npz
+reference-skippd/
+
+# keep small run records (configs, metrics, histories, logs)
+!experiments/**/*.json
+!experiments/**/*.log

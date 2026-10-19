@@ -1,0 +1,55 @@
+{
+  "manifest": "data/manifests/forecast_tol30_v2.npz",
+  "dev": {
+    "official_csi_persistence": {
+      "overall": {
+        "n": 164362,
+        "rmse_kw": 2.3074891856641546,
+        "mae_kw": 0.9311296975838342
+      }
+    },
+    "naive_persistence": {
+      "overall": {
+        "n": 164362,
+        "rmse_kw": 2.4881847984495016,
+        "mae_kw": 1.4308793136394602
+      }
+    }
+  },
+  "test": {
+    "official_csi_persistence": {
+      "sunny": {
+        "n": 6638,
+        "rmse_kw": 0.4132943604273081,
+        "mae_kw": 0.2685239562303431
+      },
+      "cloudy": {
+        "n": 6628,
+        "rmse_kw": 5.127082473928994,
+        "mae_kw": 3.1473774867547464
+      },
+      "overall": {
+        "n": 13266,
+        "rmse_kw": 3.635801176079352,
+        "mae_kw": 1.7068656719182478
+      }
+    },
+    "naive_persistence": {
+      "sunny": {
+        "n": 6638,
+        "rmse_kw": 1.117050853965937,
+        "mae_kw": 0.954867273917897
+      },
+      "cloudy": {
+        "n": 6628,
+        "rmse_kw": 5.178896574178844,
+        "mae_kw": 3.3327069908079316
+      },
+      "overall": {
+        "n": 13266,
+        "rmse_kw": 3.744962957831675,
+        "mae_kw": 2.1428909165793737
+      }
+    }
+  }
+}

@@ -1,0 +1,149 @@
+device cuda; dev samples 164,362; test samples 13,266
+fold 1/10: train 147,926  val 16,436
+  epoch   1  train RMSE 4.805  val RMSE 2.840  *  (9.3s)
+  epoch   2  train RMSE 2.889  val RMSE 2.479  *  (9.0s)
+  epoch   3  train RMSE 2.638  val RMSE 2.450  *  (9.0s)
+  epoch   4  train RMSE 2.512  val RMSE 2.450  (9.0s)
+  epoch   5  train RMSE 2.417  val RMSE 2.424  *  (9.2s)
+  epoch   6  train RMSE 2.355  val RMSE 2.430  (9.1s)
+  epoch   7  train RMSE 2.306  val RMSE 2.487  (9.1s)
+  epoch   8  train RMSE 2.263  val RMSE 2.531  (9.1s)
+  epoch   9  train RMSE 2.228  val RMSE 2.500  (9.1s)
+  epoch  10  train RMSE 2.196  val RMSE 2.563  (9.1s)
+fold 1: best epoch 5  val RMSE 2.424
+fold 2/10: train 147,926  val 16,436
+  epoch   1  train RMSE 4.675  val RMSE 2.243  *  (10.3s)
+  epoch   2  train RMSE 2.848  val RMSE 1.796  *  (9.1s)
+  epoch   3  train RMSE 2.630  val RMSE 1.759  *  (9.2s)
+  epoch   4  train RMSE 2.521  val RMSE 1.717  *  (9.2s)
+  epoch   5  train RMSE 2.442  val RMSE 1.750  (9.1s)
+  epoch   6  train RMSE 2.386  val RMSE 1.762  (9.1s)
+  epoch   7  train RMSE 2.340  val RMSE 1.740  (9.1s)
+  epoch   8  train RMSE 2.307  val RMSE 1.783  (9.2s)
+  epoch   9  train RMSE 2.275  val RMSE 1.925  (9.2s)
+fold 2: best epoch 4  val RMSE 1.717
+fold 3/10: train 147,926  val 16,436
+  epoch   1  train RMSE 5.488  val RMSE 2.479  *  (9.7s)
+  epoch   2  train RMSE 2.956  val RMSE 2.341  *  (9.3s)
+  epoch   3  train RMSE 2.702  val RMSE 2.192  *  (9.2s)
+  epoch   4  train RMSE 2.559  val RMSE 2.149  *  (9.3s)
+  epoch   5  train RMSE 2.468  val RMSE 2.129  *  (9.3s)
+  epoch   6  train RMSE 2.398  val RMSE 2.176  (9.1s)
+  epoch   7  train RMSE 2.345  val RMSE 2.171  (9.1s)
+  epoch   8  train RMSE 2.302  val RMSE 2.198  (9.1s)
+  epoch   9  train RMSE 2.264  val RMSE 2.232  (9.1s)
+  epoch  10  train RMSE 2.238  val RMSE 2.236  (9.1s)
+fold 3: best epoch 5  val RMSE 2.129
+fold 4/10: train 147,926  val 16,436
+  epoch   1  train RMSE 4.767  val RMSE 2.410  *  (9.6s)
+  epoch   2  train RMSE 2.830  val RMSE 2.181  *  (9.3s)
+  epoch   3  train RMSE 2.614  val RMSE 2.145  *  (9.3s)
+  epoch   4  train RMSE 2.492  val RMSE 2.153  (9.2s)
+  epoch   5  train RMSE 2.411  val RMSE 2.148  (9.2s)
+  epoch   6  train RMSE 2.358  val RMSE 2.284  (9.3s)
+  epoch   7  train RMSE 2.317  val RMSE 2.241  (9.3s)
+  epoch   8  train RMSE 2.283  val RMSE 2.261  (9.2s)
+fold 4: best epoch 3  val RMSE 2.145
+fold 5/10: train 147,925  val 16,437
+  epoch   1  train RMSE 4.871  val RMSE 2.516  *  (9.7s)
+  epoch   2  train RMSE 2.924  val RMSE 1.858  *  (9.2s)
+  epoch   3  train RMSE 2.665  val RMSE 1.854  *  (9.2s)
+  epoch   4  train RMSE 2.548  val RMSE 1.855  (9.2s)
+  epoch   5  train RMSE 2.451  val RMSE 1.850  *  (9.2s)
+  epoch   6  train RMSE 2.401  val RMSE 1.958  (9.2s)
+  epoch   7  train RMSE 2.356  val RMSE 1.992  (9.3s)
+  epoch   8  train RMSE 2.316  val RMSE 1.892  (9.2s)
+  epoch   9  train RMSE 2.279  val RMSE 1.973  (9.3s)
+  epoch  10  train RMSE 2.252  val RMSE 2.095  (9.3s)
+fold 5: best epoch 5  val RMSE 1.850
+fold 6/10: train 147,926  val 16,436
+  epoch   1  train RMSE 4.810  val RMSE 2.183  *  (9.7s)
+  epoch   2  train RMSE 2.897  val RMSE 1.760  *  (9.3s)
+  epoch   3  train RMSE 2.661  val RMSE 1.717  *  (9.3s)
+  epoch   4  train RMSE 2.543  val RMSE 1.707  *  (9.3s)
+  epoch   5  train RMSE 2.460  val RMSE 1.710  (9.2s)
+  epoch   6  train RMSE 2.399  val RMSE 1.748  (9.2s)
+  epoch   7  train RMSE 2.353  val RMSE 1.857  (9.2s)
+  epoch   8  train RMSE 2.313  val RMSE 1.721  (9.2s)
+  epoch   9  train RMSE 2.276  val RMSE 1.945  (9.2s)
+fold 6: best epoch 4  val RMSE 1.707
+fold 7/10: train 147,926  val 16,436
+  epoch   1  train RMSE 5.011  val RMSE 2.535  *  (9.8s)
+  epoch   2  train RMSE 2.844  val RMSE 2.417  *  (9.3s)
+  epoch   3  train RMSE 2.600  val RMSE 2.387  *  (9.3s)
+  epoch   4  train RMSE 2.469  val RMSE 2.392  (9.3s)
+  epoch   5  train RMSE 2.381  val RMSE 2.403  (9.3s)
+  epoch   6  train RMSE 2.319  val RMSE 2.402  (9.3s)
+  epoch   7  train RMSE 2.278  val RMSE 2.453  (9.2s)
+  epoch   8  train RMSE 2.241  val RMSE 2.437  (9.2s)
+fold 7: best epoch 3  val RMSE 2.387
+fold 8/10: train 147,926  val 16,436
+  epoch   1  train RMSE 5.190  val RMSE 2.551  *  (9.6s)
+  epoch   2  train RMSE 2.930  val RMSE 2.337  *  (9.2s)
+  epoch   3  train RMSE 2.669  val RMSE 2.249  *  (9.2s)
+  epoch   4  train RMSE 2.534  val RMSE 2.221  *  (9.2s)
+  epoch   5  train RMSE 2.445  val RMSE 2.201  *  (9.3s)
+  epoch   6  train RMSE 2.368  val RMSE 2.202  (9.2s)
+  epoch   7  train RMSE 2.332  val RMSE 2.224  (9.3s)
+  epoch   8  train RMSE 2.287  val RMSE 2.274  (9.2s)
+  epoch   9  train RMSE 2.248  val RMSE 2.283  (9.2s)
+  epoch  10  train RMSE 2.218  val RMSE 2.295  (9.3s)
+fold 8: best epoch 5  val RMSE 2.201
+fold 9/10: train 147,926  val 16,436
+  epoch   1  train RMSE 5.144  val RMSE 2.306  *  (9.7s)
+  epoch   2  train RMSE 2.942  val RMSE 1.951  *  (9.2s)
+  epoch   3  train RMSE 2.679  val RMSE 1.868  *  (9.2s)
+  epoch   4  train RMSE 2.549  val RMSE 1.875  (9.1s)
+  epoch   5  train RMSE 2.459  val RMSE 1.906  (9.1s)
+  epoch   6  train RMSE 2.391  val RMSE 1.898  (9.1s)
+  epoch   7  train RMSE 2.341  val RMSE 1.900  (9.1s)
+  epoch   8  train RMSE 2.315  val RMSE 1.963  (9.2s)
+fold 9: best epoch 3  val RMSE 1.868
+fold 10/10: train 147,925  val 16,437
+  epoch   1  train RMSE 4.926  val RMSE 2.347  *  (9.7s)
+  epoch   2  train RMSE 2.880  val RMSE 1.990  *  (9.3s)
+  epoch   3  train RMSE 2.635  val RMSE 1.970  *  (9.3s)
+  epoch   4  train RMSE 2.511  val RMSE 1.923  *  (9.2s)
+  epoch   5  train RMSE 2.431  val RMSE 1.946  (9.2s)
+  epoch   6  train RMSE 2.374  val RMSE 1.949  (9.2s)
+  epoch   7  train RMSE 2.331  val RMSE 1.990  (9.1s)
+  epoch   8  train RMSE 2.289  val RMSE 1.984  (9.1s)
+  epoch   9  train RMSE 2.255  val RMSE 2.079  (9.2s)
+fold 10: best epoch 4  val RMSE 1.923
+{
+  "test_ensemble": {
+    "sunny": {
+      "n": 6638,
+      "rmse_kw": 0.5943506466749111,
+      "mae_kw": 0.4752673546701164
+    },
+    "cloudy": {
+      "n": 6628,
+      "rmse_kw": 4.268777281982912,
+      "mae_kw": 2.9650708558702155
+    },
+    "overall": {
+      "n": 13266,
+      "rmse_kw": 3.0464932501274933,
+      "mae_kw": 1.719230689959899
+    }
+  },
+  "mean_val_rmse": 2.035026299600312,
+  "per_fold_test_rmse": [
+    3.094894957633551,
+    3.069952138464155,
+    3.0666489091286944,
+    3.1094382138998737,
+    3.0925750319308625,
+    3.0660826281150504,
+    3.1223924219774353,
+    3.066567807929381,
+    3.1323535394358144,
+    3.0863646023067046
+  ],
+  "forecast_skill_vs_csi_persistence": {
+    "sunny": -0.4380807085303742,
+    "cloudy": 0.16740616058168156,
+    "overall": 0.1620847503513203
+  }
+}

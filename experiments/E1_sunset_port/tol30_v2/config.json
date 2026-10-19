@@ -1,0 +1,10 @@
+{
+  "h5": "data/raw/2017_2019_images_pv_processed.hdf5",
+  "manifest": "data/manifests/forecast_tol30_v2.npz",
+  "num_fold": 10,
+  "subset": null,
+  "lr": 3e-06,
+  "batch_size": 256,
+  "max_epochs": 200,
+  "patience": 5
+}

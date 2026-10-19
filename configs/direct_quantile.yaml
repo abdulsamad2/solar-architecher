@@ -1,0 +1,30 @@
+# Template only: no training CLI consumes this yet.
+experiment:
+  name: direct_quantile
+  seed: 42
+
+data:
+  manifest: data/manifests/canonical_v0.csv
+  history_minutes: 15
+  horizons_minutes: [1, 5, 10, 15]
+  image_size: 128
+  primary_horizon: 15
+
+model:
+  encoder: small_cnn_gru
+  hidden_size: 64
+  output: noncrossing_quantiles
+  quantiles: [0.05, 0.10, 0.20, 0.30, 0.50, 0.70, 0.80, 0.90, 0.95]
+
+training:
+  optimizer: adamw
+  learning_rate: 0.0003
+  weight_decay: 0.0001
+  batch_size: 16
+  max_epochs: 50
+  patience: 10
+
+evaluation:
+  primary_metric: cloudy_crps_kw
+  selection_split: blocked_development
+  official_test_locked: true

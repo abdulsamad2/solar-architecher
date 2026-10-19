@@ -1,0 +1,12 @@
+# Install torch first with CUDA wheels:
+#   pip install torch torchvision --index-url https://download.pytorch.org/whl/cu128
+torch
+torchvision
+numpy
+pandas
+pillow
+pyyaml
+pytest
+pvlib
+h5py
+matplotlib
