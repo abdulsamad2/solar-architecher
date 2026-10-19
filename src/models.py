@@ -67,6 +67,21 @@ class NonCrossingQuantileHead(nn.Module):
         base, inc = raw[..., :1], F.softplus(raw[..., 1:])
         return torch.cat([base, base + torch.cumsum(inc, dim=-1)], dim=-1)
 
+    @torch.no_grad()
+    def init_from_targets(self, y_train: torch.Tensor, weight_scale: float = 0.01, min_gap: float = 1e-4) -> None:
+        """Start at the unconditional climatology of the TRAINING targets.
+
+        Without this, softplus(0) ~ 0.69 per increment gives an initial median of ~2.8 target units
+        (84 kW for kW/30 targets) and a 90% interval ~5.5 units wide.
+        """
+        emp = torch.quantile(y_train.float(), self.quantiles.to(y_train.device)).to(self.fc.bias)
+        gaps = torch.clamp(emp[1:] - emp[:-1], min=min_gap)
+        inv_softplus = gaps + torch.log(-torch.expm1(-gaps))
+        bias = self.fc.bias.view(self.n_horizons, self.n_q)
+        bias[:, 0] = emp[0]
+        bias[:, 1:] = inv_softplus
+        self.fc.weight.mul_(weight_scale)
+
 
 class EventSeverityHead(nn.Module):
     """Scaffold: p(arrival bin | x) over n_bins + 'no event', and a Normal severity per bin.

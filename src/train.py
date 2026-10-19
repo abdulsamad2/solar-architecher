@@ -169,6 +169,8 @@ def run_fold(ds, data, fold, target_kind, cfg, out_dir: Path, log) -> dict:
     torch.manual_seed(cfg["seed"])
     model = build_model(cfg).to(device)
     model.encoder.cnn_bf16 = cfg["cnn_bf16"]
+    if quantile:  # same train-only procedure for every target representation
+        model.head.init_from_targets(y_t[torch.as_tensor(tr, device=device)])
     opt = torch.optim.AdamW(model.parameters(), lr=cfg["lr"], weight_decay=cfg["weight_decay"])
     steps_per_epoch = -(-len(tr) // cfg["batch_size"])
     sched = (torch.optim.lr_scheduler.CosineAnnealingLR(opt, T_max=cfg["max_epochs"] * steps_per_epoch)

@@ -276,6 +276,11 @@ Pooled validation RMSE in kW over 164,362 identical samples. Δ vs E2 is the pai
   - median MAE and mean-based RMSE;
   - CRPS skill vs smart persistence as a point mass.
 - **Scope:** no official test-set access. Persistence-residual forecasting is a separate follow-up, not part of E4.
+- **Amendment 2026-10-20, before any E4 training run (bug fix, not a tuning change):**
+  - **Problem:** the GPU smoke test gave 66.7 kW RMSE. The non-crossing head's softplus increments start at about 0.69 each, so the initial median was about 84 kW and the 90% width about 167 kW (kW/30 units).
+  - **Fix:** `NonCrossingQuantileHead.init_from_targets` sets the head to the empirical quantiles of the fold's **training** targets (base = Q.05, increments = empirical gaps, weights × 0.01). Same procedure for E4-A and E4-B, each in its own target units.
+  - **After the fix (smoke):** a sane start at climatology, with coverage near nominal.
+  - **Test:** `test_quantile_head_initialises_at_training_climatology`.
 
 Comparison tool: `src/compare.py`. It asserts identical validation samples across models. It reports per-fold and pooled RMSE (overall / clear / cloudy) and 95% CIs for paired RMSE differences, from a day-block bootstrap stratified by clear/cloudy day. Validation folds only; the official test set is not read.
 

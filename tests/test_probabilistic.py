@@ -26,6 +26,20 @@ def test_calibrated_gaussian_forecast_scores_as_expected():
     assert set(s) == {"overall", "sunny", "cloudy"} and s["sunny"]["n"] + s["cloudy"]["n"] == n
 
 
+def test_quantile_head_initialises_at_training_climatology():
+    import torch
+    from src.models import NonCrossingQuantileHead
+
+    torch.manual_seed(0)
+    y = torch.rand(10000) ** 2  # skewed target in [0, 1]
+    head = NonCrossingQuantileHead(64, 1, QUANTILES)
+    head.init_from_targets(y)
+    q = head(torch.randn(256, 64))[:, 0, :].detach()
+    emp = torch.quantile(y, torch.tensor(QUANTILES))
+    assert torch.allclose(q.mean(0), emp, atol=0.02)
+    assert (q[:, 1:] >= q[:, :-1]).all()
+
+
 def test_overconfident_forecast_undercovers():
     rng = np.random.default_rng(1)
     mu = rng.uniform(5, 25, 5000)

@@ -125,3 +125,19 @@ Negative = first model better. Fold wins (first model lower RMSE):
 | 456 | -0.070 [-0.107, -0.030] | -0.248 [-0.299, -0.195] | -0.047 [-0.096, +0.006] | 3/5, 5/5, 3/5 |
 
 **Closing rule applied:** 0/3 seeds show a cloudy improvement with CI below 0 (required ≥ 2); 0/3 seeds show a sunny regression with CI above 0 (allowed < 2). **Verdict: NO DETECTABLE BENEFIT.**
+### Gate 1: CLOSED (2026-10-20)
+**Verdict under the pre-committed rule: NO DETECTABLE BENEFIT** from clear-sky normalisation on the primary criterion (cloudy-day error).
+- In 0/3 seeds does the cloudy-day E3b − E2 CI lie below zero. Seed-mean cloudy difference: −0.020 ± 0.034 kW.
+- No sunny-day regression in any seed.
+
+**Secondary observations, not part of the criterion and not claimed as findings:**
+- **Sunny days:** E3b had lower RMSE than E2 in 2/3 seeds with CIs below 0 (seed 123 −0.123, seed 456 −0.248); seed 42 was neutral (+0.001).
+- **Overall:** the same 2/3 pattern (−0.041, −0.070; seed 42 +0.013).
+- **Where the instability is:** E2's sunny RMSE varies widely across seeds (0.726 to 0.824; per fold up to 1.07). E3b's spread across seeds is also large (0.577 to 0.727). Both stay well above persistence (0.390).
+- **Interpretation:** the seed-to-seed spread is of the same order as the E3b − E2 differences, so these do not support an accuracy claim.
+- **Consequence:** the "sunny weakness" of the CNN-GRU is partly an instability across training runs, which strengthens the case for the persistence-residual follow-up.
+
+**Decision (unchanged from the seed-42 recommendation):**
+- No accuracy claim for normalisation.
+- Target-only normalisation (E3) is excluded.
+- Both representations go into E4: E4-A in kW, E4-B in K with K inputs.
