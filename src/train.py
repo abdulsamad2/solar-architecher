@@ -23,6 +23,7 @@ import torch.nn.functional as F
 
 from src.baselines import split_scores
 from src.clear_sky import ClearSkyPV, clear_sky_index, from_clear_sky_index, smart_persistence
+from src.folds import calibration_split
 from src.metrics import (crps_quantile_interp, interval_coverage, interval_width, pinball_loss, quantile_function,
                          quantile_reliability)
 from src.models import Forecaster, NonCrossingQuantileHead, PointHead, SmallSkyEncoder
@@ -130,10 +131,24 @@ def run_fold(ds, data, fold, target_kind, cfg, out_dir: Path, log) -> dict:
     device = data.pv.device
     day_str = ds.day.astype(str)
     train_days, val_days = set(fold["train_days"]), set(fold["val_days"])
+    cal_days, cal_purged = set(), set()
+    if cfg.get("calib_holdout"):
+        # Gate 2 calibration: hold a calibration-day set out of the fold's training days (never fitted on)
+        fit_l, cal_l, pur_l = calibration_split(fold["train_days"])
+        cal_days, cal_purged = set(cal_l), set(pur_l)
+        train_days = set(fit_l)
+        # STOP conditions: any overlap between fit / calibration / validation / purged days
+        assert not (train_days & cal_days), "STOP: fit and calibration days overlap"
+        assert not (train_days & val_days) and not (cal_days & val_days), "STOP: overlap with validation days"
+        assert not (cal_purged & (train_days | cal_days | val_days)), "STOP: purged days reused"
+        (out_dir / "calibration_split.json").write_text(json.dumps(
+            {"fit_days": sorted(train_days), "cal_days": sorted(cal_days), "purged_days": sorted(cal_purged)}, indent=1))
     tr = np.flatnonzero(np.isin(day_str, list(train_days)))
     va = np.flatnonzero(np.isin(day_str, list(val_days)))
+    ca = np.flatnonzero(np.isin(day_str, list(cal_days)))
+    assert not (set(tr) & set(ca)) and not (set(tr) & set(va)) and not (set(ca) & set(va)), "STOP: sample overlap"
 
-    # clear-sky anchor fitted on training-day records only
+    # clear-sky anchor fitted on training-day records only (fit days only in calibration mode)
     rec_times = ds.record_times
     rec_days = rec_times.astype("datetime64[D]").astype(str)
     train_rec = np.isin(rec_days, list(train_days))
@@ -247,9 +262,29 @@ def run_fold(ds, data, fold, target_kind, cfg, out_dir: Path, log) -> dict:
         g: 1 - metrics["model"][g]["rmse_kw"] / metrics["smart_persistence"][g]["rmse_kw"] for g in metrics["model"]}
     if quantile:
         metrics["probabilistic"] = probabilistic_scores(pred_q, y_kw[va], pers, labels)
+    def meta(idx):  # per-sample context saved alongside predictions
+        return {"origin_time_us": ds.origin_time[idx].astype("datetime64[us]").astype(np.int64),
+                "target_time_us": ds.target_time[idx].astype("datetime64[us]").astype(np.int64),
+                "pclear_target_kw": pclear_tgt[idx], "pclear_now_kw": pclear_now[idx],
+                "pv_now_kw": ds.pv.numpy()[ds.hist_rows[idx, -1]].astype(float),
+                "fold": np.full(len(idx), fold["fold"], np.int8)}
+
     np.savez_compressed(out_dir / "preds_val.npz", sample_ids=ds.sample_ids[va], target=y_kw[va], pred=pred_kw,
                         persistence=pers, day=day_str[va], clear_day=labels, quantile_levels=np.array(QUANTILES),
-                        **extra)
+                        **extra, **meta(va))
+    if len(ca):
+        # calibration-day predictions from the SAME checkpoint (trained on fit days only)
+        ca_t = torch.as_tensor(ca, device=device)
+        cal_out = to_kw(predict_raw(model, data, ca_t).cpu().numpy().astype(float), ca)
+        cal_pers = smart_persistence(ds.pv.numpy()[ds.hist_rows[ca, -1]].astype(float), pclear_now[ca],
+                                     pclear_tgt[ca], cfg["min_clear_kw"])
+        cal_extra = {"pred_q": cal_out, "pred": cal_out[:, QUANTILES.index(0.5)]} if quantile else {"pred": cal_out}
+        np.savez_compressed(out_dir / "preds_cal.npz", sample_ids=ds.sample_ids[ca], target=y_kw[ca],
+                            persistence=cal_pers, day=day_str[ca], quantile_levels=np.array(QUANTILES),
+                            **cal_extra, **meta(ca))
+        metrics["calibration_split"] = {"n_fit_samples": int(len(tr)), "n_cal_samples": int(len(ca)),
+                                        "n_val_samples": int(len(va)), "n_fit_days": len(train_days),
+                                        "n_cal_days": len(cal_days), "n_purged_days": len(cal_purged)}
     (out_dir / "history.json").write_text(json.dumps(hist, indent=2))
     (out_dir / "metrics.json").write_text(json.dumps(metrics, indent=2))
     return metrics
@@ -259,7 +294,8 @@ def main(a):
     cfg = {"seed": a.seed, "lr": a.lr, "weight_decay": 1e-4, "batch_size": a.batch_size, "max_epochs": a.max_epochs,
            "patience": a.patience, "image_features": 64, "hidden_size": 64, "min_clear_kw": 1.0, "cnn_bf16": not a.fp32_cnn,
            "schedule": a.schedule, "clip": a.clip, "ema_decay": a.ema_decay, "pool": a.pool, "input": a.input,
-           "label": a.label, "head": a.head, "quantiles": QUANTILES if a.head == "quantile" else None}
+           "label": a.label, "head": a.head, "quantiles": QUANTILES if a.head == "quantile" else None,
+           "calib_holdout": a.calib_holdout}
     out_root = Path(a.out) / a.target / f"seed{a.seed}"
     out_root.mkdir(parents=True, exist_ok=True)
     log_f = open(out_root / "train.log", "a", encoding="utf-8")
@@ -308,6 +344,8 @@ if __name__ == "__main__":
     p.add_argument("--target", choices=["kw", "csi"], required=True)
     p.add_argument("--input", choices=["pv", "csi"], default="pv", help="history input: PV/30 or clear-sky index K")
     p.add_argument("--label", default="", help="free-text experiment label stored in config.json")
+    p.add_argument("--calib-holdout", action="store_true",
+                   help="hold ~20%% of training days out as calibration days (src.folds.calibration_split)")
     p.add_argument("--head", choices=["point", "quantile"], default="point",
                    help="point (MSE) or non-crossing quantile head (pinball); quantile selects on val CRPS in kW")
     p.add_argument("--fold-ids", type=int, nargs="+", default=[0, 1, 2, 3, 4])

@@ -52,6 +52,27 @@ def blocked_folds(days, n_folds: int = 5, purge_days: int = 1) -> list[dict]:
     return folds
 
 
+def calibration_split(train_days, block_len: int = 10, every: int = 5, offset: int = 2, purge_days: int = 1):
+    """Split a fold's training days into model-fit days and a calibration-day set (Gate 2 calibration).
+
+    Training days (sorted) are cut into consecutive blocks of ``block_len`` training days; block k is a
+    calibration block iff k % every == offset (~20% of days, spread over all seasons, contiguous within
+    a block). Fit days within ``purge_days`` calendar days of any calibration day are dropped.
+    Returns (fit_days, cal_days, purged_days) as sorted lists of the input type.
+    """
+    days = sorted(train_days)
+    as_date = [d if isinstance(d, dt.date) else dt.date.fromisoformat(str(d)) for d in days]
+    cal_idx = {i for i in range(len(days)) if (i // block_len) % every == offset}
+    cal_dates = [as_date[i] for i in sorted(cal_idx)]
+    fit, purged = [], []
+    for i, (d, dd) in enumerate(zip(days, as_date)):
+        if i in cal_idx:
+            continue
+        near = any(abs((dd - c).days) <= purge_days for c in cal_dates)
+        (purged if near else fit).append(d)
+    return fit, [days[i] for i in sorted(cal_idx)], purged
+
+
 def build(raw_dir: str | Path, out_path: str | Path, n_folds: int = 5, purge_days: int = 1) -> dict:
     raw_dir = Path(raw_dir)
     report = {}

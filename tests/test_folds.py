@@ -1,6 +1,17 @@
 import datetime as dt
 
-from src.folds import blocked_folds
+from src.folds import blocked_folds, calibration_split
+
+
+def test_calibration_split_is_disjoint_purged_and_spread():
+    days = [str(dt.date(2018, 1, 1) + dt.timedelta(days=k)) for k in range(400) if k % 3 != 1]
+    fit, cal, purged = calibration_split(days)
+    assert not (set(fit) & set(cal)) and not (set(fit) & set(purged)) and not (set(cal) & set(purged))
+    assert set(fit) | set(cal) | set(purged) == set(days)
+    assert 0.15 < len(cal) / len(days) < 0.25
+    cal_d = [dt.date.fromisoformat(c) for c in cal]
+    assert all(min(abs((dt.date.fromisoformat(f) - c).days) for c in cal_d) > 1 for f in fit)
+    assert len({c.month for c in cal_d}) >= 8  # spread across seasons
 
 
 def test_blocked_folds_are_contiguous_disjoint_and_purged():
