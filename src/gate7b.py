@@ -33,11 +33,19 @@ def raw_features(direct: dict, residual: dict, tau: float) -> dict:
     return {"g": g, "s_D": qd[:, i90] - qd[:, i10], "s_R": qr[:, i90] - qr[:, i10], "d": np.abs(mean_d - mean_r)}
 
 
+SIGNED = {"inflow"}  # E8 G5: signed features are standardised without a log transform
+
+
 def transform(raw: dict, names) -> np.ndarray:
     cols = []
     for n in names:
         x = raw[n]
-        cols.append(np.log(np.clip(x, 1e-4, 1 - 1e-4) / (1 - np.clip(x, 1e-4, 1 - 1e-4))) if n == "g" else np.log(np.maximum(x, 0) + 1e-3))
+        if n == "g":
+            cols.append(np.log(np.clip(x, 1e-4, 1 - 1e-4) / (1 - np.clip(x, 1e-4, 1 - 1e-4))))
+        elif n in SIGNED:
+            cols.append(np.asarray(x, float))
+        else:
+            cols.append(np.log(np.maximum(x, 0) + 1e-3))
     return np.stack(cols, 1)
 
 
