@@ -75,3 +75,13 @@ Per seed × fold, in `experiments/E4_cal2/v1/`:
 - the chronological update trace: issue time, observation time, α_t or q̂_t, and the miss indicator.
 
 The code version (git commit) is stored with the results.
+
+## Amendment 1 (2026-10-20, before any validation outcome was computed)
+- **What changed:** ACI's α_t is now **clamped to [0, 1] after every update** (anti-windup).
+- **Why:** a unit test with a synthetic 3× noise shift showed the problem with the original rule. Under the pre-registered level clipping, q̂ cannot exceed the largest calibration score, yet unclamped α_t kept integrating (to −29). That "integrator windup" would delay recovery after the shift ends.
+- **Behaviour now:**
+  - ACI remains bounded by the calibration score range and still improves on fixed CQR under shift.
+  - It returns to nominal coverage after a shift reverses.
+  - The rolling-window method, which absorbs new scores, recovers nominal coverage under large shifts.
+  - All of this is covered by tests (`tests/test_cal2.py`).
+- **Unchanged:** grids, selection, metrics and decision rule.
