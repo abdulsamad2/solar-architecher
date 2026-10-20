@@ -26,7 +26,8 @@ from src.clear_sky import ClearSkyPV, clear_sky_index, from_clear_sky_index, sma
 from src.folds import calibration_split
 from src.metrics import (crps_quantile_interp, interval_coverage, interval_width, pinball_loss, quantile_function,
                          quantile_reliability)
-from src.models import Forecaster, NonCrossingQuantileHead, PointHead, SmallSkyEncoder
+from src.events import event_labels, future_rows
+from src.models import EventMixtureHead, Forecaster, NonCrossingQuantileHead, PointHead, SmallSkyEncoder
 from src.skippd import SkippdForecastDataset
 
 PV_SCALE = 30.0  # kW, ~nameplate; input/target scaling only
@@ -60,9 +61,21 @@ class GpuSeq:
 def build_model(cfg) -> torch.nn.Module:
     enc = SmallSkyEncoder(image_features=cfg["image_features"], hidden_size=cfg["hidden_size"],
                           pool=cfg.get("pool", "avg"))
-    if cfg.get("head", "point") == "quantile":
+    head = cfg.get("head", "point")
+    if head == "quantile":
         return Forecaster(enc, NonCrossingQuantileHead(cfg["hidden_size"], 1, QUANTILES))
+    if head == "quantile_mlp":  # Phase 6 capacity-matched direct-quantile comparator (~ EventMixtureHead size)
+        mlp = torch.nn.Sequential(torch.nn.Linear(cfg["hidden_size"], 24), torch.nn.ReLU(),
+                                  NonCrossingQuantileHead(24, 1, QUANTILES))
+        return Forecaster(enc, mlp)
+    if head == "event":
+        return Forecaster(enc, EventMixtureHead(cfg["hidden_size"], n_bins=3, n_comp=cfg.get("event_components", 2)))
     return Forecaster(enc, PointHead(cfg["hidden_size"], 1))
+
+
+def _qhead(model):
+    """The NonCrossingQuantileHead inside a (possibly MLP) quantile head."""
+    return model.head[-1] if isinstance(model.head, torch.nn.Sequential) else model.head
 
 
 def _out(pred: torch.Tensor) -> torch.Tensor:
@@ -94,8 +107,31 @@ class Ema:
 
 @torch.no_grad()
 def predict_raw(model, data, idx, batch=1024):
+    """Point [N], quantile [N,Q], or (event head) K(t+15) quantiles [N,Q] = K(t) + dK15 mixture quantiles."""
     model.eval()
-    return torch.cat([_out(model(*data(idx[s:s + batch]))) for s in range(0, len(idx), batch)])
+    outs = []
+    for s in range(0, len(idx), batch):
+        ib = idx[s:s + batch]
+        o = model(*data(ib))
+        if isinstance(o, dict):
+            o = model.head.marginal_quantiles(o, QUANTILES) + data.k_now[ib][:, None]
+        else:
+            o = _out(o)
+            if getattr(data, "residual", False):  # residual quantile head: dK15 quantiles -> K(t+15) quantiles
+                o = o + data.k_now[ib][:, None]
+        outs.append(o)
+    return torch.cat(outs)
+
+
+@torch.no_grad()
+def event_outputs(model, data, idx, tau: float, batch=1024) -> dict:
+    model.eval()
+    probs, p_abs = [], []
+    for s in range(0, len(idx), batch):
+        o = model(*data(idx[s:s + batch]))
+        probs.append(o["time_logits"].softmax(-1))
+        p_abs.append(model.head.prob_abs_change_at_least(o, tau))
+    return {"time_probs": torch.cat(probs).cpu().numpy(), "p_abs_change_ge_tau": torch.cat(p_abs).cpu().numpy()}
 
 
 def probabilistic_scores(pred_q: np.ndarray, y: np.ndarray, persistence: np.ndarray, clear: np.ndarray) -> dict:
@@ -173,8 +209,29 @@ def run_fold(ds, data, fold, target_kind, cfg, out_dir: Path, log) -> dict:
         pc = pclear_tgt[idx][:, None] if raw.ndim == 2 else pclear_tgt[idx]
         return from_clear_sky_index(raw, pc, cfg["min_clear_kw"])
 
-    quantile = cfg.get("head", "point") == "quantile"
+    event = cfg.get("head", "point") == "event"
+    quantile = cfg.get("head", "point") in ("quantile", "quantile_mlp", "event")
     sel_key = "val_crps_kw" if quantile else "val_rmse_kw"
+    data.residual = bool(cfg.get("residual"))
+    if data.residual:
+        # persistence-residual quantiles (E6-QR): fit dK15 = K(t+15) - K(t); K(t) is an input-time quantity
+        assert quantile and not event and target_kind == "csi" and cfg["input"] == "csi"
+        k_rec_r = clear_sky_index(ds.pv.numpy().astype(float), pclear_rec, cfg["min_clear_kw"])
+        k_now_r = k_rec_r[ds.hist_rows[:, -1]]
+        data.k_now = torch.tensor(k_now_r, dtype=torch.float32, device=device)
+        y_t = torch.tensor(y - k_now_r, dtype=torch.float32, device=device)
+    if event:
+        # Phase 6 labels (never inputs): K trajectory t+1..t+15 with this fold's anchor; tau from TRAINING samples
+        assert target_kind == "csi" and cfg["input"] == "csi", "event head runs in the K representation"
+        k_rec = clear_sky_index(ds.pv.numpy().astype(float), pclear_rec, cfg["min_clear_kw"])
+        k_now = k_rec[ds.hist_rows[:, -1]]
+        k_fut = np.where(ds.future_rows >= 0, k_rec[np.maximum(ds.future_rows, 0)], np.nan)
+        tau = float(np.quantile(np.abs(y - k_now)[tr], 0.9))
+        ev = event_labels(k_now, k_fut, y, tau)
+        dk_t = torch.tensor(ev["severity"], dtype=torch.float32, device=device)
+        cls_t = torch.tensor(ev["time_class"], dtype=torch.long, device=device)
+        valid_t = torch.tensor(ev["event_valid"], dtype=torch.bool, device=device)
+        data.k_now = torch.tensor(k_now, dtype=torch.float32, device=device)
 
     def val_score(kw: np.ndarray) -> float:
         if quantile:
@@ -184,8 +241,12 @@ def run_fold(ds, data, fold, target_kind, cfg, out_dir: Path, log) -> dict:
     torch.manual_seed(cfg["seed"])
     model = build_model(cfg).to(device)
     model.encoder.cnn_bf16 = cfg["cnn_bf16"]
-    if quantile:  # same train-only procedure for every target representation
-        model.head.init_from_targets(y_t[torch.as_tensor(tr, device=device)])
+    tr_dev = torch.as_tensor(tr, device=device)
+    if event:  # train-only climatology init (class frequencies, per-class dK spread)
+        keep = tr_dev[valid_t[tr_dev]]
+        model.head.init_from_targets(dk_t[keep], cls_t[keep])
+    elif quantile:  # same train-only procedure for every target representation
+        _qhead(model).init_from_targets(y_t[tr_dev])
     opt = torch.optim.AdamW(model.parameters(), lr=cfg["lr"], weight_decay=cfg["weight_decay"])
     steps_per_epoch = -(-len(tr) // cfg["batch_size"])
     sched = (torch.optim.lr_scheduler.CosineAnnealingLR(opt, T_max=cfg["max_epochs"] * steps_per_epoch)
@@ -208,8 +269,12 @@ def run_fold(ds, data, fold, target_kind, cfg, out_dir: Path, log) -> dict:
         tot, n, gnorms = 0.0, 0, []
         for s in range(0, len(perm), cfg["batch_size"]):
             b = perm[s:s + cfg["batch_size"]]
-            pred = _out(model(*data(b)))
-            loss = pinball_loss(pred, y_t[b], QUANTILES) if quantile else F.mse_loss(pred, y_t[b])
+            if event:
+                loss = model.head.loss(model(*data(b)), dk_t[b], cls_t[b], valid_t[b],
+                                       supervised=cfg["event_supervised"])
+            else:
+                pred = _out(model(*data(b)))
+                loss = pinball_loss(pred, y_t[b], QUANTILES) if quantile else F.mse_loss(pred, y_t[b])
             opt.zero_grad(set_to_none=True)
             loss.backward()
             gnorms.append(torch.nn.utils.clip_grad_norm_(model.parameters(), cfg["clip"] or float("inf")))
@@ -262,6 +327,16 @@ def run_fold(ds, data, fold, target_kind, cfg, out_dir: Path, log) -> dict:
         g: 1 - metrics["model"][g]["rmse_kw"] / metrics["smart_persistence"][g]["rmse_kw"] for g in metrics["model"]}
     if quantile:
         metrics["probabilistic"] = probabilistic_scores(pred_q, y_kw[va], pers, labels)
+    if event:
+        eo = event_outputs(model, data, va_t, tau)
+        extra.update(time_probs=eo["time_probs"], p_abs_change_ge_tau=eo["p_abs_change_ge_tau"],
+                     time_class=ev["time_class"][va], event_valid=ev["event_valid"][va],
+                     severity_dk=ev["severity"][va], arrival_min=ev["arrival_min"][va], tau=np.array(tau))
+        v_ok = ev["event_valid"][va]
+        onehot = np.eye(4)[ev["time_class"][va]]
+        metrics["event"] = {"tau": tau, "time_class_brier": float(((eo["time_probs"] - onehot) ** 2).sum(1)[v_ok].mean()),
+                            "time_class_logloss": float(-np.log(np.clip(eo["time_probs"][v_ok, ev["time_class"][va][v_ok]], 1e-12, 1)).mean()),
+                            "supervised": cfg["event_supervised"]}
     def meta(idx):  # per-sample context saved alongside predictions
         return {"origin_time_us": ds.origin_time[idx].astype("datetime64[us]").astype(np.int64),
                 "target_time_us": ds.target_time[idx].astype("datetime64[us]").astype(np.int64),
@@ -295,7 +370,8 @@ def main(a):
            "patience": a.patience, "image_features": 64, "hidden_size": 64, "min_clear_kw": 1.0, "cnn_bf16": not a.fp32_cnn,
            "schedule": a.schedule, "clip": a.clip, "ema_decay": a.ema_decay, "pool": a.pool, "input": a.input,
            "label": a.label, "head": a.head, "quantiles": QUANTILES if a.head == "quantile" else None,
-           "calib_holdout": a.calib_holdout}
+           "calib_holdout": a.calib_holdout, "event_supervised": not a.event_unsupervised, "residual": a.residual,
+           "event_components": a.event_components}
     out_root = Path(a.out) / a.target / f"seed{a.seed}"
     out_root.mkdir(parents=True, exist_ok=True)
     log_f = open(out_root / "train.log", "a", encoding="utf-8")
@@ -319,6 +395,8 @@ def main(a):
     ds = SkippdForecastDataset(a.h5, a.manifest, "dev", preload=True)
     m = np.load(a.manifest)
     ds.record_times = m["times_us"].astype("datetime64[us]")[m["hdf5_group"] == 0][np.argsort(m["hdf5_row"][m["hdf5_group"] == 0])]
+    if a.head == "event":  # label-only lookups of the records at t+1..t+15 min (never model inputs)
+        ds.future_rows = future_rows(ds.record_times.astype(np.int64), ds.origin_time.astype("datetime64[us]").astype(np.int64))
     if a.subset_days:
         for fd in folds_doc["folds"]:
             fd["train_days"], fd["val_days"] = fd["train_days"][:a.subset_days], fd["val_days"][:a.subset_days]
@@ -346,7 +424,12 @@ if __name__ == "__main__":
     p.add_argument("--label", default="", help="free-text experiment label stored in config.json")
     p.add_argument("--calib-holdout", action="store_true",
                    help="hold ~20%% of training days out as calibration days (src.folds.calibration_split)")
-    p.add_argument("--head", choices=["point", "quantile"], default="point",
+    p.add_argument("--event-unsupervised", action="store_true",
+                   help="event head trained on marginal NLL only (capacity-matched ablation of event supervision)")
+    p.add_argument("--event-components", type=int, default=2)
+    p.add_argument("--residual", action="store_true",
+                   help="quantile heads predict dK15 = K(t+15) - K(t) (persistence-residual, E6-QR)")
+    p.add_argument("--head", choices=["point", "quantile", "quantile_mlp", "event"], default="point",
                    help="point (MSE) or non-crossing quantile head (pinball); quantile selects on val CRPS in kW")
     p.add_argument("--fold-ids", type=int, nargs="+", default=[0, 1, 2, 3, 4])
     p.add_argument("--seed", type=int, default=42)

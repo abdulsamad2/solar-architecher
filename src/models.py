@@ -118,6 +118,96 @@ class EventSeverityHead(nn.Module):
         return loss
 
 
+class EventMixtureHead(nn.Module):
+    """Phase 6 (SHADOW-MoE core): arrival-time classes x conditional severity mixtures -> marginal dK15.
+
+    Classes c = 0..n_bins-1 (event arrives in bin c) and c = n_bins (no event). For each class, a mixture of
+    ``n_comp`` Gaussians over dK15 = K(t+15) - K(t). The predictive distribution is the class-weighted
+    mixture: p(dK) = sum_c pi_c sum_m w_cm N(dK; mu_cm, s_cm).
+
+    Loss (``supervised=True``): CE(time class) + NLL(dK | true class) on event-valid samples, plus
+    ``lambda_marginal`` * marginal NLL on all samples. ``supervised=False`` uses only the marginal NLL:
+    the same architecture and parameter count as an unsupervised mixture-density head, isolating the value
+    of explicit event-time supervision.
+    """
+
+    def __init__(self, hidden_size: int, n_bins: int = 3, n_comp: int = 2, min_scale: float = 1e-3):
+        super().__init__()
+        self.n_cls, self.n_comp, self.min_scale = n_bins + 1, n_comp, min_scale
+        self.time_fc = nn.Linear(hidden_size, self.n_cls)
+        self.mix_fc = nn.Linear(hidden_size, self.n_cls * n_comp * 3)
+
+    def forward(self, h: torch.Tensor) -> dict[str, torch.Tensor]:
+        b = h.shape[0]
+        w, mu, s = self.mix_fc(h).view(b, self.n_cls, self.n_comp, 3).unbind(-1)
+        return {"time_logits": self.time_fc(h), "comp_logits": w, "mu": mu, "scale": F.softplus(s) + self.min_scale}
+
+    @torch.no_grad()
+    def init_from_targets(self, dk: torch.Tensor, time_class: torch.Tensor, weight_scale: float = 0.01) -> None:
+        """Start at the TRAINING climatology: class bias = log class frequency; per class, components at the
+        class's dK quantiles (spread over 25..75%) with the class's dK spread; small weights."""
+        freq = torch.bincount(time_class, minlength=self.n_cls).float().clamp(min=1)
+        self.time_fc.bias.copy_((freq / freq.sum()).log())
+        bias = self.mix_fc.bias.view(self.n_cls, self.n_comp, 3)
+        qs = torch.linspace(0.25, 0.75, self.n_comp, device=dk.device)
+        for c in range(self.n_cls):
+            x = dk[time_class == c].float()
+            if len(x) < 10:
+                x = dk.float()
+            sd = x.std().clamp(min=1e-3)
+            bias[c, :, 0] = 0.0
+            bias[c, :, 1] = torch.quantile(x, qs)
+            bias[c, :, 2] = sd + torch.log(-torch.expm1(-sd))  # inverse softplus
+        self.time_fc.weight.mul_(weight_scale)
+        self.mix_fc.weight.mul_(weight_scale)
+
+    @staticmethod
+    def _log_mix(out, x, cls_log_w):
+        """log sum_{c,m} exp(cls_log_w[c] + log w_cm + log N(x; mu_cm, s_cm)); x [B]."""
+        lw = cls_log_w[..., None] + out["comp_logits"].log_softmax(-1)
+        lp = torch.distributions.Normal(out["mu"], out["scale"]).log_prob(x[:, None, None])
+        return torch.logsumexp((lw + lp).flatten(1), dim=1)
+
+    def marginal_log_prob(self, out, x):
+        return self._log_mix(out, x, out["time_logits"].log_softmax(-1))
+
+    def loss(self, out, dk, time_class, event_valid, supervised: bool = True, lambda_marginal: float = 1.0):
+        marg = -self.marginal_log_prob(out, dk).mean()
+        if not supervised:
+            return marg
+        v = event_valid
+        ce = F.cross_entropy(out["time_logits"][v], time_class[v]) if v.any() else dk.new_zeros(())
+        onehot = F.one_hot(time_class[v], self.n_cls).to(dk.dtype)
+        cond_log_w = torch.where(onehot > 0, torch.zeros_like(onehot), torch.full_like(onehot, -1e9))
+        sub = {k: t[v] for k, t in out.items()}
+        cond = -self._log_mix(sub, dk[v], cond_log_w).mean() if v.any() else dk.new_zeros(())
+        return ce + cond + lambda_marginal * marg
+
+    @torch.no_grad()
+    def marginal_quantiles(self, out, levels, iters: int = 60) -> torch.Tensor:
+        """Quantiles of the marginal dK15 mixture by bisection on its CDF; [B, len(levels)], non-decreasing."""
+        pi = out["time_logits"].softmax(-1)[..., None] * out["comp_logits"].softmax(-1)  # [B, C, M]
+        dist = torch.distributions.Normal(out["mu"][:, None], out["scale"][:, None])  # [B, 1, C, M]
+        lo = (out["mu"] - 8 * out["scale"]).amin(dim=(1, 2))
+        hi = (out["mu"] + 8 * out["scale"]).amax(dim=(1, 2))
+        q = torch.as_tensor(levels, dtype=lo.dtype, device=lo.device)
+        a, b = lo[:, None].expand(-1, len(q)).clone(), hi[:, None].expand(-1, len(q)).clone()
+        for _ in range(iters):
+            mid = (a + b) / 2
+            cdf = (pi[:, None] * dist.cdf(mid[..., None, None])).sum(dim=(2, 3))  # [B, Q]
+            go_right = cdf < q
+            a, b = torch.where(go_right, mid, a), torch.where(go_right, b, mid)
+        return torch.cummax((a + b) / 2, dim=1).values
+
+    @torch.no_grad()
+    def prob_abs_change_at_least(self, out, tau: float) -> torch.Tensor:
+        """P(|dK15| >= tau) from the marginal mixture (comparable with the direct-quantile comparator)."""
+        pi = out["time_logits"].softmax(-1)[..., None] * out["comp_logits"].softmax(-1)
+        dist = torch.distributions.Normal(out["mu"], out["scale"])
+        inside = dist.cdf(torch.full_like(out["mu"], tau)) - dist.cdf(torch.full_like(out["mu"], -tau))
+        return (1 - (pi * inside).sum(dim=(1, 2))).clamp(0, 1)
+
+
 class Forecaster(nn.Module):
     def __init__(self, encoder: nn.Module, head: nn.Module):
         super().__init__()
