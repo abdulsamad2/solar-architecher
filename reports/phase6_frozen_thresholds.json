@@ -1,0 +1,22 @@
+{
+ "0": {
+  "training_labels_fit_days": 0.281472,
+  "evaluation_stratum_full_training_days": 0.276943
+ },
+ "1": {
+  "training_labels_fit_days": 0.262355,
+  "evaluation_stratum_full_training_days": 0.259691
+ },
+ "2": {
+  "training_labels_fit_days": 0.298268,
+  "evaluation_stratum_full_training_days": 0.297665
+ },
+ "3": {
+  "training_labels_fit_days": 0.272097,
+  "evaluation_stratum_full_training_days": 0.270829
+ },
+ "4": {
+  "training_labels_fit_days": 0.295155,
+  "evaluation_stratum_full_training_days": 0.29326
+ }
+}

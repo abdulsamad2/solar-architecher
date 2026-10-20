@@ -227,6 +227,9 @@ def run_fold(ds, data, fold, target_kind, cfg, out_dir: Path, log) -> dict:
         k_now = k_rec[ds.hist_rows[:, -1]]
         k_fut = np.where(ds.future_rows >= 0, k_rec[np.maximum(ds.future_rows, 0)], np.nan)
         tau = float(np.quantile(np.abs(y - k_now)[tr], 0.9))
+        if cfg.get("frozen_thresholds"):
+            frozen = json.loads(Path(cfg["frozen_thresholds"]).read_text())[str(fold["fold"])]["training_labels_fit_days"]
+            assert abs(tau - frozen) < 1e-5, f"STOP: event threshold {tau:.6f} != frozen {frozen:.6f} (fold {fold['fold']})"
         ev = event_labels(k_now, k_fut, y, tau)
         dk_t = torch.tensor(ev["severity"], dtype=torch.float32, device=device)
         cls_t = torch.tensor(ev["time_class"], dtype=torch.long, device=device)
@@ -371,6 +374,7 @@ def main(a):
            "schedule": a.schedule, "clip": a.clip, "ema_decay": a.ema_decay, "pool": a.pool, "input": a.input,
            "label": a.label, "head": a.head, "quantiles": QUANTILES if a.head == "quantile" else None,
            "calib_holdout": a.calib_holdout, "event_supervised": not a.event_unsupervised, "residual": a.residual,
+           "frozen_thresholds": a.frozen_thresholds,
            "event_components": a.event_components}
     out_root = Path(a.out) / a.target / f"seed{a.seed}"
     out_root.mkdir(parents=True, exist_ok=True)
@@ -427,6 +431,7 @@ if __name__ == "__main__":
     p.add_argument("--event-unsupervised", action="store_true",
                    help="event head trained on marginal NLL only (capacity-matched ablation of event supervision)")
     p.add_argument("--event-components", type=int, default=2)
+    p.add_argument("--frozen-thresholds", default="", help="JSON of frozen per-fold event thresholds; mismatch = STOP")
     p.add_argument("--residual", action="store_true",
                    help="quantile heads predict dK15 = K(t+15) - K(t) (persistence-residual, E6-QR)")
     p.add_argument("--head", choices=["point", "quantile", "quantile_mlp", "event"], default="point",
