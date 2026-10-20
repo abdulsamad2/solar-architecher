@@ -1,0 +1,8 @@
+{
+ "gpu": "NVIDIA RTX 5000 Ada Generation",
+ "parameters": 90761,
+ "batch1_latency_ms": 1.8492673333579055,
+ "batched_throughput_samples_per_s": 10587.293579530946,
+ "calibration_fit_s_per_50k_samples": 1.7114289999590255,
+ "calibration_apply_us_per_sample": 0.27637000079266727
+}
