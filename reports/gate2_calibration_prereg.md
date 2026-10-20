@@ -69,3 +69,11 @@ Otherwise Gate 2 remains open, and the report states which condition failed.
 - Training wall time and epochs per run, from the logs.
 - Inference time per sample, batched and at batch size 1, measured on the same GPU.
 - Calibration fitting and application time.
+
+## Amendment 1 (2026-10-20, before any calibration result existed; the calibration runs were still training)
+- **What changed:** tail extrapolation in method 3. The quantile function beyond 0.05/0.95 is now extrapolated **linearly in the normal score z = Φ⁻¹(τ)**, using the outermost segment's z-slope, instead of linearly in τ.
+- **Why:** unit tests on synthetic Gaussian forecasts showed the τ-linear version is too shallow. Even mild over-confidence (forecast SD 1.6 vs a true 2.0) pinned the 0.05/0.95 mapped levels at the grid edges, so the method could not correct the tails.
+- **Behaviour now:**
+  - z-linear extrapolation is exact for Gaussian tails, and mild over-confidence is corrected (tested).
+  - Severe over-confidence (SD ratio 0.4) still saturates. `recal_fit` reports saturated levels, and the report flags them.
+- **Unchanged:** interpolation inside [0.05, 0.95], the CRPS scorer, CQR, and all splits and criteria.
