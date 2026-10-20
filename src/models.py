@@ -11,9 +11,11 @@ import torch.nn.functional as F
 class SmallSkyEncoder(nn.Module):
     """Shared per-frame CNN -> concat PV history -> GRU -> final hidden state."""
 
-    def __init__(self, in_channels: int = 3, image_features: int = 64, hidden_size: int = 64, pool: str = "avg"):
+    def __init__(self, in_channels: int = 3, image_features: int = 64, hidden_size: int = 64, pool: str = "avg",
+                 extra_features: int = 0):
         """pool='avg': global average (discards where clouds are relative to the sun);
-        pool='spatial': keep a 4x4 grid and flatten (position-aware, like SUNSET's flatten)."""
+        pool='spatial': keep a 4x4 grid and flatten (position-aware, like SUNSET's flatten).
+        extra_features: per-frame scalars appended to the GRU input (E8 solar/motion; zero-filled when unused)."""
         super().__init__()
 
         def block(cin, cout):
@@ -26,16 +28,20 @@ class SmallSkyEncoder(nn.Module):
             block(in_channels, 16), block(16, 32), block(32, 64), block(64, 64),
             nn.AdaptiveAvgPool2d(grid), nn.Flatten(), nn.Linear(64 * grid * grid, image_features), nn.ReLU(inplace=True),
         )
-        self.gru = nn.GRU(image_features + 1, hidden_size, batch_first=True)
+        self.gru = nn.GRU(image_features + 1 + extra_features, hidden_size, batch_first=True)
         self.hidden_size = hidden_size
+        self.extra_features = extra_features
         self.cnn_bf16 = False  # bf16 autocast for the CNN only; GRU and heads stay fp32
 
-    def forward(self, images: torch.Tensor, pv_history: torch.Tensor) -> torch.Tensor:
+    def forward(self, images: torch.Tensor, pv_history: torch.Tensor, extra: torch.Tensor | None = None) -> torch.Tensor:
         b, t = images.shape[:2]
         with torch.autocast("cuda", dtype=torch.bfloat16, enabled=self.cnn_bf16 and images.is_cuda):
             feats = self.cnn(images.flatten(0, 1))
         feats = feats.float().view(b, t, -1)
-        seq = torch.cat([feats, pv_history.unsqueeze(-1)], dim=-1)
+        parts = [feats, pv_history.unsqueeze(-1)]
+        if self.extra_features:
+            parts.append(extra)
+        seq = torch.cat(parts, dim=-1)
         self.gru.flatten_parameters()  # needed after deepcopy (e.g. EMA copies)
         _, h = self.gru(seq)
         return h[-1]
@@ -213,5 +219,5 @@ class Forecaster(nn.Module):
         super().__init__()
         self.encoder, self.head = encoder, head
 
-    def forward(self, images: torch.Tensor, pv_history: torch.Tensor):
-        return self.head(self.encoder(images, pv_history))
+    def forward(self, images: torch.Tensor, pv_history: torch.Tensor, extra: torch.Tensor | None = None):
+        return self.head(self.encoder(images, pv_history, extra))

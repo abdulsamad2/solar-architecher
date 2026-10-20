@@ -31,6 +31,8 @@ from src.models import EventMixtureHead, Forecaster, NonCrossingQuantileHead, Po
 from src.skippd import SkippdForecastDataset
 
 PV_SCALE = 30.0  # kW, ~nameplate; input/target scaling only
+# E8 per-frame feature columns: 5 solar-position (P) + 6 motion (M); unused columns are zero-filled
+E8_MASKS = {"none": [0] * 11, "P": [1] * 5 + [0] * 6, "M": [0] * 5 + [1] * 6, "PM": [1] * 11}
 QUANTILES = [0.05, 0.10, 0.20, 0.30, 0.50, 0.70, 0.80, 0.90, 0.95]  # roadmap Step 5.1
 
 
@@ -47,20 +49,30 @@ class GpuSeq:
         self.hist = torch.from_numpy(ds.hist_rows).to(device)
         self.tgt = torch.from_numpy(ds.target_rows).to(device)
         self.hist_feat = self.pv / PV_SCALE
+        self.extra_table = None  # E8: [R, 11] standardised, arm-masked per-record features
 
     def set_history_feature(self, per_record: np.ndarray | None) -> None:
         self.hist_feat = (self.pv / PV_SCALE if per_record is None
                           else torch.as_tensor(per_record, dtype=torch.float32, device=self.pv.device))
 
+    def set_window(self, rows_chrono: np.ndarray) -> None:
+        """E8: replace the 16 history rows per sample (chronological; -1 where the window is ineligible)."""
+        self.hist = torch.from_numpy(np.ascontiguousarray(rows_chrono)).to(self.pv.device)
+
+    def set_extra(self, table: np.ndarray | None) -> None:
+        self.extra_table = None if table is None else torch.as_tensor(table, dtype=torch.float32, device=self.pv.device)
+
     def __call__(self, idx):
         rows = self.hist[idx]
         x = self.images[rows].permute(0, 1, 4, 2, 3).float().div_(255.0)
-        return x, self.hist_feat[rows]
+        if self.extra_table is None:
+            return x, self.hist_feat[rows]
+        return x, self.hist_feat[rows], self.extra_table[rows]
 
 
 def build_model(cfg) -> torch.nn.Module:
     enc = SmallSkyEncoder(image_features=cfg["image_features"], hidden_size=cfg["hidden_size"],
-                          pool=cfg.get("pool", "avg"))
+                          pool=cfg.get("pool", "avg"), extra_features=11 if cfg.get("e8_window") else 0)
     head = cfg.get("head", "point")
     if head == "quantile":
         return Forecaster(enc, NonCrossingQuantileHead(cfg["hidden_size"], 1, QUANTILES))
@@ -183,6 +195,22 @@ def run_fold(ds, data, fold, target_kind, cfg, out_dir: Path, log) -> dict:
     va = np.flatnonzero(np.isin(day_str, list(val_days)))
     ca = np.flatnonzero(np.isin(day_str, list(cal_days)))
     assert not (set(tr) & set(ca)) and not (set(tr) & set(va)) and not (set(ca) & set(va)), "STOP: sample overlap"
+    va_extra = np.array([], dtype=np.int64)
+    if cfg.get("e8_window"):
+        # E8: train / calibrate / validate on the COMMON population only (identical samples in every arm);
+        # window-eligible but non-common validation samples are predicted separately for the fallback analysis
+        common, elig = ds.e8_common, ds.e8_eligible
+        va_extra = va[elig[va] & ~common[va]]
+        tr, va, ca = tr[common[tr]], va[common[va]], ca[common[ca]]
+        # per-frame features: z-score with statistics from FIT-day samples' window frames only, then arm mask
+        fit_rows = np.unique(ds.e8_rows[tr].ravel())
+        mu, sd = ds.e8_table[fit_rows].mean(0), ds.e8_table[fit_rows].std(0)
+        sd = np.where(sd > 0, sd, 1.0)
+        mask = np.array(E8_MASKS[cfg["e8_features"]], np.float32)
+        data.set_extra(((ds.e8_table - mu) / sd * mask).astype(np.float32))
+        (out_dir / "e8_standardisation.json").write_text(json.dumps(
+            {"mu": mu.tolist(), "sd": sd.tolist(), "mask": mask.tolist(), "n_fit_rows": int(len(fit_rows)),
+             "n_train": int(len(tr)), "n_val": int(len(va)), "n_cal": int(len(ca)), "n_val_extra": int(len(va_extra))}))
 
     # clear-sky anchor fitted on training-day records only (fit days only in calibration mode)
     rec_times = ds.record_times
@@ -350,6 +378,14 @@ def run_fold(ds, data, fold, target_kind, cfg, out_dir: Path, log) -> dict:
     np.savez_compressed(out_dir / "preds_val.npz", sample_ids=ds.sample_ids[va], target=y_kw[va], pred=pred_kw,
                         persistence=pers, day=day_str[va], clear_day=labels, quantile_levels=np.array(QUANTILES),
                         **extra, **meta(va))
+    if len(va_extra):
+        # E8 fallback population: window-eligible validation samples outside the common population
+        vx = torch.as_tensor(va_extra, device=device)
+        qx = to_kw(predict_raw(model, data, vx).cpu().numpy().astype(float), va_extra)
+        np.savez_compressed(out_dir / "preds_val_extra.npz", sample_ids=ds.sample_ids[va_extra], target=y_kw[va_extra],
+                            pred_q=qx, pred=qx[:, QUANTILES.index(0.5)], day=day_str[va_extra],
+                            clear_day=np.array([fold["day_labels"][d] for d in day_str[va_extra]]),
+                            quantile_levels=np.array(QUANTILES), **meta(va_extra))
     if len(ca):
         # calibration-day predictions from the SAME checkpoint (trained on fit days only)
         ca_t = torch.as_tensor(ca, device=device)
@@ -375,7 +411,12 @@ def main(a):
            "label": a.label, "head": a.head, "quantiles": QUANTILES if a.head == "quantile" else None,
            "calib_holdout": a.calib_holdout, "event_supervised": not a.event_unsupervised, "residual": a.residual,
            "frozen_thresholds": a.frozen_thresholds,
-           "event_components": a.event_components}
+           "event_components": a.event_components, "e8_window": a.e8_window, "e8_features": a.e8_features}
+    if a.e8_window:
+        from src.e8_features import FEAT, verify_frozen
+
+        verify_frozen()  # STOP if the frozen geometry / eligibility manifests changed
+        cfg["e8_feature_hashes"] = json.loads((FEAT / "e8_features_v1.json").read_text())
     out_root = Path(a.out) / a.target / f"seed{a.seed}"
     out_root.mkdir(parents=True, exist_ok=True)
     log_f = open(out_root / "train.log", "a", encoding="utf-8")
@@ -405,6 +446,18 @@ def main(a):
         for fd in folds_doc["folds"]:
             fd["train_days"], fd["val_days"] = fd["train_days"][:a.subset_days], fd["val_days"][:a.subset_days]
     data = GpuSeq(ds, device)
+    if a.e8_window:
+        win = np.load(FEAT / "e8_windows_v1.npz")
+        rec = np.load(FEAT / "e8_record_features_v1.npz")
+        assert np.array_equal(win["sample_ids"], ds.sample_ids), "STOP: E8 window order differs from dataset"
+        rows = win[a.e8_window][:, ::-1]                     # chronological (oldest first), as GpuSeq expects
+        ds.e8_eligible = (rows >= 0).all(1)
+        ds.e8_common = win["eligible_common"]
+        assert (ds.e8_eligible[ds.e8_common]).all()
+        ds.e8_rows = np.where(ds.e8_eligible[:, None], rows, ds.hist_rows)  # placeholder rows are never sampled
+        assert (ds.e8_rows[:, -1] == ds.hist_rows[:, -1]).all(), "STOP: window origin differs from forecast origin"
+        ds.e8_table = np.concatenate([rec["P"], rec["M"]], 1).astype(np.float32)
+        data.set_window(ds.e8_rows)
     summary = {}
     for k in a.fold_ids:
         fold = {**folds_doc["folds"][k], "day_labels": folds_doc["day_labels"]}
@@ -432,6 +485,10 @@ if __name__ == "__main__":
                    help="event head trained on marginal NLL only (capacity-matched ablation of event supervision)")
     p.add_argument("--event-components", type=int, default=2)
     p.add_argument("--frozen-thresholds", default="", help="JSON of frozen per-fold event thresholds; mismatch = STOP")
+    p.add_argument("--e8-window", choices=["H15", "H30", "H60"], default=None,
+                   help="E8 history window (16 frames, stride 1/2/4 min); restricts to the common population")
+    p.add_argument("--e8-features", choices=list(E8_MASKS), default="none",
+                   help="E8 per-frame features: none / P (solar) / M (motion) / PM; unused columns zero-filled")
     p.add_argument("--residual", action="store_true",
                    help="quantile heads predict dK15 = K(t+15) - K(t) (persistence-residual, E6-QR)")
     p.add_argument("--head", choices=["point", "quantile", "quantile_mlp", "event"], default="point",
