@@ -1,0 +1,934 @@
+{
+ "sep_oct_by_year": {
+  "2017-09": {
+   "days": 23.0,
+   "clear_day_share": 0.174,
+   "midday_K_median": 0.918,
+   "midday_K_clear_days": 0.917,
+   "midday_R/B": 1.108,
+   "midday_R/B_clear_days": 1.082,
+   "midday_brightness": 109.351,
+   "midday_saturated_frac": 0.01
+  },
+  "2017-10": {
+   "days": 28.0,
+   "clear_day_share": 0.536,
+   "midday_K_median": 1.002,
+   "midday_K_clear_days": 1.008,
+   "midday_R/B": 1.175,
+   "midday_R/B_clear_days": 1.262,
+   "midday_brightness": 109.937,
+   "midday_saturated_frac": 0.007
+  },
+  "2018-09": {
+   "days": 7.0,
+   "clear_day_share": 0.857,
+   "midday_K_median": 0.918,
+   "midday_K_clear_days": 0.918,
+   "midday_R/B": 1.105,
+   "midday_R/B_clear_days": 1.109,
+   "midday_brightness": 110.28,
+   "midday_saturated_frac": 0.012
+  },
+  "2018-10": {
+   "days": 29.0,
+   "clear_day_share": 0.207,
+   "midday_K_median": 0.973,
+   "midday_K_clear_days": 0.971,
+   "midday_R/B": 1.131,
+   "midday_R/B_clear_days": 1.207,
+   "midday_brightness": 105.569,
+   "midday_saturated_frac": 0.011
+  },
+  "2019-09": {
+   "days": 30.0,
+   "clear_day_share": 0.567,
+   "midday_K_median": 0.916,
+   "midday_K_clear_days": 0.913,
+   "midday_R/B": 1.907,
+   "midday_R/B_clear_days": 1.962,
+   "midday_brightness": 100.711,
+   "midday_saturated_frac": 0.007
+  },
+  "2019-10": {
+   "days": 24.0,
+   "clear_day_share": 0.583,
+   "midday_K_median": 0.944,
+   "midday_K_clear_days": 0.948,
+   "midday_R/B": 2.007,
+   "midday_R/B_clear_days": 2.092,
+   "midday_brightness": 100.324,
+   "midday_saturated_frac": 0.006
+  }
+ },
+ "all_months_midday": {
+  "2017-03": {
+   "days": 1.0,
+   "clear_day_share": 0.0,
+   "midday_K_median": 0.952,
+   "midday_K_clear_days": NaN,
+   "midday_R/B": 1.026,
+   "midday_R/B_clear_days": NaN,
+   "midday_brightness": 122.408,
+   "midday_saturated_frac": 0.005
+  },
+  "2017-05": {
+   "days": 18.0,
+   "clear_day_share": 0.167,
+   "midday_K_median": 1.012,
+   "midday_K_clear_days": 1.003,
+   "midday_R/B": 1.218,
+   "midday_R/B_clear_days": 1.314,
+   "midday_brightness": 110.441,
+   "midday_saturated_frac": 0.004
+  },
+  "2017-06": {
+   "days": 22.0,
+   "clear_day_share": 0.409,
+   "midday_K_median": 1.011,
+   "midday_K_clear_days": 0.997,
+   "midday_R/B": 1.168,
+   "midday_R/B_clear_days": 1.158,
+   "midday_brightness": 110.05,
+   "midday_saturated_frac": 0.007
+  },
+  "2017-07": {
+   "days": 14.0,
+   "clear_day_share": 0.571,
+   "midday_K_median": 0.988,
+   "midday_K_clear_days": 0.983,
+   "midday_R/B": 1.178,
+   "midday_R/B_clear_days": 1.2,
+   "midday_brightness": 109.286,
+   "midday_saturated_frac": 0.006
+  },
+  "2017-08": {
+   "days": 31.0,
+   "clear_day_share": 0.452,
+   "midday_K_median": 0.94,
+   "midday_K_clear_days": 0.937,
+   "midday_R/B": 1.097,
+   "midday_R/B_clear_days": 1.175,
+   "midday_brightness": 110.509,
+   "midday_saturated_frac": 0.006
+  },
+  "2017-09": {
+   "days": 23.0,
+   "clear_day_share": 0.174,
+   "midday_K_median": 0.918,
+   "midday_K_clear_days": 0.917,
+   "midday_R/B": 1.108,
+   "midday_R/B_clear_days": 1.082,
+   "midday_brightness": 109.351,
+   "midday_saturated_frac": 0.01
+  },
+  "2017-10": {
+   "days": 28.0,
+   "clear_day_share": 0.536,
+   "midday_K_median": 1.002,
+   "midday_K_clear_days": 1.008,
+   "midday_R/B": 1.175,
+   "midday_R/B_clear_days": 1.262,
+   "midday_brightness": 109.937,
+   "midday_saturated_frac": 0.007
+  },
+  "2017-11": {
+   "days": 4.0,
+   "clear_day_share": 0.25,
+   "midday_K_median": 0.489,
+   "midday_K_clear_days": 1.022,
+   "midday_R/B": 1.05,
+   "midday_R/B_clear_days": 1.203,
+   "midday_brightness": 109.733,
+   "midday_saturated_frac": 0.007
+  },
+  "2017-12": {
+   "days": 5.0,
+   "clear_day_share": 0.0,
+   "midday_K_median": 1.09,
+   "midday_K_clear_days": NaN,
+   "midday_R/B": 1.08,
+   "midday_R/B_clear_days": NaN,
+   "midday_brightness": 107.993,
+   "midday_saturated_frac": 0.007
+  },
+  "2018-01": {
+   "days": 19.0,
+   "clear_day_share": 0.0,
+   "midday_K_median": 0.814,
+   "midday_K_clear_days": NaN,
+   "midday_R/B": 1.058,
+   "midday_R/B_clear_days": NaN,
+   "midday_brightness": 107.972,
+   "midday_saturated_frac": 0.007
+  },
+  "2018-02": {
+   "days": 16.0,
+   "clear_day_share": 0.312,
+   "midday_K_median": 1.054,
+   "midday_K_clear_days": 1.062,
+   "midday_R/B": 1.257,
+   "midday_R/B_clear_days": 1.324,
+   "midday_brightness": 106.438,
+   "midday_saturated_frac": 0.007
+  },
+  "2018-03": {
+   "days": 9.0,
+   "clear_day_share": 0.0,
+   "midday_K_median": 0.998,
+   "midday_K_clear_days": NaN,
+   "midday_R/B": 1.146,
+   "midday_R/B_clear_days": NaN,
+   "midday_brightness": 107.096,
+   "midday_saturated_frac": 0.006
+  },
+  "2018-05": {
+   "days": 23.0,
+   "clear_day_share": 0.261,
+   "midday_K_median": 0.973,
+   "midday_K_clear_days": 0.971,
+   "midday_R/B": 1.109,
+   "midday_R/B_clear_days": 1.141,
+   "midday_brightness": 110.763,
+   "midday_saturated_frac": 0.006
+  },
+  "2018-06": {
+   "days": 27.0,
+   "clear_day_share": 0.63,
+   "midday_K_median": 0.978,
+   "midday_K_clear_days": 0.97,
+   "midday_R/B": 1.142,
+   "midday_R/B_clear_days": 1.159,
+   "midday_brightness": 112.575,
+   "midday_saturated_frac": 0.007
+  },
+  "2018-07": {
+   "days": 31.0,
+   "clear_day_share": 0.29,
+   "midday_K_median": 0.942,
+   "midday_K_clear_days": 0.94,
+   "midday_R/B": 1.1,
+   "midday_R/B_clear_days": 1.123,
+   "midday_brightness": 110.23,
+   "midday_saturated_frac": 0.009
+  },
+  "2018-08": {
+   "days": 21.0,
+   "clear_day_share": 0.619,
+   "midday_K_median": 0.909,
+   "midday_K_clear_days": 0.908,
+   "midday_R/B": 1.041,
+   "midday_R/B_clear_days": 1.04,
+   "midday_brightness": 111.494,
+   "midday_saturated_frac": 0.008
+  },
+  "2018-09": {
+   "days": 7.0,
+   "clear_day_share": 0.857,
+   "midday_K_median": 0.918,
+   "midday_K_clear_days": 0.918,
+   "midday_R/B": 1.105,
+   "midday_R/B_clear_days": 1.109,
+   "midday_brightness": 110.28,
+   "midday_saturated_frac": 0.012
+  },
+  "2018-10": {
+   "days": 29.0,
+   "clear_day_share": 0.207,
+   "midday_K_median": 0.973,
+   "midday_K_clear_days": 0.971,
+   "midday_R/B": 1.131,
+   "midday_R/B_clear_days": 1.207,
+   "midday_brightness": 105.569,
+   "midday_saturated_frac": 0.011
+  },
+  "2018-11": {
+   "days": 3.0,
+   "clear_day_share": 0.0,
+   "midday_K_median": 0.961,
+   "midday_K_clear_days": NaN,
+   "midday_R/B": 1.106,
+   "midday_R/B_clear_days": NaN,
+   "midday_brightness": 105.192,
+   "midday_saturated_frac": 0.016
+  },
+  "2019-01": {
+   "days": 4.0,
+   "clear_day_share": 0.0,
+   "midday_K_median": 0.793,
+   "midday_K_clear_days": NaN,
+   "midday_R/B": 1.038,
+   "midday_R/B_clear_days": NaN,
+   "midday_brightness": 107.189,
+   "midday_saturated_frac": 0.004
+  },
+  "2019-02": {
+   "days": 6.0,
+   "clear_day_share": 0.0,
+   "midday_K_median": 0.494,
+   "midday_K_clear_days": NaN,
+   "midday_R/B": 1.026,
+   "midday_R/B_clear_days": NaN,
+   "midday_brightness": 107.521,
+   "midday_saturated_frac": 0.002
+  },
+  "2019-05": {
+   "days": 10.0,
+   "clear_day_share": 0.2,
+   "midday_K_median": 0.953,
+   "midday_K_clear_days": 0.997,
+   "midday_R/B": 1.765,
+   "midday_R/B_clear_days": 2.201,
+   "midday_brightness": 101.14,
+   "midday_saturated_frac": 0.004
+  },
+  "2019-06": {
+   "days": 28.0,
+   "clear_day_share": 0.393,
+   "midday_K_median": 0.945,
+   "midday_K_clear_days": 0.944,
+   "midday_R/B": 2.146,
+   "midday_R/B_clear_days": 2.254,
+   "midday_brightness": 100.221,
+   "midday_saturated_frac": 0.005
+  },
+  "2019-07": {
+   "days": 30.0,
+   "clear_day_share": 0.6,
+   "midday_K_median": 0.927,
+   "midday_K_clear_days": 0.924,
+   "midday_R/B": 2.119,
+   "midday_R/B_clear_days": 2.155,
+   "midday_brightness": 99.813,
+   "midday_saturated_frac": 0.006
+  },
+  "2019-08": {
+   "days": 30.0,
+   "clear_day_share": 0.6,
+   "midday_K_median": 0.896,
+   "midday_K_clear_days": 0.898,
+   "midday_R/B": 1.945,
+   "midday_R/B_clear_days": 1.989,
+   "midday_brightness": 100.843,
+   "midday_saturated_frac": 0.007
+  },
+  "2019-09": {
+   "days": 30.0,
+   "clear_day_share": 0.567,
+   "midday_K_median": 0.916,
+   "midday_K_clear_days": 0.913,
+   "midday_R/B": 1.907,
+   "midday_R/B_clear_days": 1.962,
+   "midday_brightness": 100.711,
+   "midday_saturated_frac": 0.007
+  },
+  "2019-10": {
+   "days": 24.0,
+   "clear_day_share": 0.583,
+   "midday_K_median": 0.944,
+   "midday_K_clear_days": 0.948,
+   "midday_R/B": 2.007,
+   "midday_R/B_clear_days": 2.092,
+   "midday_brightness": 100.324,
+   "midday_saturated_frac": 0.006
+  }
+ },
+ "oct_daily": {
+  "2017-10-01": {
+   "K": 1.006,
+   "RB": 1.15,
+   "clear": false
+  },
+  "2017-10-02": {
+   "K": 1.024,
+   "RB": 1.337,
+   "clear": true
+  },
+  "2017-10-03": {
+   "K": 1.0,
+   "RB": 1.14,
+   "clear": true
+  },
+  "2017-10-04": {
+   "K": 1.009,
+   "RB": 1.284,
+   "clear": true
+  },
+  "2017-10-05": {
+   "K": 0.995,
+   "RB": 1.275,
+   "clear": true
+  },
+  "2017-10-07": {
+   "K": 0.996,
+   "RB": 1.267,
+   "clear": true
+  },
+  "2017-10-08": {
+   "K": 0.975,
+   "RB": 1.17,
+   "clear": true
+  },
+  "2017-10-09": {
+   "K": 0.96,
+   "RB": 1.116,
+   "clear": true
+  },
+  "2017-10-10": {
+   "K": 0.973,
+   "RB": 1.057,
+   "clear": false
+  },
+  "2017-10-12": {
+   "K": 0.99,
+   "RB": 1.099,
+   "clear": true
+  },
+  "2017-10-13": {
+   "K": 0.971,
+   "RB": 1.095,
+   "clear": true
+  },
+  "2017-10-14": {
+   "K": 1.04,
+   "RB": 1.236,
+   "clear": true
+  },
+  "2017-10-15": {
+   "K": 0.985,
+   "RB": 1.127,
+   "clear": true
+  },
+  "2017-10-16": {
+   "K": 1.026,
+   "RB": 1.013,
+   "clear": false
+  },
+  "2017-10-17": {
+   "K": 0.647,
+   "RB": 1.025,
+   "clear": false
+  },
+  "2017-10-18": {
+   "K": 0.98,
+   "RB": 1.064,
+   "clear": false
+  },
+  "2017-10-19": {
+   "K": 0.373,
+   "RB": 1.025,
+   "clear": false
+  },
+  "2017-10-20": {
+   "K": 0.776,
+   "RB": 1.024,
+   "clear": false
+  },
+  "2017-10-21": {
+   "K": 1.067,
+   "RB": 1.44,
+   "clear": true
+  },
+  "2017-10-23": {
+   "K": 0.999,
+   "RB": 1.5,
+   "clear": false
+  },
+  "2017-10-24": {
+   "K": 0.985,
+   "RB": 1.416,
+   "clear": false
+  },
+  "2017-10-25": {
+   "K": 0.996,
+   "RB": 1.404,
+   "clear": false
+  },
+  "2017-10-26": {
+   "K": 1.012,
+   "RB": 1.36,
+   "clear": true
+  },
+  "2017-10-27": {
+   "K": 1.006,
+   "RB": 1.301,
+   "clear": true
+  },
+  "2017-10-28": {
+   "K": 1.035,
+   "RB": 1.286,
+   "clear": false
+  },
+  "2017-10-29": {
+   "K": 0.406,
+   "RB": 1.035,
+   "clear": false
+  },
+  "2017-10-30": {
+   "K": 1.141,
+   "RB": 1.156,
+   "clear": false
+  },
+  "2017-10-31": {
+   "K": 1.036,
+   "RB": 1.132,
+   "clear": true
+  },
+  "2018-10-01": {
+   "K": 0.376,
+   "RB": 1.025,
+   "clear": false
+  },
+  "2018-10-02": {
+   "K": 0.931,
+   "RB": 1.055,
+   "clear": false
+  },
+  "2018-10-03": {
+   "K": 0.513,
+   "RB": 1.038,
+   "clear": false
+  },
+  "2018-10-05": {
+   "K": 0.981,
+   "RB": 1.199,
+   "clear": false
+  },
+  "2018-10-06": {
+   "K": 1.024,
+   "RB": 1.267,
+   "clear": false
+  },
+  "2018-10-07": {
+   "K": 1.0,
+   "RB": 1.279,
+   "clear": false
+  },
+  "2018-10-08": {
+   "K": 0.963,
+   "RB": 1.285,
+   "clear": true
+  },
+  "2018-10-09": {
+   "K": 0.95,
+   "RB": 1.052,
+   "clear": false
+  },
+  "2018-10-10": {
+   "K": 0.992,
+   "RB": 1.168,
+   "clear": false
+  },
+  "2018-10-11": {
+   "K": 0.971,
+   "RB": 1.074,
+   "clear": false
+  },
+  "2018-10-12": {
+   "K": 0.954,
+   "RB": 1.186,
+   "clear": true
+  },
+  "2018-10-13": {
+   "K": 0.972,
+   "RB": 1.22,
+   "clear": true
+  },
+  "2018-10-14": {
+   "K": 0.988,
+   "RB": 1.173,
+   "clear": false
+  },
+  "2018-10-15": {
+   "K": 0.989,
+   "RB": 1.223,
+   "clear": true
+  },
+  "2018-10-17": {
+   "K": 0.98,
+   "RB": 1.129,
+   "clear": false
+  },
+  "2018-10-18": {
+   "K": 0.984,
+   "RB": 1.11,
+   "clear": false
+  },
+  "2018-10-19": {
+   "K": 0.962,
+   "RB": 1.147,
+   "clear": true
+  },
+  "2018-10-20": {
+   "K": 0.969,
+   "RB": 1.107,
+   "clear": true
+  },
+  "2018-10-21": {
+   "K": 0.974,
+   "RB": 1.091,
+   "clear": false
+  },
+  "2018-10-22": {
+   "K": 0.98,
+   "RB": 1.093,
+   "clear": false
+  },
+  "2018-10-23": {
+   "K": 0.974,
+   "RB": 1.028,
+   "clear": false
+  },
+  "2018-10-24": {
+   "K": 0.963,
+   "RB": 1.221,
+   "clear": false
+  },
+  "2018-10-25": {
+   "K": 0.951,
+   "RB": 1.136,
+   "clear": false
+  },
+  "2018-10-26": {
+   "K": 0.926,
+   "RB": 1.03,
+   "clear": false
+  },
+  "2018-10-27": {
+   "K": 0.973,
+   "RB": 1.16,
+   "clear": false
+  },
+  "2018-10-28": {
+   "K": 0.927,
+   "RB": 1.107,
+   "clear": false
+  },
+  "2018-10-29": {
+   "K": 0.661,
+   "RB": 1.034,
+   "clear": false
+  },
+  "2018-10-30": {
+   "K": 1.005,
+   "RB": 1.217,
+   "clear": false
+  },
+  "2018-10-31": {
+   "K": 0.958,
+   "RB": 1.132,
+   "clear": false
+  },
+  "2019-10-01": {
+   "K": 0.983,
+   "RB": 2.031,
+   "clear": true
+  },
+  "2019-10-02": {
+   "K": 0.955,
+   "RB": 2.125,
+   "clear": true
+  },
+  "2019-10-03": {
+   "K": 0.954,
+   "RB": 2.036,
+   "clear": true
+  },
+  "2019-10-04": {
+   "K": 0.97,
+   "RB": 2.081,
+   "clear": true
+  },
+  "2019-10-05": {
+   "K": 0.941,
+   "RB": 2.305,
+   "clear": true
+  },
+  "2019-10-06": {
+   "K": 0.959,
+   "RB": 1.542,
+   "clear": false
+  },
+  "2019-10-07": {
+   "K": 0.919,
+   "RB": 2.029,
+   "clear": false
+  },
+  "2019-10-08": {
+   "K": 0.847,
+   "RB": 1.534,
+   "clear": false
+  },
+  "2019-10-09": {
+   "K": 0.96,
+   "RB": 1.984,
+   "clear": true
+  },
+  "2019-10-10": {
+   "K": 0.995,
+   "RB": 1.724,
+   "clear": false
+  },
+  "2019-10-11": {
+   "K": 0.9,
+   "RB": 1.638,
+   "clear": false
+  },
+  "2019-10-12": {
+   "K": 0.94,
+   "RB": 1.789,
+   "clear": false
+  },
+  "2019-10-13": {
+   "K": 0.949,
+   "RB": 1.809,
+   "clear": false
+  },
+  "2019-10-15": {
+   "K": 0.948,
+   "RB": 1.666,
+   "clear": false
+  },
+  "2019-10-16": {
+   "K": 0.699,
+   "RB": 1.213,
+   "clear": false
+  },
+  "2019-10-17": {
+   "K": 0.993,
+   "RB": 2.092,
+   "clear": true
+  },
+  "2019-10-18": {
+   "K": 1.002,
+   "RB": 1.507,
+   "clear": false
+  },
+  "2019-10-20": {
+   "K": 0.939,
+   "RB": 2.109,
+   "clear": true
+  },
+  "2019-10-21": {
+   "K": 0.933,
+   "RB": 2.201,
+   "clear": true
+  },
+  "2019-10-22": {
+   "K": 0.925,
+   "RB": 2.184,
+   "clear": true
+  },
+  "2019-10-23": {
+   "K": 0.914,
+   "RB": 2.148,
+   "clear": true
+  },
+  "2019-10-24": {
+   "K": 0.922,
+   "RB": 2.028,
+   "clear": true
+  },
+  "2019-10-25": {
+   "K": 0.907,
+   "RB": 2.006,
+   "clear": true
+  },
+  "2019-10-26": {
+   "K": 0.933,
+   "RB": 1.933,
+   "clear": true
+  }
+ },
+ "e4bfit_miss_direction_by_month": {
+  "2017-03": {
+   "below_q05": 0.007,
+   "above_q95": 0.009,
+   "median_error_kw": -0.782,
+   "width90_kw": 7.944,
+   "n": 969
+  },
+  "2017-05": {
+   "below_q05": 0.025,
+   "above_q95": 0.031,
+   "median_error_kw": -0.352,
+   "width90_kw": 6.731,
+   "n": 21177
+  },
+  "2017-06": {
+   "below_q05": 0.022,
+   "above_q95": 0.108,
+   "median_error_kw": 0.084,
+   "width90_kw": 6.087,
+   "n": 25320
+  },
+  "2017-07": {
+   "below_q05": 0.023,
+   "above_q95": 0.09,
+   "median_error_kw": 0.056,
+   "width90_kw": 5.395,
+   "n": 16242
+  },
+  "2017-08": {
+   "below_q05": 0.017,
+   "above_q95": 0.016,
+   "median_error_kw": -0.305,
+   "width90_kw": 6.041,
+   "n": 32277
+  },
+  "2017-09": {
+   "below_q05": 0.016,
+   "above_q95": 0.257,
+   "median_error_kw": 0.233,
+   "width90_kw": 6.994,
+   "n": 20415
+  },
+  "2017-10": {
+   "below_q05": 0.022,
+   "above_q95": 0.406,
+   "median_error_kw": 0.471,
+   "width90_kw": 5.392,
+   "n": 22392
+  },
+  "2017-11": {
+   "below_q05": 0.061,
+   "above_q95": 0.12,
+   "median_error_kw": -0.264,
+   "width90_kw": 7.602,
+   "n": 3030
+  },
+  "2017-12": {
+   "below_q05": 0.045,
+   "above_q95": 0.247,
+   "median_error_kw": 0.087,
+   "width90_kw": 5.519,
+   "n": 3039
+  },
+  "2018-01": {
+   "below_q05": 0.053,
+   "above_q95": 0.111,
+   "median_error_kw": -0.764,
+   "width90_kw": 7.554,
+   "n": 13122
+  },
+  "2018-02": {
+   "below_q05": 0.063,
+   "above_q95": 0.063,
+   "median_error_kw": -0.702,
+   "width90_kw": 6.672,
+   "n": 11958
+  },
+  "2018-03": {
+   "below_q05": 0.063,
+   "above_q95": 0.05,
+   "median_error_kw": -1.085,
+   "width90_kw": 9.71,
+   "n": 7263
+  },
+  "2018-05": {
+   "below_q05": 0.011,
+   "above_q95": 0.069,
+   "median_error_kw": -0.029,
+   "width90_kw": 5.496,
+   "n": 25131
+  },
+  "2018-06": {
+   "below_q05": 0.004,
+   "above_q95": 0.158,
+   "median_error_kw": 0.153,
+   "width90_kw": 3.612,
+   "n": 29529
+  },
+  "2018-07": {
+   "below_q05": 0.013,
+   "above_q95": 0.088,
+   "median_error_kw": -0.018,
+   "width90_kw": 3.935,
+   "n": 33123
+  },
+  "2018-08": {
+   "below_q05": 0.003,
+   "above_q95": 0.051,
+   "median_error_kw": -0.006,
+   "width90_kw": 3.785,
+   "n": 21897
+  },
+  "2018-09": {
+   "below_q05": 0.005,
+   "above_q95": 0.016,
+   "median_error_kw": -0.046,
+   "width90_kw": 3.417,
+   "n": 6918
+  },
+  "2018-10": {
+   "below_q05": 0.027,
+   "above_q95": 0.212,
+   "median_error_kw": 0.259,
+   "width90_kw": 4.041,
+   "n": 25878
+  },
+  "2018-11": {
+   "below_q05": 0.024,
+   "above_q95": 0.106,
+   "median_error_kw": -0.159,
+   "width90_kw": 4.265,
+   "n": 2541
+  },
+  "2019-01": {
+   "below_q05": 0.016,
+   "above_q95": 0.104,
+   "median_error_kw": 0.383,
+   "width90_kw": 8.808,
+   "n": 3159
+  },
+  "2019-02": {
+   "below_q05": 0.023,
+   "above_q95": 0.092,
+   "median_error_kw": 0.373,
+   "width90_kw": 14.999,
+   "n": 4647
+  },
+  "2019-05": {
+   "below_q05": 0.03,
+   "above_q95": 0.132,
+   "median_error_kw": -0.114,
+   "width90_kw": 5.158,
+   "n": 10122
+  },
+  "2019-06": {
+   "below_q05": 0.012,
+   "above_q95": 0.096,
+   "median_error_kw": 0.002,
+   "width90_kw": 4.042,
+   "n": 33051
+  },
+  "2019-07": {
+   "below_q05": 0.011,
+   "above_q95": 0.056,
+   "median_error_kw": -0.052,
+   "width90_kw": 3.881,
+   "n": 34938
+  },
+  "2019-08": {
+   "below_q05": 0.018,
+   "above_q95": 0.03,
+   "median_error_kw": -0.252,
+   "width90_kw": 4.067,
+   "n": 33006
+  },
+  "2019-09": {
+   "below_q05": 0.025,
+   "above_q95": 0.098,
+   "median_error_kw": -0.247,
+   "width90_kw": 4.09,
+   "n": 30171
+  },
+  "2019-10": {
+   "below_q05": 0.023,
+   "above_q95": 0.103,
+   "median_error_kw": -0.038,
+   "width90_kw": 4.081,
+   "n": 21771
+  }
+ }
+}

@@ -1,0 +1,2 @@
+[csi] fold 0: val ['2017-03-09', '2017-09-12']
+  epoch   1  train loss -1.50597  val CRPS 0.582 kW (raw 0.587)  *  lr 9.9e-05  |g|p99 158.84  (92s)
