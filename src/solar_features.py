@@ -91,18 +91,26 @@ def radial_inflow(prev: np.ndarray, cur: np.ndarray) -> float:
     return float(np.mean(vals))
 
 
+_MASKS = None
+
+
+def pair_motion(prev_gray: np.ndarray, cur_gray: np.ndarray, x: float, y: float, minutes: float) -> np.ndarray:
+    """6 motion features between two grey frames, both cropped at the CURRENT sun position (x, y), so solar
+    motion is not counted as cloud motion. Shifts in px per minute."""
+    global _MASKS
+    if _MASKS is None:
+        _MASKS = ring_masks()
+    prev, cur = sun_crop(prev_gray, x, y), sun_crop(cur_gray, x, y)
+    diff = np.abs(cur - prev)
+    dx, dy = phase_shift(prev, cur)
+    return np.array([diff[m].mean() for m in _MASKS] + [dx / minutes, dy / minutes, radial_inflow(prev, cur) / minutes],
+                    np.float32)
+
+
 def motion_features(gray_frames: np.ndarray, xs, ys, minutes_per_step: float) -> np.ndarray:
-    """[16, 6] motion features for chronological grey frames [16, H, W] (oldest first)."""
+    """[16, 6] motion between consecutive frames of a chronological window (draft definition; zero for the oldest).
+    The frozen E8 features use pair_motion on 1-min record pairs instead (Amendment A)."""
     out = np.zeros((len(gray_frames), N_M), np.float32)
-    masks = ring_masks()
-    crops = [sun_crop(g, x, y) for g, x, y in zip(gray_frames, xs, ys)]
-    for k in range(1, len(crops)):
-        # both crops centred on the CURRENT sun position, so solar motion is not counted as cloud motion
-        prev = sun_crop(gray_frames[k - 1], xs[k], ys[k])
-        cur = crops[k]
-        diff = np.abs(cur - prev)
-        out[k, :3] = [diff[m].mean() for m in masks]
-        dx, dy = phase_shift(prev, cur)
-        out[k, 3], out[k, 4] = dx / minutes_per_step, dy / minutes_per_step
-        out[k, 5] = radial_inflow(prev, cur) / minutes_per_step
+    for k in range(1, len(gray_frames)):
+        out[k] = pair_motion(gray_frames[k - 1], gray_frames[k], xs[k], ys[k], minutes_per_step)
     return out
