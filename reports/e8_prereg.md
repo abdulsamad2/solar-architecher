@@ -198,9 +198,14 @@ The same rule applies to G3′ vs G3c after Track A.
 
 Per-forecast inference adds about 10 ms of feature extraction (single-thread CPU) to the model's 2.8 ms (batch 1). That is negligible for 1-min operation.
 
-## 10. Items requiring approval before freezing
-1. The 16-frame / variable-stride design for H30/H60 (vs dense 1-min frames, which would change capacity and compute).
-2. The common population as primary, with E4-B-fit fallback for the secondary full-population evaluation.
-3. Stage-2 conditionality (P/M split only if stage 1 passes).
-4. The non-inferiority margins δ_O = 0.02 kW and δ_S = 0.015 kW.
-5. The G5 motion-gate feature set (origin-frame radial inflow, inner-ring |ΔI|, shift magnitude).
+## 10. Approval record
+All five items were approved by the user on 2026-10-21, with Amendments A and B (§0).
+- **Execution order:**
+  1. feature store and pipeline tests;
+  2. Track B (CPU);
+  3. **stop for go-ahead**;
+  4. Track A GPU runs.
+- **G5 feature transforms:**
+  - radial inflow: standardised only (signed);
+  - inner-ring |ΔI| and shift magnitude: log(x + 1e−3), then standardised;
+  - all fitted on the fitting set only.
