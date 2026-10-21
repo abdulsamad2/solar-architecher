@@ -89,10 +89,16 @@ We also report three data findings for SKIPP'D users:
    - **Colour:** the midday R/B ratio goes from 1.30 to 2.29 overnight.
    - **Geometry:** a label-free fisheye calibration (equidistant lens, mirrored, about 0.7 px error) shows the optical centre moving about 2.5 px at the change.
 
-## 5. Ongoing work [PROVISIONAL]
-- **E8 Track B (complete):** origin-frame motion summaries (radial inflow toward the sun, ring-wise image change, shift magnitude) do **not** add routing information beyond event probability and expert disagreement (1/3 seeds).
-- **E8 Track A (not yet run):** whether a longer history (30/60 min, 16 frames) and per-frame solar-relative features improve the direct-K expert on ramps. Results and conclusions are pending.
-- **Population caveat:** the common population used for matched comparisons excludes early-morning samples, which are ramp-rich (29.8% ramps). Any E8 conclusion must be qualified by the fallback-population and sunrise-ramp analyses.
+## 5. Longer history and solar-relative motion (E8; established on development folds)
+**Setup:** matched-capacity direct-K experts (16 frames at a 1/2/4-min stride), evaluated on the common population that is eligible for all windows.
+
+**Results:**
+- **Longer history:** 30 and 60 min improve ramp CRPS by 0.03–0.05 and 0.08–0.10 kW over a matched 15-min baseline (3/3 seeds), with small calm-condition costs within the pre-registered margins (2/3 seeds).
+- **Hand-crafted solar-relative motion features** improve ramps further (up to −0.19 kW together with 60-min history), but cost 0.03–0.05 kW overall. They fail the margins and add no routing value as gate inputs.
+- **Ramp detection quality** (implied event probability) does not change across arms. The gains are distributional.
+- **Best gate:** a disagreement gate pairing the 60-min direct expert with the residual mixture expert (G3′) improves ramp CRPS by 0.07–0.09 kW over the 15-min pairing at equal overall CRPS (0.596; 3/3 seeds). It comes within about 0.03 kW of the 15-min direct expert's ramp CRPS.
+
+**Caveat:** the common population excludes early-morning, ramp-rich samples (29.8% ramps). Deployment uses the 15-min models there.
 
 ## 6. Limitations
 - A single site and 64×64 images.
@@ -102,7 +108,9 @@ We also report three data findings for SKIPP'D users:
 - Split-conformal guarantees are marginal and approximate under temporal dependence.
 
 ## 7. Pending before submission
-1. Finish E8 (Track A) and write the Gate 4 report.
+1. ~~Finish E8 (Track A) and write the Gate 4 report.~~ Done (`reports/gate4_report.md`).
 2. **Freeze the final forecaster(s) and protocol, then a single sealed test-set evaluation**, pre-registered.
+   - Candidate: G3′ + causal rolling conformal, with a 15-min fallback where a 60-min history is unavailable.
+   - Comparators: persistence, the SUNSET port, E4-B-fit, G4.
 3. Figures: reliability, weekly fold-1 coverage, the ramp trade-off, gate weights, and a camera geometry and colour figure.
 4. Related-work section and citations (not yet drafted).
