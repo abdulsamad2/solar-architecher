@@ -74,7 +74,32 @@ def evaluate(arms, seed, rl, with_intervals=False):
     for a in arms:
         out["contrasts"][f"{a} - A0"] = {g: bootstrap_diff(crps[a][st[g]], crps["A0"][st[g]], dayk[st[g]], meta["clear_day"][st[g]], kind="mean")
                                          for g in GROUPS}
+    # reporting only (no effect on selection): per-fold CRPS by stratum
+    out["per_fold"] = {a: {k: {g: float(crps[a][st[g] & (meta["fold"] == k)].mean()) for g in ("overall", "sunny", "cloudy", "ramp")}
+                           for k in FOLDS} for a in crps}
     return out
+
+
+def latency_ms(arm, batch=1, steps=200):
+    """Batch-1 inference latency on the local GPU (reporting only)."""
+    import time
+
+    import torch
+
+    from src.train import build_model
+    cfg = json.loads((arm_dir(arm) / "seed42" / "config.json").read_text())
+    m = build_model(cfg).cuda().eval()
+    m.encoder.cnn_bf16 = True
+    x, h, e = torch.rand(batch, 16, 3, 64, 64, device="cuda"), torch.rand(batch, 16, device="cuda"), torch.rand(batch, 16, 11, device="cuda")
+    with torch.no_grad():
+        for _ in range(20):
+            m(x, h, e)
+        torch.cuda.synchronize()
+        t0 = time.perf_counter()
+        for _ in range(steps):
+            m(x, h, e)
+        torch.cuda.synchronize()
+    return (time.perf_counter() - t0) / steps * 1e3
 
 
 def params_and_cost(arm):
@@ -98,7 +123,9 @@ def screen(rl):
     a0 = r["raw_crps"]["A0"]
     elig = {a: (r["raw_crps"][a]["overall"] - a0["overall"] <= D_O) and (r["raw_crps"][a]["sunny"] - a0["sunny"] <= D_S)
             and (r["raw_crps"][a]["ramp"] < a0["ramp"]) for a in arms}
-    cost = {a: params_and_cost(a) for a in arms}
+    cost = {a: params_and_cost(a) for a in ("A0",) + tuple(arms)}
+    for a in cost:
+        cost[a]["latency_ms_batch1"] = latency_ms(a)
     cand = sorted([a for a in arms if elig[a]], key=lambda a: (r["raw_crps"][a]["ramp"], cost[a]["parameters"]))
     r.update({"eligible": elig, "selected": cand[:2], "cost": cost, "stop": len(cand) == 0})
     Path("reports/e9_screen.json").write_text(json.dumps(r, indent=1, default=float))
