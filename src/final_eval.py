@@ -71,6 +71,9 @@ class Split:
         self.data = GpuSeq(self.ds, device)
         self.table = record_table
         self.device = device
+        # same numerical backend settings as training/validation inference (src/train.py main)
+        torch.backends.cuda.matmul.allow_tf32 = True
+        torch.backends.cudnn.allow_tf32 = True
 
 
 _DEV_ARRAYS = None

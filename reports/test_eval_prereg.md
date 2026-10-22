@@ -81,3 +81,12 @@
    - updates are mature only.
 5. Synthetic fixtures for the ensemble, daily-reset calibration, bootstrap and execution guards (`tests/test_final_eval.py`).
 6. Feature, eligibility and checkpoint hashes are verified.
+
+## Amendment 1 (2026-10-23, during the development-only dry run; no test data involved)
+- **What happened:** the first dry run stopped at check 6.1. E4-B-fit (seed 42, fold 0) reproduced to 5.8e−3 kW, above the 1e−4 tolerance.
+- **Diagnosis:**
+  - The inference code ran with fp32 matrix multiplication, while training-time validation inference used **TF32** (`torch.backends.cuda.matmul.allow_tf32 = True`, set in `src/train.py`).
+  - With identical backend settings the maximum difference is **1.8e−7 kW**.
+  - Clear-sky and target arrays matched exactly, so there is no pipeline error.
+- **Fix:** `src/final_eval.Split` now sets the same backend flags as training.
+- **Unchanged:** the tolerance (1e−4 kW), the models and every rule.
