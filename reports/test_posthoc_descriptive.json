@@ -1,0 +1,1404 @@
+{
+ "note": "POST-HOC DESCRIPTIVE analysis of committed test predictions; not pre-registered hypothesis tests.",
+ "per_day": {
+  "2017-06-24": {
+   "sunny": false,
+   "n": 762,
+   "n_ramp": 225,
+   "crps|G3''-F": 1.6813580131578212,
+   "crps|E4-B-fit": 1.7221441798678254,
+   "crps|E6-S": 1.910120745510186,
+   "crps|G4": 1.759107765074021,
+   "crps|persistence": 2.8115832417721847,
+   "crps|SUNSET port": 2.6020528019999896
+  },
+  "2017-09-15": {
+   "sunny": true,
+   "n": 678,
+   "n_ramp": 28,
+   "crps|G3''-F": 0.10156694718405357,
+   "crps|E4-B-fit": 0.34396468238628614,
+   "crps|E6-S": 0.10273282902644502,
+   "crps|G4": 0.10112450083310612,
+   "crps|persistence": 0.28563598628383613,
+   "crps|SUNSET port": 0.6536378659593672
+  },
+  "2017-09-20": {
+   "sunny": false,
+   "n": 650,
+   "n_ramp": 194,
+   "crps|G3''-F": 2.5668640555102615,
+   "crps|E4-B-fit": 2.4830771424674767,
+   "crps|E6-S": 2.7375691249603396,
+   "crps|G4": 2.502340664421582,
+   "crps|persistence": 3.8963068822922433,
+   "crps|SUNSET port": 3.403496641672861
+  },
+  "2017-10-06": {
+   "sunny": true,
+   "n": 627,
+   "n_ramp": 20,
+   "crps|G3''-F": 0.0732343476266981,
+   "crps|E4-B-fit": 0.15157915967374888,
+   "crps|E6-S": 0.07492821488236553,
+   "crps|G4": 0.07295106924201,
+   "crps|persistence": 0.3071255399565475,
+   "crps|SUNSET port": 0.46245833720114715
+  },
+  "2017-10-11": {
+   "sunny": false,
+   "n": 595,
+   "n_ramp": 60,
+   "crps|G3''-F": 1.2633252105496025,
+   "crps|E4-B-fit": 1.3767726743763868,
+   "crps|E6-S": 1.348053739678256,
+   "crps|G4": 1.2944349711842036,
+   "crps|persistence": 1.8866637006473628,
+   "crps|SUNSET port": 1.7000149703717657
+  },
+  "2017-10-22": {
+   "sunny": true,
+   "n": 591,
+   "n_ramp": 8,
+   "crps|G3''-F": 0.08987398147465431,
+   "crps|E4-B-fit": 0.4330769323600946,
+   "crps|E6-S": 0.07426991547948579,
+   "crps|G4": 0.0826511398771991,
+   "crps|persistence": 0.35131964769287277,
+   "crps|SUNSET port": 0.3116333040640439
+  },
+  "2018-01-25": {
+   "sunny": false,
+   "n": 519,
+   "n_ramp": 197,
+   "crps|G3''-F": 3.366926431283762,
+   "crps|E4-B-fit": 3.391833456190983,
+   "crps|E6-S": 3.4695839737594993,
+   "crps|G4": 3.323372436782392,
+   "crps|persistence": 5.145724502844262,
+   "crps|SUNSET port": 5.284702551043332
+  },
+  "2018-02-16": {
+   "sunny": true,
+   "n": 579,
+   "n_ramp": 1,
+   "crps|G3''-F": 0.0878089045039871,
+   "crps|E4-B-fit": 0.16853212652468394,
+   "crps|E6-S": 0.07252420279726314,
+   "crps|G4": 0.07805709444710755,
+   "crps|persistence": 0.3332090190349773,
+   "crps|SUNSET port": 0.7414921036758982
+  },
+  "2018-03-09": {
+   "sunny": false,
+   "n": 630,
+   "n_ramp": 108,
+   "crps|G3''-F": 1.5512584594931378,
+   "crps|E4-B-fit": 1.5727784030018708,
+   "crps|E6-S": 1.8490995943565416,
+   "crps|G4": 1.6019301067579026,
+   "crps|persistence": 2.602303363173364,
+   "crps|SUNSET port": 2.5241616462693655
+  },
+  "2018-06-12": {
+   "sunny": true,
+   "n": 728,
+   "n_ramp": 6,
+   "crps|G3''-F": 0.0626004226241879,
+   "crps|E4-B-fit": 0.16919480103010287,
+   "crps|E6-S": 0.06308791106485684,
+   "crps|G4": 0.06230709256548904,
+   "crps|persistence": 0.18518359769256149,
+   "crps|SUNSET port": 0.19989698676899034
+  },
+  "2018-06-23": {
+   "sunny": true,
+   "n": 725,
+   "n_ramp": 7,
+   "crps|G3''-F": 0.05866007297774227,
+   "crps|E4-B-fit": 0.20474243439264125,
+   "crps|E6-S": 0.059527368202789414,
+   "crps|G4": 0.05846470548311831,
+   "crps|persistence": 0.18650709116092284,
+   "crps|SUNSET port": 0.25516867694284384
+  },
+  "2018-10-04": {
+   "sunny": false,
+   "n": 609,
+   "n_ramp": 248,
+   "crps|G3''-F": 2.46503435848162,
+   "crps|E4-B-fit": 2.5297386138439766,
+   "crps|E6-S": 2.642390253204806,
+   "crps|G4": 2.4872529806427988,
+   "crps|persistence": 4.149599766933026,
+   "crps|SUNSET port": 3.809528424014599
+  },
+  "2019-01-25": {
+   "sunny": true,
+   "n": 540,
+   "n_ramp": 8,
+   "crps|G3''-F": 0.1051708960956368,
+   "crps|E4-B-fit": 0.36514073250728524,
+   "crps|E6-S": 0.1068573181447182,
+   "crps|G4": 0.10679594611684351,
+   "crps|persistence": 0.41922241070848737,
+   "crps|SUNSET port": 1.099547298942451
+  },
+  "2019-05-27": {
+   "sunny": false,
+   "n": 767,
+   "n_ramp": 183,
+   "crps|G3''-F": 2.06370355699094,
+   "crps|E4-B-fit": 2.176777853889524,
+   "crps|E6-S": 2.120419572959482,
+   "crps|G4": 2.044282018639029,
+   "crps|persistence": 2.9914389224633267,
+   "crps|SUNSET port": 3.0257033308915737
+  },
+  "2019-06-23": {
+   "sunny": true,
+   "n": 786,
+   "n_ramp": 24,
+   "crps|G3''-F": 0.050792925613066135,
+   "crps|E4-B-fit": 0.12972082051173314,
+   "crps|E6-S": 0.05262412274005616,
+   "crps|G4": 0.05093599736723913,
+   "crps|persistence": 0.1804821526322631,
+   "crps|SUNSET port": 0.3144437139861241
+  },
+  "2019-06-28": {
+   "sunny": false,
+   "n": 764,
+   "n_ramp": 94,
+   "crps|G3''-F": 0.7736447614592046,
+   "crps|E4-B-fit": 0.837568815471531,
+   "crps|E6-S": 0.9011061135504783,
+   "crps|G4": 0.786434954919483,
+   "crps|persistence": 1.4326441601814681,
+   "crps|SUNSET port": 1.2585344682862076
+  },
+  "2019-07-14": {
+   "sunny": true,
+   "n": 775,
+   "n_ramp": 32,
+   "crps|G3''-F": 0.06941788219248873,
+   "crps|E4-B-fit": 0.1501476060232581,
+   "crps|E6-S": 0.07324943227011207,
+   "crps|G4": 0.06936205993951626,
+   "crps|persistence": 0.21016188431803373,
+   "crps|SUNSET port": 0.3948627406550992
+  },
+  "2019-08-10": {
+   "sunny": false,
+   "n": 736,
+   "n_ramp": 263,
+   "crps|G3''-F": 2.019974109489404,
+   "crps|E4-B-fit": 2.2075751628428817,
+   "crps|E6-S": 2.2831537607157295,
+   "crps|G4": 2.173891239818963,
+   "crps|persistence": 3.7045441161714696,
+   "crps|SUNSET port": 3.4912834339117147
+  },
+  "2019-10-14": {
+   "sunny": true,
+   "n": 609,
+   "n_ramp": 12,
+   "crps|G3''-F": 0.05958871899287602,
+   "crps|E4-B-fit": 0.12904655894587358,
+   "crps|E6-S": 0.06020116550431159,
+   "crps|G4": 0.06099112773677007,
+   "crps|persistence": 0.31942420539607413,
+   "crps|SUNSET port": 0.5431008493322849
+  },
+  "2019-10-19": {
+   "sunny": false,
+   "n": 596,
+   "n_ramp": 198,
+   "crps|G3''-F": 2.1193858809291113,
+   "crps|E4-B-fit": 2.344422160630458,
+   "crps|E6-S": 2.285642754303537,
+   "crps|G4": 2.2490420394801225,
+   "crps|persistence": 3.5411418143575433,
+   "crps|SUNSET port": 3.256944640663815
+  }
+ },
+ "stratum_diff_ci": {
+  "G3''-F - E4-B-fit": {
+   "overall": [
+    -0.11093067522569212,
+    -0.14910867347942075,
+    -0.0752750117639668
+   ],
+   "sunny": [
+    -0.14369333657759342,
+    -0.2037306813136916,
+    -0.09669337275559069
+   ],
+   "cloudy": [
+    -0.07811858318376079,
+    -0.1289286994592523,
+    -0.02603008650066844
+   ],
+   "ramp": [
+    -0.11705048425675404,
+    -0.24422133550948993,
+    0.03147473855860093
+   ],
+   "non-ramp": [
+    -0.10989758675842211,
+    -0.1489481194184893,
+    -0.0740926142569095
+   ],
+   "sunrise ramp": [
+    0.03055424550670203,
+    -0.013680214907994905,
+    0.08956357701209473
+   ],
+   "up-ramp": [
+    -0.0690590309584292,
+    -0.23027149858843018,
+    0.12574778545181434
+   ],
+   "down-ramp": [
+    -0.16288721924372562,
+    -0.2989445078463349,
+    0.004065384423085348
+   ],
+   "60-min eligible": [
+    -0.11785601191465431,
+    -0.15789527951385326,
+    -0.08031184159893469
+   ],
+   "fallback (no 60-min history)": [
+    -0.017009122215672565,
+    -0.03787352911020469,
+    0.0010502680624565235
+   ]
+  },
+  "G3''-F - G4": {
+   "overall": [
+    -0.01772588911173197,
+    -0.03947240874307354,
+    0.0020356621323429753
+   ],
+   "sunny": [
+    0.0013478444120664074,
+    -0.000325913697555547,
+    0.003668460279027978
+   ],
+   "cloudy": [
+    -0.036828400145373134,
+    -0.07949176476002955,
+    0.003263362219904451
+   ],
+   "ramp": [
+    -0.27129919517529205,
+    -0.36428685578016484,
+    -0.172507399358548
+   ],
+   "non-ramp": [
+    0.0250799659030505,
+    0.007140579617274582,
+    0.044834421962973596
+   ],
+   "sunrise ramp": [
+    0.006550851780379034,
+    -0.004759937990116002,
+    0.022253224181705385
+   ],
+   "up-ramp": [
+    -0.17404222790879556,
+    -0.2964569774376957,
+    -0.049315072429154845
+   ],
+   "down-ramp": [
+    -0.3641895230951297,
+    -0.448565123988864,
+    -0.25178058326524166
+   ],
+   "60-min eligible": [
+    -0.019205157637104762,
+    -0.04254094647665484,
+    0.0021319830411716057
+   ],
+   "fallback (no 60-min history)": [
+    0.0023359798575116144,
+    -0.00047039816317637196,
+    0.005737897551865547
+   ]
+  },
+  "G3''-F - E6-S": {
+   "overall": [
+    -0.0835779923545323,
+    -0.10846019233225464,
+    -0.060257736077338135
+   ],
+   "sunny": [
+    0.0014376652494706586,
+    -0.0018444500380138918,
+    0.006113532966955195
+   ],
+   "cloudy": [
+    -0.168721917396079,
+    -0.21628995239605764,
+    -0.12214612770244551
+   ],
+   "ramp": [
+    -0.7708372916304773,
+    -0.8768353294734454,
+    -0.651652711558695
+   ],
+   "non-ramp": [
+    0.0324386435408608,
+    -0.0031369733453146796,
+    0.06842771814996641
+   ],
+   "sunrise ramp": [
+    -0.09227860169559324,
+    -0.2321859455428894,
+    0.011124266539220367
+   ],
+   "up-ramp": [
+    -0.5947681821555425,
+    -0.7548343737131802,
+    -0.4198596363060487
+   ],
+   "down-ramp": [
+    -0.9390012574147014,
+    -1.1365097758268465,
+    -0.7242687061673614
+   ],
+   "60-min eligible": [
+    -0.087897360792135,
+    -0.11454236452219801,
+    -0.062249906722087606
+   ],
+   "fallback (no 60-min history)": [
+    -0.02499863225949198,
+    -0.0596727612068888,
+    0.007283450761891237
+   ]
+  },
+  "G3''-F - persistence": {
+   "overall": [
+    -0.7009338577253699,
+    -0.8229441646400424,
+    -0.5824365692879117
+   ],
+   "sunny": [
+    -0.1941577649858894,
+    -0.23701618682048012,
+    -0.15645380345485224
+   ],
+   "cloudy": [
+    -1.2084745492770705,
+    -1.4543164063653375,
+    -0.9706419785907752
+   ],
+   "ramp": [
+    -3.6202601011539293,
+    -4.254093872431368,
+    -2.895417829118421
+   ],
+   "non-ramp": [
+    -0.20812072271135063,
+    -0.3036618340297053,
+    -0.10746647232213703
+   ],
+   "sunrise ramp": [
+    -0.8018791503626732,
+    -1.0937719112765223,
+    -0.5463556997293648
+   ],
+   "up-ramp": [
+    -3.4370865021837713,
+    -4.189322559014609,
+    -2.733565926247031
+   ],
+   "down-ramp": [
+    -3.795209579353997,
+    -4.610918311602398,
+    -2.880465624005986
+   ],
+   "60-min eligible": [
+    -0.7133450994459921,
+    -0.8427392256797346,
+    -0.5892177409415306
+   ],
+   "fallback (no 60-min history)": [
+    -0.5326123522826832,
+    -0.6683606027412813,
+    -0.40996903839803367
+   ]
+  },
+  "G3''-F - SUNSET port": {
+   "overall": [
+    -0.7132988757670211,
+    -0.8584898992769812,
+    -0.577909167620904
+   ],
+   "sunny": [
+    -0.4009011634256625,
+    -0.5577484494838691,
+    -0.2772522265981881
+   ],
+   "cloudy": [
+    -1.0261679183925396,
+    -1.2834903096272714,
+    -0.7906532329883751
+   ],
+   "ramp": [
+    -1.3047788509914597,
+    -1.6053737226402267,
+    -0.9328422459393997
+   ],
+   "non-ramp": [
+    -0.6134508024163581,
+    -0.736455445180103,
+    -0.5051918531820709
+   ],
+   "sunrise ramp": [
+    -0.2621608467063201,
+    -0.43281584775957027,
+    -0.060632937221935655
+   ],
+   "up-ramp": [
+    -1.3408671218283958,
+    -1.688541335567471,
+    -0.9124563776835292
+   ],
+   "down-ramp": [
+    -1.2703108698655694,
+    -1.6304928040822135,
+    -0.8062207905622072
+   ],
+   "60-min eligible": [
+    -0.7297087081468168,
+    -0.882906813430604,
+    -0.5863414214570564
+   ],
+   "fallback (no 60-min history)": [
+    -0.49074840479844045,
+    -0.6355710579707486,
+    -0.3604951165248577
+   ]
+  },
+  "D4 - E4-B-fit (60-min eligible)": {
+   "overall": [
+    0.008049666312042729,
+    -0.015027398119555379,
+    0.03100532707864313
+   ],
+   "sunny": [
+    0.023197771260329257,
+    0.005679291644881855,
+    0.04445971333488165
+   ],
+   "cloudy": [
+    -0.007150021286464989,
+    -0.047831804533887856,
+    0.034159661471071766
+   ],
+   "ramp": [
+    -0.35420494108351497,
+    -0.41531384674241084,
+    -0.27250403872756285
+   ],
+   "non-ramp": [
+    0.06380717009348283,
+    0.03990130003364718,
+    0.09070916134135733
+   ],
+   "up-ramp": [
+    -0.402950103856821,
+    -0.6341770266514163,
+    -0.18412968110174005
+   ],
+   "down-ramp": [
+    -0.31268939795748585,
+    -0.5201304288962655,
+    -0.10292541845368414
+   ],
+   "60-min eligible": [
+    0.008049666312042729,
+    -0.015027398119555379,
+    0.03100532707864313
+   ]
+  }
+ },
+ "intervals": {
+  "G3''-F": {
+   "50": {
+    "overall": {
+     "coverage": 0.5419870345243479,
+     "miss_below_lower": 0.2230514096185738,
+     "miss_above_upper": 0.23496155585707826,
+     "width_kw": 2.026682387468557,
+     "uncalibrated_coverage": 0.49125584200211064
+    },
+    "sunny": {
+     "coverage": 0.657878879180476,
+     "miss_below_lower": 0.14884001205182285,
+     "miss_above_upper": 0.1932811087677011,
+     "width_kw": 0.2388181338626638,
+     "uncalibrated_coverage": 0.5766797228080747
+    },
+    "cloudy": {
+     "coverage": 0.425920337960169,
+     "miss_below_lower": 0.29737477368738685,
+     "miss_above_upper": 0.27670488835244417,
+     "width_kw": 3.817244082615799,
+     "uncalibrated_coverage": 0.4057030778515389
+    },
+    "ramp": {
+     "coverage": 0.16127348643006262,
+     "miss_below_lower": 0.4133611691022965,
+     "miss_above_upper": 0.4253653444676409,
+     "width_kw": 4.457558621808318,
+     "uncalibrated_coverage": 0.15083507306889352
+    },
+    "non-ramp": {
+     "coverage": 0.6062555066079295,
+     "miss_below_lower": 0.1909251101321586,
+     "miss_above_upper": 0.2028193832599119,
+     "width_kw": 1.6163247782178976,
+     "uncalibrated_coverage": 0.5487224669603524
+    },
+    "sunrise ramp": {
+     "coverage": 0.17164179104477612,
+     "miss_below_lower": 0.31343283582089554,
+     "miss_above_upper": 0.5149253731343284,
+     "width_kw": 0.7450116806014954,
+     "uncalibrated_coverage": 0.11940298507462686
+    },
+    "up-ramp": {
+     "coverage": 0.1346153846153846,
+     "miss_below_lower": 0.003205128205128205,
+     "miss_above_upper": 0.8621794871794872,
+     "width_kw": 4.526230765150637,
+     "uncalibrated_coverage": 0.11965811965811966
+    },
+    "down-ramp": {
+     "coverage": 0.186734693877551,
+     "miss_below_lower": 0.8051020408163265,
+     "miss_above_upper": 0.00816326530612245,
+     "width_kw": 4.391969717554839,
+     "uncalibrated_coverage": 0.18061224489795918
+    },
+    "60-min eligible": {
+     "coverage": 0.5435855928773776,
+     "miss_below_lower": 0.22209631728045326,
+     "miss_above_upper": 0.23431808984216917,
+     "width_kw": 2.135680524342078,
+     "uncalibrated_coverage": 0.4934844192634561
+    },
+    "fallback (no 60-min history)": {
+     "coverage": 0.5203073545554336,
+     "miss_below_lower": 0.23600439077936333,
+     "miss_above_upper": 0.24368825466520308,
+     "width_kw": 0.5484475015493947,
+     "uncalibrated_coverage": 0.4610318331503842
+    }
+   },
+   "80": {
+    "overall": {
+     "coverage": 0.8456957636062113,
+     "miss_below_lower": 0.06656113372531283,
+     "miss_above_upper": 0.0877431026684758,
+     "width_kw": 4.421802681709674,
+     "uncalibrated_coverage": 0.824212271973466
+    },
+    "sunny": {
+     "coverage": 0.9165411268454353,
+     "miss_below_lower": 0.031033443808376016,
+     "miss_above_upper": 0.05242542934618861,
+     "width_kw": 0.5350088310123512,
+     "uncalibrated_coverage": 0.8844531485387165
+    },
+    "cloudy": {
+     "coverage": 0.7747435123717562,
+     "miss_below_lower": 0.10214242607121303,
+     "miss_above_upper": 0.12311406155703078,
+     "width_kw": 8.314460735561338,
+     "uncalibrated_coverage": 0.7638805069402534
+    },
+    "ramp": {
+     "coverage": 0.5062630480167014,
+     "miss_below_lower": 0.22755741127348644,
+     "miss_above_upper": 0.2661795407098121,
+     "width_kw": 9.452626286895551,
+     "uncalibrated_coverage": 0.4848643006263048
+    },
+    "non-ramp": {
+     "coverage": 0.9029955947136564,
+     "miss_below_lower": 0.03938325991189427,
+     "miss_above_upper": 0.05762114537444934,
+     "width_kw": 3.5725464678298375,
+     "uncalibrated_coverage": 0.8814977973568282
+    },
+    "sunrise ramp": {
+     "coverage": 0.44776119402985076,
+     "miss_below_lower": 0.21641791044776118,
+     "miss_above_upper": 0.3358208955223881,
+     "width_kw": 1.6731625047993441,
+     "uncalibrated_coverage": 0.3843283582089552
+    },
+    "up-ramp": {
+     "coverage": 0.4551282051282051,
+     "miss_below_lower": 0.0,
+     "miss_above_upper": 0.5448717948717948,
+     "width_kw": 9.593255017867945,
+     "uncalibrated_coverage": 0.4284188034188034
+    },
+    "down-ramp": {
+     "coverage": 0.5551020408163265,
+     "miss_below_lower": 0.4448979591836735,
+     "miss_above_upper": 0.0,
+     "width_kw": 9.318311498946413,
+     "uncalibrated_coverage": 0.5387755102040817
+    },
+    "60-min eligible": {
+     "coverage": 0.8509105625252934,
+     "miss_below_lower": 0.06369890732496965,
+     "miss_above_upper": 0.08539053014973695,
+     "width_kw": 4.654734682427619,
+     "uncalibrated_coverage": 0.8301902063941724
+    },
+    "fallback (no 60-min history)": {
+     "coverage": 0.7749725576289791,
+     "miss_below_lower": 0.10537870472008781,
+     "miss_above_upper": 0.11964873765093303,
+     "width_kw": 1.262774285584302,
+     "uncalibrated_coverage": 0.743139407244786
+    }
+   },
+   "90": {
+    "overall": {
+     "coverage": 0.9350972410673903,
+     "miss_below_lower": 0.021860394994723354,
+     "miss_above_upper": 0.043042363937886324,
+     "width_kw": 6.264536493807571,
+     "uncalibrated_coverage": 0.9298205939996985
+    },
+    "sunny": {
+     "coverage": 0.967912021693281,
+     "miss_below_lower": 0.0061765592045796925,
+     "miss_above_upper": 0.025911419102139198,
+     "width_kw": 0.8224714181291573,
+     "uncalibrated_coverage": 0.9561614944260319
+    },
+    "cloudy": {
+     "coverage": 0.9022329511164756,
+     "miss_below_lower": 0.03756789378394689,
+     "miss_above_upper": 0.06019915509957755,
+     "width_kw": 11.714812289274278,
+     "uncalibrated_coverage": 0.9034399517199758
+    },
+    "ramp": {
+     "coverage": 0.7458246346555324,
+     "miss_below_lower": 0.10647181628392484,
+     "miss_above_upper": 0.1477035490605428,
+     "width_kw": 12.991669182909323,
+     "uncalibrated_coverage": 0.7395615866388309
+    },
+    "non-ramp": {
+     "coverage": 0.9670484581497797,
+     "miss_below_lower": 0.007577092511013216,
+     "miss_above_upper": 0.025374449339207048,
+     "width_kw": 5.128925372017356,
+     "uncalibrated_coverage": 0.9619383259911894
+    },
+    "sunrise ramp": {
+     "coverage": 0.6529850746268657,
+     "miss_below_lower": 0.1455223880597015,
+     "miss_above_upper": 0.20149253731343283,
+     "width_kw": 2.3733495598917225,
+     "uncalibrated_coverage": 0.6417910447761194
+    },
+    "up-ramp": {
+     "coverage": 0.6976495726495726,
+     "miss_below_lower": 0.0,
+     "miss_above_upper": 0.30235042735042733,
+     "width_kw": 13.149742121317761,
+     "uncalibrated_coverage": 0.688034188034188
+    },
+    "down-ramp": {
+     "coverage": 0.7918367346938775,
+     "miss_below_lower": 0.20816326530612245,
+     "miss_above_upper": 0.0,
+     "width_kw": 12.84069339683759,
+     "uncalibrated_coverage": 0.7887755102040817
+    },
+    "60-min eligible": {
+     "coverage": 0.9384864427357346,
+     "miss_below_lower": 0.019830028328611898,
+     "miss_above_upper": 0.04168352893565358,
+     "width_kw": 6.59052314968379,
+     "uncalibrated_coverage": 0.9334682314852286
+    },
+    "fallback (no 60-min history)": {
+     "coverage": 0.889132821075741,
+     "miss_below_lower": 0.04939626783754116,
+     "miss_above_upper": 0.06147091108671789,
+     "width_kw": 1.843499025804634,
+     "uncalibrated_coverage": 0.8803512623490669
+    }
+   }
+  },
+  "E4-B-fit": {
+   "50": {
+    "overall": {
+     "coverage": 0.5564601236243027,
+     "miss_below_lower": 0.22855419870345242,
+     "miss_above_upper": 0.21498567767224483,
+     "width_kw": 2.255019484544884,
+     "uncalibrated_coverage": 0.38489371325192223
+    },
+    "sunny": {
+     "coverage": 0.6482374209099127,
+     "miss_below_lower": 0.1758059656523049,
+     "miss_above_upper": 0.17595661343778246,
+     "width_kw": 0.6755261357836745,
+     "uncalibrated_coverage": 0.433865622175354
+    },
+    "cloudy": {
+     "coverage": 0.46454435727217863,
+     "miss_below_lower": 0.28138201569100785,
+     "miss_above_upper": 0.2540736270368135,
+     "width_kw": 3.8368958950875682,
+     "uncalibrated_coverage": 0.33584791792395896
+    },
+    "ramp": {
+     "coverage": 0.18319415448851775,
+     "miss_below_lower": 0.41179540709812107,
+     "miss_above_upper": 0.40501043841336115,
+     "width_kw": 4.332276041292084,
+     "uncalibrated_coverage": 0.11899791231732777
+    },
+    "non-ramp": {
+     "coverage": 0.6194713656387665,
+     "miss_below_lower": 0.19762114537444933,
+     "miss_above_upper": 0.18290748898678413,
+     "width_kw": 1.9043566155820972,
+     "uncalibrated_coverage": 0.4297797356828194
+    },
+    "sunrise ramp": {
+     "coverage": 0.3694029850746269,
+     "miss_below_lower": 0.26492537313432835,
+     "miss_above_upper": 0.3656716417910448,
+     "width_kw": 1.2688146191682923,
+     "uncalibrated_coverage": 0.16417910447761194
+    },
+    "up-ramp": {
+     "coverage": 0.19017094017094016,
+     "miss_below_lower": 0.002136752136752137,
+     "miss_above_upper": 0.8076923076923077,
+     "width_kw": 4.365696254238812,
+     "uncalibrated_coverage": 0.12072649572649573
+    },
+    "down-ramp": {
+     "coverage": 0.17653061224489797,
+     "miss_below_lower": 0.8030612244897959,
+     "miss_above_upper": 0.02040816326530612,
+     "width_kw": 4.300356327702148,
+     "uncalibrated_coverage": 0.11734693877551021
+    },
+    "60-min eligible": {
+     "coverage": 0.5526507486847431,
+     "miss_below_lower": 0.23148522865236745,
+     "miss_above_upper": 0.2158640226628895,
+     "width_kw": 2.347978527521678,
+     "uncalibrated_coverage": 0.38721165520032375
+    },
+    "fallback (no 60-min history)": {
+     "coverage": 0.6081229418221734,
+     "miss_below_lower": 0.18880351262349068,
+     "miss_above_upper": 0.2030735455543359,
+     "width_kw": 0.9943071069616981,
+     "uncalibrated_coverage": 0.3534577387486279
+    }
+   },
+   "80": {
+    "overall": {
+     "coverage": 0.8480325644504749,
+     "miss_below_lower": 0.04846977235036937,
+     "miss_above_upper": 0.10349766319915574,
+     "width_kw": 5.284972951568319,
+     "uncalibrated_coverage": 0.7612694105231419
+    },
+    "sunny": {
+     "coverage": 0.9184995480566436,
+     "miss_below_lower": 0.006628502561012353,
+     "miss_above_upper": 0.07487194938234408,
+     "width_kw": 1.985485356193606,
+     "uncalibrated_coverage": 0.8040072310937029
+    },
+    "cloudy": {
+     "coverage": 0.7774592637296318,
+     "miss_below_lower": 0.09037417018708509,
+     "miss_above_upper": 0.13216656608328303,
+     "width_kw": 8.589438651341606,
+     "uncalibrated_coverage": 0.7184671092335546
+    },
+    "ramp": {
+     "coverage": 0.4838204592901879,
+     "miss_below_lower": 0.23277661795407098,
+     "miss_above_upper": 0.28340292275574114,
+     "width_kw": 9.600530492587353,
+     "uncalibrated_coverage": 0.42849686847599167
+    },
+    "non-ramp": {
+     "coverage": 0.9095154185022026,
+     "miss_below_lower": 0.0173568281938326,
+     "miss_above_upper": 0.07312775330396476,
+     "width_kw": 4.556461211604225,
+     "uncalibrated_coverage": 0.8174449339207048
+    },
+    "sunrise ramp": {
+     "coverage": 0.5261194029850746,
+     "miss_below_lower": 0.16791044776119404,
+     "miss_above_upper": 0.30597014925373134,
+     "width_kw": 2.0384855823080357,
+     "uncalibrated_coverage": 0.34328358208955223
+    },
+    "up-ramp": {
+     "coverage": 0.44017094017094016,
+     "miss_below_lower": 0.0,
+     "miss_above_upper": 0.5598290598290598,
+     "width_kw": 9.705052244719313,
+     "uncalibrated_coverage": 0.37606837606837606
+    },
+    "down-ramp": {
+     "coverage": 0.5255102040816326,
+     "miss_below_lower": 0.45510204081632655,
+     "miss_above_upper": 0.019387755102040816,
+     "width_kw": 9.50070155381642,
+     "uncalibrated_coverage": 0.4785714285714286
+    },
+    "60-min eligible": {
+     "coverage": 0.8560906515580736,
+     "miss_below_lower": 0.04524484014569,
+     "miss_above_upper": 0.09866450829623634,
+     "width_kw": 5.558444093641926,
+     "uncalibrated_coverage": 0.7696479158235532
+    },
+    "fallback (no 60-min history)": {
+     "coverage": 0.7387486278814489,
+     "miss_below_lower": 0.09220636663007684,
+     "miss_above_upper": 0.1690450054884742,
+     "width_kw": 1.5761519193845452,
+     "uncalibrated_coverage": 0.6476399560922064
+    }
+   },
+   "90": {
+    "overall": {
+     "coverage": 0.9268807477762702,
+     "miss_below_lower": 0.015754560530679935,
+     "miss_above_upper": 0.057364691693049905,
+     "width_kw": 8.202127708442303,
+     "uncalibrated_coverage": 0.8906226443539876
+    },
+    "sunny": {
+     "coverage": 0.9603796324194034,
+     "miss_below_lower": 0.003163603495028623,
+     "miss_above_upper": 0.036456764085567944,
+     "width_kw": 4.101083886475059,
+     "uncalibrated_coverage": 0.9061464296474842
+    },
+    "cloudy": {
+     "coverage": 0.8933313216656609,
+     "miss_below_lower": 0.028364514182257092,
+     "miss_above_upper": 0.07830416415208208,
+     "width_kw": 12.309358983369666,
+     "uncalibrated_coverage": 0.8750754375377188
+    },
+    "ramp": {
+     "coverage": 0.7400835073068893,
+     "miss_below_lower": 0.0918580375782881,
+     "miss_above_upper": 0.16805845511482254,
+     "width_kw": 13.398103234730582,
+     "uncalibrated_coverage": 0.7019832985386222
+    },
+    "non-ramp": {
+     "coverage": 0.9584140969162995,
+     "miss_below_lower": 0.002907488986784141,
+     "miss_above_upper": 0.0386784140969163,
+     "width_kw": 7.324992104180775,
+     "uncalibrated_coverage": 0.9224669603524229
+    },
+    "sunrise ramp": {
+     "coverage": 0.6529850746268657,
+     "miss_below_lower": 0.09328358208955224,
+     "miss_above_upper": 0.2537313432835821,
+     "width_kw": 2.8178750015808753,
+     "uncalibrated_coverage": 0.5335820895522388
+    },
+    "up-ramp": {
+     "coverage": 0.6581196581196581,
+     "miss_below_lower": 0.0,
+     "miss_above_upper": 0.3418803418803419,
+     "width_kw": 13.534202182707316,
+     "uncalibrated_coverage": 0.6132478632478633
+    },
+    "down-ramp": {
+     "coverage": 0.8183673469387756,
+     "miss_below_lower": 0.17959183673469387,
+     "miss_above_upper": 0.0020408163265306124,
+     "width_kw": 13.26811485176505,
+     "uncalibrated_coverage": 0.786734693877551
+    },
+    "60-min eligible": {
+     "coverage": 0.9364629704573048,
+     "miss_below_lower": 0.013759611493322542,
+     "miss_above_upper": 0.049777418049372725,
+     "width_kw": 8.641385008152001,
+     "uncalibrated_coverage": 0.8979360582760016
+    },
+    "fallback (no 60-min history)": {
+     "coverage": 0.7969264544456641,
+     "miss_below_lower": 0.042810098792535674,
+     "miss_above_upper": 0.1602634467618002,
+     "width_kw": 2.244911530710876,
+     "uncalibrated_coverage": 0.7914379802414928
+    }
+   }
+  },
+  "E6-S": {
+   "50": {
+    "overall": {
+     "coverage": 0.5265339966832504,
+     "miss_below_lower": 0.2464194180612091,
+     "miss_above_upper": 0.22704658525554047,
+     "width_kw": 2.1898505273917483,
+     "uncalibrated_coverage": 0.49841700587969245
+    },
+    "sunny": {
+     "coverage": 0.5968665260620669,
+     "miss_below_lower": 0.19870442904489305,
+     "miss_above_upper": 0.20442904489304006,
+     "width_kw": 0.210005311214724,
+     "uncalibrated_coverage": 0.5462488701416089
+    },
+    "cloudy": {
+     "coverage": 0.4560953530476765,
+     "miss_below_lower": 0.29420639710319857,
+     "miss_above_upper": 0.24969824984912492,
+     "width_kw": 4.172682836532227,
+     "uncalibrated_coverage": 0.45051297525648765
+    },
+    "ramp": {
+     "coverage": 0.12056367432150313,
+     "miss_below_lower": 0.4352818371607516,
+     "miss_above_upper": 0.4441544885177453,
+     "width_kw": 4.969257657833036,
+     "uncalibrated_coverage": 0.11899791231732777
+    },
+    "non-ramp": {
+     "coverage": 0.5950660792951542,
+     "miss_below_lower": 0.2145374449339207,
+     "miss_above_upper": 0.1903964757709251,
+     "width_kw": 1.7206572179709987,
+     "uncalibrated_coverage": 0.5624669603524229
+    },
+    "sunrise ramp": {
+     "coverage": 0.08208955223880597,
+     "miss_below_lower": 0.31343283582089554,
+     "miss_above_upper": 0.6044776119402985,
+     "width_kw": 0.9264420261981188,
+     "uncalibrated_coverage": 0.07462686567164178
+    },
+    "up-ramp": {
+     "coverage": 0.09081196581196581,
+     "miss_below_lower": 0.0,
+     "miss_above_upper": 0.9091880341880342,
+     "width_kw": 5.1137017703187055,
+     "uncalibrated_coverage": 0.08653846153846154
+    },
+    "down-ramp": {
+     "coverage": 0.1489795918367347,
+     "miss_below_lower": 0.8510204081632653,
+     "miss_above_upper": 0.0,
+     "width_kw": 4.831298791214071,
+     "uncalibrated_coverage": 0.15
+    },
+    "60-min eligible": {
+     "coverage": 0.5308781869688385,
+     "miss_below_lower": 0.24451639012545529,
+     "miss_above_upper": 0.2246054229057062,
+     "width_kw": 2.3061679883807593,
+     "uncalibrated_coverage": 0.5029542695265075
+    },
+    "fallback (no 60-min history)": {
+     "coverage": 0.4676180021953897,
+     "miss_below_lower": 0.2722283205268935,
+     "miss_above_upper": 0.2601536772777168,
+     "width_kw": 0.6123508231993967,
+     "uncalibrated_coverage": 0.43688254665203075
+    }
+   },
+   "80": {
+    "overall": {
+     "coverage": 0.8322026232473994,
+     "miss_below_lower": 0.09075832956429972,
+     "miss_above_upper": 0.07703904718830092,
+     "width_kw": 4.664661734559358,
+     "uncalibrated_coverage": 0.8019749736167646
+    },
+    "sunny": {
+     "coverage": 0.8999698704429044,
+     "miss_below_lower": 0.05498644169930702,
+     "miss_above_upper": 0.04504368785778849,
+     "width_kw": 0.4740069750121581,
+     "uncalibrated_coverage": 0.8445314853871648
+    },
+    "cloudy": {
+     "coverage": 0.7643331321665661,
+     "miss_below_lower": 0.12658418829209414,
+     "miss_above_upper": 0.10908267954133977,
+     "width_kw": 8.861639147636351,
+     "uncalibrated_coverage": 0.7593542546771274
+    },
+    "ramp": {
+     "coverage": 0.44363256784968685,
+     "miss_below_lower": 0.28235908141962424,
+     "miss_above_upper": 0.2740083507306889,
+     "width_kw": 10.161985255887767,
+     "uncalibrated_coverage": 0.4342379958246347
+    },
+    "non-ramp": {
+     "coverage": 0.8977973568281938,
+     "miss_below_lower": 0.05841409691629956,
+     "miss_above_upper": 0.04378854625550661,
+     "width_kw": 3.736655402676959,
+     "uncalibrated_coverage": 0.8640528634361233
+    },
+    "sunrise ramp": {
+     "coverage": 0.5223880597014925,
+     "miss_below_lower": 0.19029850746268656,
+     "miss_above_upper": 0.2873134328358209,
+     "width_kw": 1.929864489601965,
+     "uncalibrated_coverage": 0.4962686567164179
+    },
+    "up-ramp": {
+     "coverage": 0.4391025641025641,
+     "miss_below_lower": 0.0,
+     "miss_above_upper": 0.5608974358974359,
+     "width_kw": 10.36091258403769,
+     "uncalibrated_coverage": 0.4305555555555556
+    },
+    "down-ramp": {
+     "coverage": 0.4479591836734694,
+     "miss_below_lower": 0.5520408163265306,
+     "miss_above_upper": 0.0,
+     "width_kw": 9.971989358797634,
+     "uncalibrated_coverage": 0.4377551020408163
+    },
+    "60-min eligible": {
+     "coverage": 0.8352893565358155,
+     "miss_below_lower": 0.08887090246863617,
+     "miss_above_upper": 0.07583974099554835,
+     "width_kw": 4.909608929091259,
+     "uncalibrated_coverage": 0.8040469445568595
+    },
+    "fallback (no 60-min history)": {
+     "coverage": 0.7903402854006586,
+     "miss_below_lower": 0.1163556531284303,
+     "miss_above_upper": 0.09330406147091108,
+     "width_kw": 1.342683042526834,
+     "uncalibrated_coverage": 0.7738748627881449
+    }
+   },
+   "90": {
+    "overall": {
+     "coverage": 0.9268053671038745,
+     "miss_below_lower": 0.039122568973315244,
+     "miss_above_upper": 0.03407206392281019,
+     "width_kw": 6.497348713824999,
+     "uncalibrated_coverage": 0.9049449721091513
+    },
+    "sunny": {
+     "coverage": 0.9655016571256403,
+     "miss_below_lower": 0.017475143115396205,
+     "miss_above_upper": 0.017023199758963544,
+     "width_kw": 0.704979694081982,
+     "uncalibrated_coverage": 0.931153962036758
+    },
+    "cloudy": {
+     "coverage": 0.888050694025347,
+     "miss_below_lower": 0.0608026554013277,
+     "miss_above_upper": 0.051146650573325285,
+     "width_kw": 12.298456974696174,
+     "uncalibrated_coverage": 0.8786964393482197
+    },
+    "ramp": {
+     "coverage": 0.6811064718162839,
+     "miss_below_lower": 0.16910229645093947,
+     "miss_above_upper": 0.14979123173277661,
+     "width_kw": 13.71718577901838,
+     "uncalibrated_coverage": 0.6664926931106472
+    },
+    "non-ramp": {
+     "coverage": 0.9682819383259912,
+     "miss_below_lower": 0.017180616740088105,
+     "miss_above_upper": 0.014537444933920705,
+     "width_kw": 5.278563884141253,
+     "uncalibrated_coverage": 0.9451982378854625
+    },
+    "sunrise ramp": {
+     "coverage": 0.7388059701492538,
+     "miss_below_lower": 0.1044776119402985,
+     "miss_above_upper": 0.15671641791044777,
+     "width_kw": 2.6989750707463367,
+     "uncalibrated_coverage": 0.7276119402985075
+    },
+    "up-ramp": {
+     "coverage": 0.6933760683760684,
+     "miss_below_lower": 0.0,
+     "miss_above_upper": 0.30662393162393164,
+     "width_kw": 13.893739396751437,
+     "uncalibrated_coverage": 0.6773504273504274
+    },
+    "down-ramp": {
+     "coverage": 0.6693877551020408,
+     "miss_below_lower": 0.3306122448979592,
+     "miss_above_upper": 0.0,
+     "width_kw": 13.548559058408031,
+     "uncalibrated_coverage": 0.6561224489795918
+    },
+    "60-min eligible": {
+     "coverage": 0.9286118980169972,
+     "miss_below_lower": 0.03820315661675435,
+     "miss_above_upper": 0.03318494536624848,
+     "width_kw": 6.831526305513641,
+     "uncalibrated_coverage": 0.9065965196276811
+    },
+    "fallback (no 60-min history)": {
+     "coverage": 0.9023051591657519,
+     "miss_below_lower": 0.05159165751920966,
+     "miss_above_upper": 0.04610318331503842,
+     "width_kw": 1.9652256124932965,
+     "uncalibrated_coverage": 0.8825466520307355
+    }
+   }
+  },
+  "G4": {
+   "50": {
+    "overall": {
+     "coverage": 0.5398009950248757,
+     "miss_below_lower": 0.22734810794512286,
+     "miss_above_upper": 0.2328508970300015,
+     "width_kw": 1.9704406795459968,
+     "uncalibrated_coverage": 0.48092868988391374
+    },
+    "sunny": {
+     "coverage": 0.6533594456161494,
+     "miss_below_lower": 0.152154263332329,
+     "miss_above_upper": 0.19448629105152154,
+     "width_kw": 0.23243705482693588,
+     "uncalibrated_coverage": 0.5584513407652908
+    },
+    "cloudy": {
+     "coverage": 0.4260712130356065,
+     "miss_below_lower": 0.3026554013277007,
+     "miss_above_upper": 0.27127338563669284,
+     "width_kw": 3.711066518544959,
+     "uncalibrated_coverage": 0.40328907664453834
+    },
+    "ramp": {
+     "coverage": 0.1336116910229645,
+     "miss_below_lower": 0.4321503131524008,
+     "miss_above_upper": 0.4342379958246347,
+     "width_kw": 4.359297302520091,
+     "uncalibrated_coverage": 0.12265135699373696
+    },
+    "non-ramp": {
+     "coverage": 0.6083700440528634,
+     "miss_below_lower": 0.19277533039647576,
+     "miss_above_upper": 0.1988546255506608,
+     "width_kw": 1.5671764249540703,
+     "uncalibrated_coverage": 0.541409691629956
+    },
+    "sunrise ramp": {
+     "coverage": 0.17537313432835822,
+     "miss_below_lower": 0.31343283582089554,
+     "miss_above_upper": 0.5111940298507462,
+     "width_kw": 0.7429534553586618,
+     "uncalibrated_coverage": 0.13432835820895522
+    },
+    "up-ramp": {
+     "coverage": 0.11217948717948718,
+     "miss_below_lower": 0.0,
+     "miss_above_upper": 0.8878205128205128,
+     "width_kw": 4.447523457839189,
+     "uncalibrated_coverage": 0.10042735042735043
+    },
+    "down-ramp": {
+     "coverage": 0.1540816326530612,
+     "miss_below_lower": 0.8448979591836735,
+     "miss_above_upper": 0.0010204081632653062,
+     "width_kw": 4.275032321521442,
+     "uncalibrated_coverage": 0.14387755102040817
+    },
+    "60-min eligible": {
+     "coverage": 0.5418858761634966,
+     "miss_below_lower": 0.22614326183731284,
+     "miss_above_upper": 0.23197086199919062,
+     "width_kw": 2.0757075408939367,
+     "uncalibrated_coverage": 0.4840145690004047
+    },
+    "fallback (no 60-min history)": {
+     "coverage": 0.5115257958287596,
+     "miss_below_lower": 0.24368825466520308,
+     "miss_above_upper": 0.24478594950603733,
+     "width_kw": 0.5428094260291992,
+     "uncalibrated_coverage": 0.43907793633369924
+    }
+   },
+   "80": {
+    "overall": {
+     "coverage": 0.8394391677973767,
+     "miss_below_lower": 0.07198854213779587,
+     "miss_above_upper": 0.08857229006482738,
+     "width_kw": 4.4475862932564,
+     "uncalibrated_coverage": 0.816146540027137
+    },
+    "sunny": {
+     "coverage": 0.9168424224163905,
+     "miss_below_lower": 0.0326905694486291,
+     "miss_above_upper": 0.050467008134980416,
+     "width_kw": 0.5144103608508457,
+     "uncalibrated_coverage": 0.8781259415486592
+    },
+    "cloudy": {
+     "coverage": 0.7619191309595654,
+     "miss_below_lower": 0.11134580567290284,
+     "miss_above_upper": 0.12673506336753168,
+     "width_kw": 8.38669640781706,
+     "uncalibrated_coverage": 0.7540736270368135
+    },
+    "ramp": {
+     "coverage": 0.4535490605427975,
+     "miss_below_lower": 0.2640918580375783,
+     "miss_above_upper": 0.28235908141962424,
+     "width_kw": 9.564292986500806,
+     "uncalibrated_coverage": 0.4384133611691023
+    },
+    "non-ramp": {
+     "coverage": 0.9045814977973569,
+     "miss_below_lower": 0.03955947136563877,
+     "miss_above_upper": 0.05585903083700441,
+     "width_kw": 3.583832106097256,
+     "uncalibrated_coverage": 0.8799118942731278
+    },
+    "sunrise ramp": {
+     "coverage": 0.4253731343283582,
+     "miss_below_lower": 0.22388059701492538,
+     "miss_above_upper": 0.35074626865671643,
+     "width_kw": 1.6401692638518268,
+     "uncalibrated_coverage": 0.3843283582089552
+    },
+    "up-ramp": {
+     "coverage": 0.422008547008547,
+     "miss_below_lower": 0.0,
+     "miss_above_upper": 0.5779914529914529,
+     "width_kw": 9.693103821518127,
+     "uncalibrated_coverage": 0.405982905982906
+    },
+    "down-ramp": {
+     "coverage": 0.48367346938775513,
+     "miss_below_lower": 0.5163265306122449,
+     "miss_above_upper": 0.0,
+     "width_kw": 9.441265495096507,
+     "uncalibrated_coverage": 0.46938775510204084
+    },
+    "60-min eligible": {
+     "coverage": 0.8455685957102388,
+     "miss_below_lower": 0.06871711857547552,
+     "miss_above_upper": 0.08571428571428572,
+     "width_kw": 4.684803508597385,
+     "uncalibrated_coverage": 0.8225010117361392
+    },
+    "fallback (no 60-min history)": {
+     "coverage": 0.756311745334797,
+     "miss_below_lower": 0.1163556531284303,
+     "miss_above_upper": 0.12733260153677278,
+     "width_kw": 1.2304417317439251,
+     "uncalibrated_coverage": 0.7299670691547749
+    }
+   },
+   "90": {
+    "overall": {
+     "coverage": 0.9342680536710387,
+     "miss_below_lower": 0.025629428614503243,
+     "miss_above_upper": 0.04010251771445801,
+     "width_kw": 6.290811814791754,
+     "uncalibrated_coverage": 0.9266546057590833
+    },
+    "sunny": {
+     "coverage": 0.9688159084061464,
+     "miss_below_lower": 0.0076830370593552275,
+     "miss_above_upper": 0.023501054534498342,
+     "width_kw": 0.7567461099525494,
+     "uncalibrated_coverage": 0.9572160289243749
+    },
+    "cloudy": {
+     "coverage": 0.8996680748340374,
+     "miss_below_lower": 0.0436028968014484,
+     "miss_above_upper": 0.056729028364514184,
+     "width_kw": 11.833227045437898,
+     "uncalibrated_coverage": 0.8960470730235365
+    },
+    "ramp": {
+     "coverage": 0.714509394572025,
+     "miss_below_lower": 0.1315240083507307,
+     "miss_above_upper": 0.15396659707724425,
+     "width_kw": 13.166774104925848,
+     "uncalibrated_coverage": 0.704070981210856
+    },
+    "non-ramp": {
+     "coverage": 0.9713656387665198,
+     "miss_below_lower": 0.007753303964757709,
+     "miss_above_upper": 0.020881057268722466,
+     "width_kw": 5.130076682818458,
+     "uncalibrated_coverage": 0.9642290748898679
+    },
+    "sunrise ramp": {
+     "coverage": 0.6529850746268657,
+     "miss_below_lower": 0.1455223880597015,
+     "miss_above_upper": 0.20149253731343283,
+     "width_kw": 2.326668561229074,
+     "uncalibrated_coverage": 0.6268656716417911
+    },
+    "up-ramp": {
+     "coverage": 0.6848290598290598,
+     "miss_below_lower": 0.0,
+     "miss_above_upper": 0.31517094017094016,
+     "width_kw": 13.29350560764636,
+     "uncalibrated_coverage": 0.6688034188034188
+    },
+    "down-ramp": {
+     "coverage": 0.7428571428571429,
+     "miss_below_lower": 0.2571428571428571,
+     "miss_above_upper": 0.0,
+     "width_kw": 13.04573258804177,
+     "uncalibrated_coverage": 0.7377551020408163
+    },
+    "60-min eligible": {
+     "coverage": 0.9376770538243626,
+     "miss_below_lower": 0.02387697288547147,
+     "miss_above_upper": 0.03844597329016593,
+     "width_kw": 6.621818019281768,
+     "uncalibrated_coverage": 0.9305544314042897
+    },
+    "fallback (no 60-min history)": {
+     "coverage": 0.8880351262349067,
+     "miss_below_lower": 0.04939626783754116,
+     "miss_above_upper": 0.06256860592755215,
+     "width_kw": 1.8016991293097313,
+     "uncalibrated_coverage": 0.8737650933040615
+    }
+   }
+  }
+ },
+ "consistency_with_committed_results": "CRPS (G3''-F, E4-B-fit) and overall coverage (all models, 50/80/90) reproduced exactly"
+}
