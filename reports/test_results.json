@@ -1,0 +1,720 @@
+{
+ "n": 13266,
+ "n_days": 20,
+ "routing_share_G3pp": 0.9313282074476105,
+ "scores": {
+  "G3''-F": {
+   "overall": {
+    "n": 13266,
+    "crps_kw": 1.005931814192878,
+    "rmse_median_kw": 2.959032275165175,
+    "mae_median_kw": 1.411450558288036
+   },
+   "sunny": {
+    "n": 6638,
+    "crps_kw": 0.07436619124445365,
+    "rmse_median_kw": 0.14913622296050266,
+    "mae_median_kw": 0.09996098784821696
+   },
+   "cloudy": {
+    "n": 6628,
+    "crps_kw": 1.9389029374776756,
+    "rmse_median_kw": 4.183620354356085,
+    "mae_median_kw": 2.7249188396066115
+   },
+   "ramp": {
+    "n": 1916,
+    "crps_kw": 3.5103860722984015,
+    "rmse_median_kw": 6.625991803138531,
+    "mae_median_kw": 5.0570623872667975
+   },
+   "non-ramp": {
+    "n": 11350,
+    "crps_kw": 0.583153456613126,
+    "rmse_median_kw": 1.6800403743197132,
+    "mae_median_kw": 0.7960327376428105
+   },
+   "sunrise ramp": {
+    "n": 268,
+    "crps_kw": 0.8080205178590726,
+    "rmse_median_kw": 1.6043638980936168,
+    "mae_median_kw": 1.0895639060032376
+   }
+  },
+  "E4-B-fit": {
+   "overall": {
+    "n": 13266,
+    "crps_kw": 1.11686248941857,
+    "rmse_median_kw": 3.037112890984758,
+    "mae_median_kw": 1.5343323369722666
+   },
+   "sunny": {
+    "n": 6638,
+    "crps_kw": 0.21805952782204704,
+    "rmse_median_kw": 0.34476852048372647,
+    "mae_median_kw": 0.2651372547008817
+   },
+   "cloudy": {
+    "n": 6628,
+    "crps_kw": 2.0170215206614364,
+    "rmse_median_kw": 4.282870714112284,
+    "mae_median_kw": 2.805442318281478
+   },
+   "ramp": {
+    "n": 1916,
+    "crps_kw": 3.627436556555156,
+    "rmse_median_kw": 6.677496536992836,
+    "mae_median_kw": 5.049798595284293
+   },
+   "non-ramp": {
+    "n": 11350,
+    "crps_kw": 0.6930510433715481,
+    "rmse_median_kw": 1.8039082010252256,
+    "mae_median_kw": 0.9408844646439983
+   },
+   "sunrise ramp": {
+    "n": 268,
+    "crps_kw": 0.7774662723523706,
+    "rmse_median_kw": 1.5021179352166325,
+    "mae_median_kw": 1.0116095837775791
+   }
+  },
+  "E6-S": {
+   "overall": {
+    "n": 13266,
+    "crps_kw": 1.0895098065474103,
+    "rmse_median_kw": 3.273514487438104,
+    "mae_median_kw": 1.4991476809582756
+   },
+   "sunny": {
+    "n": 6638,
+    "crps_kw": 0.07292852599498299,
+    "rmse_median_kw": 0.1447603593203367,
+    "mae_median_kw": 0.09964291316740612
+   },
+   "cloudy": {
+    "n": 6628,
+    "crps_kw": 2.107624854873755,
+    "rmse_median_kw": 4.628928022600586,
+    "mae_median_kw": 2.900763952623301
+   },
+   "ramp": {
+    "n": 1916,
+    "crps_kw": 4.28122336392888,
+    "rmse_median_kw": 7.880365262413715,
+    "mae_median_kw": 6.174764048727861
+   },
+   "non-ramp": {
+    "n": 11350,
+    "crps_kw": 0.5507148130722652,
+    "rmse_median_kw": 1.4288774665504822,
+    "mae_median_kw": 0.7098542042493302
+   },
+   "sunrise ramp": {
+    "n": 268,
+    "crps_kw": 0.9002991195546658,
+    "rmse_median_kw": 1.8142306876891605,
+    "mae_median_kw": 1.257469047401915
+   }
+  },
+  "G4": {
+   "overall": {
+    "n": 13266,
+    "crps_kw": 1.02365770330461,
+    "rmse_median_kw": 3.0331194146653195,
+    "mae_median_kw": 1.4294094620903133
+   },
+   "sunny": {
+    "n": 6638,
+    "crps_kw": 0.07301834683238724,
+    "rmse_median_kw": 0.14518230008588956,
+    "mae_median_kw": 0.09896555739274841
+   },
+   "cloudy": {
+    "n": 6628,
+    "crps_kw": 1.9757313376230488,
+    "rmse_median_kw": 4.288635831015019,
+    "mae_median_kw": 2.761860675032745
+   },
+   "ramp": {
+    "n": 1916,
+    "crps_kw": 3.7816852674736934,
+    "rmse_median_kw": 7.021823327884446,
+    "mae_median_kw": 5.436403505953245
+   },
+   "non-ramp": {
+    "n": 11350,
+    "crps_kw": 0.5580734907100756,
+    "rmse_median_kw": 1.5586739786855894,
+    "mae_median_kw": 0.7529865027915136
+   },
+   "sunrise ramp": {
+    "n": 268,
+    "crps_kw": 0.8014696660786935,
+    "rmse_median_kw": 1.594534994242205,
+    "mae_median_kw": 1.0805901865756273
+   }
+  },
+  "D4 (60-min eligible)": {
+   "overall": {
+    "n": 12355,
+    "crps_kw": 1.179623022307987,
+    "rmse_median_kw": 3.0842882761477313,
+    "mae_median_kw": 1.6361698302975538
+   },
+   "sunny": {
+    "n": 6188,
+    "crps_kw": 0.25096393415953105,
+    "rmse_median_kw": 0.4031347186934098,
+    "mae_median_kw": 0.3244122481650244
+   },
+   "cloudy": {
+    "n": 6167,
+    "crps_kw": 2.1114444002004222,
+    "rmse_median_kw": 4.346836854180214,
+    "mae_median_kw": 2.9523942373408634
+   },
+   "ramp": {
+    "n": 1648,
+    "crps_kw": 3.736697656834715,
+    "rmse_median_kw": 6.702760194913234,
+    "mae_median_kw": 5.2641767547530165
+   },
+   "non-ramp": {
+    "n": 10707,
+    "crps_kw": 0.7860432149202924,
+    "rmse_median_kw": 2.0154298718248547,
+    "mae_median_kw": 1.077754269309172
+   }
+  },
+  "E4-B-fit (60-min eligible)": {
+   "overall": {
+    "n": 12355,
+    "crps_kw": 1.1715733559959445,
+    "rmse_median_kw": 3.1367974811652695,
+    "mae_median_kw": 1.6110882037127259
+   },
+   "sunny": {
+    "n": 6188,
+    "crps_kw": 0.22776616289920176,
+    "rmse_median_kw": 0.3545359617385463,
+    "mae_median_kw": 0.27660890765079943
+   },
+   "cloudy": {
+    "n": 6167,
+    "crps_kw": 2.118594421486887,
+    "rmse_median_kw": 4.425650096395915,
+    "mae_median_kw": 2.9501116971505725
+   },
+   "ramp": {
+    "n": 1648,
+    "crps_kw": 4.09090259791823,
+    "rmse_median_kw": 7.174478742816868,
+    "mae_median_kw": 5.706494381136113
+   },
+   "non-ramp": {
+    "n": 10707,
+    "crps_kw": 0.7222360448268096,
+    "rmse_median_kw": 1.8523851899147397,
+    "mae_median_kw": 0.9807314856410209
+   }
+  },
+  "persistence": {
+   "overall": {
+    "n": 13266,
+    "crps_kw": 1.7068656719182478,
+    "rmse_median_kw": 3.635801176079352,
+    "mae_median_kw": 1.7068656719182478
+   },
+   "sunny": {
+    "n": 6638,
+    "crps_kw": 0.268523956230343,
+    "rmse_median_kw": 0.4132943604273081,
+    "mae_median_kw": 0.2685239562303431
+   },
+   "cloudy": {
+    "n": 6628,
+    "crps_kw": 3.1473774867547464,
+    "rmse_median_kw": 5.127082473928994,
+    "mae_median_kw": 3.1473774867547464
+   },
+   "ramp": {
+    "n": 1916,
+    "crps_kw": 7.13064617345233,
+    "rmse_median_kw": 8.933867505935138,
+    "mae_median_kw": 7.13064617345233
+   },
+   "non-ramp": {
+    "n": 11350,
+    "crps_kw": 0.7912741793244765,
+    "rmse_median_kw": 1.40610116953057,
+    "mae_median_kw": 0.7912741793244765
+   },
+   "sunrise ramp": {
+    "n": 268,
+    "crps_kw": 1.6098996682217457,
+    "rmse_median_kw": 2.2000958278589384,
+    "mae_median_kw": 1.6098996682217457
+   }
+  },
+  "SUNSET port": {
+   "overall": {
+    "n": 13266,
+    "crps_kw": 1.719230689959899,
+    "rmse_median_kw": 3.0464932501274933,
+    "mae_median_kw": 1.719230689959899
+   },
+   "sunny": {
+    "n": 6638,
+    "crps_kw": 0.4752673546701164,
+    "rmse_median_kw": 0.5943506466749111,
+    "mae_median_kw": 0.4752673546701164
+   },
+   "cloudy": {
+    "n": 6628,
+    "crps_kw": 2.9650708558702155,
+    "rmse_median_kw": 4.268777281982912,
+    "mae_median_kw": 2.9650708558702155
+   },
+   "ramp": {
+    "n": 1916,
+    "crps_kw": 4.815164923289862,
+    "rmse_median_kw": 6.304346792385536,
+    "mae_median_kw": 4.815164923289862
+   },
+   "non-ramp": {
+    "n": 11350,
+    "crps_kw": 1.196604259029484,
+    "rmse_median_kw": 2.034338219328885,
+    "mae_median_kw": 1.196604259029484
+   },
+   "sunrise ramp": {
+    "n": 268,
+    "crps_kw": 1.0701813645653928,
+    "rmse_median_kw": 1.5457305927241465,
+    "mae_median_kw": 1.0701813645653928
+   }
+  }
+ },
+ "hypotheses": {
+  "H1 overall CRPS G3''-F - E4-B-fit": [
+   -0.11093067522569212,
+   -0.14910867347942075,
+   -0.0752750117639668
+  ],
+  "H2 overall CRPS G3''-F - persistence": [
+   -0.7009338577253699,
+   -0.8229441646400424,
+   -0.5824365692879117
+  ],
+  "H2 cloudy CRPS G3''-F - persistence": [
+   -1.2084745492770705,
+   -1.4543164063653375,
+   -0.9706419785907752
+  ],
+  "H3 ramp CRPS G3''-F - E4-B-fit (non-inferiority margin 0.02)": [
+   -0.11705048425675404,
+   -0.24422133550948993,
+   0.03147473855860093
+  ],
+  "H4 RMSE skill vs persistence": {
+   "G3''-F": 0.18614023928667267,
+   "SUNSET port": 0.1620847503513203
+  },
+  "H5 G3''-F calibrated 90% coverage": 0.9350972410673903
+ },
+ "intervals": {
+  "G3''-F": {
+   "50": {
+    "overall": {
+     "coverage": 0.5419870345243479,
+     "width_kw": 2.026682387468557,
+     "interval_score": 4.534679793625921
+    },
+    "sunny": {
+     "coverage": 0.657878879180476,
+     "width_kw": 0.2388181338626638,
+     "interval_score": 0.34511188970664325
+    },
+    "cloudy": {
+     "coverage": 0.425920337960169,
+     "width_kw": 3.817244082615799,
+     "interval_score": 8.730568711280743
+    },
+    "ramp": {
+     "coverage": 0.16127348643006262,
+     "width_kw": 4.457558621808318,
+     "interval_score": 15.925251163030957
+    },
+    "non-ramp": {
+     "coverage": 0.6062555066079295,
+     "width_kw": 1.6163247782178976,
+     "interval_score": 2.611830917521952
+    },
+    "sunrise ramp": {
+     "coverage": 0.17164179104477612,
+     "width_kw": 0.7450116806014954,
+     "interval_score": 3.663958674894138
+    }
+   },
+   "80": {
+    "overall": {
+     "coverage": 0.8456957636062113,
+     "width_kw": 4.421802681709674,
+     "interval_score": 6.304811264771432
+    },
+    "sunny": {
+     "coverage": 0.9165411268454353,
+     "width_kw": 0.5350088310123512,
+     "interval_score": 0.5909971994767188
+    },
+    "cloudy": {
+     "coverage": 0.7747435123717562,
+     "width_kw": 8.314460735561338,
+     "interval_score": 12.02724605134752
+    },
+    "ramp": {
+     "coverage": 0.5062630480167014,
+     "width_kw": 9.452626286895551,
+     "interval_score": 19.956441985383076
+    },
+    "non-ramp": {
+     "coverage": 0.9029955947136564,
+     "width_kw": 3.5725464678298375,
+     "interval_score": 4.00027166471047
+    },
+    "sunrise ramp": {
+     "coverage": 0.44776119402985076,
+     "width_kw": 1.6731625047993441,
+     "interval_score": 5.028363510893043
+    }
+   },
+   "90": {
+    "overall": {
+     "coverage": 0.9350972410673903,
+     "width_kw": 6.264536493807571,
+     "interval_score": 7.616520191428942
+    },
+    "sunny": {
+     "coverage": 0.967912021693281,
+     "width_kw": 0.8224714181291573,
+     "interval_score": 0.8588289519991233
+    },
+    "cloudy": {
+     "coverage": 0.9022329511164756,
+     "width_kw": 11.714812289274278,
+     "interval_score": 14.384407102614087
+    },
+    "ramp": {
+     "coverage": 0.7458246346555324,
+     "width_kw": 12.991669182909323,
+     "interval_score": 21.070925396730054
+    },
+    "non-ramp": {
+     "coverage": 0.9670484581497797,
+     "width_kw": 5.128925372017356,
+     "interval_score": 5.3452743435560865
+    },
+    "sunrise ramp": {
+     "coverage": 0.6529850746268657,
+     "width_kw": 2.3733495598917225,
+     "interval_score": 5.426855765561784
+    }
+   }
+  },
+  "E4-B-fit": {
+   "50": {
+    "overall": {
+     "coverage": 0.5564601236243027,
+     "width_kw": 2.255019484544884,
+     "interval_score": 4.970862536345251
+    },
+    "sunny": {
+     "coverage": 0.6482374209099127,
+     "width_kw": 0.6755261357836745,
+     "interval_score": 0.8644489636054521
+    },
+    "cloudy": {
+     "coverage": 0.46454435727217863,
+     "width_kw": 3.8368958950875682,
+     "interval_score": 9.083471663660697
+    },
+    "ramp": {
+     "coverage": 0.18319415448851775,
+     "width_kw": 4.332276041292084,
+     "interval_score": 16.407988122919743
+    },
+    "non-ramp": {
+     "coverage": 0.6194713656387665,
+     "width_kw": 1.9043566155820972,
+     "interval_score": 3.040154816179901
+    },
+    "sunrise ramp": {
+     "coverage": 0.3694029850746269,
+     "width_kw": 1.2688146191682923,
+     "interval_score": 3.3648151588639017
+    }
+   },
+   "80": {
+    "overall": {
+     "coverage": 0.8480325644504749,
+     "width_kw": 5.284972951568319,
+     "interval_score": 7.300064388743332
+    },
+    "sunny": {
+     "coverage": 0.9184995480566436,
+     "width_kw": 1.985485356193606,
+     "interval_score": 2.0777395212967478
+    },
+    "cloudy": {
+     "coverage": 0.7774592637296318,
+     "width_kw": 8.589438651341606,
+     "interval_score": 12.530268442773268
+    },
+    "ramp": {
+     "coverage": 0.4838204592901879,
+     "width_kw": 9.600530492587353,
+     "interval_score": 20.792657380715156
+    },
+    "non-ramp": {
+     "coverage": 0.9095154185022026,
+     "width_kw": 4.556461211604225,
+     "interval_score": 5.022372038732934
+    },
+    "sunrise ramp": {
+     "coverage": 0.5261194029850746,
+     "width_kw": 2.0384855823080357,
+     "interval_score": 4.7677402268845475
+    }
+   },
+   "90": {
+    "overall": {
+     "coverage": 0.9268807477762702,
+     "width_kw": 8.202127708442303,
+     "interval_score": 9.488531818568449
+    },
+    "sunny": {
+     "coverage": 0.9603796324194034,
+     "width_kw": 4.101083886475059,
+     "interval_score": 4.18008274304643
+    },
+    "cloudy": {
+     "coverage": 0.8933313216656609,
+     "width_kw": 12.309358983369666,
+     "interval_score": 14.804990020637721
+    },
+    "ramp": {
+     "coverage": 0.7400835073068893,
+     "width_kw": 13.398103234730582,
+     "interval_score": 20.954667323951774
+    },
+    "non-ramp": {
+     "coverage": 0.9584140969162995,
+     "width_kw": 7.324992104180775,
+     "interval_score": 7.552926917395368
+    },
+    "sunrise ramp": {
+     "coverage": 0.6529850746268657,
+     "width_kw": 2.8178750015808753,
+     "interval_score": 5.219632948957941
+    }
+   }
+  },
+  "E6-S": {
+   "50": {
+    "overall": {
+     "coverage": 0.5265339966832504,
+     "width_kw": 2.1898505273917483,
+     "interval_score": 4.919278103636992
+    },
+    "sunny": {
+     "coverage": 0.5968665260620669,
+     "width_kw": 0.210005311214724,
+     "interval_score": 0.3335342327619423
+    },
+    "cloudy": {
+     "coverage": 0.4560953530476765,
+     "width_kw": 4.172682836532227,
+     "interval_score": 9.511940719036597
+    },
+    "ramp": {
+     "coverage": 0.12056367432150313,
+     "width_kw": 4.969257657833036,
+     "interval_score": 19.313239528170268
+    },
+    "non-ramp": {
+     "coverage": 0.5950660792951542,
+     "width_kw": 1.7206572179709987,
+     "interval_score": 2.4894252323237094
+    },
+    "sunrise ramp": {
+     "coverage": 0.08208955223880597,
+     "width_kw": 0.9264420261981188,
+     "interval_score": 4.042760902822381
+    }
+   },
+   "80": {
+    "overall": {
+     "coverage": 0.8322026232473994,
+     "width_kw": 4.664661734559358,
+     "interval_score": 7.102325949209993
+    },
+    "sunny": {
+     "coverage": 0.8999698704429044,
+     "width_kw": 0.4740069750121581,
+     "interval_score": 0.5377628128300153
+    },
+    "cloudy": {
+     "coverage": 0.7643331321665661,
+     "width_kw": 8.861639147636351,
+     "interval_score": 13.67679337517413
+    },
+    "ramp": {
+     "coverage": 0.44363256784968685,
+     "width_kw": 10.161985255887767,
+     "interval_score": 24.84161997406424
+    },
+    "non-ramp": {
+     "coverage": 0.8977973568281938,
+     "width_kw": 3.736655402676959,
+     "interval_score": 4.107745565807286
+    },
+    "sunrise ramp": {
+     "coverage": 0.5223880597014925,
+     "width_kw": 1.929864489601965,
+     "interval_score": 5.410103026219961
+    }
+   },
+   "90": {
+    "overall": {
+     "coverage": 0.9268053671038745,
+     "width_kw": 6.497348713824999,
+     "interval_score": 8.474331778289802
+    },
+    "sunny": {
+     "coverage": 0.9655016571256403,
+     "width_kw": 0.704979694081982,
+     "interval_score": 0.7453934526188587
+    },
+    "cloudy": {
+     "coverage": 0.888050694025347,
+     "width_kw": 12.298456974696174,
+     "interval_score": 16.214931145490123
+    },
+    "ramp": {
+     "coverage": 0.6811064718162839,
+     "width_kw": 13.71718577901838,
+     "interval_score": 26.32460664585609
+    },
+    "non-ramp": {
+     "coverage": 0.9682819383259912,
+     "width_kw": 5.278563884141253,
+     "interval_score": 5.461016655271564
+    },
+    "sunrise ramp": {
+     "coverage": 0.7388059701492538,
+     "width_kw": 2.6989750707463367,
+     "interval_score": 6.24208278732476
+    }
+   }
+  },
+  "G4": {
+   "50": {
+    "overall": {
+     "coverage": 0.5398009950248757,
+     "width_kw": 1.9704406795459968,
+     "interval_score": 4.629813889216832
+    },
+    "sunny": {
+     "coverage": 0.6533594456161494,
+     "width_kw": 0.23243705482693588,
+     "interval_score": 0.3394201029511981
+    },
+    "cloudy": {
+     "coverage": 0.4260712130356065,
+     "width_kw": 3.711066518544959,
+     "interval_score": 8.926680810344061
+    },
+    "ramp": {
+     "coverage": 0.1336116910229645,
+     "width_kw": 4.359297302520091,
+     "interval_score": 17.259045964938746
+    },
+    "non-ramp": {
+     "coverage": 0.6083700440528634,
+     "width_kw": 1.5671764249540703,
+     "interval_score": 2.497865989914348
+    },
+    "sunrise ramp": {
+     "coverage": 0.17537313432835822,
+     "width_kw": 0.7429534553586618,
+     "interval_score": 3.631897170133721
+    }
+   },
+   "80": {
+    "overall": {
+     "coverage": 0.8394391677973767,
+     "width_kw": 4.4475862932564,
+     "interval_score": 6.467569380863067
+    },
+    "sunny": {
+     "coverage": 0.9168424224163905,
+     "width_kw": 0.5144103608508457,
+     "interval_score": 0.566112160983947
+    },
+    "cloudy": {
+     "coverage": 0.7619191309595654,
+     "width_kw": 8.38669640781706,
+     "interval_score": 12.377930428774592
+    },
+    "ramp": {
+     "coverage": 0.4535490605427975,
+     "width_kw": 9.564292986500806,
+     "interval_score": 21.35252480140561
+    },
+    "non-ramp": {
+     "coverage": 0.9045814977973569,
+     "width_kw": 3.583832106097256,
+     "interval_score": 3.954831531897471
+    },
+    "sunrise ramp": {
+     "coverage": 0.4253731343283582,
+     "width_kw": 1.6401692638518268,
+     "interval_score": 5.010047169765674
+    }
+   },
+   "90": {
+    "overall": {
+     "coverage": 0.9342680536710387,
+     "width_kw": 6.290811814791754,
+     "interval_score": 7.661008957508955
+    },
+    "sunny": {
+     "coverage": 0.9688159084061464,
+     "width_kw": 0.7567461099525494,
+     "interval_score": 0.7927505025519178
+    },
+    "cloudy": {
+     "coverage": 0.8996680748340374,
+     "width_kw": 11.833227045437898,
+     "interval_score": 14.539629902591152
+    },
+    "ramp": {
+     "coverage": 0.714509394572025,
+     "width_kw": 13.166774104925848,
+     "interval_score": 21.88210376736496
+    },
+    "non-ramp": {
+     "coverage": 0.9713656387665198,
+     "width_kw": 5.130076682818458,
+     "interval_score": 5.260337798417844
+    },
+    "sunrise ramp": {
+     "coverage": 0.6529850746268657,
+     "width_kw": 2.326668561229074,
+     "interval_score": 5.332070881354189
+    }
+   }
+  }
+ }
+}

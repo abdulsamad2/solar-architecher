@@ -1,0 +1,12 @@
+{
+ "git_commit": "e4b10488878c32493fc1f0ed1b7eaec70de93fca",
+ "start_utc": "2026-10-22T17:57:39.645550+00:00",
+ "invocations_of_run_test": 1,
+ "status": "completed",
+ "n_samples": 13266,
+ "n_days": 20,
+ "wall_time_s": 475.37290049996227,
+ "end_utc": "2026-10-22T18:05:35.009543+00:00",
+ "gpu_max_memory_gb": 5.823826432,
+ "amortised_end_to_end_s_per_sample": 0.03583392887833275
+}
