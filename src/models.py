@@ -12,7 +12,7 @@ class SmallSkyEncoder(nn.Module):
     """Shared per-frame CNN -> concat PV history -> GRU -> final hidden state."""
 
     def __init__(self, in_channels: int = 3, image_features: int = 64, hidden_size: int = 64, pool: str = "avg",
-                 extra_features: int = 0):
+                 extra_features: int = 0, channels=(16, 32, 64, 64)):
         """pool='avg': global average (discards where clouds are relative to the sun);
         pool='spatial': keep a 4x4 grid and flatten (position-aware, like SUNSET's flatten).
         extra_features: per-frame scalars appended to the GRU input (E8 solar/motion; zero-filled when unused)."""
@@ -24,9 +24,10 @@ class SmallSkyEncoder(nn.Module):
             )
 
         grid = {"avg": 1, "spatial": 4}[pool]
+        c = (in_channels,) + tuple(channels)
         self.cnn = nn.Sequential(
-            block(in_channels, 16), block(16, 32), block(32, 64), block(64, 64),
-            nn.AdaptiveAvgPool2d(grid), nn.Flatten(), nn.Linear(64 * grid * grid, image_features), nn.ReLU(inplace=True),
+            *[block(c[i], c[i + 1]) for i in range(4)],
+            nn.AdaptiveAvgPool2d(grid), nn.Flatten(), nn.Linear(c[-1] * grid * grid, image_features), nn.ReLU(inplace=True),
         )
         self.gru = nn.GRU(image_features + 1 + extra_features, hidden_size, batch_first=True)
         self.hidden_size = hidden_size
@@ -45,6 +46,104 @@ class SmallSkyEncoder(nn.Module):
         self.gru.flatten_parameters()  # needed after deepcopy (e.g. EMA copies)
         _, h = self.gru(seq)
         return h[-1]
+
+
+def _cnn_block2d(cin, cout):
+    return nn.Sequential(nn.Conv2d(cin, cout, 3, padding=1), nn.BatchNorm2d(cout), nn.ReLU(inplace=True), nn.MaxPool2d(2))
+
+
+class DiffSkyEncoder(SmallSkyEncoder):
+    """E9 A5: CNN-GRU whose per-frame input is [frame, frame - previous window frame] (6 channels)."""
+
+    def __init__(self, **kw):
+        super().__init__(in_channels=6, **kw)
+
+    def forward(self, images, pv_history, extra=None):
+        diff = torch.cat([torch.zeros_like(images[:, :1]), images[:, 1:] - images[:, :-1]], dim=1)
+        return super().forward(torch.cat([images, diff], dim=2), pv_history, extra)
+
+
+class Conv3dGRUEncoder(nn.Module):
+    """E9 A2: Conv3d blocks (temporal kernel 3, spatial stride 2, no temporal stride) -> per-time features -> GRU."""
+
+    def __init__(self, image_features: int = 64, hidden_size: int = 64, extra_features: int = 0):
+        super().__init__()
+
+        def block(cin, cout):
+            return nn.Sequential(nn.Conv3d(cin, cout, 3, padding=1), nn.BatchNorm3d(cout), nn.ReLU(inplace=True),
+                                 nn.MaxPool3d((1, 2, 2)))
+
+        self.conv = nn.Sequential(block(3, 16), block(16, 32), block(32, 64), block(64, 64))
+        self.proj = nn.Sequential(nn.Linear(64, image_features), nn.ReLU(inplace=True))
+        self.gru = nn.GRU(image_features + 1 + extra_features, hidden_size, batch_first=True)
+        self.hidden_size, self.extra_features, self.cnn_bf16 = hidden_size, extra_features, False
+
+    def forward(self, images, pv_history, extra=None):
+        with torch.autocast("cuda", dtype=torch.bfloat16, enabled=self.cnn_bf16 and images.is_cuda):
+            f = self.conv(images.permute(0, 2, 1, 3, 4))          # [B, C, T, h, w]
+        f = self.proj(f.float().mean(dim=(3, 4)).transpose(1, 2))  # [B, T, F]
+        parts = [f, pv_history.unsqueeze(-1)] + ([extra] if self.extra_features else [])
+        self.gru.flatten_parameters()
+        _, h = self.gru(torch.cat(parts, -1))
+        return h[-1]
+
+
+class ConvGRUCell(nn.Module):
+    def __init__(self, cin: int, ch: int):
+        super().__init__()
+        self.gates = nn.Conv2d(cin + ch, 2 * ch, 3, padding=1)
+        self.cand = nn.Conv2d(cin + ch, ch, 3, padding=1)
+
+    def forward(self, x, h):
+        z, r = torch.sigmoid(self.gates(torch.cat([x, h], 1))).chunk(2, 1)
+        n = torch.tanh(self.cand(torch.cat([x, r * h], 1)))
+        return (1 - z) * h + z * n
+
+
+class ConvGRUEncoder(nn.Module):
+    """E9 A3: per-frame CNN to an 8x8x32 map; ConvGRU over time keeps spatial layout; K (+extra) as constant channels."""
+
+    def __init__(self, hidden_size: int = 64, extra_features: int = 0, ch: int = 32):
+        super().__init__()
+        self.cnn = nn.Sequential(_cnn_block2d(3, 16), _cnn_block2d(16, 32), _cnn_block2d(32, ch))  # 64 -> 8
+        self.cell = ConvGRUCell(ch + 1 + extra_features, ch)
+        self.out = nn.Sequential(nn.AdaptiveAvgPool2d(2), nn.Flatten(), nn.Linear(ch * 4, hidden_size), nn.ReLU(inplace=True))
+        self.hidden_size, self.extra_features, self.ch, self.cnn_bf16 = hidden_size, extra_features, ch, False
+
+    def forward(self, images, pv_history, extra=None):
+        b, t = images.shape[:2]
+        with torch.autocast("cuda", dtype=torch.bfloat16, enabled=self.cnn_bf16 and images.is_cuda):
+            maps = self.cnn(images.flatten(0, 1))
+        maps = maps.float().view(b, t, self.ch, *maps.shape[-2:])
+        h = torch.zeros(b, self.ch, *maps.shape[-2:], device=images.device)
+        for k in range(t):
+            scal = pv_history[:, k:k + 1] if not self.extra_features else torch.cat([pv_history[:, k:k + 1], extra[:, k]], 1)
+            const = scal[:, :, None, None].expand(-1, -1, *maps.shape[-2:])
+            h = self.cell(torch.cat([maps[:, k], const], 1), h)
+        return self.out(h)
+
+
+class TemporalTransformerEncoder(nn.Module):
+    """E9 A4: per-frame CNN tokens (+K, +extra) with learned positions -> 2-layer transformer -> last token."""
+
+    def __init__(self, image_features: int = 64, hidden_size: int = 64, extra_features: int = 0, n_frames: int = 16):
+        super().__init__()
+        self.cnn = nn.Sequential(_cnn_block2d(3, 16), _cnn_block2d(16, 32), _cnn_block2d(32, 64), _cnn_block2d(64, 64),
+                                 nn.AdaptiveAvgPool2d(1), nn.Flatten(), nn.Linear(64, image_features), nn.ReLU(inplace=True))
+        self.tok = nn.Linear(image_features + 1 + extra_features, hidden_size)
+        self.pos = nn.Parameter(torch.zeros(1, n_frames, hidden_size))
+        layer = nn.TransformerEncoderLayer(hidden_size, 4, 128, dropout=0.1, batch_first=True, norm_first=True)
+        self.tr = nn.TransformerEncoder(layer, 2, enable_nested_tensor=False)
+        self.hidden_size, self.extra_features, self.cnn_bf16 = hidden_size, extra_features, False
+
+    def forward(self, images, pv_history, extra=None):
+        b, t = images.shape[:2]
+        with torch.autocast("cuda", dtype=torch.bfloat16, enabled=self.cnn_bf16 and images.is_cuda):
+            f = self.cnn(images.flatten(0, 1))
+        f = f.float().view(b, t, -1)
+        parts = [f, pv_history.unsqueeze(-1)] + ([extra] if self.extra_features else [])
+        z = self.tr(self.tok(torch.cat(parts, -1)) + self.pos[:, :t])
+        return z[:, -1]
 
 
 class PointHead(nn.Module):

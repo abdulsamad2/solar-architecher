@@ -27,7 +27,8 @@ from src.folds import calibration_split
 from src.metrics import (crps_quantile_interp, interval_coverage, interval_width, pinball_loss, quantile_function,
                          quantile_reliability)
 from src.events import event_labels, future_rows
-from src.models import EventMixtureHead, Forecaster, NonCrossingQuantileHead, PointHead, SmallSkyEncoder
+from src.models import (Conv3dGRUEncoder, ConvGRUEncoder, DiffSkyEncoder, EventMixtureHead, Forecaster,
+                        NonCrossingQuantileHead, PointHead, SmallSkyEncoder, TemporalTransformerEncoder)
 from src.skippd import SkippdForecastDataset
 
 PV_SCALE = 30.0  # kW, ~nameplate; input/target scaling only
@@ -70,19 +71,40 @@ class GpuSeq:
         return x, self.hist_feat[rows], self.extra_table[rows]
 
 
+def build_encoder(cfg):
+    extra = 11 if cfg.get("e8_window") else 0
+    kind = cfg.get("encoder", "cnn_gru")
+    if kind == "cnn_gru":
+        return SmallSkyEncoder(image_features=cfg["image_features"], hidden_size=cfg["hidden_size"],
+                               pool=cfg.get("pool", "avg"), extra_features=extra)
+    if kind == "cnn_gru_wide":  # E9 A1
+        return SmallSkyEncoder(image_features=128, hidden_size=128, pool="avg", extra_features=extra,
+                               channels=(32, 64, 128, 128))
+    if kind == "cnn3d_gru":  # E9 A2
+        return Conv3dGRUEncoder(cfg["image_features"], cfg["hidden_size"], extra)
+    if kind == "convgru":  # E9 A3
+        return ConvGRUEncoder(cfg["hidden_size"], extra)
+    if kind == "transformer":  # E9 A4
+        return TemporalTransformerEncoder(cfg["image_features"], cfg["hidden_size"], extra)
+    if kind == "diff_cnn_gru":  # E9 A5
+        return DiffSkyEncoder(image_features=cfg["image_features"], hidden_size=cfg["hidden_size"],
+                              pool=cfg.get("pool", "avg"), extra_features=extra)
+    raise ValueError(kind)
+
+
 def build_model(cfg) -> torch.nn.Module:
-    enc = SmallSkyEncoder(image_features=cfg["image_features"], hidden_size=cfg["hidden_size"],
-                          pool=cfg.get("pool", "avg"), extra_features=11 if cfg.get("e8_window") else 0)
+    enc = build_encoder(cfg)
+    hs = enc.hidden_size
     head = cfg.get("head", "point")
     if head == "quantile":
-        return Forecaster(enc, NonCrossingQuantileHead(cfg["hidden_size"], 1, QUANTILES))
+        return Forecaster(enc, NonCrossingQuantileHead(hs, 1, QUANTILES))
     if head == "quantile_mlp":  # Phase 6 capacity-matched direct-quantile comparator (~ EventMixtureHead size)
-        mlp = torch.nn.Sequential(torch.nn.Linear(cfg["hidden_size"], 24), torch.nn.ReLU(),
+        mlp = torch.nn.Sequential(torch.nn.Linear(hs, 24), torch.nn.ReLU(),
                                   NonCrossingQuantileHead(24, 1, QUANTILES))
         return Forecaster(enc, mlp)
     if head == "event":
-        return Forecaster(enc, EventMixtureHead(cfg["hidden_size"], n_bins=3, n_comp=cfg.get("event_components", 2)))
-    return Forecaster(enc, PointHead(cfg["hidden_size"], 1))
+        return Forecaster(enc, EventMixtureHead(hs, n_bins=3, n_comp=cfg.get("event_components", 2)))
+    return Forecaster(enc, PointHead(hs, 1))
 
 
 def _qhead(model):
@@ -273,6 +295,17 @@ def run_fold(ds, data, fold, target_kind, cfg, out_dir: Path, log) -> dict:
     model = build_model(cfg).to(device)
     model.encoder.cnn_bf16 = cfg["cnn_bf16"]
     tr_dev = torch.as_tensor(tr, device=device)
+    w_t = None
+    if cfg.get("loss_weight_alpha"):
+        # E9 L1: input-only weights; v = mean |K_j - K_{j-1}| over the window frames, median over FIT-day samples
+        assert cfg["input"] == "csi" and quantile and not event
+        kh = data.hist_feat[data.hist].detach().cpu().numpy()          # [N, 16] K history per sample (inputs only)
+        v = np.abs(np.diff(kh, axis=1)).mean(1)
+        med = float(np.median(v[tr]))
+        w = 1.0 + cfg["loss_weight_alpha"] * np.minimum(v / max(med, 1e-6), 5.0)
+        w_t = torch.tensor(w, dtype=torch.float32, device=device)
+        (out_dir / "loss_weights.json").write_text(json.dumps({"alpha": cfg["loss_weight_alpha"], "median_v_fit": med,
+                                                               "w_mean_train": float(w[tr].mean())}))
     if event:  # train-only climatology init (class frequencies, per-class dK spread)
         keep = tr_dev[valid_t[tr_dev]]
         model.head.init_from_targets(dk_t[keep], cls_t[keep])
@@ -305,7 +338,13 @@ def run_fold(ds, data, fold, target_kind, cfg, out_dir: Path, log) -> dict:
                                        supervised=cfg["event_supervised"])
             else:
                 pred = _out(model(*data(b)))
-                loss = pinball_loss(pred, y_t[b], QUANTILES) if quantile else F.mse_loss(pred, y_t[b])
+                if w_t is not None:
+                    qs = torch.as_tensor(QUANTILES, device=device, dtype=pred.dtype)
+                    err = y_t[b].unsqueeze(-1) - pred
+                    per = torch.maximum(qs * err, (qs - 1) * err).mean(-1)
+                    loss = (w_t[b] * per).sum() / w_t[b].sum()
+                else:
+                    loss = pinball_loss(pred, y_t[b], QUANTILES) if quantile else F.mse_loss(pred, y_t[b])
             opt.zero_grad(set_to_none=True)
             loss.backward()
             gnorms.append(torch.nn.utils.clip_grad_norm_(model.parameters(), cfg["clip"] or float("inf")))
@@ -411,7 +450,8 @@ def main(a):
            "label": a.label, "head": a.head, "quantiles": QUANTILES if a.head == "quantile" else None,
            "calib_holdout": a.calib_holdout, "event_supervised": not a.event_unsupervised, "residual": a.residual,
            "frozen_thresholds": a.frozen_thresholds,
-           "event_components": a.event_components, "e8_window": a.e8_window, "e8_features": a.e8_features}
+           "event_components": a.event_components, "e8_window": a.e8_window, "e8_features": a.e8_features,
+           "encoder": a.encoder, "loss_weight_alpha": a.loss_weight_alpha}
     if a.e8_window:
         from src.e8_features import FEAT, verify_frozen
 
@@ -487,6 +527,9 @@ if __name__ == "__main__":
     p.add_argument("--frozen-thresholds", default="", help="JSON of frozen per-fold event thresholds; mismatch = STOP")
     p.add_argument("--e8-window", choices=["H15", "H30", "H60"], default=None,
                    help="E8 history window (16 frames, stride 1/2/4 min); restricts to the common population")
+    p.add_argument("--encoder", default="cnn_gru",
+                   choices=["cnn_gru", "cnn_gru_wide", "cnn3d_gru", "convgru", "transformer", "diff_cnn_gru"])
+    p.add_argument("--loss-weight-alpha", type=float, default=0.0, help="E9 L1 input-weighted pinball (0 = off)")
     p.add_argument("--e8-features", choices=list(E8_MASKS), default="none",
                    help="E8 per-frame features: none / P (solar) / M (motion) / PM; unused columns zero-filled")
     p.add_argument("--residual", action="store_true",
