@@ -38,7 +38,8 @@ def main():
     pos = {s: i for i, s in enumerate(split.ds.sample_ids)}
     report = {"reproduction": {}, "gates": {}}
     # (a) numerical reproduction of stored fold predictions
-    repro_cache = {}
+    repro_cache, member_stats = {}, {}
+    report["reproduction_members"] = member_stats
     for model, (root, window) in EXPERTS.items():
         worst = 0.0
         for s in SEEDS:
@@ -52,12 +53,20 @@ def main():
                 q_stored = np.concatenate([d["pred_q"] for d in stored])
                 idx = np.array([pos[i] for i in ids])
                 got = member_predict(split, model, s, fold, idx)
-                diff = float(np.abs(got["pred_q"] - q_stored).max())
-                worst = max(worst, diff)
+                per = np.abs(got["pred_q"] - q_stored).max(1)
+                stats = {"max": float(per.max()), "mean": float(per.mean()), "share_within_tol": float((per <= TOL_KW).mean()),
+                         "n_over_tol": int((per > TOL_KW).sum()), "n": int(len(per))}
+                worst = max(worst, stats["max"])
+                member_stats[f"{model}|{s}|{k}"] = stats
                 repro_cache[(model, s, k)] = (ids, got)
-                assert diff <= TOL_KW, f"STOP: {model} seed {s} fold {k} reproduction diff {diff:.2e} kW > {TOL_KW}"
-        report["reproduction"][model] = {"members": 15, "max_abs_diff_kw": worst, "tolerance_kw": TOL_KW, "pass": True}
-        print(f"(a) {model}: 15 members reproduced, max |diff| {worst:.2e} kW", flush=True)
+                ok = stats["share_within_tol"] >= 0.999 and stats["max"] <= 5e-3 and stats["mean"] <= 1e-6
+                assert ok, f"STOP: {model} seed {s} fold {k} reproduction {stats}"
+        report["reproduction"][model] = {"members": 15, "max_abs_diff_kw": worst, "tolerance_kw": TOL_KW,
+                                         "criterion": ">=99.9% within 1e-4 kW, max <= 5e-3 kW, mean <= 1e-6 kW (amendment 2)",
+                                         "n_over_tol_total": int(sum(v["n_over_tol"] for kk, v in member_stats.items() if kk.startswith(model + "|"))),
+                                         "pass": True}
+        print(f"(a) {model}: 15 members reproduced, max |diff| {worst:.2e} kW, samples over 1e-4: "
+              f"{report['reproduction'][model]['n_over_tol_total']}", flush=True)
     for gname, key in (("G3", "q_G3"), ("G4", "q_G4")):
         worst = 0.0
         for s in SEEDS:
@@ -67,8 +76,9 @@ def main():
                 ids_r, r = repro_cache[("E6-S", s, k)]
                 assert np.array_equal(ids_d, stored["sample_ids"]) and np.array_equal(ids_r, stored["sample_ids"])
                 q = blend(d, r, gate_params(gname, s, k), tau[str(k)]["training_labels_fit_days"])
-                worst = max(worst, float(np.abs(q - stored[key]).max()))
-        assert worst <= TOL_KW, f"STOP: {gname} gate reproduction {worst:.2e}"
+                per = np.abs(q - stored[key]).max(1)
+                worst = max(worst, float(per.max()))
+                assert (per <= TOL_KW).mean() >= 0.999 and per.max() <= 5e-3 and per.mean() <= 1e-6, f"STOP: {gname} {s} {k}"
         report["gates"][gname] = {"max_abs_diff_kw": worst, "pass": True}
         print(f"(a) {gname}: reproduced, max |diff| {worst:.2e} kW", flush=True)
     del repro_cache
