@@ -300,32 +300,48 @@ def run_test(approval_token: str):
     tau = json.loads(Path("reports/phase6_frozen_thresholds.json").read_text())
     fc = assemble(split, {(s, k): np.arange(n) for s in SEEDS for k in FOLDS}, folds_doc, tau)
     assert all((fc[mm]["n_members"] == 15).all() for mm in ("G3''-F", "E4-B-fit", "E6-S", "G4"))
-    # 2) labels (official outcomes; first access), strata
-    y = split.pv[split.ds.target_rows]
     day = split.ds.day.astype(str)
     sunny = np.array([np.datetime64(d).astype(object) in SUNNY_DATES for d in day])
-    rd = json.loads(Path("reports/test_ramp_definition_frozen.json").read_text())
-    anchor = ClearSkyPV(rd["anchor_coef"])
-    pc = anchor(split.rec_t)
-    k = split.pv / np.maximum(pc, 1.0)
-    ramp = np.abs(k[split.ds.target_rows] - k[split.ds.hist_rows[:, -1]]) >= rd["tau_test"]
-    masks = {"overall": np.ones(n, bool), "sunny": sunny, "cloudy": ~sunny, "ramp": ramp, "non-ramp": ~ramp,
-             "sunrise ramp": ramp & ~split.h60_ok}
-    levels = np.array([.05, .1, .2, .3, .5, .7, .8, .9, .95])
-    pers = official_persistence(split.ds.origin_time.astype(object), split.pv[split.ds.hist_rows[:, -1]])
     e1 = np.load("experiments/E1_sunset_port/tol30_v2/preds_test.npz")
     assert np.array_equal(e1["sample_ids"], split.ds.sample_ids), "STOP: SUNSET sample order differs"
-    res = {"n": n, "scores": {}, "hypotheses": {}, "intervals": {}}
+    res = evaluate(split, np.arange(n), fc, sunny, e1["ensemble"], exclude_same_day=False)
+    Path("reports/test_results.json").write_text(json.dumps(res, indent=1, default=float))
+    np.savez_compressed("experiments/final/test_predictions_v1.npz", sample_ids=split.ds.sample_ids,
+                        **{f"q|{mm}": fc[mm]["pred_q"] for mm in MODELS}, sunset=e1["ensemble"])
+    return res
+
+
+def evaluate(split: Split, idx: np.ndarray, fc: dict, sunny: np.ndarray, sunset, exclude_same_day: bool) -> dict:
+    """Scoring body shared by the one-shot test run and the development rehearsal (identical code path).
+
+    idx: evaluated samples (split indices); sunny: day label per evaluated sample; sunset: SUNSET point forecast per
+    evaluated sample or None. Calibration initialises from the frozen development out-of-fold scores; for the
+    development rehearsal exclude_same_day=True draws them from OTHER days only.
+    """
+    from src.baselines import official_persistence
+    from src.cal2 import ALPHA
+
+    n = len(idx)
+    y = split.pv[split.ds.target_rows[idx]]
+    day = split.ds.day.astype(str)[idx]
+    rd = json.loads(Path("reports/test_ramp_definition_frozen.json").read_text())
+    k = split.pv / np.maximum(ClearSkyPV(rd["anchor_coef"])(split.rec_t), 1.0)
+    ramp = np.abs(k[split.ds.target_rows[idx]] - k[split.ds.hist_rows[idx, -1]]) >= rd["tau_test"]
+    h60 = split.h60_ok[idx]
+    masks = {"overall": np.ones(n, bool), "sunny": sunny, "cloudy": ~sunny, "ramp": ramp, "non-ramp": ~ramp,
+             "sunrise ramp": ramp & ~h60}
+    levels = np.array([.05, .1, .2, .3, .5, .7, .8, .9, .95])
+    pers = official_persistence(split.ds.origin_time[idx].astype(object), split.pv[split.ds.hist_rows[idx, -1]])
+    q = {mm: fc[mm]["pred_q"][idx] for mm in MODELS}
+    res = {"n": n, "n_days": int(len(np.unique(day))), "routing_share_G3pp": float(h60.mean()), "scores": {}, "hypotheses": {}, "intervals": {}}
     for mm in ("G3''-F", "E4-B-fit", "E6-S", "G4"):
-        res["scores"][mm] = score(fc[mm]["pred_q"], y, levels, masks)
-    d4 = split.h60_ok
-    res["scores"]["D4 (60-min eligible)"] = score(fc["D4"]["pred_q"][d4], y[d4], levels, {g: v[d4] for g, v in masks.items()})
-    res["scores"]["E4-B-fit (60-min eligible)"] = score(fc["E4-B-fit"]["pred_q"][d4], y[d4], levels, {g: v[d4] for g, v in masks.items()})
-    pq = np.repeat(pers[:, None], 9, 1)
-    res["scores"]["persistence"] = score(pq, y, levels, masks)
-    sq = np.repeat(e1["ensemble"][:, None], 9, 1)
-    res["scores"]["SUNSET port"] = score(sq, y, levels, masks)
-    c = {mm: crps_quantile_interp(fc[mm]["pred_q"], y, levels) for mm in ("G3''-F", "E4-B-fit")}
+        res["scores"][mm] = score(q[mm], y, levels, masks)
+    res["scores"]["D4 (60-min eligible)"] = score(q["D4"][h60], y[h60], levels, {g: v[h60] for g, v in masks.items()})
+    res["scores"]["E4-B-fit (60-min eligible)"] = score(q["E4-B-fit"][h60], y[h60], levels, {g: v[h60] for g, v in masks.items()})
+    res["scores"]["persistence"] = score(np.repeat(pers[:, None], 9, 1), y, levels, masks)
+    if sunset is not None:
+        res["scores"]["SUNSET port"] = score(np.repeat(np.asarray(sunset)[:, None], 9, 1), y, levels, masks)
+    c = {mm: crps_quantile_interp(q[mm], y, levels) for mm in ("G3''-F", "E4-B-fit")}
     c["persistence"] = np.abs(pers - y)
     res["hypotheses"]["H1 overall CRPS G3''-F - E4-B-fit"] = day_bootstrap(c["G3''-F"] - c["E4-B-fit"], day, sunny)
     res["hypotheses"]["H2 overall CRPS G3''-F - persistence"] = day_bootstrap(c["G3''-F"] - c["persistence"], day, sunny)
@@ -333,26 +349,29 @@ def run_test(approval_token: str):
     res["hypotheses"]["H2 cloudy CRPS G3''-F - persistence"] = day_bootstrap(c["G3''-F"][cl] - c["persistence"][cl], day[cl], sunny[cl])
     res["hypotheses"]["H3 ramp CRPS G3''-F - E4-B-fit (non-inferiority margin 0.02)"] = day_bootstrap(
         c["G3''-F"][ramp] - c["E4-B-fit"][ramp], day[ramp], sunny[ramp])
-    rm = lambda q: float(np.sqrt(np.mean((q - y) ** 2)))
-    rp = rm(pers)
-    res["hypotheses"]["H4 RMSE skill vs persistence"] = {"G3''-F": 1 - rm(fc["G3''-F"]["pred_q"][:, 4]) / rp, "SUNSET port": 1 - rm(e1["ensemble"]) / rp}
-    # 3) empirical adaptive calibration from frozen development out-of-fold scores
+    rm = lambda f: float(np.sqrt(np.mean((f - y) ** 2)))
+    skill = {"G3''-F": 1 - rm(q["G3''-F"][:, 4]) / rm(pers)}
+    if sunset is not None:
+        skill["SUNSET port"] = 1 - rm(np.asarray(sunset)) / rm(pers)
+    res["hypotheses"]["H4 RMSE skill vs persistence"] = skill
     cal = np.load("experiments/final/dev_oof_calibration_v1.npz")
     meta = json.loads(Path("experiments/final/dev_oof_calibration_v1.json").read_text())
-    org, tgt = split.ds.origin_time.astype("datetime64[us]").astype(np.int64), split.ds.target_time.astype("datetime64[us]").astype(np.int64)
+    org = split.ds.origin_time.astype("datetime64[us]").astype(np.int64)[idx]
+    tgt = split.ds.target_time.astype("datetime64[us]").astype(np.int64)[idx]
+    cal_day = cal["origin_us"].astype("datetime64[us]").astype("datetime64[D]").astype(str)
     for mm in ("G3''-F", "E4-B-fit", "E6-S", "G4"):
         res["intervals"][mm] = {}
         for nm, a in ALPHA.items():
-            lo, hi = base_interval(fc[mm]["pred_q"], levels, nm)
+            lo, hi = base_interval(q[mm], levels, nm)
             W = meta["W"][mm]
-            inits = {d: nearest_init(cal["origin_us"], cal[f"{mm}|{nm}"], org[day == d].min(), W) for d in np.unique(day)}
+            inits = {}
+            for d in np.unique(day):
+                keep = cal_day != d if exclude_same_day else np.ones(len(cal_day), bool)
+                inits[d] = nearest_init(cal["origin_us"][keep], cal[f"{mm}|{nm}"][keep], org[day == d].min(), W)
             clo, chi = rolling_conformal_daily(org, tgt, day, lo, hi, y, a, W, inits)
             res["intervals"][mm][nm] = {g: {"coverage": float(np.mean((y[v] >= clo[v]) & (y[v] <= chi[v]))),
                                             "width_kw": float(np.mean(chi[v] - clo[v])),
                                             "interval_score": float(interval_score(clo[v], chi[v], y[v], a).mean())}
                                         for g, v in masks.items() if v.any()}
-    res["hypotheses"]["H5 G3''-F rolling 90% coverage"] = res["intervals"]["G3''-F"]["90"]["overall"]["coverage"]
-    Path("reports/test_results.json").write_text(json.dumps(res, indent=1, default=float))
-    np.savez_compressed("experiments/final/test_predictions_v1.npz", sample_ids=split.ds.sample_ids, target=y,
-                        **{f"q|{mm}": fc[mm]["pred_q"] for mm in MODELS}, persistence=pers, sunset=e1["ensemble"])
+    res["hypotheses"]["H5 G3''-F calibrated 90% coverage"] = res["intervals"]["G3''-F"]["90"]["overall"]["coverage"]
     return res
