@@ -1,0 +1,85 @@
+{
+ "git_commit_before_authorization": "f822e56302d4a3789014886cdfb939065ffb83b6",
+ "checks": {
+  "1 prereg frozen": true,
+  "2 clean tree": true,
+  "3 inventory hashes (140)": true,
+  "4 inventory covers runner models": true,
+  "5 amendments documented": true,
+  "7 no previous evaluation": true,
+  "geometry/eligibility frozen hashes (verify_frozen)": true
+ },
+ "inventory_hash_mismatches": [],
+ "inventory_missing": [],
+ "configuration": {
+  "primary": "G3''-F: G3'' (A2 3D-CNN + E6-S, frozen disagreement gate) if valid 60-min history, else G3 (E4-B-fit + E6-S, frozen E7b gate)",
+  "ensemble": "15 members (seeds 42/123/456 x folds 0-4), equal-weight level-wise quantile averaging",
+  "comparators": [
+   "E4-B-fit",
+   "E6-S",
+   "G4",
+   "D4",
+   "SUNSET port",
+   "official smart persistence"
+  ],
+  "descriptive": "D4 and E4-B-fit on the 60-min eligible population",
+  "calibration": {
+   "method": "causal rolling-window conformal, daily reset, nearest-in-time dev out-of-fold init, 15-min maturation",
+   "W": {
+    "G3''-F": 4620,
+    "E4-B-fit": 990,
+    "E6-S": 4620,
+    "G4": 4620
+   },
+   "init_scores_sha256": "C6773FA02B196D5CD7B5B5A08CF009424B8C0680382C96F82F3BBCED7187899D"
+  },
+  "ramp_definition": {
+   "anchor": "ClearSkyPV fitted on all development records (349,372; all 497 dev days)",
+   "anchor_coef": [
+    0.02600940523462742,
+    0.001470668185080081,
+    0.0016106280451181534
+   ],
+   "anchor_seasonal": true,
+   "tau_test": 0.27948276047614223,
+   "tau_definition": "90th percentile of |K(t+15)-K(t)| over all 164,362 development samples",
+   "min_clear_kw": 1.0,
+   "event_formula": "ramp iff |K(t+15) - K(t)| >= tau_test, K = PV / max(P_clear, 1 kW), K(t+15) at the matched target record, K(t) at the origin record"
+  },
+  "scoring": "crps_quantile_interp; paired test-day bootstrap 10,000 resamples, stratified sunny/cloudy, seed 20261022",
+  "hypotheses": [
+   "H1 (sole primary) overall CRPS G3''-F - E4-B-fit < 0: CI upper < 0",
+   "H2 vs persistence (overall, cloudy)",
+   "H3 ramp non-inferiority margin 0.02 kW",
+   "H4 RMSE skill vs persistence (and SUNSET)",
+   "H5 calibrated 90% coverage"
+  ],
+  "reproduction_tolerance_kw": 0.0001,
+  "dry_run_routing": {
+   "share_G3pp": 0.9172314768620484,
+   "share_G3_fallback": 0.08276852313795159
+  }
+ },
+ "code_sha256": {
+  "src/final_eval.py": "D50E6132D0690220F4CB42CA7DA533D21782B527EE92F2C80A0EAB82753C1D72",
+  "src/cal2.py": "495480176D7F7F38405A2D175BF0200D9289D7D828FC082C8DC9D21AB31BA7E7",
+  "src/metrics.py": "101D3A9CA965AACF79DF0F247A8194CFF0ADB85F90685E19A4F8B3E5EA07E721",
+  "src/gate7b.py": "F7581D70535B6C6BBFB21732D7314C3032B7CCC0AADB7018E7DE610A73B67797",
+  "src/train.py": "3D2B5698DBE4027C902AD2EC6E092EE655AB9FF603C4AA884B8AAE686DD77C53",
+  "src/skippd.py": "443EB9C83759286671021DAF51C238EEED10F433B2E05C09A3CF01169681CA5B",
+  "src/clear_sky.py": "126E558C8FF0084406A4974B961019C722E3CAF6D63088EEA39668CB8E0C9F0A",
+  "src/e8_features.py": "E592ACD3B3DB8537336761173351EB886F331B1DECBC3B74311FEBF309C88C71",
+  "src/baselines.py": "261C9D36121CB511F22A25507D4C44FC049DF07D0138A5DB01A869F401627BFA",
+  "src/calibrate.py": "904A4452C2ED1E5D1513A77BC9C3D813AD7CCD2427B0C4103600EAAD90DAA6AF"
+ },
+ "environment": {
+  "python": "3.11.16 (main, Sep  1 2026, 14:15:24) [MSC v.1944 64 bit (AMD64)]",
+  "platform": "Windows-10-10.0.26200-SP0",
+  "torch": "2.11.0+cu128",
+  "cuda": "12.8",
+  "cudnn": 91900,
+  "gpu": "NVIDIA RTX 5000 Ada Generation",
+  "numpy": "2.4.6"
+ },
+ "all_checks_pass": true
+}
