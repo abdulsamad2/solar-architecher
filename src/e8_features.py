@@ -51,13 +51,14 @@ def predecessor_1min(t_us: np.ndarray) -> np.ndarray:
 
 
 _G = None
+_G_PATH = None
 
 
 def _work(args):
-    global _G
-    if _G is None:
-        _G = np.load(GRAY, mmap_mode="r")
-    rows, prev, xs, ys, dts = args
+    global _G, _G_PATH
+    rows, prev, xs, ys, dts, gray_path = args
+    if _G is None or _G_PATH != str(gray_path):
+        _G, _G_PATH = np.load(gray_path, mmap_mode="r"), str(gray_path)
     out = np.zeros((len(rows), N_M), np.float32)
     for i, (r, p, x, y, dt) in enumerate(zip(rows, prev, xs, ys, dts)):
         if p >= 0:
@@ -75,24 +76,28 @@ def build_record_table(workers: int = 32) -> dict:
             for s in range(0, ds.shape[0], 20000):
                 g[s:s + 20000] = np.round(ds[s:s + 20000].astype(np.float32).mean(-1)).astype(np.uint8)
         np.save(GRAY, g)
-    t = record_times()
-    t_us = t.astype(np.int64)
-    assert (np.diff(t_us) > 0).all(), "trainval records must be sorted"
+    out = record_features(record_times(), GRAY, workers)
+    np.savez_compressed(FEAT / "e8_record_features_v1.npz", **out)
+    return out
+
+
+def record_features(t: np.ndarray, gray_path, workers: int = 32) -> dict:
+    """P/M features for a sorted record timeline whose grey images (row order = timeline order) are at gray_path."""
+    t_us = np.asarray(t, dtype="datetime64[us]").astype(np.int64)
+    assert (np.diff(t_us) > 0).all(), "records must be sorted"
     geo = load_geometry()
-    x, y, zen, az = sun_xy(t, geo)
+    x, y, zen, az = sun_xy(np.asarray(t, dtype="datetime64[us]"), geo)
     P = solar_scalars(zen, az, x, y)
     prev = predecessor_1min(t_us)
     dts = np.where(prev >= 0, (t_us - t_us[np.maximum(prev, 0)]) / MIN_US, 1.0)
-    idx = np.arange(len(t))
-    chunks = [(idx[s:s + 2000], prev[s:s + 2000], x[s:s + 2000], y[s:s + 2000], dts[s:s + 2000])
-              for s in range(0, len(t), 2000)]
+    idx = np.arange(len(t_us))
+    chunks = [(idx[s:s + 2000], prev[s:s + 2000], x[s:s + 2000], y[s:s + 2000], dts[s:s + 2000], str(gray_path))
+              for s in range(0, len(t_us), 2000)]
     with Pool(workers) as pool:
         M = np.concatenate(pool.map(_work, chunks))
     assert np.isfinite(P).all() and np.isfinite(M).all(), "STOP: non-finite features"
-    out = {"P": P, "M": M, "prev_1min_row": prev, "has_motion": prev >= 0, "sun_x": x.astype(np.float32),
-           "sun_y": y.astype(np.float32)}
-    np.savez_compressed(FEAT / "e8_record_features_v1.npz", **out)
-    return out
+    return {"P": P, "M": M, "prev_1min_row": prev, "has_motion": prev >= 0, "sun_x": x.astype(np.float32),
+            "sun_y": y.astype(np.float32)}
 
 
 def build_windows() -> dict:
