@@ -268,6 +268,20 @@ def score(q, y, levels, masks: dict) -> dict:
                 "mae_median_kw": float(np.abs(med[m] - y[m]).mean())} for g, m in masks.items() if m.any()}
 
 
+def record_table_unsorted(t, gray, gray_path) -> np.ndarray:
+    """P/M feature table in HDF5 row order for records not stored chronologically (official test HDF5: two blocks).
+
+    Features are computed on the chronologically sorted timeline (record_features requires it) and mapped back.
+    Deviation 2 of reports/test_execution_deviations.md.
+    """
+    from src.e8_features import record_features
+    order = np.argsort(np.asarray(t, dtype="datetime64[us]").astype(np.int64), kind="stable")
+    inv = np.argsort(order, kind="stable")
+    np.save(gray_path, gray[order])
+    rf = record_features(np.asarray(t)[order], gray_path)
+    return np.concatenate([rf["P"], rf["M"]], 1)[inv].astype(np.float32)
+
+
 def run_test(approval_token: str):
     """ONE-SHOT official test evaluation (reports/test_eval_prereg.md). Not executed during development."""
     expected = Path("reports/test_eval_approval.txt")
@@ -282,18 +296,15 @@ def run_test(approval_token: str):
 
     from src.baselines import official_persistence
     from src.cal2 import ALPHA
-    from src.e8_features import record_features
     from src.skippd import SUNNY_DATES
     # 1) test-record features (inputs only) for D4
     with h5py.File(H5, "r") as f:
         ds_img = f["test/images_log"]
         gray = np.round(ds_img[...].astype(np.float32).mean(-1)).astype(np.uint8)
-    np.save(FEAT / "gray_u8_test.npy", gray)
     m = np.load(MAN)
     sel = m["hdf5_group"] == 1
     t_test = m["times_us"][sel][np.argsort(m["hdf5_row"][sel])].astype("datetime64[us]")
-    rf = record_features(t_test, FEAT / "gray_u8_test.npy")
-    table = np.concatenate([rf["P"], rf["M"]], 1).astype(np.float32)
+    table = record_table_unsorted(t_test, gray, FEAT / "gray_u8_test.npy")
     split = Split("test", torch.device("cuda"), table)
     n = len(split.ds.sample_ids)
     folds_doc = json.loads(Path("data/manifests/folds_blocked5_v1.json").read_text())

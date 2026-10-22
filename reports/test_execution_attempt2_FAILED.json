@@ -1,0 +1,10 @@
+{
+ "git_commit": "b6d4b79cf526e59c57c06b8d692b43894b71cbea",
+ "start_utc": "2026-10-22T17:52:31.535811+00:00",
+ "invocations_of_run_test": 1,
+ "status": "FAILED",
+ "traceback": "Traceback (most recent call last):\n  File \"C:\\Users\\absamad\\Desktop\\solar-architecher\\src\\final_execute.py\", line 31, in main\n    res = run_test(token)\n          ^^^^^^^^^^^^^^^\n  File \"C:\\Users\\absamad\\Desktop\\solar-architecher\\src\\final_eval.py\", line 295, in run_test\n    rf = record_features(t_test, FEAT / \"gray_u8_test.npy\")\n         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\absamad\\Desktop\\solar-architecher\\src\\e8_features.py\", line 87, in record_features\n    assert (np.diff(t_us) > 0).all(), \"records must be sorted\"\n           ^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: records must be sorted\n",
+ "wall_time_s": 1.3788128000451252,
+ "end_utc": "2026-10-22T17:52:32.910297+00:00",
+ "gpu_max_memory_gb": 0.0
+}
