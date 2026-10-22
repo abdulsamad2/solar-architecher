@@ -1,0 +1,13 @@
+{
+ "anchor": "ClearSkyPV fitted on all development records (349,372; all 497 dev days)",
+ "anchor_coef": [
+  0.02600940523462742,
+  0.001470668185080081,
+  0.0016106280451181534
+ ],
+ "anchor_seasonal": true,
+ "tau_test": 0.27948276047614223,
+ "tau_definition": "90th percentile of |K(t+15)-K(t)| over all 164,362 development samples",
+ "min_clear_kw": 1.0,
+ "event_formula": "ramp iff |K(t+15) - K(t)| >= tau_test, K = PV / max(P_clear, 1 kW), K(t+15) at the matched target record, K(t) at the origin record"
+}
