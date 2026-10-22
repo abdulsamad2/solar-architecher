@@ -24,7 +24,8 @@ def main(token: str):
     assert not LOG.exists(), "STOP: an execution log already exists (one-shot)"
     log = {"git_commit": subprocess.run(["git", "rev-parse", "HEAD"], capture_output=True, text=True).stdout.strip(),
            "start_utc": datetime.now(timezone.utc).isoformat(), "invocations_of_run_test": 1}
-    LOG.write_text(json.dumps({**log, "status": "started"}, indent=1))
+    # nothing is written into the repository before run_test returns: its clean-tree guard must see a clean tree
+    # (attempt 1 failed that guard because a "started" log was written here; see reports/test_execution_deviations.md)
     t0 = time.perf_counter()
     try:
         res = run_test(token)

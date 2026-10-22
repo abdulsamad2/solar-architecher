@@ -1,0 +1,10 @@
+{
+ "git_commit": "77fa2f3bf5041d06b7fb8bfb76ca36829b59d2c1",
+ "start_utc": "2026-10-22T17:50:27.723809+00:00",
+ "invocations_of_run_test": 1,
+ "status": "FAILED",
+ "traceback": "Traceback (most recent call last):\n  File \"C:\\Users\\absamad\\Desktop\\solar-architecher\\src\\final_execute.py\", line 30, in main\n    res = run_test(token)\n          ^^^^^^^^^^^^^^^\n  File \"C:\\Users\\absamad\\Desktop\\solar-architecher\\src\\final_eval.py\", line 276, in run_test\n    assert not subprocess.run([\"git\", \"status\", \"--porcelain\"], capture_output=True, text=True).stdout.strip(), \"STOP: dirty tree\"\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: STOP: dirty tree\n",
+ "wall_time_s": 0.19795379997231066,
+ "end_utc": "2026-10-22T17:50:27.922531+00:00",
+ "gpu_max_memory_gb": 0.0
+}

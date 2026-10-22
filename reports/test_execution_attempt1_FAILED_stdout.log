@@ -1,0 +1,19 @@
+﻿.venv\Scripts\python.exe : Traceback (most recent call last):
+At line:1 char:302
++ ... tch {} } }; .venv\Scripts\python.exe -u -m src.final_execute SKIPPD-G ...
++                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (Traceback (most recent call last)::String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "C:\Users\absamad\Desktop\solar-architecher\src\final_execute.py", line 48, in <module>
+    main(sys.argv[1])
+  File "C:\Users\absamad\Desktop\solar-architecher\src\final_execute.py", line 30, in main
+    res = run_test(token)
+          ^^^^^^^^^^^^^^^
+  File "C:\Users\absamad\Desktop\solar-architecher\src\final_eval.py", line 276, in run_test
+    assert not subprocess.run(["git", "status", "--porcelain"], capture_output=True, text=True).stdout.strip(), "STOP: 
+dirty tree"
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: STOP: dirty tree
