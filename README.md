@@ -376,7 +376,51 @@ If you use this code or the results, please cite this repository (see `CITATION.
 
 ---
 
-## 10. Roadmap and status
+## 10. Physics-informed training objective (Phase F; in progress)
+
+**What it is.** An optional extension that adds solar-physics terms to the **training objective** of the 3D-CNN ramp expert (A2). It does not change:
+- any architecture, the gate, the 9 quantile outputs, the clear-sky model, the folds, seeds, ensemble or calibration;
+- the sealed test protocol.
+
+The pre-registration is `reports/phaseF_physics_prereg.md`. The code is `src/physics_losses.py` and `src/physics_metrics.py`, plus `src/train.py --physics-config <yaml>`.
+
+**Physical model.**
+- Clear-sky index: K_t = P_t / max(P_clear,t, 1 kW).
+- Forecast: P̂(t+15, q) = K̂(t+15, q) · max(P_clear(t+15), 1 kW).
+- P_clear is the existing Ineichen + Hay–Davies + incidence-angle model, scaled on training days only.
+
+**Loss terms** (per training batch; K̂_q are the predicted K quantiles, K̂₅₀ the median):
+
+| Term | Definition | Role |
+|---|---|---|
+| L_quantile | mean over samples and q of ρ_q(K − K̂_q), with ρ_q(e) = max(q·e, (q − 1)·e) | Primary objective (unchanged) |
+| L_phys | mean \|P_true − K̂₅₀ · max(P_clear(t+15), 1)\| / P_scale, with P_scale = 30 kW (fixed); optional Huber | Physical power consistency of the median |
+| L_bound | mean over q of ReLU(−K̂_q) + ReLU(K̂_q − K_max), with K_max = 1.5 | Soft plausibility. K > 1 is allowed (cloud enhancement) |
+| L_ramp | mean w_i · \|ΔK_true − ΔK_pred\|, where ΔK_true = K(t+15) − K(t), ΔK_pred = K̂₅₀ − K(t), and w_i = 1 + α_ramp · r_i | Ramp-weighted error of the predicted change |
+| L_direction (optional; off by default) | Σ r_i · ReLU(m − sign(ΔK_true) · ΔK_pred) / Σ r_i, with margin m = 0.02 | Penalises the wrong ramp direction |
+
+- **Total loss:** L_total = L_quantile + λ_phys·L_phys + λ_ramp·L_ramp + λ_bound·L_bound (+ λ_dir·L_direction).
+- **Ramp indicator:** r_i = 1 iff \|ΔK_true\| ≥ τ_fold. τ_fold is the repository's existing ramp/event threshold, the 90th percentile over fit-day training samples; the code asserts it equals the frozen value.
+- Every component is logged separately each epoch (`history.json` → `loss_components`).
+- With all terms disabled, the loss is exactly the original pinball loss (unit-tested).
+- Note: since K̂₅₀ − K(t) and K − K(t) share K(t), L_ramp equals a **ramp-weighted absolute error of the median in K units**. The ramp weighting is what distinguishes it from the pinball term.
+
+**Ablations** (`configs/physics/`; `scripts/run_physics_ablation.py`):
+
+| Arm | Objective |
+|---|---|
+| A0 | Quantile loss only (the existing model) |
+| A1 | + physics consistency |
+| R | + ramp |
+| A3 | + physics + ramp |
+| A4 | + physics + ramp + bounds |
+| A5 (optional) | + direction |
+
+- **Hyperparameters:** chosen by a pre-registered staged search on development folds 1 and 3 (seed 42): λ_phys, then λ_ramp and α_ramp, then λ_bound, then λ_direction.
+- **Evaluation:** `scripts/evaluate_physics_ablation.py`, run on **development out-of-fold** forecasts with the G3″ gate refitted per arm. The official test sets are not reused.
+- **Tests:** `tests/test_physics_losses.py` covers power reconstruction, K bounds, the ramp and direction losses, the disabled-equals-baseline check, and no test leakage.
+
+## 11. Roadmap and status
 
 | Phase | Work | Status |
 |---|---|---|
