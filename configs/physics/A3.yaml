@@ -1,0 +1,10 @@
+p_scale_kw: 30.0
+c_min_kw: 1.0
+physics_loss:
+  enabled: true
+  type: mae
+  lambda_phys: 0.01
+ramp_loss:
+  enabled: true
+  lambda_ramp: 0.1
+  alpha_ramp: 2.0

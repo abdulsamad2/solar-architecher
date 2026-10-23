@@ -20,6 +20,7 @@ from pathlib import Path
 import yaml
 
 ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT))  # so `src` is importable when run as a script
 CFG = ROOT / "configs" / "physics"
 OUT = ROOT / "experiments" / "F_physics"
 A0_DIR = ROOT / "experiments" / "E9" / "v1" / "A2" / "csi"

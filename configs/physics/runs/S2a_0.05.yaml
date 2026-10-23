@@ -1,0 +1,6 @@
+p_scale_kw: 30.0
+c_min_kw: 1.0
+ramp_loss:
+  enabled: true
+  lambda_ramp: 0.05
+  alpha_ramp: 2.0
