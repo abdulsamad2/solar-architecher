@@ -348,6 +348,7 @@ The official test evaluation (`src/final_eval.run_test`) is guarded: it requires
   - ramp non-inferiority was not established on test;
   - ramp-conditioned interval coverage is about 0.65–0.75 at a nominal 90%;
   - ramp *detection* from the image history (AUPRC ≈ 0.5) is the bottleneck.
+- **No anticipation of changes:** on cloudy test days, minute-to-minute changes in every model's median forecast, including G3″-F, are uncorrelated with the concurrent observed changes (lag-0 correlation ≈ 0). They correlate with the observed changes 15 minutes earlier (G3″-F 0.87, smart persistence 0.98; `reports/lag_analysis.json`). The accuracy gains come from a better forecast level and spread, not from anticipating cloud arrivals. This is the "very smart persistence" behaviour reported by Paletta et al. (2021).
 - **Calibration:** calibrated intervals over-covered on the test days (0.935 at 90%). The development-initialised windows did not fully adapt to the cloudier test period.
 - **Clear-sky model:** it has no temperature model, and the annual scale fit absorbs an apparent decline in the PV/clear-sky ratio: about 2.2%/yr after adjusting for season (±0.3; the naive linear fit gives 2.8%/yr). This exceeds typical module degradation (0.5–0.8%/yr), so it is not attributed to degradation alone; soiling, clear-sky (aerosol) model error and data artefacts likely contribute (`reports/related_work.md`).
 
