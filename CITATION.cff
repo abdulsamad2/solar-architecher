@@ -1,0 +1,33 @@
+cff-version: 1.2.0
+message: "If you use this code or its results, please cite it as below, together with the SKIPP'D dataset."
+title: "SHADOW-MoE: probabilistic 15-minute solar power forecasting from sky images"
+authors:
+  - family-names: Laghari
+    given-names: Abdul Samad
+repository-code: "https://github.com/abdulsamad2/solar-architecher"
+date-released: 2026-10-23
+keywords:
+  - solar forecasting
+  - sky images
+  - probabilistic forecasting
+  - mixture of experts
+  - conformal prediction
+  - SKIPP'D
+references:
+  - type: article
+    title: "SKIPP'D: a SKy Images and Photovoltaic Power Generation Dataset for short-term solar forecasting"
+    authors:
+      - family-names: Nie
+        given-names: Yuhao
+      - family-names: Li
+        given-names: Xiatong
+      - family-names: Scott
+        given-names: Andea
+      - family-names: Sun
+        given-names: Yuchi
+      - family-names: Venugopal
+        given-names: Vignesh
+      - family-names: Brandt
+        given-names: Adam
+    journal: "Solar Energy"
+    year: 2023
