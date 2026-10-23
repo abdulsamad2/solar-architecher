@@ -4,6 +4,16 @@ A gated mixture of sky-image experts forecasts rooftop PV power 15 minutes ahead
 
 **Headline result (official 20-day SKIPP'D test set, 13,266 forecasts).** The final model **G3″-F** lowers the overall CRPS against the strongest single model (E4-B-fit) from **1.117 to 1.006 kW (−9.9%)**. The paired test-day bootstrap 95% CI of the difference is **[−0.149, −0.075] kW**, so the pre-registered primary hypothesis is confirmed. Two secondary hypotheses were **not** met: ramp non-inferiority, and 90% interval coverage within ±3 percentage points of nominal. Both are reported below.
 
+**Against published models (Phase A, pre-registered; section 3.5).**
+
+| Comparison | Ours (G3″-F) | Published |
+|---|---|---|
+| SKIPP'D 20-day test, official exact-timing samples: RMSE / forecast skill | **2.949 kW / 18.1%** | SUNSET 3.03 kW / 16.4% |
+| SkyGPT's own external test (5 cloudy days, Nov–Dec 2019, 2,582 samples, run once): CRPS | **2.455 kW** | SkyGPT 2.81 · SUNSET 3.31 · persistence 3.67 |
+| Same SkyGPT test: Winkler score (90%) | **18.16** | SkyGPT 26.70 · SUNSET 56.95 |
+
+These are comparisons against published point estimates. SkyGPT's per-sample predictions are not public, so no paired test was possible. On the external cloudy days the intervals under-cover (90% coverage 0.77), and ramps are no better than with the single direct expert.
+
 ---
 
 ## Contents
@@ -16,6 +26,7 @@ A gated mixture of sky-image experts forecasts rooftop PV power 15 minutes ahead
 7. [Reproducing the work](#7-reproducing-the-work)
 8. [Limitations](#8-limitations)
 9. [Citation, data and licences](#9-citation-data-and-licences)
+10. [Roadmap and status](#10-roadmap-and-status)
 
 ---
 
@@ -339,3 +350,18 @@ If you use this code or the results, please cite this repository (see `CITATION.
 - **This repository's code:** MIT licence (`LICENSE`).
 
 **Author:** Abdul Samad Laghari
+
+---
+
+## 10. Roadmap and status
+
+| Phase | Work | Status |
+|---|---|---|
+| Gates 0–5 | Development experiments and the one-shot official test | Done (`reports/gate5_test_report.md`) |
+| **A** | Comparison with published SUNSET and SkyGPT | **Done** (`reports/phaseA_report.md`) |
+| B | Literature review and novelty positioning | In progress |
+| C | Calibration under slow panel decline and out-of-period cloudy days | Planned |
+| D | Explanatory figures (gate behaviour, ramp examples, camera change) | Planned |
+| E | External validation at a second site | Planned |
+| F | Ramp improvements (developed on dev, tested on a new sealed set) | Optional |
+| G | Paper writing and submission | Planned |
