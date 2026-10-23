@@ -1,0 +1,87 @@
+﻿{
+ "crps": {
+  "G3''-F": {
+   "overall": 2.4554717959437813,
+   "ramp": 5.16049989177915,
+   "non-ramp": 1.2802873676419713,
+   "fs_vs_persistence": 0.33128341209336665
+  },
+  "E4-B-fit": {
+   "overall": 2.5705999702847544,
+   "ramp": 5.064124271575171,
+   "non-ramp": 1.4873021905019175,
+   "fs_vs_persistence": 0.2999297145903479
+  },
+  "E6-S": {
+   "overall": 2.433180082722392,
+   "ramp": 5.6034449949836835,
+   "non-ramp": 1.0558761041733202,
+   "fs_vs_persistence": 0.3373542773456678
+  },
+  "G4": {
+   "overall": 2.4685933237130393,
+   "ramp": 5.206680850656629,
+   "non-ramp": 1.2790464092297689,
+   "fs_vs_persistence": 0.32770993049505415
+  },
+  "SUNSET port (10-member empirical CRPS)": {
+   "overall": 3.2706202829763353,
+   "ramp": 6.096036906733463,
+   "non-ramp": 2.0431337275440713,
+   "fs_vs_persistence": 0.10928806448394768
+  },
+  "SUNSET port (ensemble-mean MAE)": {
+   "overall": 3.590516858878016,
+   "ramp": 6.511657306954844,
+   "non-ramp": 2.3214436197690826,
+   "fs_vs_persistence": 0.022168290975099314
+  },
+  "smart persistence": {
+   "overall": 3.671916982993423,
+   "ramp": 9.021856269968435,
+   "non-ramp": 1.3476655816520562,
+   "fs_vs_persistence": 0.0
+  }
+ },
+ "winkler90_raw": {
+  "G3''-F": {
+   "overall": 18.155789303505806,
+   "ramp": 37.1288373368291,
+   "non-ramp": 9.913053991250905,
+   "coverage": 0.7869868319132456
+  },
+  "E4-B-fit": {
+   "overall": 18.600798788332327,
+   "ramp": 37.45898832986619,
+   "non-ramp": 10.407963109732615,
+   "coverage": 0.7498063516653757
+  },
+  "E6-S": {
+   "overall": 19.671523255608594,
+   "ramp": 42.96969599931993,
+   "non-ramp": 9.549761541396228,
+   "coverage": 0.8001549186676995
+  },
+  "G4": {
+   "overall": 18.358913641909584,
+   "ramp": 37.87677490005021,
+   "non-ramp": 9.87948725087293,
+   "coverage": 0.7784663051897753
+  },
+  "SUNSET port": {
+   "overall": 56.869607706107175,
+   "coverage": 0.23896204492641362
+  }
+ },
+ "population_check": {
+  "our_persistence_crps": 3.671916982993423,
+  "published": 3.67,
+  "within_5pct": true
+ },
+ "mask_check": {
+  "external_corner_mean": 2.6887425768138393,
+  "skippd_corner_mean": 11.638722222222222,
+  "external_corner_zero_share": 0.894848954298993,
+  "skippd_corner_zero_share": 0.8888888888888888
+ }
+}
