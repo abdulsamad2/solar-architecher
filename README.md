@@ -348,6 +348,7 @@ The official test evaluation (`src/final_eval.run_test`) is guarded: it requires
   - ramp non-inferiority was not established on test;
   - ramp-conditioned interval coverage is about 0.65–0.75 at a nominal 90%;
   - ramp *detection* from the image history (AUPRC ≈ 0.5) is the bottleneck.
+- **Calibration method:** the frozen daily-reset rolling conformal works only when recent, similar scores are available. On development folds initialised from distant periods it falls to 0.61–0.87 coverage, while continuous rolling or ACI stays at 0.88–0.92 (`reports/phaseC_report.md`). A future sealed evaluation should pre-register continuous adaptation. Regime-aware calibration did not improve ramp coverage for G3″-F; ramp-conditional coverage stays about 0.65–0.70.
 - **No anticipation of changes:** on cloudy test days, minute-to-minute changes in every model's median forecast, including G3″-F, are uncorrelated with the concurrent observed changes (lag-0 correlation ≈ 0). They correlate with the observed changes 15 minutes earlier (G3″-F 0.87, smart persistence 0.98; `reports/lag_analysis.json`). The accuracy gains come from a better forecast level and spread, not from anticipating cloud arrivals. This is the "very smart persistence" behaviour reported by Paletta et al. (2021).
 - **Calibration:** calibrated intervals over-covered on the test days (0.935 at 90%). The development-initialised windows did not fully adapt to the cloudier test period.
 - **Clear-sky model:** it has no temperature model, and the annual scale fit absorbs an apparent decline in the PV/clear-sky ratio: about 2.2%/yr after adjusting for season (±0.3; the naive linear fit gives 2.8%/yr). This exceeds typical module degradation (0.5–0.8%/yr), so it is not attributed to degradation alone; soiling, clear-sky (aerosol) model error and data artefacts likely contribute (`reports/related_work.md`).
@@ -376,7 +377,7 @@ If you use this code or the results, please cite this repository (see `CITATION.
 | Gates 0–5 | Development experiments and the one-shot official test | Done (`reports/gate5_test_report.md`) |
 | **A** | Comparison with published SUNSET and SkyGPT | **Done** (`reports/phaseA_report.md`) |
 | B | Literature review and novelty positioning | **Done** (`reports/related_work.md`) |
-| C | Calibration under the PV/clear-sky ratio decline and in ramp regimes (pre-registered) | In progress |
+| C | Calibration under temporal shift and in ramp regimes (pre-registered, dev only) | **Done** (`reports/phaseC_report.md`). The primary hypothesis was not confirmed; continuous rolling/ACI beats the daily reset |
 | D | Explanatory figures (forecast example, per-day CRPS, Phase A, PV decline, camera change, coverage) | **Done**, first set (`reports/figures/`) |
 | E | External validation at a second site | Planned |
 | F | Ramp improvements (developed on dev, tested on a new sealed set) | Optional |
