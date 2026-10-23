@@ -163,6 +163,30 @@ Differences are G3″-F minus the comparator. Bootstrap: 10,000 resamples of tes
 
 The test days are harder than development: 14.4% of samples are ramps, against 10.0%.
 
+### 3.5 Comparison with published results (Phase A)
+
+The protocol was pre-registered before execution; the full report is `reports/phaseA_report.md`.
+
+**SUNSET, on the SKIPP'D 20-day test.**
+- Our SUNSET port reproduces the published SKIPP'D-paper numbers within 0.03 kW on the exact-timing subset (the official matching rule).
+- On that subset, G3″-F has RMSE **2.949 kW** and forecast skill **18.1%**, against **3.03 kW** and **16.4%** for published SUNSET.
+
+**SkyGPT, on its own external test set.**
+- The set is 5 cloudy days in Nov–Dec 2019, 2,582 samples, never seen in our development.
+- The frozen models were run exactly once on SkyGPT's public test file.
+- The population is verified: our smart persistence scores 3.672 against the published 3.67, and our SUNSET port's Winkler score is 56.87 against 56.95.
+
+| Model | CRPS (kW) | Winkler 90% |
+|---|---|---|
+| **G3″-F** (its 15-min configuration; no 60-min history in the file) | **2.455** | **18.16** |
+| SkyGPT (published) | 2.81 | 26.70 |
+| SUNSET (published) | 3.31 | 56.95 |
+| Smart persistence | 3.67 | – |
+
+**Caveats.**
+- SkyGPT's per-sample predictions are not public, so this comparison is against published point estimates, not a paired test.
+- On these days the calibrated 90% intervals under-cover (0.77), and ramp CRPS is not better than E4-B-fit's.
+
 **Compute.** The complete one-shot run for all models (15 members × 5 models, calibration, bootstraps) took 475 s on an NVIDIA RTX 5000 Ada. That is 35.8 ms per forecast amortised.
 
 ---
@@ -292,7 +316,8 @@ The official test evaluation (`src/final_eval.run_test`) is guarded: it requires
 ## 8. Limitations
 
 - **A single site, 64×64 images** and three years of data.
-- **Matching protocol:** ±30 s sample matching differs from the original benchmark construction. Numbers are therefore **not** directly comparable to published SKIPP'D results, and we claim no superiority over them.
+- **Matching protocol:** ±30 s sample matching differs from the original benchmark construction. Phase A shows that the effect is small: our SUNSET port is within 0.03 kW of the published numbers on the exact-timing subset. Comparisons with published SUNSET and SkyGPT still rest on their published numbers, not on paired per-sample tests.
+- **External test is short:** the SkyGPT external test has only 5 days, and there the calibrated intervals under-cover substantially.
 - **Ramps remain the open problem:**
   - ramp non-inferiority was not established on test;
   - ramp-conditioned interval coverage is about 0.65–0.75 at a nominal 90%;
