@@ -1,0 +1,6 @@
+{
+ "SUNSET_port_empirical_crps": 3.2706202829763353,
+ "SUNSET_port_quantile_crps_9_levels": 3.308949291316096,
+ "quantile_minus_empirical": 0.038329008339760495,
+ "relative": 0.011719186277680649
+}
