@@ -1,4 +1,4 @@
-﻿# SHADOW-MoE: probabilistic 15-minute solar power forecasting from sky images
+# SHADOW-MoE: probabilistic 15-minute solar power forecasting from sky images
 
 A gated mixture of sky-image experts forecasts rooftop PV power 15 minutes ahead as a full probability distribution, using the Stanford **SKIPP'D** benchmark. Every model decision was pre-registered, and the official test set was evaluated **exactly once**.
 
@@ -366,7 +366,7 @@ If you use this code or the results, please cite this repository (see `CITATION.
 | **A** | Comparison with published SUNSET and SkyGPT | **Done** (`reports/phaseA_report.md`) |
 | B | Literature review and novelty positioning | In progress |
 | C | Calibration under slow panel decline and out-of-period cloudy days | Planned |
-| D | Explanatory figures (gate behaviour, ramp examples, camera change) | Planned |
+| D | Explanatory figures (forecast example, per-day CRPS, Phase A, PV decline, camera change, coverage) | **Done**, first set (`reports/figures/`) |
 | E | External validation at a second site | Planned |
 | F | Ramp improvements (developed on dev, tested on a new sealed set) | Optional |
 | G | Paper writing and submission | Planned |
