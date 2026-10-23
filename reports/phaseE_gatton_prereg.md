@@ -85,6 +85,18 @@ Each is tested with a paired day bootstrap: 10,000 resamples, stratified by the 
 
 No other change. No result of any kind had been computed.
 
+## Amendment E-2 (2026-10-23; before any clear-sky or alignment computation)
+**Problem.** Section 3.5 selects the geometry by RMSE on "sunny" days, but the SKIPP'D sunny rule itself needs the geometry. This makes it circular.
+
+**Clarified, geometry-agnostic rules (development days ≤ 2020-04-15 only):**
+1. **Geometry selection.**
+   - For each candidate (fixed tilt/azimuth grid, or the horizontal N–S single-axis tracker), compute the daily correlation between PV and the candidate's clear-sky POA on development days with ≥ 300 non-missing daytime minutes.
+   - The candidate score is the **mean of the top 20% of daily correlations**; clear days select themselves. Highest score wins; ties go to the simpler fixed-tilt candidate.
+   - The scale is then fitted with `ClearSkyPV`'s rule (per-day median PV/POA for POA ≥ 300 W/m², with iterative rejection of days > 8% below the fit; constant scale).
+2. **Day label (reporting only):** sunny ⇔ corr(PV, POA_best) > 0.995 and mean \|ΔPV/min\| < 0.15 kW × (3275 / 30.1) = **16.3 kW**. This is the SKIPP'D rule with its smoothness threshold scaled by capacity.
+3. **Time alignment (§3.4):** brightness is the mean 64×64 pixel value. Correlation is computed between first differences of brightness at t and first differences of PV at t + L, L = −5…+5 min, over consecutive 1-min record pairs on development days.
+4. **Site constants:** latitude −27.559, longitude 152.343 (SolarBench supplementary); altitude 90 m (assumption); time zone fixed UTC+10. Tracker: axis azimuth 0° (N–S), max rotation 60°, no backtracking.
+
 ## 7. Known limitations stated in advance
 - About 3.5 months, a single season (summer to autumn).
 - The PV array geometry is unknown and is estimated.
