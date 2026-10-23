@@ -108,6 +108,22 @@ No other change. No result of any kind had been computed.
 
 Nothing else changes. No model had been run and no test row had been read. The setup step (§3.4–3.5, E-2) is re-run after this fix.
 
+## Amendment E-4 (2026-10-23; development data only; no model run)
+**What happened.** After E-3, the best single-geometry score was 0.962 (top-20% daily correlation). Plots of the best development days show:
+- **a mixed plant**: the PV curve lies between the fixed-horizontal and N–S tracker clear-sky shapes;
+- **AC clipping**: a midday plateau at about 2,850–2,900 kW.
+
+No single candidate in the E-2 grid can represent this.
+
+**Clear-sky model (replaces the E-2 geometry choice):**
+- `P_clear(t) = min( s · [ r · POA_fixed(t) + (1 − r) · POA_tracker(t) ], C )`.
+  - POA_fixed is the best fixed candidate from the E-2 grid.
+  - r ∈ {0, 0.1, …, 1.0}.
+  - s is fitted per r with the `ClearSkyPV` rule (per-day median PV / shape for shape ≥ 300 W/m², iterative 8% cloudy-day rejection, constant scale).
+- **C (AC cap)** = the 99.9th percentile of development PV.
+- **r selection:** the E-2 criterion (mean of the top 20% of daily correlations between PV and P_clear). Ties go to the larger r (simpler, more fixed).
+- **Day label:** unchanged (E-2.2), now using this P_clear. If no development day qualifies as sunny, sunny/cloudy strata are not reported for Gatton, and the bootstrap is unstratified.
+
 ## 7. Known limitations stated in advance
 - About 3.5 months, a single season (summer to autumn).
 - The PV array geometry is unknown and is estimated.
