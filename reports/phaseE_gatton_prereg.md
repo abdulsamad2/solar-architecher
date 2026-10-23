@@ -74,6 +74,17 @@ Each is tested with a paired day bootstrap: 10,000 resamples, stratified by the 
 - All development-stage choices (preprocessing parameters, clear-sky geometry, fine-tuning, gates, W) are frozen and hash-inventoried before unsealing.
 - The test PV is read by a guarded runner exactly once, from a clean committed tree. Raw outputs are committed before interpretation. Failures before labels are read may be fixed and documented; after that, only identical-code reruns are allowed.
 
+## Amendment E-1 (2026-10-23; development rows only had been read)
+**What happened.** The first preprocessing run stopped while reading development PV: some `Power(kW)` entries are the string `(null)`, meaning missing readings. Section 3 had no rule for missing PV.
+
+**Rule added:**
+- `(null)` and any non-numeric entry is parsed as missing (NaN). Missing values are not interpolated.
+- As in SKIPP'D sample construction, a forecast sample is not created if any of its 16 history records or its target record has missing PV.
+- Missing records are also excluded from the clear-sky fit and from all fitted statistics.
+- The number of missing development values is reported. Test rows are handled by the same rule inside the one-shot runner.
+
+No other change. No result of any kind had been computed.
+
 ## 7. Known limitations stated in advance
 - About 3.5 months, a single season (summer to autumn).
 - The PV array geometry is unknown and is estimated.

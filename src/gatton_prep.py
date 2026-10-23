@@ -111,14 +111,17 @@ def main():
     # development PV values only: CSV rows of sealed test days (and later) are skipped while reading, never loaded
     dev_row = np.flatnonzero(t_all.astype("datetime64[D]") <= DEV_END)
     keep_rows = set((dev_row + 1).tolist()) | {0}  # +1 for the header line
-    dfv = pd.read_csv(PV_CSV, skiprows=lambda i: i not in keep_rows)
+    dfv = pd.read_csv(PV_CSV, skiprows=lambda i: i not in keep_rows, na_values=["(null)"])  # amendment E-1
+    dfv["Power(kW)"] = pd.to_numeric(dfv["Power(kW)"], errors="coerce")
     t_dev = pd.to_datetime(dfv["DateTime"], format="%d/%m/%Y %I:%M:%S %p").to_numpy().astype("datetime64[s]")
     assert t_dev.max() < TEST_START, "STOP: a sealed test row was loaded"
     first_dev = np.r_[True, t_dev[1:] != t_dev[:-1]]
     t_dev, pv_dev = t_dev[first_dev], dfv["Power(kW)"].to_numpy(float)[first_dev]
-    np.savez_compressed(OUT / "pv_dev.npz", times=t_dev.astype(np.int64), pv_kw=np.maximum(pv_dev, 0.0),
-                        n_negative_clipped=int((pv_dev < 0).sum()))
-    print(f"development PV rows (incl. PV-only January days): {len(t_dev):,}; negatives clipped {int((pv_dev < 0).sum())}", flush=True)
+    n_nan = int(np.isnan(pv_dev).sum())
+    np.savez_compressed(OUT / "pv_dev.npz", times=t_dev.astype(np.int64), pv_kw=np.where(np.isnan(pv_dev), np.nan, np.maximum(pv_dev, 0.0)),
+                        n_negative_clipped=int((pv_dev < 0).sum()), n_missing=n_nan)
+    print(f"development PV rows (incl. PV-only January days): {len(t_dev):,}; negatives clipped {int((pv_dev < 0).sum())}; "
+          f"missing {n_nan}", flush=True)
     # images for all paired records (inputs only), frozen parameters
     with Pool(16, initializer=_init, initargs=(circle,)) as pool:
         imgs = np.stack(pool.map(_process, names[img_idx], chunksize=256))
