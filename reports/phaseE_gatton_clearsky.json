@@ -1,0 +1,22 @@
+{
+ "site": {
+  "latitude": -27.559,
+  "longitude": 152.343,
+  "altitude": 90.0,
+  "tz": "Etc/GMT-10"
+ },
+ "fixed_component": {
+  "type": "fixed",
+  "tilt": 0,
+  "azimuth": 0
+ },
+ "tracker": {
+  "axis_azimuth": 0,
+  "max_angle": 60
+ },
+ "r_fixed": 0.7,
+ "scale": 2.787362843888181,
+ "cap_kw": 3126.3876308593744,
+ "min_poa": 300.0,
+ "c_min_kw": 108.80398671096346
+}
