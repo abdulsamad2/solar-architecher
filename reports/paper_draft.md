@@ -22,8 +22,9 @@ Sky-image deep-learning models for minute-scale photovoltaic (PV) forecasting ar
 - Ramp non-inferiority and the coverage target were not met.
 
 **Results on SkyGPT's external test set** (2,582 samples on 5 cloudy days after the end of the development data; one-shot):
-- The frozen model reaches CRPS 2.455 kW and a Winkler score of 18.16.
-- The published values on the same samples are 2.63 / 21.46 (PV-MM-Diffusion), 2.81 / 26.70 (SkyGPT) and 3.31 / 56.95 (SUNSET).
+- Scored exactly as the competitors score theirs (30-sample energy-form CRPS), the frozen model reaches CRPS 2.49 kW.
+- The published values on the same samples are 2.63 (PV-MM-Diffusion), 2.81 (SkyGPT) and 3.31 (SUNSET).
+- Its interval quality is comparable to the best published (Winkler 22.0 vs 21.46).
 
 **Limits we report.**
 - No model, ours included, anticipates changes: forecast increments correlate with observed increments 15 minutes earlier, not with concurrent ones.
@@ -44,7 +45,7 @@ Minute-scale PV variability from passing clouds complicates grid balancing, stor
 
 **Contributions.**
 1. A **disagreement-gated mixture** of a calm-condition expert and a 60-min 3D-CNN ramp expert, fitted by CRPS on held-out days, with a timestamp-only fallback when long history is unavailable (Section 4).
-2. A **pre-registered, sealed, one-shot evaluation** on the official SKIPP'D test (Section 5–6.2), plus a pre-registered one-shot evaluation on SkyGPT's external test samples. There we report the lowest published CRPS and Winkler score we are aware of (Section 6.3).
+2. A **pre-registered, sealed, one-shot evaluation** on the official SKIPP'D test (Section 5–6.2), plus a pre-registered one-shot evaluation on SkyGPT's external test samples. There we report the lowest CRPS we are aware of on those samples, also under the competitors' own estimator (Section 6.3).
 3. A **calibration study** showing that online conformal calibration restores marginal coverage only when allowed to adapt continuously, and that regime-aware calibration adds nothing on top of a disagreement-gated mixture (Section 6.4).
 4. A **lag analysis** showing that the gains come from better forecast level and spread, not anticipation (Section 6.5).
 5. **Four undocumented SKIPP'D data issues** and an apparent PV/clear-sky ratio decline (Section 3.3).
@@ -189,14 +190,41 @@ Each step below was a pre-registered gate. CRPS in kW.
 
 | Model (same 2,582 samples) | CRPS (kW) | Winkler 90% |
 |---|---|---|
-| **G3″-F (= G3 here; ours, one-shot)** | **2.455** | **18.16** |
+| **G3″-F (= G3 here; ours, one-shot)**, scored as the competitors (30-sample energy-form CRPS; Winkler from 30-sample percentiles) | **2.49** | 22.0 |
+| *same forecasts, our quantile estimator* | *2.455* | *18.16 (not comparable)* |
 | Real-future-image → U-Net oracle (Huang et al., 2026) | 2.52 | 30.72 |
 | PV-MM-Diffusion (Huang et al., 2026) | 2.63 | 21.46 |
 | SkyGPT (Nie et al., 2024) | 2.81 | 26.70 |
 | SUNSET (Nie et al., 2024) | 3.31 | 56.95 |
 | Smart persistence | 3.67 | – |
 
-Our quantile-interpolation CRPS is 1.2% *higher* than the empirical-ensemble CRPS used by SkyGPT, measured on our SUNSET port's members, so the comparison does not favour us. Per-sample predictions of the published models are not available, so these are comparisons of point estimates, not paired tests. On these winter cloudy days the calibrated 90% coverage is only 0.77 (Section 6.4).
+**Estimator comparability.** Competitors score m generated samples with the energy-form CRPS (a V-statistic), which is biased upward for small m. We therefore converted our quantiles to m samples by inverse-CDF sampling and scored them identically (50 random seeds; three tail assumptions).
+- **CRPS:** the advantage holds: 2.49 vs 2.63 at m = 30, and 2.59 vs 2.78 at m = 10 (PV-MM-Diffusion's own 10-sample figure). Tail assumptions move it by ±0.01.
+- **Per day:** it holds on each of the three days PV-MM-Diffusion reports individually (0.95 / 2.44 / 3.59 vs 1.14 / 2.64 / 3.83).
+- **Winkler score:** computed the competitors' way, from 30-sample 5th/95th percentiles, it is **comparable**: 22.0 vs 21.46.
+
+We therefore claim a CRPS advantage, not an interval-score advantage. Per-sample predictions of the published models are not available, so these are comparisons of point estimates, not paired tests. On these winter cloudy days the calibrated 90% coverage is only 0.77 (Section 6.4).
+
+### 6.3b Where does the gain come from? (ablation ladder, development out-of-fold)
+Each rung adds one ingredient. Paired day-bootstrap differences against the previous rung are in brackets.
+
+| Rung | Overall CRPS | Sunny | Ramp |
+|---|---|---|---|
+| Smart persistence | 0.877 | 0.223 | 4.672 |
+| 1 member, kW target | 0.946 | 0.548 | 2.583 |
+| 1 member, **clear-sky-index target** | 0.733 [−0.212] | 0.295 | 2.417 |
+| E4-B-fit, 1 member (calibration hold-out removed from training) | 0.751 | 0.305 | 2.448 |
+| E4-B-fit, **3-member ensemble** | 0.730 [−0.021] | 0.291 | 2.436 |
+| + calm expert E6-S, **plain 50/50 quantile average** | 0.630 [−0.100] | 0.184 | 2.635 [**+0.199**] |
+| + **disagreement gate** (G3) instead of a plain average | 0.583 [−0.047] | 0.121 | 2.534 [**−0.101**] |
+| + **60-min 3D-CNN ramp expert** (G3″-F) | 0.573 [−0.010] | 0.121 | 2.411 [**−0.123**] |
+
+**What each ingredient buys:**
+- **Clear-sky-index target:** the largest single gain.
+- **Ensembling:** small (−0.021).
+- **The calm expert:** helps overall but, averaged naively, hurts ramps.
+- **The gate:** improves *both* overall and ramp CRPS over a plain average; all CIs exclude 0. The gate is a genuine contribution, not a by-product of ensembling.
+- **The 60-min ramp expert:** mainly improves ramps.
 
 ### 6.4 Calibration under temporal shift (development data only)
 We compared seven causal calibration methods on out-of-fold streams with leave-one-fold-out hyperparameters (pre-registered):

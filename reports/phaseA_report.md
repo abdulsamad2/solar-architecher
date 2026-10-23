@@ -113,7 +113,14 @@ The authors supplied the full text.
 | PV-MM-Diffusion | 2.63 | 21.46 |
 | SkyGPT (published) | 2.81 | 26.70 |
 
-**Our CRPS is 6.7% below PV-MM-Diffusion's and our Winkler score 15.4% below.** It is also below the two-stage "real future image" oracle (2.52), which feeds the *true* future sky image to a U-Net.
+**Our CRPS is 6.7% below PV-MM-Diffusion's, and our raw-quantile Winkler score 15.4% below.**
+
+**Correction (post-hoc estimator check, `reports/estimator_check.json`).** Our quantiles were converted to samples and scored exactly as the competitors score theirs.
+- **CRPS:** 2.49 at 30 samples vs 2.63, and 2.59 at 10 samples vs 2.78. The advantage holds, and is robust to tail assumptions (±0.01).
+- **Per day:** the advantage also holds on each of the 3 days PV-MM-Diffusion reports individually (0.95 / 2.44 / 3.59 vs 1.14 / 2.64 / 3.83).
+- **Winkler score:** computed from 30-sample 5th/95th percentiles, ours is **22.0 vs 21.46**, i.e. **comparable, not better**. The raw-quantile 18.16 above is not like-for-like.
+
+The CRPS is also below the two-stage "real future image" oracle (2.52), which feeds the *true* future sky image to a U-Net.
 
 **Independent population check.** PV-MM-Diffusion's own SUNSET re-run (CRPS 3.28, WS 56.29) and persistence (3.67) match ours (3.27, 56.87; 3.672).
 
@@ -129,7 +136,8 @@ The authors supplied the full text.
 
 ## What Phase A supports
 - **Supported:**
-  - On SkyGPT's own test samples, the frozen G3″-F (in its 15-min configuration) achieves lower CRPS and Winkler scores than SkyGPT's published values.
+  - On SkyGPT's own test samples, the frozen G3″-F (in its 15-min configuration) achieves lower CRPS than SkyGPT and PV-MM-Diffusion, also under their own estimator.
+  - Its Winkler score is better than SkyGPT's and comparable to PV-MM-Diffusion's.
   - On the SKIPP'D test it beats published SUNSET under a closely matched protocol.
   - Both comparisons rest on published numbers, not paired per-sample tests.
 - **Not supported:** better ramp forecasting than the direct expert (E4-B-fit), or reliable interval coverage on out-of-period cloudy days.

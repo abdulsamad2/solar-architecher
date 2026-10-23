@@ -10,7 +10,13 @@ A gated mixture of sky-image experts forecasts rooftop PV power 15 minutes ahead
 |---|---|---|
 | SKIPP'D 20-day test, official exact-timing samples: RMSE / forecast skill | **2.949 kW / 18.1%** | SUNSET 3.03 kW / 16.4% |
 | SkyGPT's own external test (5 cloudy days, Nov–Dec 2019, 2,582 samples, run once): CRPS | **2.455 kW** | PV-MM-Diffusion 2.63 · SkyGPT 2.81 · SUNSET 3.31 · persistence 3.67 |
-| Same SkyGPT test: Winkler score (90%) | **18.16** | PV-MM-Diffusion 21.46 · SkyGPT 26.70 · SUNSET 56.95 |
+| Same SkyGPT test, scored exactly as the competitors (30 samples, energy-form CRPS) | **2.49** | PV-MM-Diffusion 2.63 (30 samples) |
+| Same SkyGPT test: Winkler score (90%), from 30-sample percentiles as the competitors | 22.0 | PV-MM-Diffusion 21.46 · SkyGPT 26.70 · SUNSET 56.95 |
+
+**Estimator check** (`reports/estimator_check.json`):
+- Scored exactly like the competitors, our CRPS advantage holds: 2.49 vs 2.63 at 30 samples, 2.59 vs 2.78 at 10 samples. It is robust to tail assumptions (±0.01).
+- It also holds on each of the 3 days PV-MM-Diffusion reports individually: 0.95 vs 1.14, 2.44 vs 2.64, 3.59 vs 3.83.
+- **On the Winkler score, ours is comparable, not better** (22.0 vs 21.46 under the competitors' estimator). Our raw-quantile Winkler score of 18.16 is not comparable with theirs.
 
 These are comparisons against published point estimates. SkyGPT's per-sample predictions are not public, so no paired test was possible. On the external cloudy days the intervals under-cover (90% coverage 0.77), and ramps are no better than with the single direct expert.
 
@@ -202,7 +208,7 @@ The protocol was pre-registered before execution; the full report is `reports/ph
 
 | Model | CRPS (kW) | Winkler 90% |
 |---|---|---|
-| **G3″-F** (its 15-min configuration; no 60-min history in the file) | **2.455** | **18.16** |
+| **G3″-F** (its 15-min configuration; no 60-min history in the file); our estimator / the competitors' 30-sample estimator | **2.455 / 2.49** | 18.16 / **22.0** |
 | Real-future-image → U-Net oracle (from the PV-MM-Diffusion paper) | 2.52 | 30.72 |
 | PV-MM-Diffusion (Huang et al., *Applied Energy* 2026; same test set, confirmed from the full text) | 2.63 | 21.46 |
 | SkyGPT (published) | 2.81 | 26.70 |
