@@ -1,0 +1,8 @@
+{
+ "F4_trend": {
+  "season_adjusted_relative_per_year": -0.021718839199775603,
+  "season_adjusted_se_relative": 0.002990592455446852,
+  "naive_linear_relative_per_year": -0.027982629240037256,
+  "n_days": 196
+ }
+}
