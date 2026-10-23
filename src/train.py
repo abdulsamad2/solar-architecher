@@ -29,6 +29,7 @@ from src.metrics import (crps_quantile_interp, interval_coverage, interval_width
 from src.events import event_labels, future_rows
 from src.models import (Conv3dGRUEncoder, ConvGRUEncoder, DiffSkyEncoder, EventMixtureHead, Forecaster,
                         NonCrossingQuantileHead, PointHead, SmallSkyEncoder, TemporalTransformerEncoder)
+from src.physics_losses import PhysicsConfig, total_loss
 from src.skippd import SkippdForecastDataset
 
 PV_SCALE = 30.0  # kW, ~nameplate; input/target scaling only
@@ -306,6 +307,26 @@ def run_fold(ds, data, fold, target_kind, cfg, out_dir: Path, log) -> dict:
         w_t = torch.tensor(w, dtype=torch.float32, device=device)
         (out_dir / "loss_weights.json").write_text(json.dumps({"alpha": cfg["loss_weight_alpha"], "median_v_fit": med,
                                                                "w_mean_train": float(w[tr].mean())}))
+    phys = PhysicsConfig.from_dict(cfg.get("physics"))
+    if phys.any_enabled:
+        # physics-informed auxiliary terms (src/physics_losses.py); quantile heads in the K representation only
+        assert quantile and not event and target_kind == "csi" and cfg["input"] == "csi" and w_t is None, \
+            "physics losses apply to K-quantile heads only"
+        k_rec_p = clear_sky_index(ds.pv.numpy().astype(float), pclear_rec, cfg["min_clear_kw"])
+        k_now_p = k_rec_p[ds.hist_rows[:, -1]]
+        fit_all = np.flatnonzero(np.isin(day_str, list(train_days)))  # all fit-day samples (before any E8 restriction)
+        tau_p = float(np.quantile(np.abs(y - k_now_p)[fit_all], 0.9))  # existing ramp/event threshold rule (fit days)
+        if cfg.get("frozen_thresholds"):
+            frozen_p = json.loads(Path(cfg["frozen_thresholds"]).read_text())[str(fold["fold"])]["training_labels_fit_days"]
+            assert abs(tau_p - frozen_p) < 1e-5, f"STOP: ramp threshold {tau_p:.6f} != frozen {frozen_p:.6f}"
+        phys_t = {"k_now": torch.tensor(k_now_p, dtype=torch.float32, device=device),
+                  "p_true": torch.tensor(y_kw, dtype=torch.float32, device=device),
+                  "p_clear": torch.tensor(pclear_tgt, dtype=torch.float32, device=device),
+                  "is_ramp": torch.tensor(np.abs(y - k_now_p) >= tau_p, device=device),
+                  "k_true": torch.tensor(y, dtype=torch.float32, device=device)}
+        (out_dir / "physics.json").write_text(json.dumps(
+            {**phys.__dict__, "tau_ramp_fit_days": tau_p, "ramp_share_train": float((np.abs(y - k_now_p) >= tau_p)[tr].mean()),
+             "k_target_p999_train": float(np.quantile(y[tr], 0.999))}, indent=1))
     if event:  # train-only climatology init (class frequencies, per-class dK spread)
         keep = tr_dev[valid_t[tr_dev]]
         model.head.init_from_targets(dk_t[keep], cls_t[keep])
@@ -326,16 +347,27 @@ def run_fold(ds, data, fold, target_kind, cfg, out_dir: Path, log) -> dict:
 
     best, wait = float("inf"), 0
     hist = {"train_loss": [], sel_key: [], f"{sel_key}_raw_weights": [], "grad_norm_p99": []}
+    if phys.any_enabled:
+        hist["loss_components"] = []
     for epoch in range(cfg["max_epochs"]):
         t0 = time.time()
         model.train()
         perm = tr_t[torch.randperm(len(tr_t), generator=gen, device=device)]
         tot, n, gnorms = 0.0, 0, []
+        comp_sum = {}
         for s in range(0, len(perm), cfg["batch_size"]):
             b = perm[s:s + cfg["batch_size"]]
             if event:
                 loss = model.head.loss(model(*data(b)), dk_t[b], cls_t[b], valid_t[b],
                                        supervised=cfg["event_supervised"])
+            elif phys.any_enabled:
+                pred = _out(model(*data(b)))
+                k_q = pred + phys_t["k_now"][b].unsqueeze(-1) if data.residual else pred
+                loss, parts = total_loss(k_q, phys_t["k_true"][b], QUANTILES, phys, k_now=phys_t["k_now"][b],
+                                         p_true_kw=phys_t["p_true"][b], p_clear_kw=phys_t["p_clear"][b],
+                                         is_ramp=phys_t["is_ramp"][b])
+                for kk, vv in parts.items():
+                    comp_sum[kk] = comp_sum.get(kk, 0.0) + vv * len(b)
             else:
                 pred = _out(model(*data(b)))
                 if w_t is not None:
@@ -361,6 +393,9 @@ def run_fold(ds, data, fold, target_kind, cfg, out_dir: Path, log) -> dict:
         hist[sel_key].append(val_s)
         hist[f"{sel_key}_raw_weights"].append(raw_s)
         hist["grad_norm_p99"].append(float(torch.quantile(torch.stack(gnorms).float(), 0.99)))
+        if phys.any_enabled:
+            hist["loss_components"].append({kk: vv / n for kk, vv in comp_sum.items()})
+            log("    components " + "  ".join(f"{kk} {vv / n:.5f}" for kk, vv in comp_sum.items()))
         improved = val_s < best
         if improved:
             best, wait = val_s, 0
@@ -452,6 +487,10 @@ def main(a):
            "frozen_thresholds": a.frozen_thresholds,
            "event_components": a.event_components, "e8_window": a.e8_window, "e8_features": a.e8_features,
            "encoder": a.encoder, "loss_weight_alpha": a.loss_weight_alpha}
+    if a.physics_config:
+        import yaml
+        cfg["physics"] = yaml.safe_load(Path(a.physics_config).read_text())
+        cfg["physics_config_path"] = a.physics_config
     if a.e8_window:
         from src.e8_features import FEAT, verify_frozen
 
@@ -530,6 +569,7 @@ if __name__ == "__main__":
     p.add_argument("--encoder", default="cnn_gru",
                    choices=["cnn_gru", "cnn_gru_wide", "cnn3d_gru", "convgru", "transformer", "diff_cnn_gru"])
     p.add_argument("--loss-weight-alpha", type=float, default=0.0, help="E9 L1 input-weighted pinball (0 = off)")
+    p.add_argument("--physics-config", default="", help="YAML with physics_loss / ramp_loss / bound_loss / direction_loss")
     p.add_argument("--e8-features", choices=list(E8_MASKS), default="none",
                    help="E8 per-frame features: none / P (solar) / M (motion) / PM; unused columns zero-filled")
     p.add_argument("--residual", action="store_true",

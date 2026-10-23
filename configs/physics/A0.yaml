@@ -1,0 +1,3 @@
+# A0: quantile (pinball) loss only = the existing A2 3D-CNN expert (experiments/E9/v1/A2). Not retrained.
+p_scale_kw: 30.0
+c_min_kw: 1.0
