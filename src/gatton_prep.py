@@ -118,10 +118,14 @@ def main():
     first_dev = np.r_[True, t_dev[1:] != t_dev[:-1]]
     t_dev, pv_dev = t_dev[first_dev], dfv["Power(kW)"].to_numpy(float)[first_dev]
     n_nan = int(np.isnan(pv_dev).sum())
-    np.savez_compressed(OUT / "pv_dev.npz", times=t_dev.astype(np.int64), pv_kw=np.where(np.isnan(pv_dev), np.nan, np.maximum(pv_dev, 0.0)),
-                        n_negative_clipped=int((pv_dev < 0).sum()), n_missing=n_nan)
-    print(f"development PV rows (incl. PV-only January days): {len(t_dev):,}; negatives clipped {int((pv_dev < 0).sum())}; "
-          f"missing {n_nan}", flush=True)
+    gen = -pv_dev  # amendment E-3: the file uses an export sign convention (generation negative, night load positive)
+    np.savez_compressed(OUT / "pv_dev.npz", times=t_dev.astype(np.int64), pv_kw=np.where(np.isnan(gen), np.nan, np.maximum(gen, 0.0)),
+                        n_floored_to_zero=int((gen < 0).sum()), n_missing=n_nan, sign_convention="generation = max(-Power(kW), 0)")
+    print(f"development PV rows (incl. PV-only January days): {len(t_dev):,}; consumption values floored to 0: "
+          f"{int((gen < 0).sum())}; missing {n_nan}", flush=True)
+    if (OUT / "images_64.npy").exists():
+        print("images already processed with the frozen parameters; skipping", flush=True)
+        return
     # images for all paired records (inputs only), frozen parameters
     with Pool(16, initializer=_init, initargs=(circle,)) as pool:
         imgs = np.stack(pool.map(_process, names[img_idx], chunksize=256))

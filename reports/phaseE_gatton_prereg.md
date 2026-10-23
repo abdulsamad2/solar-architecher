@@ -97,6 +97,17 @@ No other change. No result of any kind had been computed.
 3. **Time alignment (§3.4):** brightness is the mean 64×64 pixel value. Correlation is computed between first differences of brightness at t and first differences of PV at t + L, L = −5…+5 min, over consecutive 1-min record pairs on development days.
 4. **Site constants:** latitude −27.559, longitude 152.343 (SolarBench supplementary); altitude 90 m (assumption); time zone fixed UTC+10. Tracker: axis azimuth 0° (N–S), max rotation 60°, no backtracking.
 
+## Amendment E-3 (2026-10-23; development rows only)
+**What happened.** The setup diagnostics failed: alignment correlation ≈ 0 at every lag, a NaN geometry score, and 0 sunny days. Inspecting **development** PV values showed that the file uses an export sign convention:
+- generation is **negative**: noon median −1,667 kW, minimum −3,144 kW, consistent with the 3.275 MW plant;
+- night values are about **+5.5 kW**, the plant's own consumption.
+
+§3.6's "clip negatives to 0" had therefore removed all generation.
+
+**Corrected rule:** PV generation = **max(−Power(kW), 0)**. Night-time consumption maps to 0. Missing values follow E-1.
+
+Nothing else changes. No model had been run and no test row had been read. The setup step (§3.4–3.5, E-2) is re-run after this fix.
+
 ## 7. Known limitations stated in advance
 - About 3.5 months, a single season (summer to autumn).
 - The PV array geometry is unknown and is estimated.
