@@ -311,6 +311,6 @@ If you use this code or the results, please cite this repository (see `CITATION.
 **Licences**
 - **Dataset:** SKIPP'D, CC BY 4.0, <https://purl.stanford.edu/dj417rh1007>.
 - **Vendored helper:** `src/official/relative_op_func.py` is © the SKIPP'D authors, MIT licence (`src/official/LICENSE_SKIPPD`).
-- **This repository's code:** licence not yet chosen. Until a `LICENSE` file is added, all rights are reserved by the author.
+- **This repository's code:** MIT licence (`LICENSE`).
 
 **Author:** Abdul Samad Laghari

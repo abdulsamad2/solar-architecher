@@ -6,6 +6,7 @@ authors:
     given-names: Abdul Samad
 repository-code: "https://github.com/abdulsamad2/solar-architecher"
 date-released: 2026-10-23
+license: MIT
 keywords:
   - solar forecasting
   - sky images
