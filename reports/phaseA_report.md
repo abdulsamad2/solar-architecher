@@ -69,6 +69,9 @@ Our SUNSET port is our own 10-fold reproduction, not the authors' model.
 | G4 | 2.469 | 32.8% | 18.36 | 0.778 |
 | E4-B-fit | 2.571 | 30.0% | 18.60 | 0.750 |
 | **SkyGPT, published** | **2.81** | 23% | **26.70** | – |
+| **PV-MM-Diffusion, published** (Huang et al., *Applied Energy* 413:127816, 2026; same 2,582 samples, Table 3) | **2.63** | – | **21.46** | – |
+| Real future image→U-Net (PV-MM-Diffusion Table 3; an *oracle* given the true future image) | 2.52 | – | 30.72 | – |
+| QR-GRU / MC-Dropout SUNSET / SkyGPT→U-Net re-run (PV-MM-Diffusion Table 3) | 2.95 / 3.10 / 3.21 | – | 33.38 / 43.68 / 35.62 | – |
 | SUNSET, published | 3.31 | 10% | 56.95 | – |
 | SUNSET port (10-member empirical) | 3.271 | 10.9% | 56.87 | 0.239 |
 | Smart persistence | 3.672 | 0 | – | – |
@@ -95,6 +98,28 @@ Our SUNSET port is our own 10-fold reproduction, not the authors' model.
 | 90% | 0.774 | 0.462 | 0.133 / 0.093 | 9.78 |
 
 **The calibration fails on these days.** The frozen windows start from late-October development scores, and these winter cloudy days are much more volatile. A daily reset with 15-min maturation cannot adapt within a day. Raw 90% coverage (0.787) was no better.
+
+### Added after publication check: PV-MM-Diffusion (Huang et al., 2026)
+The authors supplied the full text.
+
+**Same test set.** It states that all methods are evaluated "on the official validation set (4,467 samples from 10 cloudy days) and test set (2,582 samples from 5 cloudy days) following the SkyGPT split" (Sections 3.3 and 4.2), with 30 diffusion samples per input.
+
+**Ranking on these 2,582 samples:**
+
+| Model | CRPS | Winkler 90% |
+|---|---|---|
+| **G3″-F (ours)** | **2.455** | **18.16** |
+| Real-future-image oracle (PV-MM-Diffusion paper) | 2.52 | 30.72 |
+| PV-MM-Diffusion | 2.63 | 21.46 |
+| SkyGPT (published) | 2.81 | 26.70 |
+
+**Our CRPS is 6.7% below PV-MM-Diffusion's and our Winkler score 15.4% below.** It is also below the two-stage "real future image" oracle (2.52), which feeds the *true* future sky image to a U-Net.
+
+**Independent population check.** PV-MM-Diffusion's own SUNSET re-run (CRPS 3.28, WS 56.29) and persistence (3.67) match ours (3.27, 56.87; 3.672).
+
+**Note on SkyGPT.** PV-MM-Diffusion's re-run of SkyGPT→U-Net gives CRPS 3.21, not the 2.81 originally published. Its "18% better than SkyGPT" is relative to its own 3.21, which is 6% better than the published 2.81.
+
+**Compute.** PV-MM-Diffusion reports 45.4 s per forecast for 10 samples on an RTX 3090, plus 43 h of training on 8 GPUs. Our complete 15-member run costs 35.8 ms per forecast for *all* models together.
 
 ### Comparability caveats
 - **Estimator.** SkyGPT's CRPS is the empirical CRPS over 100 sampled predictions; ours uses quantile interpolation over 9 levels. On the SUNSET port's 10 members (post-hoc, `reports/phaseA_a2_estimator_check.json`), the quantile estimator is **1.2% higher** than the empirical one (3.309 vs 3.271). Our estimator is therefore, if anything, slightly unfavourable to us.

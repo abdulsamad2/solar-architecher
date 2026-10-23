@@ -9,8 +9,8 @@ A gated mixture of sky-image experts forecasts rooftop PV power 15 minutes ahead
 | Comparison | Ours (G3″-F) | Published |
 |---|---|---|
 | SKIPP'D 20-day test, official exact-timing samples: RMSE / forecast skill | **2.949 kW / 18.1%** | SUNSET 3.03 kW / 16.4% |
-| SkyGPT's own external test (5 cloudy days, Nov–Dec 2019, 2,582 samples, run once): CRPS | **2.455 kW** | SkyGPT 2.81 · SUNSET 3.31 · persistence 3.67 |
-| Same SkyGPT test: Winkler score (90%) | **18.16** | SkyGPT 26.70 · SUNSET 56.95 |
+| SkyGPT's own external test (5 cloudy days, Nov–Dec 2019, 2,582 samples, run once): CRPS | **2.455 kW** | PV-MM-Diffusion 2.63 · SkyGPT 2.81 · SUNSET 3.31 · persistence 3.67 |
+| Same SkyGPT test: Winkler score (90%) | **18.16** | PV-MM-Diffusion 21.46 · SkyGPT 26.70 · SUNSET 56.95 |
 
 These are comparisons against published point estimates. SkyGPT's per-sample predictions are not public, so no paired test was possible. On the external cloudy days the intervals under-cover (90% coverage 0.77), and ramps are no better than with the single direct expert.
 
@@ -203,6 +203,8 @@ The protocol was pre-registered before execution; the full report is `reports/ph
 | Model | CRPS (kW) | Winkler 90% |
 |---|---|---|
 | **G3″-F** (its 15-min configuration; no 60-min history in the file) | **2.455** | **18.16** |
+| Real-future-image → U-Net oracle (from the PV-MM-Diffusion paper) | 2.52 | 30.72 |
+| PV-MM-Diffusion (Huang et al., *Applied Energy* 2026; same test set, confirmed from the full text) | 2.63 | 21.46 |
 | SkyGPT (published) | 2.81 | 26.70 |
 | SUNSET (published) | 3.31 | 56.95 |
 | Smart persistence | 3.67 | – |
