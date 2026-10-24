@@ -1,0 +1,20 @@
+{
+ "phys_enabled": false,
+ "phys_type": "mae",
+ "lambda_phys": 0.0,
+ "huber_delta": 0.05,
+ "ramp_enabled": true,
+ "lambda_ramp": 0.1,
+ "alpha_ramp": 2.0,
+ "bound_enabled": false,
+ "lambda_bound": 0.0,
+ "k_max": 1.5,
+ "direction_enabled": false,
+ "lambda_direction": 0.0,
+ "direction_margin": 0.02,
+ "p_scale_kw": 30.0,
+ "c_min_kw": 1.0,
+ "tau_ramp_fit_days": 0.2982678694412747,
+ "ramp_share_train": 0.08383669718601862,
+ "k_target_p999_train": 1.8589667478519785
+}

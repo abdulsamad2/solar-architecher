@@ -376,7 +376,16 @@ If you use this code or the results, please cite this repository (see `CITATION.
 
 ---
 
-## 10. Physics-informed training objective (Phase F; in progress)
+## 10. Physics-informed training objective (Phase F; done; `reports/phaseF_report.md`)
+
+**Result (development out-of-fold, pre-registered): no material effect.**
+- **CRPS:** every physics variant changes CRPS by ≤ 0.6%. The physics-consistency term alone improves overall CRPS by 0.14% (95% CI excludes 0; negligible in practice). Ramp terms cost 0.4–0.6%.
+- **Pre-registered winner rule:** no variant met it (none matched the baseline's ramp CRPS).
+- **Small conditional effects:**
+  - ramp 90% coverage up to +0.8 pp;
+  - ramp-direction accuracy 82.2% → 83.5%;
+  - better rising ramps but worse falling ramps.
+- **Conclusion:** the ramp limitation is one of perception (the inputs), not of the training objective.
 
 **What it is.** An optional extension that adds solar-physics terms to the **training objective** of the 3D-CNN ramp expert (A2). It does not change:
 - any architecture, the gate, the 9 quantile outputs, the clear-sky model, the folds, seeds, ensemble or calibration;
@@ -429,6 +438,6 @@ The pre-registration is `reports/phaseF_physics_prereg.md`. The code is `src/phy
 | B | Literature review and novelty positioning | **Done** (`reports/related_work.md`) |
 | C | Calibration under temporal shift and in ramp regimes (pre-registered, dev only) | **Done** (`reports/phaseC_report.md`). The primary hypothesis was not confirmed; continuous rolling/ACI beats the daily reset |
 | D | Explanatory figures (forecast example, per-day CRPS, Phase A, PV decline, camera change, coverage) | **Done**, first set (`reports/figures/`) |
-| E | External validation at a second site | Planned |
-| F | Ramp improvements (developed on dev, tested on a new sealed set) | Optional |
-| G | Paper writing and submission | Planned |
+| E | External validation at a second site (Gatton, Australia) | Pre-registered; data prepared (`reports/phaseE_gatton_prereg.md`); fine-tuning next |
+| F | Physics-informed training objective | **Done**: no material effect (`reports/phaseF_report.md`) |
+| G | Paper writing and submission (one paper) | Planned |

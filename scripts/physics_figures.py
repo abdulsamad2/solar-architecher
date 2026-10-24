@@ -81,7 +81,7 @@ def fig_crps(res, arms):
     ax.axhline(0, color=INK2, lw=0.8)
     ax.set_xticks(x, strata)
     ax.set_ylabel("CRPS change vs original G3''-F (%)\n(negative = better)")
-    ax.set_title("Physics-informed ablations: CRPS relative to the original model (development, out-of-fold)",
+    ax.set_title("Physics-informed ablations: CRPS vs the original model (dev, out-of-fold)",
                  loc="left", fontsize=10, color=INK)
     ax.legend(fontsize=7.5, ncol=3)
     save(fig, "F_phys2_ablation_crps")

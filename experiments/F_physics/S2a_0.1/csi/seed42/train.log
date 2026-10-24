@@ -1,0 +1,44 @@
+[csi] fold 1: val ['2017-09-13', '2018-05-15']
+    components quantile 0.03385  ramp 0.13573
+  epoch   1  train loss 0.04743  val CRPS 1.480 kW (raw 1.438)  *  lr 9.9e-05  |g|p99 0.76  (41s)
+    components quantile 0.02491  ramp 0.10778
+  epoch   2  train loss 0.03568  val CRPS 1.345 kW (raw 1.367)  *  lr 9.6e-05  |g|p99 1.17  (41s)
+    components quantile 0.02170  ramp 0.10146
+  epoch   3  train loss 0.03184  val CRPS 1.288 kW (raw 1.301)  *  lr 9.0e-05  |g|p99 1.45  (41s)
+    components quantile 0.02008  ramp 0.09781
+  epoch   4  train loss 0.02986  val CRPS 1.262 kW (raw 1.348)  *  lr 8.3e-05  |g|p99 1.64  (41s)
+    components quantile 0.01889  ramp 0.09445
+  epoch   5  train loss 0.02833  val CRPS 1.246 kW (raw 1.274)  *  lr 7.5e-05  |g|p99 1.64  (41s)
+    components quantile 0.01784  ramp 0.09057
+  epoch   6  train loss 0.02690  val CRPS 1.251 kW (raw 1.296)  lr 6.5e-05  |g|p99 1.73  (41s)
+    components quantile 0.01707  ramp 0.08771
+  epoch   7  train loss 0.02585  val CRPS 1.259 kW (raw 1.271)  lr 5.5e-05  |g|p99 1.65  (41s)
+    components quantile 0.01638  ramp 0.08455
+  epoch   8  train loss 0.02484  val CRPS 1.258 kW (raw 1.331)  lr 4.5e-05  |g|p99 1.67  (41s)
+    components quantile 0.01578  ramp 0.08164
+  epoch   9  train loss 0.02394  val CRPS 1.270 kW (raw 1.328)  lr 3.5e-05  |g|p99 1.74  (41s)
+    components quantile 0.01513  ramp 0.07824
+  epoch  10  train loss 0.02295  val CRPS 1.290 kW (raw 1.318)  lr 2.5e-05  |g|p99 1.57  (41s)
+[csi] fold 1 done: best epoch 5  RMSE sunny 0.595 (pers 0.324)  cloudy 3.486 (pers 4.074)  overall 2.997 (pers 3.488)
+[csi] fold 3: val ['2018-09-22', '2019-07-16']
+    components quantile 0.03673  ramp 0.14604
+  epoch   1  train loss 0.05133  val CRPS 0.991 kW (raw 0.951)  *  lr 9.9e-05  |g|p99 0.73  (41s)
+    components quantile 0.02725  ramp 0.11717
+  epoch   2  train loss 0.03897  val CRPS 0.841 kW (raw 1.033)  *  lr 9.6e-05  |g|p99 1.23  (41s)
+    components quantile 0.02385  ramp 0.11123
+  epoch   3  train loss 0.03497  val CRPS 0.797 kW (raw 0.849)  *  lr 9.0e-05  |g|p99 1.37  (42s)
+    components quantile 0.02199  ramp 0.10706
+  epoch   4  train loss 0.03270  val CRPS 0.783 kW (raw 0.835)  *  lr 8.3e-05  |g|p99 1.66  (42s)
+    components quantile 0.02062  ramp 0.10316
+  epoch   5  train loss 0.03093  val CRPS 0.779 kW (raw 0.791)  *  lr 7.5e-05  |g|p99 1.60  (42s)
+    components quantile 0.01966  ramp 0.09986
+  epoch   6  train loss 0.02964  val CRPS 0.779 kW (raw 0.815)  lr 6.5e-05  |g|p99 1.70  (42s)
+    components quantile 0.01882  ramp 0.09664
+  epoch   7  train loss 0.02848  val CRPS 0.785 kW (raw 0.777)  lr 5.5e-05  |g|p99 1.77  (41s)
+    components quantile 0.01807  ramp 0.09346
+  epoch   8  train loss 0.02742  val CRPS 0.794 kW (raw 0.866)  lr 4.5e-05  |g|p99 1.62  (41s)
+    components quantile 0.01742  ramp 0.09018
+  epoch   9  train loss 0.02644  val CRPS 0.805 kW (raw 0.910)  lr 3.5e-05  |g|p99 1.72  (41s)
+    components quantile 0.01685  ramp 0.08750
+  epoch  10  train loss 0.02560  val CRPS 0.816 kW (raw 0.847)  lr 2.5e-05  |g|p99 1.80  (41s)
+[csi] fold 3 done: best epoch 5  RMSE sunny 0.390 (pers 0.379)  cloudy 2.636 (pers 2.991)  overall 2.173 (pers 2.461)

@@ -1,0 +1,840 @@
+{
+ "A0": {
+  "crps": {
+   "overall": 0.5725310865892032,
+   "sunny": 0.12141887374272956,
+   "cloudy": 0.8937538826787109,
+   "ramp": 2.4112529895789243,
+   "sunrise ramp": 0.9030513708721094,
+   "rising ramp": 2.4030340804306847,
+   "falling ramp": 2.41957080136551
+  },
+  "point": {
+   "rmse": 1.9144112130527138,
+   "mae": 0.7745259077828182,
+   "rmse_skill_vs_persistence": 0.16369197824268722
+  },
+  "intervals": {
+   "50": {
+    "overall": {
+     "coverage": 0.4992273153161923,
+     "width": 1.0905288016652852,
+     "interval_score": 2.555005595824406
+    },
+    "sunny": {
+     "coverage": 0.5294177881802223,
+     "width": 0.2641418394416534,
+     "interval_score": 0.5346665630555945
+    },
+    "cloudy": {
+     "coverage": 0.47772963063269513,
+     "width": 1.678972925096125,
+     "interval_score": 3.9936253774964117
+    },
+    "ramp": {
+     "coverage": 0.1656497311665559,
+     "width": 2.6472888186698773,
+     "interval_score": 10.829858611414238
+    },
+    "sunrise ramp": {
+     "coverage": 0.1812607309296051,
+     "width": 0.7136316809396399,
+     "interval_score": 4.0124689330489485
+    },
+    "rising ramp": {
+     "coverage": 0.1551765553687245,
+     "width": 2.6992118149938253,
+     "interval_score": 10.59893799970882
+    },
+    "falling ramp": {
+     "coverage": 0.17624893642883188,
+     "width": 2.594741004473549,
+     "interval_score": 11.063558017401753
+    }
+   },
+   "80": {
+    "overall": {
+     "coverage": 0.8002336306445529,
+     "width": 2.4198835964490923,
+     "interval_score": 3.852898106260759
+    },
+    "sunny": {
+     "coverage": 0.8214452896430661,
+     "width": 0.5695479000581787,
+     "interval_score": 0.8560155486877735
+    },
+    "cloudy": {
+     "coverage": 0.7851294764692403,
+     "width": 3.7374493576340972,
+     "interval_score": 5.9868837694312065
+    },
+    "ramp": {
+     "coverage": 0.45278801425723436,
+     "width": 5.710517261549641,
+     "interval_score": 15.1836536410027
+    },
+    "sunrise ramp": {
+     "coverage": 0.446897228354182,
+     "width": 1.67094032936202,
+     "interval_score": 6.261806038596338
+    },
+    "rising ramp": {
+     "coverage": 0.4503963487869325,
+     "width": 5.830327997057974,
+     "interval_score": 14.592396691501827
+    },
+    "falling ramp": {
+     "coverage": 0.4552084599489486,
+     "width": 5.589264777795857,
+     "interval_score": 15.782025509429133
+    }
+   },
+   "90": {
+    "overall": {
+     "coverage": 0.9009320889256641,
+     "width": 3.553299951732414,
+     "interval_score": 4.934481964494218
+    },
+    "sunny": {
+     "coverage": 0.9126682270333528,
+     "width": 0.8933184707073047,
+     "interval_score": 1.2064890167413804
+    },
+    "cloudy": {
+     "coverage": 0.8925751546842774,
+     "width": 5.447388971157807,
+     "interval_score": 7.589068305491114
+    },
+    "ramp": {
+     "coverage": 0.6505165226847097,
+     "width": 8.00974587592867,
+     "interval_score": 17.698220025764925
+    },
+    "sunrise ramp": {
+     "coverage": 0.6038753985773854,
+     "width": 2.3747445719025655,
+     "interval_score": 8.00167667935232
+    },
+    "rising ramp": {
+     "coverage": 0.631755945231804,
+     "width": 8.162712899479498,
+     "interval_score": 17.234795828114912
+    },
+    "falling ramp": {
+     "coverage": 0.66950285644828,
+     "width": 7.854938116346298,
+     "interval_score": 18.167220860775746
+    }
+   }
+  },
+  "physics": {
+   "power_consistency_mae_kw": 0.7745259077828182,
+   "power_consistency_median_abs_kw": 0.15892573857891978,
+   "frac_k_neg": 0.0031488759905303875,
+   "frac_k_over_kmax": 0.008655014879081269,
+   "k_max": 1.5,
+   "ramp_direction_accuracy": 0.8220262188122999,
+   "ramp_magnitude_error": 0.3440928703784129,
+   "n_ramp": 16553
+  }
+ },
+ "A1": {
+  "crps": {
+   "overall": 0.5716906703340482,
+   "sunny": 0.12096358745041602,
+   "cloudy": 0.8926392275091601,
+   "ramp": 2.4143405235312274,
+   "sunrise ramp": 0.9030513708721094,
+   "rising ramp": 2.4187319690194133,
+   "falling ramp": 2.409896233372647
+  },
+  "point": {
+   "rmse": 1.9131046620043426,
+   "mae": 0.7727340360857472,
+   "rmse_skill_vs_persistence": 0.16426274335059
+  },
+  "intervals": {
+   "50": {
+    "overall": {
+     "coverage": 0.49902653898102967,
+     "width": 1.0874500101497944,
+     "interval_score": 2.551221589555346
+    },
+    "sunny": {
+     "coverage": 0.5291105909888824,
+     "width": 0.26245621648580214,
+     "interval_score": 0.53248150170399
+    },
+    "cloudy": {
+     "coverage": 0.4776046332368076,
+     "width": 1.674902102136113,
+     "interval_score": 3.9887028129206783
+    },
+    "ramp": {
+     "coverage": 0.16595179121609377,
+     "width": 2.641152730616254,
+     "interval_score": 10.845484217961083
+    },
+    "sunrise ramp": {
+     "coverage": 0.17978906058376257,
+     "width": 0.7113059087201683,
+     "interval_score": 4.013811136927653
+    },
+    "rising ramp": {
+     "coverage": 0.15469613259668508,
+     "width": 2.694640942101636,
+     "interval_score": 10.67541525415731
+    },
+    "falling ramp": {
+     "coverage": 0.17734289534459705,
+     "width": 2.5870208661666014,
+     "interval_score": 11.017599714816587
+    }
+   },
+   "80": {
+    "overall": {
+     "coverage": 0.8006169309207725,
+     "width": 2.4163283025216025,
+     "interval_score": 3.8529032319619674
+    },
+    "sunny": {
+     "coverage": 0.8219426565242832,
+     "width": 0.5678429930692352,
+     "interval_score": 0.8540986440948313
+    },
+    "cloudy": {
+     "coverage": 0.7854315535093019,
+     "width": 3.7325764614574974,
+     "interval_score": 5.988257512358182
+    },
+    "ramp": {
+     "coverage": 0.45176101008880565,
+     "width": 5.700302103911144,
+     "interval_score": 15.218810332978638
+    },
+    "sunrise ramp": {
+     "coverage": 0.445916114790287,
+     "width": 1.6691483204227713,
+     "interval_score": 6.265745188964696
+    },
+    "rising ramp": {
+     "coverage": 0.44619264953158777,
+     "width": 5.824069163693504,
+     "interval_score": 14.733722338306658
+    },
+    "falling ramp": {
+     "coverage": 0.4573963777804789,
+     "width": 5.575045687264989,
+     "interval_score": 15.709735657354344
+    }
+   },
+   "90": {
+    "overall": {
+     "coverage": 0.9005609569121816,
+     "width": 3.5496559551989013,
+     "interval_score": 4.937886295924328
+    },
+    "sunny": {
+     "coverage": 0.9122001170275015,
+     "width": 0.8934489451620252,
+     "interval_score": 1.2065076185785848
+    },
+    "cloudy": {
+     "coverage": 0.8922730776442157,
+     "width": 5.441057292734794,
+     "interval_score": 7.594883508309018
+    },
+    "ramp": {
+     "coverage": 0.6496707545460038,
+     "width": 7.993120878524571,
+     "interval_score": 17.744741057269994
+    },
+    "sunrise ramp": {
+     "coverage": 0.6021584498405691,
+     "width": 2.3752868535296994,
+     "interval_score": 7.997022958978127
+    },
+    "rising ramp": {
+     "coverage": 0.6251501321162624,
+     "width": 8.149836477756908,
+     "interval_score": 17.36997243873969
+    },
+    "falling ramp": {
+     "coverage": 0.6744864470645435,
+     "width": 7.834519434595017,
+     "interval_score": 18.12401947198779
+    }
+   }
+  },
+  "physics": {
+   "power_consistency_mae_kw": 0.7727340360857472,
+   "power_consistency_median_abs_kw": 0.1580628762068666,
+   "frac_k_neg": 0.003187408822531296,
+   "frac_k_over_kmax": 0.00867597133157299,
+   "k_max": 1.5,
+   "ramp_direction_accuracy": 0.8244426992086027,
+   "ramp_magnitude_error": 0.34425743222093946,
+   "n_ramp": 16553
+  }
+ },
+ "R": {
+  "crps": {
+   "overall": 0.575012634246946,
+   "sunny": 0.11981820639320664,
+   "cloudy": 0.8991422470475295,
+   "ramp": 2.4194693882617786,
+   "sunrise ramp": 0.9030513708721094,
+   "rising ramp": 2.3690163470659242,
+   "falling ramp": 2.470529558554313
+  },
+  "point": {
+   "rmse": 1.9181488643263311,
+   "mae": 0.7750359033788057,
+   "rmse_skill_vs_persistence": 0.16205919019728443
+  },
+  "intervals": {
+   "50": {
+    "overall": {
+     "coverage": 0.4995011012277777,
+     "width": 1.0553270332398104,
+     "interval_score": 2.5737305539357513
+    },
+    "sunny": {
+     "coverage": 0.5333089526038619,
+     "width": 0.2576210519428009,
+     "interval_score": 0.526763065023688
+    },
+    "cloudy": {
+     "coverage": 0.4754275952584321,
+     "width": 1.6233483336446308,
+     "interval_score": 4.031311620392998
+    },
+    "ramp": {
+     "coverage": 0.16395819488914395,
+     "width": 2.5051639712516285,
+     "interval_score": 10.933875032725073
+    },
+    "sunrise ramp": {
+     "coverage": 0.1807701741476576,
+     "width": 0.71349163124863,
+     "interval_score": 4.012557785624601
+    },
+    "rising ramp": {
+     "coverage": 0.1572183521498919,
+     "width": 2.556614763672401,
+     "interval_score": 10.431352864166787
+    },
+    "falling ramp": {
+     "coverage": 0.1707791418500061,
+     "width": 2.4530940432468453,
+     "interval_score": 11.442444325956663
+    }
+   },
+   "80": {
+    "overall": {
+     "coverage": 0.800817707255935,
+     "width": 2.4410351301023874,
+     "interval_score": 3.8792043857792002
+    },
+    "sunny": {
+     "coverage": 0.8226301930953774,
+     "width": 0.571956741636293,
+     "interval_score": 0.8592089092800365
+    },
+    "cloudy": {
+     "coverage": 0.7852857232140997,
+     "width": 3.7719469718925818,
+     "interval_score": 6.02964803042705
+    },
+    "ramp": {
+     "coverage": 0.4507944179302845,
+     "width": 5.698322198450399,
+     "interval_score": 15.21894916848985
+    },
+    "sunrise ramp": {
+     "coverage": 0.43659553593328426,
+     "width": 1.6495551757344535,
+     "interval_score": 6.3003940991812355
+    },
+    "rising ramp": {
+     "coverage": 0.4466730723036272,
+     "width": 5.819606109098233,
+     "interval_score": 14.528373959770933
+    },
+    "falling ramp": {
+     "coverage": 0.45496535796766746,
+     "width": 5.575578812033253,
+     "interval_score": 15.917834447181194
+    }
+   },
+   "90": {
+    "overall": {
+     "coverage": 0.9007069760650271,
+     "width": 3.6132648241660066,
+     "interval_score": 4.972103034729915
+    },
+    "sunny": {
+     "coverage": 0.911746635459333,
+     "width": 0.909340808757468,
+     "interval_score": 1.2226122204215109
+    },
+    "cloudy": {
+     "coverage": 0.8928459823753672,
+     "width": 5.538643938073297,
+     "interval_score": 7.641997329287554
+    },
+    "ramp": {
+     "coverage": 0.6545037153386093,
+     "width": 8.071564254384004,
+     "interval_score": 17.568456155762405
+    },
+    "sunrise ramp": {
+     "coverage": 0.5984792739759627,
+     "width": 2.3522898839089224,
+     "interval_score": 8.067364366130223
+    },
+    "rising ramp": {
+     "coverage": 0.6300744655296661,
+     "width": 8.227702125103699,
+     "interval_score": 17.221027770269146
+    },
+    "falling ramp": {
+     "coverage": 0.679226935699526,
+     "width": 7.913547491090924,
+     "interval_score": 17.920065337434576
+    }
+   }
+  },
+  "physics": {
+   "power_consistency_mae_kw": 0.7750359033788057,
+   "power_consistency_median_abs_kw": 0.15510329777452814,
+   "frac_k_neg": 0.0034456463983970342,
+   "frac_k_over_kmax": 0.008700983871643756,
+   "k_max": 1.5,
+   "ramp_direction_accuracy": 0.8315713163776959,
+   "ramp_magnitude_error": 0.3418366569725137,
+   "n_ramp": 16553
+  }
+ },
+ "A3": {
+  "crps": {
+   "overall": 0.5752566012015499,
+   "sunny": 0.11979024232856443,
+   "cloudy": 0.8995798475147232,
+   "ramp": 2.4208260266284123,
+   "sunrise ramp": 0.9030513708721094,
+   "rising ramp": 2.3686233739779046,
+   "falling ramp": 2.47365686240915
+  },
+  "point": {
+   "rmse": 1.9185515127887984,
+   "mae": 0.7751907784566475,
+   "rmse_skill_vs_persistence": 0.16188329374577304
+  },
+  "intervals": {
+   "50": {
+    "overall": {
+     "coverage": 0.4991847263966124,
+     "width": 1.0495939172240825,
+     "interval_score": 2.5746224408326333
+    },
+    "sunny": {
+     "coverage": 0.5342451726155647,
+     "width": 0.2571679921927063,
+     "interval_score": 0.5266346786606256
+    },
+    "cloudy": {
+     "coverage": 0.47421928709818545,
+     "width": 1.6138554558914522,
+     "interval_score": 4.032930011738223
+    },
+    "ramp": {
+     "coverage": 0.16202501057210172,
+     "width": 2.4870131610520745,
+     "interval_score": 10.940316098409317
+    },
+    "sunrise ramp": {
+     "coverage": 0.1807701741476576,
+     "width": 0.7147440324310891,
+     "interval_score": 4.011519984835795
+    },
+    "rising ramp": {
+     "coverage": 0.15457602690367522,
+     "width": 2.5356299707671286,
+     "interval_score": 10.43415361051717
+    },
+    "falling ramp": {
+     "coverage": 0.16956363194360033,
+     "width": 2.437811318620139,
+     "interval_score": 11.452569516932478
+    }
+   },
+   "80": {
+    "overall": {
+     "coverage": 0.8006777722344581,
+     "width": 2.437065500751232,
+     "interval_score": 3.8813916196188214
+    },
+    "sunny": {
+     "coverage": 0.8228935049736689,
+     "width": 0.5725612224262183,
+     "interval_score": 0.8596846407201745
+    },
+    "cloudy": {
+     "coverage": 0.7848586487781505,
+     "width": 3.764720262800959,
+     "interval_score": 6.033053971210576
+    },
+    "ramp": {
+     "coverage": 0.4492841176825953,
+     "width": 5.680422666754766,
+     "interval_score": 15.245382549298098
+    },
+    "sunrise ramp": {
+     "coverage": 0.4383124846701006,
+     "width": 1.6537273160206403,
+     "interval_score": 6.291485662625398
+    },
+    "rising ramp": {
+     "coverage": 0.4449915926014893,
+     "width": 5.798014797002264,
+     "interval_score": 14.56134929709823
+    },
+    "falling ramp": {
+     "coverage": 0.45362829707062113,
+     "width": 5.56141548595488,
+     "interval_score": 15.937647148522124
+    }
+   },
+   "90": {
+    "overall": {
+     "coverage": 0.9007495649846071,
+     "width": 3.6080083149701063,
+     "interval_score": 4.974619596447026
+    },
+    "sunny": {
+     "coverage": 0.9121416032767701,
+     "width": 0.910315800903766,
+     "interval_score": 1.2234102274895118
+    },
+    "cloudy": {
+     "coverage": 0.8926376533822212,
+     "width": 5.528950173072803,
+     "interval_score": 7.645737619633373
+    },
+    "ramp": {
+     "coverage": 0.6532350631305504,
+     "width": 8.051019804978727,
+     "interval_score": 17.61144552080634
+    },
+    "sunrise ramp": {
+     "coverage": 0.6014226146676478,
+     "width": 2.355395575197928,
+     "interval_score": 8.055885267970412
+    },
+    "rising ramp": {
+     "coverage": 0.6280326687484987,
+     "width": 8.203887564736606,
+     "interval_score": 17.269218069468863
+    },
+    "falling ramp": {
+     "coverage": 0.6787407317369637,
+     "width": 7.896312503684925,
+     "interval_score": 17.957791182631524
+    }
+   }
+  },
+  "physics": {
+   "power_consistency_mae_kw": 0.7751907784566475,
+   "power_consistency_median_abs_kw": 0.15470602892732188,
+   "frac_k_neg": 0.003436858208642441,
+   "frac_k_over_kmax": 0.00856442892314931,
+   "k_max": 1.5,
+   "ramp_direction_accuracy": 0.8301818401498218,
+   "ramp_magnitude_error": 0.3416175630144675,
+   "n_ramp": 16553
+  }
+ },
+ "A4": {
+  "crps": {
+   "overall": 0.5753332589044384,
+   "sunny": 0.11969369908452349,
+   "cloudy": 0.8997798361558432,
+   "ramp": 2.424767627050354,
+   "sunrise ramp": 0.9030513708721094,
+   "rising ramp": 2.377181731783921,
+   "falling ramp": 2.472926149475093
+  },
+  "point": {
+   "rmse": 1.9187736255366767,
+   "mae": 0.7753491597561734,
+   "rmse_skill_vs_persistence": 0.16178626408384944
+  },
+  "intervals": {
+   "50": {
+    "overall": {
+     "coverage": 0.4991664740025067,
+     "width": 1.0465293082327851,
+     "interval_score": 2.574710140303606
+    },
+    "sunny": {
+     "coverage": 0.5340550029256875,
+     "width": 0.2557798564907168,
+     "interval_score": 0.5257705426634874
+    },
+    "cloudy": {
+     "coverage": 0.4743234515947584,
+     "width": 1.6095970830821402,
+     "interval_score": 4.033695483261862
+    },
+    "ramp": {
+     "coverage": 0.15978976620552165,
+     "width": 2.4758654510862383,
+     "interval_score": 10.965261835100785
+    },
+    "sunrise ramp": {
+     "coverage": 0.18003433897473634,
+     "width": 0.7147907243862156,
+     "interval_score": 4.011435915226485
+    },
+    "rising ramp": {
+     "coverage": 0.15205380735046842,
+     "width": 2.5257872227743996,
+     "interval_score": 10.473890281796796
+    },
+    "falling ramp": {
+     "coverage": 0.16761881609335116,
+     "width": 2.4253429433585576,
+     "interval_score": 11.462546331613368
+    }
+   },
+   "80": {
+    "overall": {
+     "coverage": 0.8004648276365584,
+     "width": 2.443419988806048,
+     "interval_score": 3.8811983721277254
+    },
+    "sunny": {
+     "coverage": 0.8218841427735518,
+     "width": 0.5750131498492098,
+     "interval_score": 0.8633466986971087
+    },
+    "cloudy": {
+     "coverage": 0.7852128080664986,
+     "width": 3.773853641345468,
+     "interval_score": 6.0301154821433185
+    },
+    "ramp": {
+     "coverage": 0.4489216456231499,
+     "width": 5.687534659966489,
+     "interval_score": 15.256861025589922
+    },
+    "sunrise ramp": {
+     "coverage": 0.4370860927152318,
+     "width": 1.6506556272944668,
+     "interval_score": 6.297338082431661
+    },
+    "rising ramp": {
+     "coverage": 0.4424693730482825,
+     "width": 5.809023847941836,
+     "interval_score": 14.627810255658492
+    },
+    "falling ramp": {
+     "coverage": 0.45545156193022973,
+     "width": 5.564583526007241,
+     "interval_score": 15.893481508201939
+    }
+   },
+   "90": {
+    "overall": {
+     "coverage": 0.9006096299631302,
+     "width": 3.6214619578524943,
+     "interval_score": 4.980325728472606
+    },
+    "sunny": {
+     "coverage": 0.9112931538911644,
+     "width": 0.9166327674282159,
+     "interval_score": 1.2317942868171319
+    },
+    "cloudy": {
+     "coverage": 0.8930022291202266,
+     "width": 5.547485618374188,
+     "interval_score": 7.649536883985704
+    },
+    "ramp": {
+     "coverage": 0.6537183592098109,
+     "width": 8.069150473744436,
+     "interval_score": 17.604506352834132
+    },
+    "sunrise ramp": {
+     "coverage": 0.5997056659308315,
+     "width": 2.3537147843387785,
+     "interval_score": 8.063200882253657
+    },
+    "rising ramp": {
+     "coverage": 0.6270718232044199,
+     "width": 8.226441888301022,
+     "interval_score": 17.327141016529826
+    },
+    "falling ramp": {
+     "coverage": 0.6806855475872128,
+     "width": 7.909966285389249,
+     "interval_score": 17.88520937824676
+    }
+   }
+  },
+  "physics": {
+   "power_consistency_mae_kw": 0.7753491597561735,
+   "power_consistency_median_abs_kw": 0.15393554204514537,
+   "frac_k_neg": 0.00340846559558914,
+   "frac_k_over_kmax": 0.008483983186164955,
+   "k_max": 1.5,
+   "ramp_direction_accuracy": 0.8301818401498218,
+   "ramp_magnitude_error": 0.34207270844173576,
+   "n_ramp": 16553
+  }
+ },
+ "A5": {
+  "crps": {
+   "overall": 0.57486268277359,
+   "sunny": 0.11945192295980514,
+   "cloudy": 0.8991463387481566,
+   "ramp": 2.419892546479301,
+   "sunrise ramp": 0.9030513708721094,
+   "rising ramp": 2.368873321403948,
+   "falling ramp": 2.4715257138522664
+  },
+  "point": {
+   "rmse": 1.9183292241768284,
+   "mae": 0.7749400878620445,
+   "rmse_skill_vs_persistence": 0.16198040023369387
+  },
+  "intervals": {
+   "50": {
+    "overall": {
+     "coverage": 0.49951326949051483,
+     "width": 1.0485004724665328,
+     "interval_score": 2.5725196651926554
+    },
+    "sunny": {
+     "coverage": 0.5345231129315389,
+     "width": 0.25538806177028583,
+     "interval_score": 0.5246003543065448
+    },
+    "cloudy": {
+     "coverage": 0.4745838628361909,
+     "width": 1.6132508359505793,
+     "interval_score": 4.030778494093871
+    },
+    "ramp": {
+     "coverage": 0.16184377454237903,
+     "width": 2.479276705805635,
+     "interval_score": 10.951311517171138
+    },
+    "sunrise ramp": {
+     "coverage": 0.17978906058376257,
+     "width": 0.7125768099087394,
+     "interval_score": 4.01286128838299
+    },
+    "rising ramp": {
+     "coverage": 0.15457602690367522,
+     "width": 2.5334711598278106,
+     "interval_score": 10.439927803554255
+    },
+    "falling ramp": {
+     "coverage": 0.16919897897167863,
+     "width": 2.4244301002156714,
+     "interval_score": 11.468848991289795
+    }
+   },
+   "80": {
+    "overall": {
+     "coverage": 0.8004404911110841,
+     "width": 2.457185425759876,
+     "interval_score": 3.8781271432112914
+    },
+    "sunny": {
+     "coverage": 0.8210064365125804,
+     "width": 0.5740167795255129,
+     "interval_score": 0.862155304853543
+    },
+    "cloudy": {
+     "coverage": 0.7857961292473074,
+     "width": 3.798130496243627,
+     "interval_score": 6.02570568188898
+    },
+    "ramp": {
+     "coverage": 0.45333172234640245,
+     "width": 5.727760463056484,
+     "interval_score": 15.167726095729241
+    },
+    "sunrise ramp": {
+     "coverage": 0.43340691685062543,
+     "width": 1.6455939371988584,
+     "interval_score": 6.306480594260701
+    },
+    "rising ramp": {
+     "coverage": 0.44343021859236126,
+     "width": 5.855821476846432,
+     "interval_score": 14.560835657070422
+    },
+    "falling ramp": {
+     "coverage": 0.46335237632186704,
+     "width": 5.598158420900764,
+     "interval_score": 15.781919579656961
+    }
+   },
+   "90": {
+    "overall": {
+     "coverage": 0.9004575266789161,
+     "width": 3.6385916247440035,
+     "interval_score": 4.981653824275299
+    },
+    "sunny": {
+     "coverage": 0.9111176126389702,
+     "width": 0.91681575566676,
+     "interval_score": 1.2304895402057174
+    },
+    "cloudy": {
+     "coverage": 0.8928668152746818,
+     "width": 5.576682481289913,
+     "interval_score": 7.652739743933188
+    },
+    "ramp": {
+     "coverage": 0.6583096719627862,
+     "width": 8.118800764985929,
+     "interval_score": 17.504190426536407
+    },
+    "sunrise ramp": {
+     "coverage": 0.5989698307579102,
+     "width": 2.34758579009567,
+     "interval_score": 8.078060515693036
+    },
+    "rising ramp": {
+     "coverage": 0.627792457362479,
+     "width": 8.284017609657814,
+     "interval_score": 17.280486303036096
+    },
+    "falling ramp": {
+     "coverage": 0.689194116932053,
+     "width": 7.95159577547115,
+     "interval_score": 17.730586504361085
+    }
+   }
+  },
+  "physics": {
+   "power_consistency_mae_kw": 0.7749400878620445,
+   "power_consistency_median_abs_kw": 0.1535310436535342,
+   "frac_k_neg": 0.0035477246024696167,
+   "frac_k_over_kmax": 0.008463702748269741,
+   "k_max": 1.5,
+   "ramp_direction_accuracy": 0.8344710928532593,
+   "ramp_magnitude_error": 0.34081089101884804,
+   "n_ramp": 16553
+  }
+ },
+ "comparison_vs_A0": {
+  "best_arm": null,
+  "note": "no arm with ramp CRPS <= A0"
+ }
+}

@@ -1,6 +1,13 @@
 # Physics-informed training objective: paper-ready methodology subsection
 
-*Results are inserted after the pre-registered ablation completes; nothing below depends on them.*
+*Results paragraph (for the Results section):* "Adding physics-informed terms to the ramp expert's objective did not materially change forecast quality.
+- Across all variants, development out-of-fold CRPS changed by at most 0.6%.
+- The power-consistency term alone gave a statistically detectable but negligible improvement: ΔCRPS = −0.0008 kW [−0.0015, −0.0002].
+- Ramp-weighted terms slightly increased CRPS (+0.002 to +0.003 kW). They raised ramp-conditional 90% coverage by up to 0.8 percentage points and ramp-direction accuracy from 82.2% to 83.5%.
+- They reshaped rather than improved the ramp response: better rising-ramp and worse falling-ramp CRPS.
+- No variant met the pre-registered selection criterion.
+
+Together with the lag analysis, this indicates that the remaining ramp error stems from limited perception of approaching clouds in the inputs, rather than from the training objective."
 
 ### X.Y Physics-informed training objective
 
