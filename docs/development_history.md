@@ -25,10 +25,10 @@ This page holds detail that used to sit in the main README. Each step has its ow
   - d is the absolute difference between the two experts' mean forecasts (their disagreement).
 - **Fitting:** exact blended-CRPS minimisation plus an L2 penalty, on calibration days only. λ is chosen on a chronological calibration split.
 
-**Calibration** ([`src/cal2.py`](../src/cal2.py), [`src/final_eval.py`](../src/final_eval.py), [`src/gatton_eval.py`](../src/gatton_eval.py)):
+**Calibration** ([`src/cal2.py`](../src/cal2.py), [`src/final_eval.py`](../src/final_eval.py)):
 - Rolling-window conformal correction using only outcomes that have matured (15-minute delay).
-- **Stanford test:** daily reset, initialised from development out-of-fold scores.
-- **Gatton test:** continuous, with no daily reset. This follows Phase C ([`reports/phaseC_report.md`](../reports/phaseC_report.md)).
+- It resets daily and is initialised from development out-of-fold scores.
+- Phase C ([`reports/phaseC_report.md`](../reports/phaseC_report.md)) later showed that the daily reset is fragile, and that continuous rolling or adaptive conformal calibration is more robust.
 - No finite-sample coverage guarantee is claimed under temporal dependence.
 
 ## 2. Experiment sequence (Stanford development)
