@@ -32,3 +32,14 @@ references:
         given-names: Adam
     journal: "Solar Energy"
     year: 2023
+  - type: dataset
+    title: "Gatton Sky Image and PV Generation 2020"
+    authors:
+      - family-names: Xu
+        given-names: Shijie
+      - family-names: Ma
+        given-names: Hui
+    institution:
+      name: "The University of Queensland"
+    year: 2023
+    doi: "10.48610/bd7e108"

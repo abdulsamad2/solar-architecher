@@ -1,0 +1,113 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 834" width="960" height="834" role="img" aria-labelledby="t d" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif">
+  <title id="t">SHADOW-MoE G3″-F forecaster</title>
+  <desc id="d">Sky images and PV history are converted to the clear-sky index K. Three experts (A2 3D-CNN, E6-S residual event-mixture, E4-B-fit direct CNN-GRU) produce quantiles of K. A disagreement-guided logistic gate blends A2 with E6-S (G3″) when 60 minutes of history exist, otherwise E4-B-fit with E6-S (G3 fallback). Fifteen gated members are quantile-averaged, calibrated by causal rolling conformal prediction and rescaled to kW.</desc>
+  <style>
+    .bg { fill: #ffffff; }
+    .box { fill: #f6f8fa; stroke: #8c959f; stroke-width: 1.2; }
+    .exp { fill: #eef4fb; stroke: #4a7fb5; stroke-width: 1.4; }
+    .gate { fill: #fdf3e7; stroke: #c27a2c; stroke-width: 1.4; }
+    .out { fill: #edf7ef; stroke: #3f8f55; stroke-width: 1.4; }
+    .h { fill: #1f2328; font-size: 14.5px; font-weight: 600; }
+    .t { fill: #1f2328; font-size: 13px; }
+    .m { fill: #57606a; font-size: 12px; }
+    .lbl { fill: #c27a2c; font-size: 12.5px; font-weight: 600; }
+    .ln { stroke: #57606a; stroke-width: 1.4; fill: none; }
+    .ah { fill: #57606a; }
+    @media (prefers-color-scheme: dark) {
+      .bg { fill: #0d1117; }
+      .box { fill: #161b22; stroke: #6e7681; }
+      .exp { fill: #10243a; stroke: #6ea8e0; }
+      .gate { fill: #2e2112; stroke: #e0a050; }
+      .out { fill: #12291a; stroke: #5fbf7a; }
+      .h, .t { fill: #e6edf3; }
+      .m { fill: #9198a1; }
+      .lbl { fill: #e0a050; }
+      .ln { stroke: #9198a1; }
+      .ah { fill: #9198a1; }
+    }
+  </style>
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path class="ah" d="M0,0 L10,5 L0,10 z"/>
+    </marker>
+  </defs>
+  <rect class="bg" x="0" y="0" width="960" height="834"/>
+
+  <!-- Inputs -->
+  <rect class="box" x="170" y="16" width="620" height="58" rx="8"/>
+  <text class="h" x="480" y="40" text-anchor="middle">Inputs at issue time t</text>
+  <text class="t" x="480" y="61" text-anchor="middle">64×64 RGB fisheye sky images (1 per min, up to 60 min back) · PV power history</text>
+
+  <rect class="box" x="170" y="100" width="620" height="58" rx="8"/>
+  <text class="h" x="480" y="124" text-anchor="middle">Physics clear-sky model → clear-sky index</text>
+  <text class="t" x="480" y="145" text-anchor="middle">K = PV / max(P_clear, c_min); forecast in kW = K̂(t+15) × P_clear(t+15)</text>
+  <line class="ln" x1="480" y1="74" x2="480" y2="98" marker-end="url(#a)"/>
+
+  <!-- Experts -->
+  <line class="ln" x1="300" y1="158" x2="180" y2="196" marker-end="url(#a)"/>
+  <line class="ln" x1="480" y1="158" x2="480" y2="196" marker-end="url(#a)"/>
+  <line class="ln" x1="660" y1="158" x2="780" y2="196" marker-end="url(#a)"/>
+
+  <rect class="exp" x="30" y="198" width="300" height="92" rx="8"/>
+  <text class="h" x="180" y="222" text-anchor="middle">A2 · ramp expert</text>
+  <text class="t" x="180" y="243" text-anchor="middle">3D-CNN → GRU (spatio-temporal)</text>
+  <text class="t" x="180" y="262" text-anchor="middle">60-min history, 16 frames @ 4 min</text>
+  <text class="m" x="180" y="280" text-anchor="middle">output: 9 quantiles of K(t+15)</text>
+
+  <rect class="exp" x="345" y="198" width="270" height="92" rx="8"/>
+  <text class="h" x="480" y="222" text-anchor="middle">E6-S · residual mixture expert</text>
+  <text class="t" x="480" y="243" text-anchor="middle">CNN → GRU, 15 min, event-mixture</text>
+  <text class="t" x="480" y="262" text-anchor="middle">head on ΔK = K(t+15) − K(t)</text>
+  <text class="m" x="480" y="280" text-anchor="middle">sharp in calm / clear conditions</text>
+
+  <rect class="exp" x="630" y="198" width="300" height="92" rx="8"/>
+  <text class="h" x="780" y="222" text-anchor="middle">E4-B-fit · direct expert</text>
+  <text class="t" x="780" y="243" text-anchor="middle">per-frame CNN → GRU</text>
+  <text class="t" x="780" y="262" text-anchor="middle">15-min history, 16 frames @ 1 min</text>
+  <text class="m" x="780" y="280" text-anchor="middle">output: 9 quantiles of K(t+15)</text>
+
+  <!-- Gates -->
+  <line class="ln" x1="180" y1="290" x2="255" y2="334" marker-end="url(#a)"/>
+  <line class="ln" x1="440" y1="290" x2="380" y2="334" marker-end="url(#a)"/>
+  <line class="ln" x1="520" y1="290" x2="580" y2="334" marker-end="url(#a)"/>
+  <line class="ln" x1="780" y1="290" x2="705" y2="334" marker-end="url(#a)"/>
+
+  <rect class="gate" x="120" y="336" width="340" height="74" rx="8"/>
+  <text class="h" x="290" y="359" text-anchor="middle">Gate G3″ (A2 + E6-S)</text>
+  <text class="t" x="290" y="380" text-anchor="middle">w = σ(b₀ + β₁·logit g + β₂·log d)</text>
+  <text class="t" x="290" y="399" text-anchor="middle">q = w·q_A2 + (1 − w)·q_E6-S, per quantile</text>
+
+  <rect class="gate" x="500" y="336" width="340" height="74" rx="8"/>
+  <text class="h" x="670" y="359" text-anchor="middle">Gate G3 (E4-B-fit + E6-S)</text>
+  <text class="t" x="670" y="380" text-anchor="middle">same form, separately fitted</text>
+  <text class="t" x="670" y="399" text-anchor="middle">q = w·q_E4 + (1 − w)·q_E6-S, per quantile</text>
+
+  <!-- Router -->
+  <line class="ln" x1="290" y1="410" x2="360" y2="468" marker-end="url(#a)"/>
+  <line class="ln" x1="670" y1="410" x2="600" y2="468" marker-end="url(#a)"/>
+  <text class="lbl" x="312" y="446" text-anchor="end">60-min history available</text>
+  <text class="lbl" x="648" y="446" text-anchor="start">otherwise (fallback)</text>
+
+  <rect class="gate" x="190" y="470" width="580" height="54" rx="8"/>
+  <text class="h" x="480" y="492" text-anchor="middle">Router (G3″-F): timestamp rule only, no outcome used</text>
+  <text class="t" x="480" y="513" text-anchor="middle">G3″ when a full 60-min image history exists; G3 otherwise (mainly after sunrise)</text>
+
+  <!-- Ensemble, calibration, output -->
+  <line class="ln" x1="480" y1="524" x2="480" y2="550" marker-end="url(#a)"/>
+  <rect class="box" x="150" y="552" width="660" height="52" rx="8"/>
+  <text class="h" x="480" y="574" text-anchor="middle">15-member ensemble</text>
+  <text class="t" x="480" y="594" text-anchor="middle">5 blocked folds × 3 seeds, equal-weight level-wise quantile averaging</text>
+
+  <line class="ln" x1="480" y1="604" x2="480" y2="630" marker-end="url(#a)"/>
+  <rect class="box" x="150" y="632" width="660" height="62" rx="8"/>
+  <text class="h" x="480" y="655" text-anchor="middle">Causal rolling-window conformal calibration</text>
+  <text class="t" x="480" y="676" text-anchor="middle">uses outcomes only after 15-min maturation · Stanford: daily reset · Gatton: continuous</text>
+
+  <line class="ln" x1="480" y1="694" x2="480" y2="720" marker-end="url(#a)"/>
+  <rect class="out" x="150" y="722" width="660" height="52" rx="8"/>
+  <text class="h" x="480" y="744" text-anchor="middle">Probabilistic forecast of PV power at t + 15 min</text>
+  <text class="t" x="480" y="764" text-anchor="middle">9 quantiles (5–95%) in kW and 50 / 80 / 90% prediction intervals</text>
+
+  <text class="m" x="480" y="800" text-anchor="middle">Gate features: g = event probability implied by the E6-S quantiles; d = |mean(expert) − mean(E6-S)| (expert disagreement).</text>
+  <text class="m" x="480" y="818" text-anchor="middle">Each member's gates are fitted by exact blended-CRPS minimisation on held-out calibration days only.</text>
+</svg>

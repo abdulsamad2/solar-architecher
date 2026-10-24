@@ -1,443 +1,254 @@
-# SHADOW-MoE: probabilistic 15-minute solar power forecasting from sky images
+# SHADOW-MoE
 
-A gated mixture of sky-image experts forecasts rooftop PV power 15 minutes ahead as a full probability distribution, using the Stanford **SKIPP'D** benchmark. Every model decision was pre-registered, and the official test set was evaluated **exactly once**.
+**Probabilistic 15-minute-ahead solar power forecasting from ground-based sky images, using a disagreement-gated mixture of experts, evaluated on pre-registered, one-shot sealed tests at two sites.**
 
-**Headline result (official 20-day SKIPP'D test set, 13,266 forecasts).** The final model **G3″-F** lowers the overall CRPS against the strongest single model (E4-B-fit) from **1.117 to 1.006 kW (−9.9%)**. The paired test-day bootstrap 95% CI of the difference is **[−0.149, −0.075] kW**, so the pre-registered primary hypothesis is confirmed. Two secondary hypotheses were **not** met: ramp non-inferiority, and 90% interval coverage within ±3 percentage points of nominal. Both are reported below.
+[![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
+[![Python 3.11](https://img.shields.io/badge/python-3.11-blue.svg)](pyproject.toml)
+[![Status: research code](https://img.shields.io/badge/status-research%20code%2C%20manuscript%20in%20preparation-lightgrey.svg)](#research-status)
 
-**Against published models (Phase A, pre-registered; section 3.6).**
+## Overview
 
-| Comparison | Ours (G3″-F) | Published |
-|---|---|---|
-| SKIPP'D 20-day test, official exact-timing samples: RMSE / forecast skill | **2.949 kW / 18.1%** | SUNSET 3.03 kW / 16.4% |
-| SkyGPT's own external test (5 cloudy days, Nov–Dec 2019, 2,582 samples, run once): CRPS | **2.455 kW** | PV-MM-Diffusion 2.63 · SkyGPT 2.81 · SUNSET 3.31 · persistence 3.67 |
-| Same SkyGPT test, scored exactly as the competitors (30 samples, energy-form CRPS) | **2.49** | PV-MM-Diffusion 2.63 (30 samples) |
-| Same SkyGPT test: Winkler score (90%), from 30-sample percentiles as the competitors | 22.0 | PV-MM-Diffusion 21.46 · SkyGPT 26.70 · SUNSET 56.95 |
+**Research question.** Can a forecaster that routes between specialised sky-image experts produce better probabilistic 15-minute PV forecasts than its strongest single expert? Does that advantage hold at a second, very different site?
 
-**Estimator check** (`reports/estimator_check.json`):
-- Scored exactly like the competitors, our CRPS advantage holds: 2.49 vs 2.63 at 30 samples, 2.59 vs 2.78 at 10 samples. It is robust to tail assumptions (±0.01).
-- It also holds on each of the 3 days PV-MM-Diffusion reports individually: 0.95 vs 1.14, 2.44 vs 2.64, 3.59 vs 3.83.
-- **On the Winkler score, ours is comparable, not better** (22.0 vs 21.46 under the competitors' estimator). Our raw-quantile Winkler score of 18.16 is not comparable with theirs.
+**What this repository contributes**
+- **A gated forecaster, G3″-F.**
+  - It combines a 3D-CNN ramp expert (60-minute image history) with a residual event-mixture expert that is sharp in calm conditions.
+  - A logistic gate blends the two. Its inputs include their *disagreement*.
+  - A timestamp rule falls back to a 15-minute direct expert when 60 minutes of history are not yet available.
+  - The output is 9 predictive quantiles, made from a 15-member ensemble and calibrated by causal rolling conformal prediction.
+- **Two one-shot sealed evaluations**, each with a frozen protocol, hash-verified model inventories and raw outputs committed before interpretation:
+  - Stanford **SKIPP'D**, a 30 kW rooftop array in California;
+  - **Gatton**, a 3.275 MW plant in Queensland, Australia.
+- **Complete reporting of what did not work:** hypotheses that were not confirmed, missed calibration targets, failed zero-shot transfer and a null result for physics-informed losses.
 
-These are comparisons against published point estimates. SkyGPT's per-sample predictions are not public, so no paired test was possible. On the external cloudy days the intervals under-cover (90% coverage 0.77), and ramps are no better than with the single direct expert.
+## Results at a glance
 
----
+### Primary hypothesis (confirmatory, pre-registered at both sites)
 
-## Contents
-1. [Problem and data](#1-problem-and-data)
-2. [How the model works](#2-how-the-model-works)
-3. [Results on the official test set](#3-results-on-the-official-test-set)
-4. [Development history: every experiment](#4-development-history-every-experiment)
-5. [Research protocol and integrity](#5-research-protocol-and-integrity)
-6. [Repository layout](#6-repository-layout)
-7. [Reproducing the work](#7-reproducing-the-work)
-8. [Limitations](#8-limitations)
-9. [Citation, data and licences](#9-citation-data-and-licences)
-10. [Roadmap and status](#10-roadmap-and-status)
+The final gated model G3″-F against its direct expert E4-B-fit.
+- **Metric:** overall CRPS in kW (lower is better).
+- **Interval:** 95% CI of the paired difference from a day-block bootstrap (10,000 resamples, stratified sunny/cloudy).
 
----
+| Site (sealed test) | Forecasts | G3″-F | E4-B-fit | Difference [95% CI] | Verdict |
+|---|---|---|---|---|---|
+| Stanford SKIPP'D (20 days) | 13,266 | 1.006 | 1.117 | −0.111 [−0.149, −0.075] (−9.9%) | **Confirmed** |
+| Gatton (21 days) | 13,311 | 116.9 | 163.8 | −46.9 [−57.4, −37.8] (−28.6%) | **Confirmed** |
 
-## 1. Problem and data
+CRPS is in kW and scales with plant size, so values are not comparable across sites.
 
-**Task.** At each time *t*, forecast the PV power at *t* + 15 min from the sky images up to *t*. The output is 9 quantiles (5, 10, 20, 30, 50, 70, 80, 90 and 95%), which together form a full predictive distribution.
+### Secondary, descriptive and exploratory results
 
-**Dataset.** SKIPP'D (SKy Images and Photovoltaic Power generation Dataset), Stanford University, 2017–2019. Download: <https://purl.stanford.edu/dj417rh1007> (CC BY 4.0).
-
-| Item | Content |
-|---|---|
-| Sky images | 64×64 RGB fisheye images of the whole sky, one per minute |
-| PV power | 1-minute output of a ≈ 30 kW rooftop array, in kW |
-| Timestamps | Local time of every image/PV pair |
-| Development split | 349,372 records over 497 days, giving 164,362 forecast samples |
-| Official test split | 14,003 records over 20 fixed days (10 sunny, 10 cloudy), giving 13,266 forecast samples |
-
-The data has **no** cloud labels, irradiance sensor or weather variables. The link between cloud and power is learned from the images (section 2).
-
-**Sample construction.**
-- Each sample uses 16 frames (*t*−15 … *t* min) and the PV target at *t* + 15 min.
-- The public benchmark is thinned to about one record per minute, and its timestamps drift by up to ±30 s. Exact matching therefore loses 19% of the samples.
-- We match each frame to the nearest record within **±30 s**, which recovers the official sample counts (`reports/protocol_notes.md`). This is a documented deviation from the original construction.
-
-**Evaluation metric.** CRPS (continuous ranked probability score) in kW; lower is better.
-- For a point forecast, CRPS equals the mean absolute error, so deterministic baselines are scored on the same scale.
-- We also report RMSE and MAE of the median, interval coverage, width and interval score.
-
----
-
-## 2. How the model works
-
-### 2.1 Separating clouds from the sun's daily cycle
-
-1. **Clear-sky power** `P_clear(t)`: the power the array *would* produce under a perfectly clear sky, computed from physics. It combines the sun's position, Ineichen clear-sky irradiance, Hay-Davies transposition to the panel plane (22.5° tilt, 195° azimuth) and an incidence-angle loss. A smooth annual scale factor is fitted on training days only (`src/clear_sky.py`).
-2. **Clear-sky index** `K = PV / max(P_clear, 1 kW)`:
-   - K ≈ 1 is clear sky;
-   - K ≈ 0.3 means a cloud is blocking the sun;
-   - K > 1 briefly occurs when cloud edges reflect extra light onto the panels.
-3. Every model predicts **future K** from the images and the recent K history. The forecast in kW is `K̂ × P_clear(t + 15 min)`.
-
-Removing the sunrise/sunset and seasonal pattern this way lets the network focus on clouds. It reduced CRPS by 22% on development folds (Gate 2).
-
-### 2.2 The experts
-
-| Name | Input | Architecture | Output | Strength |
-|---|---|---|---|---|
-| **E4-B-fit** | last 15 min (16 frames, 1-min stride) + K history | per-frame CNN → GRU | 9 quantiles of K | strongest single model; robust on ramps |
-| **E6-S** | last 15 min + K history | CNN → GRU + event-mixture head (4 arrival-time classes × 2-component Gaussian severity over ΔK) | mixture → quantiles | very sharp on calm, clear-sky conditions |
-| **A2** | last **60 min** (16 frames, 4-min stride) + K history | **3D-CNN** (spatio-temporal) → GRU | 9 quantiles of K | sees cloud motion; best on ramps |
-| D4 (descriptive) | last 60 min + hand-crafted sun-position and motion features | CNN → GRU | 9 quantiles | helps ramps but costs overall; not used |
-
-**Training recipe (all experts)**
-- AdamW at lr 1e−4 with cosine decay, weight decay 1e−4, gradient clipping 1.0, EMA of the weights (0.999).
-- Batch 128, at most 15 epochs, early stopping with patience 5 on the pinball loss.
-- The CNN runs in bf16; the GRU and heads in fp32.
-- Each expert is trained on 5 blocked folds × 3 seeds (42, 123, 456), i.e. **15 members**.
-- A calibration hold-out (every 5th block of 10 training days) is kept out of training. It is used to fit the gates.
-
-### 2.3 G3″-F: the final forecaster
-
-```
-                ┌─────────────── 60-min history available? (timestamp rule only) ───────────────┐
-                │ yes (93% of test forecasts)                         no (sunrise; 7%)          │
-                ▼                                                      ▼                        │
-   G3″ = gate( A2 [3D-CNN, 60 min] , E6-S )            G3 = gate( E4-B-fit [15 min] , E6-S )     │
-                │                                                      │                        │
-                └──────────────► 15-member equal-weight quantile averaging ◄────────────────────┘
-                                              │
-                         causal rolling-window conformal calibration
-                                              │
-                               predictive quantiles + 50/80/90% intervals
-```
-
-**The gate** is a logistic weight `w` that blends the ramp-robust expert with the calm-condition expert: `q = w · q_ramp + (1 − w) · q_calm`. It uses only forecast-time features:
-- the event probability implied by the experts' quantiles;
-- the **disagreement** between the two experts.
-
-It is fitted by exact blended-CRPS minimisation on the calibration hold-out days only (`src/gate7b.py`).
-
-**Calibration**
-- Intervals are widened or narrowed by a rolling-window conformal correction.
-- The correction uses only outcomes already observed at issue time (a 15-minute maturation delay). It resets at each day boundary and starts from development out-of-fold scores (`src/cal2.py`, `src/final_eval.py`).
-- No finite-sample coverage guarantee is claimed under temporal dependence.
-
----
-
-## 3. Results on the official test set
-
-All numbers come from the single pre-registered run (`reports/test_results.json`, `reports/gate5_test_report.md`). Units are kW.
-
-### 3.1 Pre-registered hypotheses
-
-Differences are G3″-F minus the comparator. Bootstrap: 10,000 resamples of test days, stratified sunny/cloudy.
-
-| Hypothesis | Estimate [95% CI] | Verdict |
-|---|---|---|
-| **H1 (primary): overall CRPS vs E4-B-fit** | **−0.111 [−0.149, −0.075]** | **Confirmed** |
-| H2: overall CRPS vs smart persistence | −0.701 [−0.823, −0.582] | Confirmed |
-| H2: cloudy-day CRPS vs smart persistence | −1.208 [−1.454, −0.971] | Confirmed |
-| H3: ramp non-inferiority vs E4-B-fit (margin 0.02) | −0.117 [−0.244, +0.031] | **Not established** (upper bound > 0.02) |
-| H4: RMSE skill vs persistence (descriptive) | G3″-F 18.6%, SUNSET port 16.2% | – |
-| H5: calibrated 90% coverage within 0.90 ± 0.03 | 0.935 | **Not met** (too conservative) |
-
-### 3.2 CRPS by condition
-
-| Model | Overall | Sunny | Cloudy | Ramp | Non-ramp | Sunrise ramp | RMSE | MAE |
-|---|---|---|---|---|---|---|---|---|
-| **G3″-F** | **1.006** | 0.074 | **1.939** | **3.510** | 0.583 | 0.808 | **2.959** | **1.411** |
-| E4-B-fit | 1.117 | 0.218 | 2.017 | 3.627 | 0.693 | 0.778 | 3.037 | 1.534 |
-| G4 (15-min gate) | 1.024 | 0.073 | 1.976 | 3.782 | 0.558 | 0.802 | 3.033 | 1.429 |
-| E6-S | 1.090 | 0.073 | 2.108 | 4.281 | 0.551 | 0.900 | 3.274 | 1.499 |
-| SUNSET (our port) | 1.719 | 0.475 | 2.965 | 4.815 | 1.197 | 1.070 | 3.046 | 1.719 |
-| Smart persistence | 1.707 | 0.269 | 3.147 | 7.131 | 0.791 | 1.610 | 3.636 | 1.707 |
-
-- **Sample counts:** sunny 6,638; cloudy 6,628; ramp 1,916; sunrise ramp 268.
-- **Ramp definition:** |ΔK over 15 min| ≥ 0.279. The threshold was frozen before testing.
-- **Per day:** G3″-F beats E4-B-fit on 19 of 20 test days, and persistence and SUNSET on all 20.
-- **D4, descriptive, 60-min subset (n = 12,355):** overall +0.008 [−0.015, +0.031] vs E4-B-fit, ramp −0.354 [−0.415, −0.273].
-
-### 3.3 Interval calibration (G3″-F)
-
-| Nominal | Overall coverage | Sunny | Cloudy | Ramp | Width overall | Interval score |
-|---|---|---|---|---|---|---|
-| 50% | 0.542 | 0.658 | 0.426 | 0.161 | 2.03 | 4.53 |
-| 80% | 0.846 | 0.917 | 0.775 | 0.506 | 4.42 | 6.30 |
-| 90% | 0.935 | 0.968 | 0.902 | 0.746 | 6.26 | 7.62 |
-
-- **Ramp misses are directional:**
-  - on up-ramps, 30% of outcomes fall *above* the 90% interval;
-  - on down-ramps, 21% fall *below* it.
-
-  The forecast lags sudden changes.
-- **Interval width:** G3″-F's 90% intervals are 24% narrower than E4-B-fit's (6.26 vs 8.20 kW), at higher coverage.
-
-### 3.4 Development vs test
-
-| | Development (497 days) | Official test (20 days) |
-|---|---|---|
-| G3″-F overall CRPS | 0.573 | 1.006 |
-| E4-B-fit overall CRPS | 0.730 | 1.117 |
-| H1 difference [95% CI] | −0.157 [−0.170, −0.145] | −0.111 [−0.149, −0.075] |
-| Ramp difference [95% CI] | −0.025 [−0.054, +0.005] | −0.117 [−0.244, +0.031] |
-| 90% coverage, overall / ramp | 0.901 / 0.651 | 0.935 / 0.746 |
-
-The test days are harder than development: 14.4% of samples are ramps, against 10.0%.
-
-### 3.5 Figures
-
-All figures are in `reports/figures/` (PNG and PDF) and are generated by `python -m src.figures`.
-
-| Figure | Shows |
-|---|---|
-| ![F1](reports/figures/F1_test_day_forecast.png) | **F1:** forecast vs observed PV on a cloudy official test day, with the 20–80% and 5–95% bands |
-| ![F2](reports/figures/F2_per_day_crps.png) | **F2:** per-day CRPS on all 20 test days for G3″-F, E4-B-fit, the SUNSET port and persistence |
-| ![F3](reports/figures/F3_phaseA_skygpt_comparison.png) | **F3:** CRPS on SkyGPT's own external test samples |
-| ![F4](reports/figures/F4_clear_day_ratio_decline.png) | **F4:** clear-day PV relative to a fixed clear-sky model shows an apparent decline of about 2.2%/yr (season-adjusted) |
-| ![F5](reports/figures/F5_camera_change_rb.png) | **F5:** the camera change on 2019-05-22, seen in the midday sky R/B ratio |
-| ![F6](reports/figures/F6_interval_coverage.png) | **F6:** interval coverage on development, the SKIPP'D test and the SkyGPT external test (overall and ramps) |
-
-### 3.6 Comparison with published results (Phase A)
-
-The protocol was pre-registered before execution; the full report is `reports/phaseA_report.md`.
-
-**SUNSET, on the SKIPP'D 20-day test.**
-- Our SUNSET port reproduces the published SKIPP'D-paper numbers within 0.03 kW on the exact-timing subset (the official matching rule).
-- On that subset, G3″-F has RMSE **2.949 kW** and forecast skill **18.1%**, against **3.03 kW** and **16.4%** for published SUNSET.
-
-**SkyGPT, on its own external test set.**
-- The set is 5 cloudy days in Nov–Dec 2019, 2,582 samples, never seen in our development.
-- The frozen models were run exactly once on SkyGPT's public test file.
-- The population is verified: our smart persistence scores 3.672 against the published 3.67, and our SUNSET port's Winkler score is 56.87 against 56.95.
-
-| Model | CRPS (kW) | Winkler 90% |
-|---|---|---|
-| **G3″-F** (its 15-min configuration; no 60-min history in the file); our estimator / the competitors' 30-sample estimator | **2.455 / 2.49** | 18.16 / **22.0** |
-| Real-future-image → U-Net oracle (from the PV-MM-Diffusion paper) | 2.52 | 30.72 |
-| PV-MM-Diffusion (Huang et al., *Applied Energy* 2026; same test set, confirmed from the full text) | 2.63 | 21.46 |
-| SkyGPT (published) | 2.81 | 26.70 |
-| SUNSET (published) | 3.31 | 56.95 |
-| Smart persistence | 3.67 | – |
-
-**Caveats.**
-- SkyGPT's per-sample predictions are not public, so this comparison is against published point estimates, not a paired test.
-- On these days the calibrated 90% intervals under-cover (0.77), and ramp CRPS is not better than E4-B-fit's.
-
-**Compute.** The complete one-shot run for all models (15 members × 5 models, calibration, bootstraps) took 475 s on an NVIDIA RTX 5000 Ada. That is 35.8 ms per forecast amortised.
-
----
-
-## 4. Development history: every experiment
-
-All numbers in this section are on development folds: blocked 5-fold CV, 3 seeds, paired day-bootstrap CIs. Each step has a pre-registration and a report in `reports/`.
-
-| Step | Question | Key result | Decision |
+| Question | Type | Stanford SKIPP'D | Gatton |
 |---|---|---|---|
-| E0 / E1 (Gate 0) | Can we reproduce the benchmark? | Smart persistence matches; SUNSET port RMSE 3.046 vs 3.029 kW published | Benchmark reproduced |
-| E2 / E3 / E3b (Gate 1) | Does clear-sky normalisation help point forecasts? | RMSE 2.059 (K) vs 2.091 (kW); CI includes 0 | No benefit for point forecasts |
-| E4 (Gate 2) | Quantiles in K vs kW? | CRPS 0.733 vs 0.946 (−22%) | K representation adopted |
-| E4-CAL2 | Calibration under temporal shift | Static conformal: 90% coverage 0.71 on one fold; rolling conformal restores 0.89–0.90. PV/clear-sky ratio declines about 2.2%/yr (season-adjusted, ±0.3; Figure F4) | Causal rolling conformal adopted |
-| Phase 6 (E5/E6) | Residual target and mixture head | CRPS 0.751 → 0.646 → 0.610; sunny 0.305 → 0.123 (beats persistence 0.223); ramps worsen 2.45 → 2.93 | E6-S kept as the calm-condition expert |
-| Gate 3 | Explicit event-time/severity supervision | Arrival Brier 0.202 vs 0.277 climatology; ramp CRPS not improved | Not retained |
-| E7 / E7b | Gating the two experts | Best overall CRPS 0.585 (−33% vs persistence); best ramp gate 2.545 | Disagreement gate adopted |
-| E8 (Gate 4) | Longer history; sun-relative motion features | 60-min history improves ramps by 0.08–0.10; motion features cost 0.03–0.05 overall | 60-min history kept; features dropped |
-| E9 | Better encoders on 60-min history | 3D-CNN (A2) confirmed in 2/3 seeds, ramps about −0.10; wide CNN, ConvGRU, transformer and frame-difference arms not confirmed | A2 adopted → G3″ |
-| Dry run + rehearsal | Full frozen pipeline on held-out development data | G3″-F 0.573 vs E4-B-fit 0.730; all reproduction, causality and hash checks pass | Approved for testing |
-| **Gate 5** | **One-shot official test** | **H1 confirmed, −0.111 [−0.149, −0.075]** | Final |
+| G3″-F beats smart persistence (CRPS) | pre-registered secondary | **Confirmed:** 1.006 vs 1.707; −0.701 [−0.823, −0.582] | **Not confirmed:** 116.9 vs 134.0; −17.0 [−39.2, +2.5] |
+| Ramp CRPS vs E4-B-fit | Stanford: pre-registered non-inferiority · Gatton: descriptive | **Not established:** −0.117 [−0.244, +0.031] | **Worse:** +15.7 [+0.8, +30.7] |
+| Calibrated 90% coverage (target 0.87–0.93) | pre-specified target | **Not met:** 0.935 (over-covers) | **Not met:** 0.864 (under-covers) |
+| Standalone residual expert E6-S vs G3″-F | Stanford: descriptive · Gatton: exploratory | E6-S worse (1.090 vs 1.006) | **E6-S better** (96.5 vs 116.9) |
+| Forecast anticipates PV changes (lag analysis) | Stanford: exploratory · Gatton: descriptive | No; best lag 15 min | No; best lag 15 min |
 
-**Data findings reported along the way**
-- The ±30 s matching protocol recovers the official sample counts.
-- Images change about 1 minute before the corresponding PV change, which suggests a 1-minute image/PV pairing offset.
-- The camera was changed on **2019-05-22**: the colour ratio jumps (R/B 1.30 → 2.29) and the optical centre shifts by about 2.5 px.
+**Further Gatton results**
+- **Zero-shot transfer fails.** The frozen Stanford model, applied without retraining, scores 597.3 kW CRPS, far worse than persistence. Flipping the image orientation does not help.
+- **Pre-training gives no measurable benefit.** Fine-tuning from Stanford was not established to beat training from scratch: −1.5 [−6.6, +5.9] kW.
+- **Clear days are a weakness.** The gated model loses to persistence on the four sunny test days, and that is the main reason it misses the persistence comparison (exploratory).
 
----
+**Physics-informed losses (Phase F, development only).** Adding solar-physics terms to the ramp expert's training objective changed CRPS by ≤ 0.6%. No variant met the pre-registered selection rule, so this is a null result in practice.
 
-## 5. Research protocol and integrity
+**What these results do and do not show.**
+- **They do show:** the gain over the direct expert replicated at a second site.
+- **They do not show** universal superiority:
+  - at Gatton a simpler component (E6-S) scored better overall, and persistence was not beaten;
+  - ramps remain the main weakness;
+  - neither site met the calibration target.
 
-- **Pre-registration:** every gate's hypotheses, metrics and decision rules were committed *before* its results existed (`reports/*_prereg.md`, with git history as evidence).
-- **Blocked folds:** 5 contiguous day blocks with 1-day purges (`src/folds.py`). Gate parameters are fitted only on held-out calibration days.
-- **Sealed test set:**
-  - The 20 official test days were never used for training, selection or tuning.
-  - The final protocol (`reports/test_eval_prereg.md`) was frozen, then verified by a development-only dry run (`reports/final_dryrun_report.md`).
-  - A leakage audit (`reports/leakage_audit_final.md`) and SHA-256 hashes of all 140 model files (`reports/checkpoint_inventory.json`) were checked before unsealing.
-  - The test run executed **once**.
-- **Execution deviations, fully documented** (`reports/test_execution_deviations.md`):
-  - Two aborted attempts preceded the run, and neither read any test PV or labels.
-  - Attempt 1: a log file written too early tripped the clean-tree guard.
-  - Attempt 2: the test HDF5 is not stored in time order.
-  - Neither fix changed any model or scoring rule.
-- **Raw outputs committed before interpretation:** `reports/test_results.json`, `experiments/final/test_predictions_v1.npz`, with hashes in `reports/test_raw_output_hashes.json`.
-- **Negative results are reported**, including H3, H5 and every non-confirmed arm.
+Full reports:
+- [Stanford test report](reports/gate5_test_report.md)
+- [Gatton test report](reports/phaseE_gatton_test_report.md)
 
----
+## Method
 
-## 6. Repository layout
+![SHADOW-MoE G3″-F architecture](docs/figures/architecture.svg)
 
-```
-src/                 all code (data, models, training, calibration, gating, evaluation)
-  skippd.py            SKIPP'D loading and ±30 s forecast-manifest construction
-  folds.py             blocked 5-fold development folds and calibration hold-out
-  clear_sky.py         clear-sky PV model and clear-sky index K
-  models.py, train.py  CNN-GRU / 3D-CNN encoders, quantile and event-mixture heads, trainer
-  metrics.py           CRPS (piecewise-linear quantile function), pinball, interval metrics
-  cal2.py, calibrate.py  conformal calibration (split, rolling, ACI)
-  gate7b.py            forecast-time gate features and CRPS-optimal gate fitting
-  e8_features.py       60-min windows, sun-position and motion features
-  final_eval.py        frozen one-shot test pipeline (G3″-F routing, 15-member ensemble, scoring)
-  final_*.py           pre-unseal checks, dry run, rehearsal, execution wrapper, post-hoc analysis
-  official/            vendored helper from the SKIPP'D authors (MIT, see LICENSE_SKIPPD)
-tests/               unit tests (pytest) and opt-in real-data audits (pytest -m realdata)
-configs/             example configuration
-experiments/         run records: config.json, metrics, histories, logs per run (no weights)
-reports/             pre-registrations, gate reports, audits, frozen thresholds, test results
-  gate5_test_report.md   final official test report
-  manuscript_draft.md    working manuscript (development-stage text)
-```
+1. **Clear-sky normalisation.**
+   - A physical clear-sky model gives the power the array would produce under a clear sky, P_clear(t).
+   - Every model forecasts the clear-sky index K = PV / max(P_clear, c_min), which separates clouds from the daily and seasonal cycle.
+   - The kW forecast is K̂(t+15) × P_clear(t+15).
+   - At Stanford, this normalisation reduced development CRPS by 22%.
+2. **Experts.** All are image encoders followed by a GRU, with a quantile or mixture head:
+   - **A2:** 3D-CNN over 60 minutes of images (16 frames at 4-minute stride); the ramp expert.
+   - **E6-S:** an event-mixture head on the 15-minute change ΔK; sharp in calm conditions.
+   - **E4-B-fit:** per-frame CNN over 15 minutes; the direct expert.
+3. **Disagreement-guided gate.**
+   - w = σ(b₀ + β₁·logit g + β₂·log d), where g is the event probability implied by E6-S's quantiles and d is the gap between the two experts' mean forecasts.
+   - The two quantile functions are blended level by level.
+   - Gates are fitted by exact blended-CRPS minimisation on held-out calibration days only ([`src/gate7b.py`](src/gate7b.py)).
+4. **Routing and fallback.**
+   - G3″ (A2 + E6-S) is used whenever a full 60-minute image history exists (93% of Stanford test forecasts).
+   - Otherwise, mainly just after sunrise, G3 (E4-B-fit + E6-S) is used.
+   - The rule uses timestamps only ([`src/final_eval.py`](src/final_eval.py)).
+5. **Ensemble and calibration.**
+   - 15 members (5 blocked folds × 3 seeds) are averaged quantile by quantile.
+   - Intervals are corrected by causal rolling-window conformal prediction, which uses only outcomes observed 15 minutes later.
+   - Stanford used a daily reset. Gatton used the continuous variant selected in the [Phase C calibration study](reports/phaseC_report.md).
+   - No finite-sample coverage guarantee is claimed under temporal dependence.
 
-Raw data, manifests (`data/`) and model weights (`*.pt`) are not versioned. They are reproducible from the dataset and the code.
+Training recipe, expert details, development history and equations: [docs/development_history.md](docs/development_history.md).
 
----
+## Datasets and preprocessing
 
-## 7. Reproducing the work
+| | Stanford SKIPP'D | Gatton |
+|---|---|---|
+| Source | Nie et al., Stanford Digital Repository, [DOI 10.25740/dj417rh1007](https://doi.org/10.25740/dj417rh1007) | Xu and Ma, University of Queensland, [DOI 10.48610/bd7e108](https://doi.org/10.48610/bd7e108) |
+| Licence | CC BY 4.0 | Permitted Re-Use with Commercial Use Restriction |
+| PV system | ≈ 30 kW rooftop array | 3.275 MW plant (mixed fixed/tracking, AC-capped) |
+| Images used | 64×64 RGB fisheye, 1 per minute (as distributed) | 2048×1536 every 10 s → nearest frame per minute, circle-masked, 64×64 |
+| Development | 497 days (2017–2019) | 83 days (2020-01-23 to 2020-04-15) |
+| Sealed test | 20 official test days (10 sunny, 10 cloudy) | last 21 days (2020-04-16 to 2020-05-06) |
 
-**Environment**
-- Python 3.11. A CUDA GPU is needed for training; we used an NVIDIA RTX 5000 Ada (32 GB).
+**Preprocessing**
+- **Common construction:** each sample uses 16 frames over [t − 15, t] (or 60 min for A2) and the PV target at t + 15 min. Image and PV records are matched within ±30 s.
+- **Stanford:** this matching recovers the official sample counts and is a documented deviation from the benchmark's exact-timing construction ([`reports/protocol_notes.md`](reports/protocol_notes.md), [`reports/dataset_preprocessing_audit.md`](reports/dataset_preprocessing_audit.md)).
+- **Gatton:** every preprocessing rule and parameter was fixed on development data before any test row was read, including four documented amendments:
+  - missing PV values;
+  - the export sign convention;
+  - clear-sky geometry;
+  - the mixed fixed/tracker plant model.
+
+  See [`reports/phaseE_gatton_prereg.md`](reports/phaseE_gatton_prereg.md).
+
+## Installation and quick start
+
+These steps need Python 3.11. Training needs a CUDA GPU; the work used one NVIDIA RTX 5000 Ada (32 GB).
 
 ```bash
-python -m venv .venv && .venv\Scripts\activate          # Windows (use source .venv/bin/activate on Linux)
+git clone https://github.com/abdulsamad2/solar-architecher.git
+cd solar-architecher
+python -m venv .venv
+source .venv/bin/activate          # Windows: .venv\Scripts\activate
 pip install torch torchvision --index-url https://download.pytorch.org/whl/cu128
 pip install -r requirements.txt
-pytest                                                    # unit tests
+pytest                             # unit tests; no data required
 ```
 
-**Data**
-- Download `2017_2019_images_pv_processed.hdf5`, `times_trainval.npy` and `times_test.npy` from <https://purl.stanford.edu/dj417rh1007> into `data/raw/`.
+Then download SKIPP'D (`2017_2019_images_pv_processed.hdf5`, `times_trainval.npy`, `times_test.npy`) into `data/raw/` and build the development manifests:
 
 ```bash
-python -m src.skippd        # forecast manifest   -> data/manifests/forecast_tol30_v2.npz
-python -m src.folds         # blocked folds        -> data/manifests/folds_blocked5_v1.json
-pytest -m realdata          # real-data integrity audits
+python -m src.skippd               # forecast manifest (±30 s matching)
+python -m src.folds                # blocked 5-fold development folds
+pytest -m realdata                 # opt-in real-data integrity audits
 ```
 
-**Training the experts**
-- Run each command for `--seed 42`, `123` and `456`.
-- Each run trains all 5 folds.
+**Notes**
+- **Weights:** trained model weights are **not distributed**. The full training, gating and rehearsal sequence for both sites is in [docs/reproducibility.md](docs/reproducibility.md).
+- **Gatton paths:** the Gatton modules read a data path set as a constant at the top of each file; edit it to point at your copy.
+- **Test status:** the Gatton guard tests are skipped unless Gatton data are present. When the data are present, one of them (`test_official_run_refuses_without_recorded_token`) fails. That test was written before the official run, and the approval-token file it checks for is now committed by design.
 
-```bash
-# E4-B-fit (15-min CNN-GRU quantile expert)
-python -m src.train --target csi --input csi --head quantile --calib-holdout --max-epochs 15 --patience 5 --seed 42 --out experiments/E4_calib/v1
-# E6-S (event-mixture expert; frozen per-fold event thresholds)
-python -m src.train --target csi --input csi --head event --calib-holdout --frozen-thresholds reports/phase6_frozen_thresholds.json --max-epochs 15 --patience 5 --seed 42 --out experiments/E6/v1/E6-S
-# A2 (60-min 3D-CNN quantile expert); build the 60-min windows first: python -m src.e8_features
-python -m src.train --target csi --input csi --head quantile --calib-holdout --e8-window H60 --encoder cnn3d_gru --max-epochs 15 --patience 5 --seed 42 --out experiments/E9/v1/A2
-# D4 (descriptive comparator)
-python -m src.train --target csi --input csi --head quantile --calib-holdout --e8-window H60 --e8-features PM --max-epochs 15 --patience 5 --seed 42 --out experiments/E8/v1/D4
+> **Sealed tests.** `src.final_execute` / `src.final_eval.run_test` (Stanford) and `src.gatton_execute official` / `src.gatton_eval.run_test` (Gatton) are one-shot evaluation commands. Both have already been executed and must not be rerun. Their guards refuse to run while results exist.
+
+## Reports and figures
+
+**Final test reports**
+- [Stanford Gate 5 report](reports/gate5_test_report.md)
+- [Gatton Phase E report](reports/phaseE_gatton_test_report.md)
+
+**Pre-registrations**
+- [Stanford test](reports/test_eval_prereg.md)
+- [Gatton](reports/phaseE_gatton_prereg.md)
+- [Calibration study](reports/phaseC_calibration_prereg.md)
+- [Physics losses](reports/phaseF_physics_prereg.md)
+- [Published-method comparison](reports/phaseA_comparability_prereg.md)
+
+**Studies**
+- Phase A, comparison with published methods: [report](reports/phaseA_report.md)
+- Phase C, calibration under temporal shift: [report](reports/phaseC_report.md)
+- Phase F, physics-informed losses: [report](reports/phaseF_report.md)
+- Dataset preprocessing: [audit](reports/dataset_preprocessing_audit.md)
+- Related work: [review](reports/related_work.md)
+
+**Raw results**
+- [Stanford results](reports/test_results.json)
+- [Gatton results](reports/phaseE_gatton_test_results.json)
+- [Stanford lag analysis](reports/lag_analysis.json)
+- [Gatton lag analysis](reports/phaseE_gatton_test_lag.json)
+
+**Figures and drafts**
+- **Figures:** [`reports/figures/`](reports/figures/) contains a test-day forecast, per-day CRPS, interval coverage, the camera change, the PV/clear-sky decline and the Phase F figures. Generate them with `python -m src.figures`.
+- **Working manuscript:** [`reports/paper_draft.md`](reports/paper_draft.md).
+
+**Comparison with published methods.** Phase A compared G3″-F with published SUNSET, SkyGPT and PV-MM-Diffusion numbers on the SKIPP'D test and on SkyGPT's public external test set.
+- **Unpaired:** these are comparisons against published point estimates. The protocols differ in sample matching and CRPS estimation. We therefore do not claim superiority over these methods.
+- **Interval scores are comparable, not better.** Our 90% interval score is comparable to PV-MM-Diffusion's.
+- **Coverage on SkyGPT's set:** our intervals under-cover there (0.77 at 90%).
+
+Details: [docs/development_history.md §4](docs/development_history.md#4-context-published-results-phase-a).
+
+## Reproducibility and scientific integrity
+
+- **Pre-registration:** hypotheses, metrics and decision rules were committed before the corresponding results existed. Amendments are dated and justified in the same files.
+- **Leakage control:** blocked folds with purge days. Gates, thresholds and calibration windows are fitted on development data only.
+- **One-shot sealed tests:**
+  - each test ran once, from a clean committed tree, after an explicit recorded approval token;
+  - all model files were SHA-256 verified before unsealing;
+  - raw predictions and metrics were committed unchanged before any interpretation.
+- **Provenance:**
+
+  | | Stanford | Gatton |
+  |---|---|---|
+  | Execution | `e4b1048` | `9f5164e` (scientific freeze `dd39740`) |
+  | Raw outputs | `cd7c30a` | `59ccbcd` |
+  | Deviations | two aborted pre-read attempts, documented | none |
+
+  Full table and logs: [docs/reproducibility.md](docs/reproducibility.md#5-sealed-test-execution-provenance-only-do-not-run).
+- **Result labels:** results are labelled confirmatory, descriptive or exploratory, and post-hoc analyses are never presented as confirmatory.
+
+## Limitations and negative results
+
+- **Only two sites:** 64×64 images, a single season at Gatton (summer to autumn) and an estimated PV-array geometry there.
+- **Not better than persistence at Gatton:** on clear days the gated model was clearly worse.
+- **Not always better than its own components:** the standalone E6-S expert scored better overall at Gatton.
+- **Ramps remain unsolved:**
+  - ramp CRPS was not better than the direct expert's, and was worse at Gatton;
+  - at nominal 90%, ramp interval coverage was only 0.65–0.75;
+  - misses are directional: outcomes fall above the interval on up-ramps and below it on down-ramps.
+- **No anticipation:** at both sites the forecast changes follow the observed changes about 15 minutes later. The gains come from a better forecast level and spread, not from predicting cloud arrivals.
+- **Calibration:** the 90% target was missed at both sites, in opposite directions.
+- **Transfer:** models do not transfer without site-specific training, and Stanford pre-training gave no measurable benefit.
+- **Physics-informed losses:** no practically meaningful improvement.
+- **Data caveats at Stanford:**
+  - the ±30 s sample matching differs from the benchmark's original construction;
+  - the camera was replaced in May 2019;
+  - the PV/clear-sky ratio declines by an apparent 2.2%/yr.
+
+  These are documented in the [preprocessing audit](reports/dataset_preprocessing_audit.md).
+
+## Citation
+
+Please cite this repository (metadata in [`CITATION.cff`](CITATION.cff)) together with the datasets you use:
+
+```bibtex
+@software{laghari_shadow_moe_2026,
+  author = {Laghari, Abdul Samad},
+  title  = {{SHADOW-MoE}: probabilistic 15-minute solar power forecasting from sky images},
+  year   = {2026},
+  url    = {https://github.com/abdulsamad2/solar-architecher}
+}
 ```
 
-Each run's exact settings and git commit are stored in its `experiments/**/config.json`.
+- **Stanford data:** Y. Nie, X. Li, A. Scott, Y. Sun, V. Venugopal, A. Brandt. *SKIPP'D: a SKy Images and Photovoltaic Power Generation Dataset for short-term solar forecasting.* Solar Energy, 2023. Dataset DOI [10.25740/dj417rh1007](https://doi.org/10.25740/dj417rh1007).
+- **Gatton data:** S. Xu, H. Ma. *Gatton Sky Image and PV Generation 2020.* The University of Queensland, 2023. DOI [10.48610/bd7e108](https://doi.org/10.48610/bd7e108).
 
-**Gates, dry run and evaluation**
+## Acknowledgments and licences
 
-```bash
-python -m src.gate7b_run        # G3 / G4 gates (E4-B-fit + E6-S), fitted on calibration days
-python -m src.freeze_g3pp       # G3″ gate (A2 + E6-S)
-python -m src.final_dryrun      # development-only reproduction, out-of-fold assembly, calibration freeze, inventory
-python -m src.final_rehearsal   # full evaluation body on development data
-```
+- **This repository's code** is released under the [MIT licence](LICENSE).
+- **Vendored helper:** [`src/official/relative_op_func.py`](src/official/relative_op_func.py) is © the SKIPP'D authors, MIT licence ([`src/official/LICENSE_SKIPPD`](src/official/LICENSE_SKIPPD)).
+- **Data licences:**
+  - SKIPP'D is distributed under CC BY 4.0.
+  - The Gatton dataset is distributed under "Permitted Re-Use with Commercial Use Restriction". Check the dataset's own terms before any commercial use.
+- **Acknowledgments:** we thank the SKIPP'D authors at Stanford University and the authors of the Gatton dataset at the University of Queensland for making their data public.
 
-The official test evaluation (`src/final_eval.run_test`) is guarded: it requires a committed approval token and a clean tree, and it refuses to run if results already exist. It has been executed once for this work, and its outputs are in `reports/`.
+## Research status
 
----
+- **Done:** both sealed evaluations, the published-method comparison, the calibration study and the physics-loss study.
+- **In progress:** a single manuscript covering both sites. It has not yet been peer-reviewed.
+- **Nature of the code:** this is research code for reproducing the reported experiments, not a production forecasting system.
 
-## 8. Limitations
-
-- **A single site, 64×64 images** and three years of data.
-- **Matching protocol:** ±30 s sample matching differs from the original benchmark construction. Phase A shows that the effect is small: our SUNSET port is within 0.03 kW of the published numbers on the exact-timing subset. Comparisons with published SUNSET and SkyGPT still rest on their published numbers, not on paired per-sample tests.
-- **External test is short:** the SkyGPT external test has only 5 days, and there the calibrated intervals under-cover substantially.
-- **Ramps remain the open problem:**
-  - ramp non-inferiority was not established on test;
-  - ramp-conditioned interval coverage is about 0.65–0.75 at a nominal 90%;
-  - ramp *detection* from the image history (AUPRC ≈ 0.5) is the bottleneck.
-- **Calibration method:** the frozen daily-reset rolling conformal works only when recent, similar scores are available. On development folds initialised from distant periods it falls to 0.61–0.87 coverage, while continuous rolling or ACI stays at 0.88–0.92 (`reports/phaseC_report.md`). A future sealed evaluation should pre-register continuous adaptation. Regime-aware calibration did not improve ramp coverage for G3″-F; ramp-conditional coverage stays about 0.65–0.70.
-- **No anticipation of changes:** on cloudy test days, minute-to-minute changes in every model's median forecast, including G3″-F, are uncorrelated with the concurrent observed changes (lag-0 correlation ≈ 0). They correlate with the observed changes 15 minutes earlier (G3″-F 0.87, smart persistence 0.98; `reports/lag_analysis.json`). The accuracy gains come from a better forecast level and spread, not from anticipating cloud arrivals. This is the "very smart persistence" behaviour reported by Paletta et al. (2021).
-- **Calibration:** calibrated intervals over-covered on the test days (0.935 at 90%). The development-initialised windows did not fully adapt to the cloudier test period.
-- **Clear-sky model:** it has no temperature model, and the annual scale fit absorbs an apparent decline in the PV/clear-sky ratio: about 2.2%/yr after adjusting for season (±0.3; the naive linear fit gives 2.8%/yr). This exceeds typical module degradation (0.5–0.8%/yr), so it is not attributed to degradation alone; soiling, clear-sky (aerosol) model error and data artefacts likely contribute (`reports/related_work.md`).
-
----
-
-## 9. Citation, data and licences
-
-If you use this code or the results, please cite this repository (see `CITATION.cff`) and the dataset:
-
-> Y. Nie, X. Li, A. Scott, Y. Sun, V. Venugopal, A. Brandt. *SKIPP'D: a SKy Images and Photovoltaic Power Generation Dataset for short-term solar forecasting.* Solar Energy, 2023.
-
-**Licences**
-- **Dataset:** SKIPP'D, CC BY 4.0, <https://purl.stanford.edu/dj417rh1007>.
-- **Vendored helper:** `src/official/relative_op_func.py` is © the SKIPP'D authors, MIT licence (`src/official/LICENSE_SKIPPD`).
-- **This repository's code:** MIT licence (`LICENSE`).
-
-**Author:** Abdul Samad Laghari
-
----
-
-## 10. Physics-informed training objective (Phase F; done; `reports/phaseF_report.md`)
-
-**Result (development out-of-fold, pre-registered): no material effect.**
-- **CRPS:** every physics variant changes CRPS by ≤ 0.6%. The physics-consistency term alone improves overall CRPS by 0.14% (95% CI excludes 0; negligible in practice). Ramp terms cost 0.4–0.6%.
-- **Pre-registered winner rule:** no variant met it (none matched the baseline's ramp CRPS).
-- **Small conditional effects:**
-  - ramp 90% coverage up to +0.8 pp;
-  - ramp-direction accuracy 82.2% → 83.5%;
-  - better rising ramps but worse falling ramps.
-- **Conclusion:** the ramp limitation is one of perception (the inputs), not of the training objective.
-
-**What it is.** An optional extension that adds solar-physics terms to the **training objective** of the 3D-CNN ramp expert (A2). It does not change:
-- any architecture, the gate, the 9 quantile outputs, the clear-sky model, the folds, seeds, ensemble or calibration;
-- the sealed test protocol.
-
-The pre-registration is `reports/phaseF_physics_prereg.md`. The code is `src/physics_losses.py` and `src/physics_metrics.py`, plus `src/train.py --physics-config <yaml>`.
-
-**Physical model.**
-- Clear-sky index: K_t = P_t / max(P_clear,t, 1 kW).
-- Forecast: P̂(t+15, q) = K̂(t+15, q) · max(P_clear(t+15), 1 kW).
-- P_clear is the existing Ineichen + Hay–Davies + incidence-angle model, scaled on training days only.
-
-**Loss terms** (per training batch; K̂_q are the predicted K quantiles, K̂₅₀ the median):
-
-| Term | Definition | Role |
-|---|---|---|
-| L_quantile | mean over samples and q of ρ_q(K − K̂_q), with ρ_q(e) = max(q·e, (q − 1)·e) | Primary objective (unchanged) |
-| L_phys | mean \|P_true − K̂₅₀ · max(P_clear(t+15), 1)\| / P_scale, with P_scale = 30 kW (fixed); optional Huber | Physical power consistency of the median |
-| L_bound | mean over q of ReLU(−K̂_q) + ReLU(K̂_q − K_max), with K_max = 1.5 | Soft plausibility. K > 1 is allowed (cloud enhancement) |
-| L_ramp | mean w_i · \|ΔK_true − ΔK_pred\|, where ΔK_true = K(t+15) − K(t), ΔK_pred = K̂₅₀ − K(t), and w_i = 1 + α_ramp · r_i | Ramp-weighted error of the predicted change |
-| L_direction (optional; off by default) | Σ r_i · ReLU(m − sign(ΔK_true) · ΔK_pred) / Σ r_i, with margin m = 0.02 | Penalises the wrong ramp direction |
-
-- **Total loss:** L_total = L_quantile + λ_phys·L_phys + λ_ramp·L_ramp + λ_bound·L_bound (+ λ_dir·L_direction).
-- **Ramp indicator:** r_i = 1 iff \|ΔK_true\| ≥ τ_fold. τ_fold is the repository's existing ramp/event threshold, the 90th percentile over fit-day training samples; the code asserts it equals the frozen value.
-- Every component is logged separately each epoch (`history.json` → `loss_components`).
-- With all terms disabled, the loss is exactly the original pinball loss (unit-tested).
-- Note: since K̂₅₀ − K(t) and K − K(t) share K(t), L_ramp equals a **ramp-weighted absolute error of the median in K units**. The ramp weighting is what distinguishes it from the pinball term.
-
-**Ablations** (`configs/physics/`; `scripts/run_physics_ablation.py`):
-
-| Arm | Objective |
-|---|---|
-| A0 | Quantile loss only (the existing model) |
-| A1 | + physics consistency |
-| R | + ramp |
-| A3 | + physics + ramp |
-| A4 | + physics + ramp + bounds |
-| A5 (optional) | + direction |
-
-- **Hyperparameters:** chosen by a pre-registered staged search on development folds 1 and 3 (seed 42): λ_phys, then λ_ramp and α_ramp, then λ_bound, then λ_direction.
-- **Evaluation:** `scripts/evaluate_physics_ablation.py`, run on **development out-of-fold** forecasts with the G3″ gate refitted per arm. The official test sets are not reused.
-- **Tests:** `tests/test_physics_losses.py` covers power reconstruction, K bounds, the ramp and direction losses, the disabled-equals-baseline check, and no test leakage.
-
-## 11. Roadmap and status
-
-| Phase | Work | Status |
-|---|---|---|
-| Gates 0–5 | Development experiments and the one-shot official test | Done (`reports/gate5_test_report.md`) |
-| **A** | Comparison with published SUNSET and SkyGPT | **Done** (`reports/phaseA_report.md`) |
-| B | Literature review and novelty positioning | **Done** (`reports/related_work.md`) |
-| C | Calibration under temporal shift and in ramp regimes (pre-registered, dev only) | **Done** (`reports/phaseC_report.md`). The primary hypothesis was not confirmed; continuous rolling/ACI beats the daily reset |
-| D | Explanatory figures (forecast example, per-day CRPS, Phase A, PV decline, camera change, coverage) | **Done**, first set (`reports/figures/`) |
-| E | External validation at a second site (Gatton, Australia) | **Done (one-shot sealed test).** E1 primary confirmed: G3″-F − E4-B-fit = −46.9 kW CRPS [−57.4, −37.8]. E2 (beats persistence) not confirmed: −17.0 [−39.2, +2.5]. E4 coverage 0.864, not met. Zero-shot fails. Lag 15 min (`reports/phaseE_gatton_test_report.md`) |
-| F | Physics-informed training objective | **Done**: no material effect (`reports/phaseF_report.md`) |
-| G | Paper writing and submission (one paper) | Planned |
+Author: Abdul Samad Laghari.
