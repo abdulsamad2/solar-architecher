@@ -1,0 +1,77 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 408" width="960" height="408" role="img" aria-labelledby="t d" font-family="system-ui, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif">
+<title id="t">Comparison with published models on SkyGPT's external test</title>
+<desc id="d">Horizontal bars of CRPS and 90% Winkler score for G3″-F (ours, scored with the competitors' 30-sample estimator), an oracle using real future images, PV-MM-Diffusion, SkyGPT, SUNSET and smart persistence.</desc>
+<style>
+.bg{fill:#ffffff}.title{fill:#0b0b0b;font-size:15px;font-weight:600}.sub{fill:#52514e;font-size:12px}
+.lab{fill:#0b0b0b;font-size:13.5px;font-weight:500}.labsm{fill:#0b0b0b;font-size:13px}
+.tick{fill:#6e6d68;font-size:11.5px;font-variant-numeric:tabular-nums}
+.axis{fill:#52514e;font-size:12px}.colhead{fill:#6e6d68;font-size:11.5px}.ptitle{fill:#0b0b0b;font-size:13px;font-weight:600}
+.val{fill:#0b0b0b;font-size:12.5px;font-variant-numeric:tabular-nums}.valmuted{fill:#6e6d68;font-size:12.5px;font-variant-numeric:tabular-nums}
+.grid{stroke:#e1e0d9;stroke-width:1}.zero{stroke:#898781;stroke-width:1.5}.base{stroke:#c3c2b7;stroke-width:1}
+.sep{stroke:#eeede8;stroke-width:1}.band{fill:#1baf7a;fill-opacity:.16}
+.s1{fill:#2a78d6}.l1{stroke:#2a78d6;stroke-width:2;stroke-linecap:round}.ring{stroke:#ffffff;stroke-width:2}
+.bar-hi{fill:#2a78d6}.bar-mid{fill:#86b6ef}.bar-lo{fill:#c3c2b7}
+@media (prefers-color-scheme:dark){
+.bg{fill:#0d1117}.title,.lab,.labsm,.val,.ptitle{fill:#f0efec}.sub,.axis{fill:#c3c2b7}.tick,.colhead,.valmuted{fill:#9a9890}
+.grid{stroke:#2c2c2a}.zero{stroke:#898781}.base{stroke:#383835}.sep{stroke:#21262d}.band{fill:#199e70;fill-opacity:.22}
+.s1{fill:#3987e5}.l1{stroke:#3987e5}.ring{stroke:#0d1117}.bar-hi{fill:#3987e5}.bar-mid{fill:#1c5cab}.bar-lo{fill:#52514e}}
+</style>
+<rect class="bg" width="960" height="408"/>
+<text x="24.0" y="34.0" class="title" text-anchor="start">Comparison on SkyGPT's public external test set (5 cloudy days, Nov–Dec 2019, 2,582 forecasts)</text>
+<text x="24.0" y="54.0" class="sub" text-anchor="start">Lower is better in both panels. Ours: frozen model run once. Others: published numbers (unpaired; protocols differ).</text>
+<text x="330.0" y="84.0" class="ptitle" text-anchor="start">CRPS (kW)</text>
+<text x="650.0" y="84.0" class="ptitle" text-anchor="start">Winkler score, 90% interval</text>
+<line x1="330.0" y1="96.0" x2="330.0" y2="368.0" class="base"/>
+<text x="330.0" y="386.0" class="tick" text-anchor="middle">0</text>
+<line x1="397.5" y1="96.0" x2="397.5" y2="368.0" class="grid"/>
+<text x="397.5" y="386.0" class="tick" text-anchor="middle">1</text>
+<line x1="465.0" y1="96.0" x2="465.0" y2="368.0" class="grid"/>
+<text x="465.0" y="386.0" class="tick" text-anchor="middle">2</text>
+<line x1="532.5" y1="96.0" x2="532.5" y2="368.0" class="grid"/>
+<text x="532.5" y="386.0" class="tick" text-anchor="middle">3</text>
+<line x1="600.0" y1="96.0" x2="600.0" y2="368.0" class="grid"/>
+<text x="600.0" y="386.0" class="tick" text-anchor="middle">4</text>
+<line x1="650.0" y1="96.0" x2="650.0" y2="368.0" class="base"/>
+<text x="650.0" y="386.0" class="tick" text-anchor="middle">0</text>
+<line x1="733.3" y1="96.0" x2="733.3" y2="368.0" class="grid"/>
+<text x="733.3" y="386.0" class="tick" text-anchor="middle">20</text>
+<line x1="816.7" y1="96.0" x2="816.7" y2="368.0" class="grid"/>
+<text x="816.7" y="386.0" class="tick" text-anchor="middle">40</text>
+<line x1="900.0" y1="96.0" x2="900.0" y2="368.0" class="grid"/>
+<text x="900.0" y="386.0" class="tick" text-anchor="middle">60</text>
+<text x="24.0" y="124.0" class="lab" text-anchor="start">G3″-F (ours)</text>
+<text x="24.0" y="140.0" class="sub" text-anchor="start">frozen, run once · scored like competitors</text>
+<path class="bar-hi" d="M330.0,117.0 H494.3 Q498.3,117.0 498.3,121.0 V131.0 Q498.3,135.0 494.3,135.0 H330.0 Z"/>
+<text x="504.3" y="130.5" class="val" text-anchor="start">2.49</text>
+<path class="bar-hi" d="M650.0,117.0 H737.8 Q741.8,117.0 741.8,121.0 V131.0 Q741.8,135.0 737.8,135.0 H650.0 Z"/>
+<text x="747.8" y="130.5" class="val" text-anchor="start">22.0</text>
+<text x="24.0" y="168.0" class="lab" text-anchor="start">Real future images → U-Net</text>
+<text x="24.0" y="184.0" class="sub" text-anchor="start">oracle reported in the PV-MM-Diffusion paper</text>
+<path class="bar-lo" d="M330.0,161.0 H496.1 Q500.1,161.0 500.1,165.0 V175.0 Q500.1,179.0 496.1,179.0 H330.0 Z"/>
+<text x="506.1" y="174.5" class="val" text-anchor="start">2.52</text>
+<path class="bar-lo" d="M650.0,161.0 H774.0 Q778.0,161.0 778.0,165.0 V175.0 Q778.0,179.0 774.0,179.0 H650.0 Z"/>
+<text x="784.0" y="174.5" class="val" text-anchor="start">30.7</text>
+<text x="24.0" y="212.0" class="lab" text-anchor="start">PV-MM-Diffusion</text>
+<text x="24.0" y="228.0" class="sub" text-anchor="start">Huang et al., Applied Energy 2026</text>
+<path class="bar-lo" d="M330.0,205.0 H503.5 Q507.5,205.0 507.5,209.0 V219.0 Q507.5,223.0 503.5,223.0 H330.0 Z"/>
+<text x="513.5" y="218.5" class="val" text-anchor="start">2.63</text>
+<path class="bar-lo" d="M650.0,205.0 H735.4 Q739.4,205.0 739.4,209.0 V219.0 Q739.4,223.0 735.4,223.0 H650.0 Z"/>
+<text x="745.4" y="218.5" class="val" text-anchor="start">21.5</text>
+<text x="24.0" y="256.0" class="lab" text-anchor="start">SkyGPT</text>
+<text x="24.0" y="272.0" class="sub" text-anchor="start">Nie et al., Adv. Appl. Energy 2024</text>
+<path class="bar-lo" d="M330.0,249.0 H515.7 Q519.7,249.0 519.7,253.0 V263.0 Q519.7,267.0 515.7,267.0 H330.0 Z"/>
+<text x="525.7" y="262.5" class="val" text-anchor="start">2.81</text>
+<path class="bar-lo" d="M650.0,249.0 H757.2 Q761.2,249.0 761.2,253.0 V263.0 Q761.2,267.0 757.2,267.0 H650.0 Z"/>
+<text x="767.2" y="262.5" class="val" text-anchor="start">26.7</text>
+<text x="24.0" y="300.0" class="lab" text-anchor="start">SUNSET</text>
+<text x="24.0" y="316.0" class="sub" text-anchor="start">Sun et al., Solar Energy 2019 (as published)</text>
+<path class="bar-lo" d="M330.0,293.0 H549.4 Q553.4,293.0 553.4,297.0 V307.0 Q553.4,311.0 549.4,311.0 H330.0 Z"/>
+<text x="559.4" y="306.5" class="val" text-anchor="start">3.31</text>
+<path class="bar-lo" d="M650.0,293.0 H883.3 Q887.3,293.0 887.3,297.0 V307.0 Q887.3,311.0 883.3,311.0 H650.0 Z"/>
+<text x="893.3" y="306.5" class="val" text-anchor="start">57.0</text>
+<text x="24.0" y="344.0" class="lab" text-anchor="start">Smart persistence</text>
+<text x="24.0" y="360.0" class="sub" text-anchor="start">no-skill reference</text>
+<path class="bar-lo" d="M330.0,337.0 H573.7 Q577.7,337.0 577.7,341.0 V351.0 Q577.7,355.0 573.7,355.0 H330.0 Z"/>
+<text x="583.7" y="350.5" class="val" text-anchor="start">3.67</text>
+<text x="656.0" y="350.5" class="valmuted" text-anchor="start">not reported</text>
+</svg>

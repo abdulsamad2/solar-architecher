@@ -1,0 +1,94 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 464" width="960" height="464" role="img" aria-labelledby="t d" font-family="system-ui, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif">
+<title id="t">SHADOW-MoE ablation ladder on development data</title>
+<desc id="d">Horizontal bars of development out-of-fold CRPS, overall and on ramp forecasts, from smart persistence through the clear-sky index, the two experts, a 50/50 average, the disagreement gate and the final G3″-F model.</desc>
+<style>
+.bg{fill:#ffffff}.title{fill:#0b0b0b;font-size:15px;font-weight:600}.sub{fill:#52514e;font-size:12px}
+.lab{fill:#0b0b0b;font-size:13.5px;font-weight:500}.labsm{fill:#0b0b0b;font-size:13px}
+.tick{fill:#6e6d68;font-size:11.5px;font-variant-numeric:tabular-nums}
+.axis{fill:#52514e;font-size:12px}.colhead{fill:#6e6d68;font-size:11.5px}.ptitle{fill:#0b0b0b;font-size:13px;font-weight:600}
+.val{fill:#0b0b0b;font-size:12.5px;font-variant-numeric:tabular-nums}.valmuted{fill:#6e6d68;font-size:12.5px;font-variant-numeric:tabular-nums}
+.grid{stroke:#e1e0d9;stroke-width:1}.zero{stroke:#898781;stroke-width:1.5}.base{stroke:#c3c2b7;stroke-width:1}
+.sep{stroke:#eeede8;stroke-width:1}.band{fill:#1baf7a;fill-opacity:.16}
+.s1{fill:#2a78d6}.l1{stroke:#2a78d6;stroke-width:2;stroke-linecap:round}.ring{stroke:#ffffff;stroke-width:2}
+.bar-hi{fill:#2a78d6}.bar-mid{fill:#86b6ef}.bar-lo{fill:#c3c2b7}
+@media (prefers-color-scheme:dark){
+.bg{fill:#0d1117}.title,.lab,.labsm,.val,.ptitle{fill:#f0efec}.sub,.axis{fill:#c3c2b7}.tick,.colhead,.valmuted{fill:#9a9890}
+.grid{stroke:#2c2c2a}.zero{stroke:#898781}.base{stroke:#383835}.sep{stroke:#21262d}.band{fill:#199e70;fill-opacity:.22}
+.s1{fill:#3987e5}.l1{stroke:#3987e5}.ring{stroke:#0d1117}.bar-hi{fill:#3987e5}.bar-mid{fill:#1c5cab}.bar-lo{fill:#52514e}}
+</style>
+<rect class="bg" width="960" height="464"/>
+<text x="24.0" y="34.0" class="title" text-anchor="start">Where the improvement comes from: one ingredient at a time</text>
+<text x="24.0" y="54.0" class="sub" text-anchor="start">Mean CRPS (kW, lower is better) on 164,362 held-out development forecasts; post hoc, descriptive; no test data</text>
+<text x="330.0" y="84.0" class="ptitle" text-anchor="start">All forecasts</text>
+<text x="640.0" y="84.0" class="ptitle" text-anchor="start">Ramp forecasts only (fast changes)</text>
+<line x1="330.0" y1="96.0" x2="330.0" y2="424.0" class="base"/>
+<text x="330.0" y="442.0" class="tick" text-anchor="middle">0</text>
+<line x1="395.0" y1="96.0" x2="395.0" y2="424.0" class="grid"/>
+<text x="395.0" y="442.0" class="tick" text-anchor="middle">0.25</text>
+<line x1="460.0" y1="96.0" x2="460.0" y2="424.0" class="grid"/>
+<text x="460.0" y="442.0" class="tick" text-anchor="middle">0.5</text>
+<line x1="525.0" y1="96.0" x2="525.0" y2="424.0" class="grid"/>
+<text x="525.0" y="442.0" class="tick" text-anchor="middle">0.75</text>
+<line x1="590.0" y1="96.0" x2="590.0" y2="424.0" class="grid"/>
+<text x="590.0" y="442.0" class="tick" text-anchor="middle">1</text>
+<line x1="640.0" y1="96.0" x2="640.0" y2="424.0" class="base"/>
+<text x="640.0" y="442.0" class="tick" text-anchor="middle">0</text>
+<line x1="692.0" y1="96.0" x2="692.0" y2="424.0" class="grid"/>
+<text x="692.0" y="442.0" class="tick" text-anchor="middle">1</text>
+<line x1="744.0" y1="96.0" x2="744.0" y2="424.0" class="grid"/>
+<text x="744.0" y="442.0" class="tick" text-anchor="middle">2</text>
+<line x1="796.0" y1="96.0" x2="796.0" y2="424.0" class="grid"/>
+<text x="796.0" y="442.0" class="tick" text-anchor="middle">3</text>
+<line x1="848.0" y1="96.0" x2="848.0" y2="424.0" class="grid"/>
+<text x="848.0" y="442.0" class="tick" text-anchor="middle">4</text>
+<line x1="900.0" y1="96.0" x2="900.0" y2="424.0" class="grid"/>
+<text x="900.0" y="442.0" class="tick" text-anchor="middle">5</text>
+<text x="24.0" y="122.0" class="labsm" text-anchor="start">Smart persistence</text>
+<text x="24.0" y="137.0" class="sub" text-anchor="start">reference: cloudiness stays as it is now</text>
+<path class="bar-lo" d="M330.0,115.0 H554.0 Q558.0,115.0 558.0,119.0 V129.0 Q558.0,133.0 554.0,133.0 H330.0 Z"/>
+<text x="564.0" y="128.5" class="val" text-anchor="start">0.877</text>
+<path class="bar-lo" d="M640.0,115.0 H879.0 Q883.0,115.0 883.0,119.0 V129.0 Q883.0,133.0 879.0,133.0 H640.0 Z"/>
+<text x="889.0" y="128.5" class="val" text-anchor="start">4.67</text>
+<text x="24.0" y="162.0" class="labsm" text-anchor="start">Forecast power in kW</text>
+<text x="24.0" y="177.0" class="sub" text-anchor="start">single CNN-GRU network</text>
+<path class="bar-mid" d="M330.0,155.0 H571.9 Q575.9,155.0 575.9,159.0 V169.0 Q575.9,173.0 571.9,173.0 H330.0 Z"/>
+<text x="581.9" y="168.5" class="val" text-anchor="start">0.946</text>
+<path class="bar-mid" d="M640.0,155.0 H770.3 Q774.3,155.0 774.3,159.0 V169.0 Q774.3,173.0 770.3,173.0 H640.0 Z"/>
+<text x="780.3" y="168.5" class="val" text-anchor="start">2.58</text>
+<text x="24.0" y="202.0" class="labsm" text-anchor="start">Forecast clear-sky index K</text>
+<text x="24.0" y="217.0" class="sub" text-anchor="start">same network, physics-normalised target</text>
+<path class="bar-mid" d="M330.0,195.0 H516.6 Q520.6,195.0 520.6,199.0 V209.0 Q520.6,213.0 516.6,213.0 H330.0 Z"/>
+<text x="526.6" y="208.5" class="val" text-anchor="start">0.733</text>
+<path class="bar-mid" d="M640.0,195.0 H761.7 Q765.7,195.0 765.7,199.0 V209.0 Q765.7,213.0 761.7,213.0 H640.0 Z"/>
+<text x="771.7" y="208.5" class="val" text-anchor="start">2.42</text>
+<text x="24.0" y="242.0" class="labsm" text-anchor="start">Direct expert E4-B-fit</text>
+<text x="24.0" y="257.0" class="sub" text-anchor="start">3-member ensemble</text>
+<path class="bar-mid" d="M330.0,235.0 H515.7 Q519.7,235.0 519.7,239.0 V249.0 Q519.7,253.0 515.7,253.0 H330.0 Z"/>
+<text x="525.7" y="248.5" class="val" text-anchor="start">0.730</text>
+<path class="bar-mid" d="M640.0,235.0 H762.7 Q766.7,235.0 766.7,239.0 V249.0 Q766.7,253.0 762.7,253.0 H640.0 Z"/>
+<text x="772.7" y="248.5" class="val" text-anchor="start">2.44</text>
+<text x="24.0" y="282.0" class="labsm" text-anchor="start">Calm expert E6-S alone</text>
+<text x="24.0" y="297.0" class="sub" text-anchor="start">residual event-mixture head</text>
+<path class="bar-mid" d="M330.0,275.0 H483.0 Q487.0,275.0 487.0,279.0 V289.0 Q487.0,293.0 483.0,293.0 H330.0 Z"/>
+<text x="493.0" y="288.5" class="val" text-anchor="start">0.604</text>
+<path class="bar-mid" d="M640.0,275.0 H787.7 Q791.7,275.0 791.7,279.0 V289.0 Q791.7,293.0 787.7,293.0 H640.0 Z"/>
+<text x="797.7" y="288.5" class="val" text-anchor="start">2.92</text>
+<text x="24.0" y="322.0" class="labsm" text-anchor="start">50/50 average of both experts</text>
+<text x="24.0" y="337.0" class="sub" text-anchor="start">no gate</text>
+<path class="bar-mid" d="M330.0,315.0 H489.7 Q493.7,315.0 493.7,319.0 V329.0 Q493.7,333.0 489.7,333.0 H330.0 Z"/>
+<text x="499.7" y="328.5" class="val" text-anchor="start">0.630</text>
+<path class="bar-mid" d="M640.0,315.0 H773.0 Q777.0,315.0 777.0,319.0 V329.0 Q777.0,333.0 773.0,333.0 H640.0 Z"/>
+<text x="783.0" y="328.5" class="val" text-anchor="start">2.63</text>
+<text x="24.0" y="362.0" class="labsm" text-anchor="start">Disagreement gate G3</text>
+<text x="24.0" y="377.0" class="sub" text-anchor="start">learned blend of the two experts</text>
+<path class="bar-mid" d="M330.0,355.0 H477.5 Q481.5,355.0 481.5,359.0 V369.0 Q481.5,373.0 477.5,373.0 H330.0 Z"/>
+<text x="487.5" y="368.5" class="val" text-anchor="start">0.583</text>
+<path class="bar-mid" d="M640.0,355.0 H767.8 Q771.8,355.0 771.8,359.0 V369.0 Q771.8,373.0 767.8,373.0 H640.0 Z"/>
+<text x="777.8" y="368.5" class="val" text-anchor="start">2.53</text>
+<text x="24.0" y="402.0" class="labsm" text-anchor="start">+ 60-min 3D-CNN expert = G3″-F</text>
+<text x="24.0" y="417.0" class="sub" text-anchor="start">final model (routed)</text>
+<path class="bar-hi" d="M330.0,395.0 H474.9 Q478.9,395.0 478.9,399.0 V409.0 Q478.9,413.0 474.9,413.0 H330.0 Z"/>
+<text x="484.9" y="408.5" class="val" text-anchor="start">0.573</text>
+<path class="bar-hi" d="M640.0,395.0 H761.4 Q765.4,395.0 765.4,399.0 V409.0 Q765.4,413.0 761.4,413.0 H640.0 Z"/>
+<text x="771.4" y="408.5" class="val" text-anchor="start">2.41</text>
+</svg>

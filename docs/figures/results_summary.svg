@@ -1,35 +1,37 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 628" width="960" height="628" role="img" aria-labelledby="t d" font-family="system-ui, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif">
 <title id="t">SHADOW-MoE official SKIPP'D test results</title>
-<desc id="d">Panel A: CRPS change of G3″-F versus the direct expert E4-B-fit (overall and ramps) and versus smart persistence (overall and cloudy days), with 95% CIs. Panel B: calibrated 90% interval coverage by stratum versus the 0.87-0.93 target.</desc>
+<desc id="d">Panel A: CRPS change of G3″-F versus E4-B-fit (overall and ramps) and versus smart persistence (overall and cloudy days), with 95% CIs. Panel B: calibrated 90% interval coverage by stratum versus the 0.87-0.93 target.</desc>
 <style>
 .bg{fill:#ffffff}.title{fill:#0b0b0b;font-size:15px;font-weight:600}.sub{fill:#52514e;font-size:12px}
-.lab{fill:#0b0b0b;font-size:13.5px;font-weight:500}.tick{fill:#6e6d68;font-size:11.5px;font-variant-numeric:tabular-nums}
-.axis{fill:#52514e;font-size:12px}.colhead{fill:#6e6d68;font-size:11.5px}
+.lab{fill:#0b0b0b;font-size:13.5px;font-weight:500}.labsm{fill:#0b0b0b;font-size:13px}
+.tick{fill:#6e6d68;font-size:11.5px;font-variant-numeric:tabular-nums}
+.axis{fill:#52514e;font-size:12px}.colhead{fill:#6e6d68;font-size:11.5px}.ptitle{fill:#0b0b0b;font-size:13px;font-weight:600}
 .val{fill:#0b0b0b;font-size:12.5px;font-variant-numeric:tabular-nums}.valmuted{fill:#6e6d68;font-size:12.5px;font-variant-numeric:tabular-nums}
-.grid{stroke:#e1e0d9;stroke-width:1}.zero{stroke:#898781;stroke-width:1.5}
+.grid{stroke:#e1e0d9;stroke-width:1}.zero{stroke:#898781;stroke-width:1.5}.base{stroke:#c3c2b7;stroke-width:1}
 .sep{stroke:#eeede8;stroke-width:1}.band{fill:#1baf7a;fill-opacity:.16}
 .s1{fill:#2a78d6}.l1{stroke:#2a78d6;stroke-width:2;stroke-linecap:round}.ring{stroke:#ffffff;stroke-width:2}
+.bar-hi{fill:#2a78d6}.bar-mid{fill:#86b6ef}.bar-lo{fill:#c3c2b7}
 @media (prefers-color-scheme:dark){
-.bg{fill:#0d1117}.title,.lab,.val{fill:#f0efec}.sub,.axis{fill:#c3c2b7}.tick,.colhead,.valmuted{fill:#9a9890}
-.grid{stroke:#2c2c2a}.zero{stroke:#898781}.sep{stroke:#21262d}.band{fill:#199e70;fill-opacity:.22}
-.s1{fill:#3987e5}.l1{stroke:#3987e5}.ring{stroke:#0d1117}}
+.bg{fill:#0d1117}.title,.lab,.labsm,.val,.ptitle{fill:#f0efec}.sub,.axis{fill:#c3c2b7}.tick,.colhead,.valmuted{fill:#9a9890}
+.grid{stroke:#2c2c2a}.zero{stroke:#898781}.base{stroke:#383835}.sep{stroke:#21262d}.band{fill:#199e70;fill-opacity:.22}
+.s1{fill:#3987e5}.l1{stroke:#3987e5}.ring{stroke:#0d1117}.bar-hi{fill:#3987e5}.bar-mid{fill:#1c5cab}.bar-lo{fill:#52514e}}
 </style>
 <rect class="bg" width="960" height="628"/>
 <text x="24.0" y="34.0" class="title" text-anchor="start">A · Change in CRPS of G3″-F on the official SKIPP'D test (lower is better)</text>
 <text x="24.0" y="54.0" class="sub" text-anchor="start">Paired difference and 95% day-bootstrap CI, as % of the comparator's test CRPS · 20 days, 13,266 forecasts</text>
-<line x1="300.0" y1="76" x2="300.0" y2="306" class="grid"/>
+<line x1="300.0" y1="76.0" x2="300.0" y2="306.0" class="grid"/>
 <text x="300.0" y="324.0" class="tick" text-anchor="middle">−50%</text>
-<line x1="366.7" y1="76" x2="366.7" y2="306" class="grid"/>
+<line x1="366.7" y1="76.0" x2="366.7" y2="306.0" class="grid"/>
 <text x="366.7" y="324.0" class="tick" text-anchor="middle">−40%</text>
-<line x1="433.3" y1="76" x2="433.3" y2="306" class="grid"/>
+<line x1="433.3" y1="76.0" x2="433.3" y2="306.0" class="grid"/>
 <text x="433.3" y="324.0" class="tick" text-anchor="middle">−30%</text>
-<line x1="500.0" y1="76" x2="500.0" y2="306" class="grid"/>
+<line x1="500.0" y1="76.0" x2="500.0" y2="306.0" class="grid"/>
 <text x="500.0" y="324.0" class="tick" text-anchor="middle">−20%</text>
-<line x1="566.7" y1="76" x2="566.7" y2="306" class="grid"/>
+<line x1="566.7" y1="76.0" x2="566.7" y2="306.0" class="grid"/>
 <text x="566.7" y="324.0" class="tick" text-anchor="middle">−10%</text>
-<line x1="633.3" y1="76" x2="633.3" y2="306" class="zero"/>
+<line x1="633.3" y1="76.0" x2="633.3" y2="306.0" class="zero"/>
 <text x="633.3" y="324.0" class="tick" text-anchor="middle">0%</text>
-<line x1="700.0" y1="76" x2="700.0" y2="306" class="grid"/>
+<line x1="700.0" y1="76.0" x2="700.0" y2="306.0" class="grid"/>
 <text x="700.0" y="324.0" class="tick" text-anchor="middle">10%</text>
 <text x="466.7" y="344.0" class="axis" text-anchor="middle">← G3″-F better</text>
 <text x="666.7" y="344.0" class="axis" text-anchor="middle">worse →</text>
@@ -39,19 +41,19 @@
 <line x1="544.3" y1="110.0" x2="588.4" y2="110.0" class="l1"/>
 <circle cx="567.1" cy="110.0" r="5.5" class="s1 ring"/>
 <text x="724.0" y="114.5" class="val" text-anchor="start">−9.9%  [−13.4, −6.7]</text>
-<line x1="24" y1="138.0" x2="936" y2="138.0" class="sep"/>
+<line x1="24.0" y1="138.0" x2="936.0" y2="138.0" class="sep"/>
 <text x="24.0" y="163.0" class="lab" text-anchor="start">vs smart persistence</text>
 <text x="24.0" y="181.0" class="sub" text-anchor="start">overall · H2</text>
 <line x1="311.9" y1="166.0" x2="405.8" y2="166.0" class="l1"/>
 <circle cx="359.6" cy="166.0" r="5.5" class="s1 ring"/>
 <text x="724.0" y="170.5" class="val" text-anchor="start">−41.1%  [−48.2, −34.1]</text>
-<line x1="24" y1="194.0" x2="936" y2="194.0" class="sep"/>
+<line x1="24.0" y1="194.0" x2="936.0" y2="194.0" class="sep"/>
 <text x="24.0" y="219.0" class="lab" text-anchor="start">vs smart persistence</text>
 <text x="24.0" y="237.0" class="sub" text-anchor="start">cloudy days · H2</text>
 <line x1="325.3" y1="222.0" x2="427.7" y2="222.0" class="l1"/>
 <circle cx="377.4" cy="222.0" r="5.5" class="s1 ring"/>
 <text x="724.0" y="226.5" class="val" text-anchor="start">−38.4%  [−46.2, −30.8]</text>
-<line x1="24" y1="250.0" x2="936" y2="250.0" class="sep"/>
+<line x1="24.0" y1="250.0" x2="936.0" y2="250.0" class="sep"/>
 <text x="24.0" y="275.0" class="lab" text-anchor="start">vs direct expert E4-B-fit</text>
 <text x="24.0" y="293.0" class="sub" text-anchor="start">ramp samples · H3 (non-inferiority)</text>
 <line x1="588.4" y1="278.0" x2="639.1" y2="278.0" class="l1"/>
@@ -61,15 +63,15 @@
 <text x="24.0" y="410.0" class="sub" text-anchor="start">Shaded band: pre-specified target 0.90 ± 0.03 (H5 not met: overall coverage too high)</text>
 <text x="724.0" y="422.0" class="colhead" text-anchor="start">Coverage</text>
 <rect x="570.0" y="428" width="60.0" height="166" class="band"/>
-<line x1="300.0" y1="428" x2="300.0" y2="594" class="grid"/>
+<line x1="300.0" y1="428.0" x2="300.0" y2="594.0" class="grid"/>
 <text x="300.0" y="612.0" class="tick" text-anchor="middle">0.6</text>
-<line x1="400.0" y1="428" x2="400.0" y2="594" class="grid"/>
+<line x1="400.0" y1="428.0" x2="400.0" y2="594.0" class="grid"/>
 <text x="400.0" y="612.0" class="tick" text-anchor="middle">0.7</text>
-<line x1="500.0" y1="428" x2="500.0" y2="594" class="grid"/>
+<line x1="500.0" y1="428.0" x2="500.0" y2="594.0" class="grid"/>
 <text x="500.0" y="612.0" class="tick" text-anchor="middle">0.8</text>
-<line x1="600.0" y1="428" x2="600.0" y2="594" class="grid"/>
+<line x1="600.0" y1="428.0" x2="600.0" y2="594.0" class="grid"/>
 <text x="600.0" y="612.0" class="tick" text-anchor="middle">0.9</text>
-<line x1="700.0" y1="428" x2="700.0" y2="594" class="grid"/>
+<line x1="700.0" y1="428.0" x2="700.0" y2="594.0" class="grid"/>
 <text x="700.0" y="612.0" class="tick" text-anchor="middle">1.0</text>
 <text x="24.0" y="458.5" class="lab" text-anchor="start">Overall</text>
 <circle cx="635.1" cy="454.0" r="5.5" class="s1 ring"/>
