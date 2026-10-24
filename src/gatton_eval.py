@@ -243,39 +243,87 @@ def prepare():
     print(json.dumps({k: v for k, v in out.items() if k != "W"}, indent=1))
 
 
+CSV = r"D:/solar_data/gatton/bag/data/pv_2020.csv"
+TEST_END = np.datetime64("2020-05-07")                     # exclusive
+STANFORD_PREFIXES = ("experiments/E4_calib/v1/csi", "experiments/E6/v1/E6-S/csi", "experiments/E9/v1/A2/csi",
+                     "experiments/E7b_gate/v1", "experiments/E9/v1/G3pp_params")
+
+
+def verify_all_artifacts() -> dict:
+    """Fail closed: every Gatton inventory file (144) and every Stanford artifact used by Z0/Z1 (100) must exist and match."""
+    gat = json.loads(Path("reports/phaseE_gatton_inventory.json").read_text())
+    inv5 = json.loads(Path("reports/checkpoint_inventory.json").read_text())["files"]
+    stan = {p: h for p, h in inv5.items() if p.startswith(STANFORD_PREFIXES) or p == "reports/phase6_frozen_thresholds.json"}
+    assert len(gat) == 144 and len(stan) == 100, f"STOP: unexpected inventory sizes {len(gat)} / {len(stan)}"
+    for p, h in {**gat, **stan}.items():
+        assert Path(p).exists(), f"STOP: missing artifact {p}"
+        assert sha(p) == h, f"STOP: hash mismatch {p}"
+    return {"gatton": len(gat), "stanford": len(stan)}
+
+
+def read_pv_window(start: np.datetime64, end: np.datetime64) -> dict:
+    """PV of CSV rows with start <= time < end ONLY (other rows are skipped while reading, never loaded).
+    Sign convention E-3; missing -> NaN (E-1); duplicate timestamps -> first occurrence."""
+    import pandas as pd
+    t_all = pd.to_datetime(pd.read_csv(CSV, usecols=["DateTime"])["DateTime"], format="%d/%m/%Y %I:%M:%S %p")
+    rows = set((np.flatnonzero((t_all >= str(start)) & (t_all < str(end))) + 1).tolist()) | {0}
+    d = pd.read_csv(CSV, skiprows=lambda i: i not in rows, na_values=["(null)"])
+    tt = pd.to_datetime(d["DateTime"], format="%d/%m/%Y %I:%M:%S %p").to_numpy().astype("datetime64[s]")
+    assert len(tt) == 0 or (tt.min() >= start and tt.max() < end), "STOP: a row outside the requested window was loaded"
+    gen = -pd.to_numeric(d["Power(kW)"], errors="coerce").to_numpy(float)
+    gen = np.where(np.isnan(gen), np.nan, np.maximum(gen, 0.0))
+    first = {}
+    for ti, v in zip(tt.astype(np.int64), gen):
+        first.setdefault(int(ti), v)
+    return first
+
+
 def run_test(token: str):
+    """OFFICIAL one-shot sealed test: 21 days 2020-04-16 .. 2020-05-06 (requires a recorded approval token)."""
     assert Path("reports/gatton_test_approval.txt").read_text().strip() == token, "STOP: no recorded explicit approval"
     res_path = Path("reports/phaseE_gatton_test_results.json")
     assert not res_path.exists(), "STOP: test results already exist (one-shot)"
     assert not subprocess.run(["git", "status", "--porcelain"], capture_output=True, text=True).stdout.strip(), "STOP: dirty tree"
-    for p, h in json.loads(Path("reports/phaseE_gatton_inventory.json").read_text()).items():
-        assert sha(p) == h, f"STOP: hash mismatch {p}"
-    import pandas as pd
-    # sealed test PV: rows on 2020-04-16 .. 2020-05-06 only; sign convention E-3; missing -> NaN (E-1)
-    csv = r"D:/solar_data/gatton/bag/data/pv_2020.csv"
-    t_all = pd.to_datetime(pd.read_csv(csv, usecols=["DateTime"])["DateTime"], format="%d/%m/%Y %I:%M:%S %p")
-    rows = set((np.flatnonzero((t_all >= "2020-04-16") & (t_all < "2020-05-07")) + 1).tolist()) | {0}
-    d = pd.read_csv(csv, skiprows=lambda i: i not in rows, na_values=["(null)"])
-    tt = pd.to_datetime(d["DateTime"], format="%d/%m/%Y %I:%M:%S %p").to_numpy().astype("datetime64[s]").astype(np.int64)
-    gen = -pd.to_numeric(d["Power(kW)"], errors="coerce").to_numpy(float)
-    gen = np.where(np.isnan(gen), np.nan, np.maximum(gen, 0.0))
-    first = {}
-    for ti, v in zip(tt, gen):
-        first.setdefault(int(ti), v)
+    verify_all_artifacts()
     m = np.load(MAN)
-    sel = m["hdf5_group"] == 1
+    test_days = sorted({str(d) for d in m["times_us"][m["origin"][m["is_test"]]].astype("datetime64[us]").astype("datetime64[D]")})
+    return evaluate_window("test", test_days, TEST_START, TEST_END, res_path, OUT / "test_predictions_v1.npz")
+
+
+def rehearse():
+    """DEVELOPMENT-ONLY rehearsal of the identical evaluation body on the last 21 development days (2020-03-26 .. 04-15).
+    Structurally unable to read sealed rows: the window end is asserted <= the sealed start before any read."""
+    dev_days = sorted({d for fd in FOLDS["folds"] for d in fd["val_days"]})
+    window = dev_days[-21:]
+    start, end = np.datetime64(window[0]), np.datetime64(window[-1]) + np.timedelta64(1, "D")
+    assert end <= TEST_START, "STOP: rehearsal window would touch sealed days"
+    verify_all_artifacts()
+    return evaluate_window("dev", window, start, end, Path("reports/phaseE_gatton_rehearsal_dev.json"),
+                           OUT / "rehearsal_predictions_dev.npz")
+
+
+def evaluate_window(group: str, days: list, start, end, res_path: Path, pred_path: Path) -> dict:
+    """Evaluation body shared by the official test and the development rehearsal (code moved from the dd39740 run_test;
+    the only parameters are the HDF5 group, the window of days, the CSV row window and the output paths; calibration
+    initial scores are restricted to origins before the window start, which for the official window equals all
+    development scores, i.e. identical to dd39740)."""
+    first = read_pv_window(start, end)
+    m = np.load(MAN)
+    sel = m["hdf5_group"] == (1 if group == "test" else 0)
     rec_t = m["times_us"][sel][np.argsort(m["hdf5_row"][sel])].astype("datetime64[us]").astype("datetime64[s]").astype(np.int64)
     pv_test = np.array([first.get(int(s), np.nan) for s in rec_t])
-    test = GattonSplit("test", torch.device("cuda"), pv_override=np.nan_to_num(pv_test, nan=0.0))
+    test = GattonSplit(group, torch.device("cuda"), pv_override=np.nan_to_num(pv_test, nan=0.0))
     pv_nan = np.isnan(pv_test)
     valid = ~(pv_nan[test.ds.hist_rows].any(1) | pv_nan[test.ds.target_rows])
     if test.h60_ok.any():
         valid &= ~np.where(test.h60_ok[:, None], pv_nan[test.h60_rows], False).any(1)  # E-1 also for 60-min windows
-    idx = np.flatnonzero(valid)
+    in_window = np.isin(test.ds.day.astype(str), days)
+    valid_w = valid & in_window
+    idx = np.flatnonzero(valid_w)
     fc = {"F1": predict_arm(test, "F1", idx, [(s, k) for s in SEEDS for k in KS]),
           "F0": predict_arm(test, "F0", idx, [(s, k) for s in SEEDS for k in KS]),
           "Z0": predict_arm(test, "Z0", idx, [(s, k) for s in SEEDS for k in KS])}
-    flip = GattonSplit("test", torch.device("cuda"), pv_override=np.nan_to_num(pv_test, nan=0.0), flip=True)
+    flip = GattonSplit(group, torch.device("cuda"), pv_override=np.nan_to_num(pv_test, nan=0.0), flip=True)
     fc["Z1"] = predict_arm(flip, "Z1", idx, [(s, k) for s in SEEDS for k in KS])
     y = pv_test[test.ds.target_rows[idx]]
     day = test.ds.day.astype(str)[idx]
@@ -297,7 +345,7 @@ def run_test(token: str):
     sunny = np.array([lab[dd] for dd in day])
     strata = {"overall": np.ones(len(y), bool), "sunny": sunny, "cloudy": ~sunny, "ramp": ramp, "non-ramp": ~ramp,
               "sunrise ramp": ramp & ~h60, "rising ramp": ramp & (k_tgt > k_now), "falling ramp": ramp & (k_tgt < k_now)}
-    res = {"n": int(len(idx)), "n_excluded_missing_pv": int((~valid).sum()), "n_days": int(len(np.unique(day))),
+    res = {"n": int(len(idx)), "n_excluded_missing_pv": int((~valid & in_window).sum()), "n_days": int(len(np.unique(day))),
            "n_sunny_days": int(sum(lab.values())), "tau_G": tau_g, "scores": {}, "intervals": {}, "hypotheses": {}, "per_day": {}}
     crps = {}
     for arm, qs in fc.items():
@@ -329,7 +377,9 @@ def run_test(token: str):
             res["intervals"][key] = {}
             for nm, a in ALPHA.items():
                 lo, hi = base_interval(fc[arm][mdl], LV, nm)
-                init = cal[f"{key}|{nm}"][np.argsort(cal["origin_us"], kind="stable")][-W:]
+                o_ = np.argsort(cal["origin_us"], kind="stable")
+                o_ = o_[cal["origin_us"][o_] < np.datetime64(start, "us").astype(np.int64)]  # causal: before the window
+                init = cal[f"{key}|{nm}"][o_][-W:]
                 r = replay(org, tgt, lo, hi, y, a, "rolling", W, init)
                 cov = (y >= r["lo"]) & (y <= r["hi"])
                 isc = interval_score(r["lo"], r["hi"], y, a)
@@ -342,9 +392,10 @@ def run_test(token: str):
         s_ = day == dd
         res["per_day"][dd] = {"sunny": lab[dd], "n": int(s_.sum()), "n_ramp": int(ramp[s_].sum()),
                               **{k: float(c[s_].mean()) for k, c in crps.items()}}
+    res["window"] = {"group": group, "start": str(start), "end_exclusive": str(end), "n_days": len(days)}
     res_path.write_text(json.dumps(res, indent=1, default=float))
-    np.savez_compressed(OUT / "test_predictions_v1.npz", sample_ids=test.ds.sample_ids[idx], y=y, persistence=pers,
-                        **{f"{a}|{m}": q for a, qs in fc.items() for m, q in qs.items()})
+    np.savez_compressed(pred_path, sample_ids=test.ds.sample_ids[idx], y=y, persistence=pers,
+                        **{f"{a}|{mm}": q for a, qs in fc.items() for mm, q in qs.items()})
     return res
 
 
@@ -353,3 +404,5 @@ if __name__ == "__main__":
         prepare()
     elif sys.argv[1] == "run_test":
         run_test(sys.argv[2])
+    elif sys.argv[1] == "rehearse":
+        rehearse()

@@ -1,0 +1,28 @@
+{
+ "mode": "rehearsal",
+ "git_commit": "dd397403ca485c8100bd5f54c3d55e78ad5ce30c",
+ "git_dirty_at_start": true,
+ "start_utc": "2026-10-24T09:52:01.107829+00:00",
+ "environment": {
+  "python": "3.11.16",
+  "platform": "Windows-10-10.0.26200-SP0",
+  "torch": "2.11.0+cu128",
+  "cuda": "12.8",
+  "gpu": "NVIDIA RTX 5000 Ada Generation",
+  "numpy": "2.4.6"
+ },
+ "invocations": 1,
+ "artifacts_verified": {
+  "gatton": 144,
+  "stanford": 100
+ },
+ "status": "completed",
+ "n_samples": 6973,
+ "n_days": 21,
+ "wall_time_s": 265.00279900000896,
+ "end_utc": "2026-10-24T09:56:29.305348+00:00",
+ "output_sha256": {
+  "reports/phaseE_gatton_rehearsal_dev.json": "45EB07E21DE4CBC3C987C0368EFA1416CEAF8703AA029A1DFF49CFD0384EB5C0",
+  "experiments/E_gatton/rehearsal_predictions_dev.npz": "BEE2835FC12E1F3AAC2CFE2A0AB0544BDCD7495C8F55C9336721C4449B00A65A"
+ }
+}

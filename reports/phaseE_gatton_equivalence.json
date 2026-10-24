@@ -1,0 +1,36 @@
+{
+ "window": [
+  "2020-03-26",
+  "2020-04-16"
+ ],
+ "n_samples": 6973,
+ "prediction_max_abs_diff": {
+  "sample_ids": true,
+  "y": 0.0,
+  "persistence": 0.0,
+  "F1|G3''-F": 0.0,
+  "F1|E4-B-fit": 0.0,
+  "F1|E6-S": 0.0,
+  "F0|G3''-F": 0.0,
+  "F0|E4-B-fit": 0.0,
+  "F0|E6-S": 0.0,
+  "Z0|G3''-F": 0.0,
+  "Z0|E4-B-fit": 0.0,
+  "Z0|E6-S": 0.0,
+  "Z1|G3''-F": 0.0,
+  "Z1|E4-B-fit": 0.0,
+  "Z1|E6-S": 0.0
+ },
+ "statistics_differences": [
+  [
+   "/n_excluded_missing_pv",
+   "21843",
+   "0"
+  ]
+ ],
+ "expected_difference_fields": [
+  "/n_excluded_missing_pv"
+ ],
+ "predictions_identical": true,
+ "statistics_identical_except_expected": true
+}
