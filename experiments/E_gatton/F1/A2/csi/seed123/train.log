@@ -1,0 +1,55 @@
+[csi] fold 0: val 
+  initialised from experiments\E9\v1\A2\csi\seed123\fold_0\best.pt
+  epoch   1  train loss 0.05056  val CRPS 247.389 kW (raw 257.261)  *  lr 9.9e-05  |g|p99 1.86  (8s)
+  epoch   2  train loss 0.04324  val CRPS 238.514 kW (raw 245.825)  *  lr 9.6e-05  |g|p99 1.07  (8s)
+  epoch   3  train loss 0.04118  val CRPS 232.449 kW (raw 249.904)  *  lr 9.0e-05  |g|p99 0.94  (8s)
+  epoch   4  train loss 0.04003  val CRPS 232.666 kW (raw 235.120)  lr 8.3e-05  |g|p99 1.25  (8s)
+  epoch   5  train loss 0.03871  val CRPS 232.768 kW (raw 238.486)  lr 7.5e-05  |g|p99 1.07  (8s)
+  epoch   6  train loss 0.03748  val CRPS 233.387 kW (raw 251.120)  lr 6.5e-05  |g|p99 0.94  (8s)
+  epoch   7  train loss 0.03650  val CRPS 234.452 kW (raw 241.654)  lr 5.5e-05  |g|p99 1.09  (8s)
+  epoch   8  train loss 0.03583  val CRPS 235.511 kW (raw 294.354)  lr 4.5e-05  |g|p99 1.05  (8s)
+[csi] fold 0 done: best epoch 3  RMSE overall 490.886 (pers 605.669)
+[csi] fold 1: val 
+  initialised from experiments\E9\v1\A2\csi\seed123\fold_1\best.pt
+  epoch   1  train loss 0.04897  val CRPS 268.656 kW (raw 275.091)  *  lr 9.9e-05  |g|p99 1.10  (8s)
+  epoch   2  train loss 0.04154  val CRPS 264.183 kW (raw 275.390)  *  lr 9.6e-05  |g|p99 0.92  (8s)
+  epoch   3  train loss 0.03946  val CRPS 263.385 kW (raw 271.136)  *  lr 9.0e-05  |g|p99 1.02  (8s)
+  epoch   4  train loss 0.03824  val CRPS 263.518 kW (raw 275.103)  lr 8.3e-05  |g|p99 1.30  (7s)
+  epoch   5  train loss 0.03677  val CRPS 265.448 kW (raw 272.683)  lr 7.5e-05  |g|p99 1.11  (8s)
+  epoch   6  train loss 0.03573  val CRPS 268.112 kW (raw 286.060)  lr 6.5e-05  |g|p99 1.29  (8s)
+  epoch   7  train loss 0.03459  val CRPS 270.444 kW (raw 290.391)  lr 5.5e-05  |g|p99 1.00  (8s)
+  epoch   8  train loss 0.03360  val CRPS 273.291 kW (raw 289.763)  lr 4.5e-05  |g|p99 1.12  (8s)
+[csi] fold 1 done: best epoch 3  RMSE sunny 55.419 (pers 25.882)  cloudy 552.577 (pers 663.193)  overall 536.833 (pers 644.132)
+[csi] fold 2: val 
+  initialised from experiments\E9\v1\A2\csi\seed123\fold_2\best.pt
+  epoch   1  train loss 0.04785  val CRPS 240.137 kW (raw 258.108)  *  lr 9.9e-05  |g|p99 1.49  (8s)
+  epoch   2  train loss 0.04114  val CRPS 239.690 kW (raw 258.519)  *  lr 9.6e-05  |g|p99 1.24  (8s)
+  epoch   3  train loss 0.03859  val CRPS 234.674 kW (raw 254.530)  *  lr 9.0e-05  |g|p99 1.27  (8s)
+  epoch   4  train loss 0.03715  val CRPS 236.370 kW (raw 291.692)  lr 8.3e-05  |g|p99 1.12  (8s)
+  epoch   5  train loss 0.03590  val CRPS 237.062 kW (raw 260.543)  lr 7.5e-05  |g|p99 1.19  (8s)
+  epoch   6  train loss 0.03479  val CRPS 239.028 kW (raw 263.241)  lr 6.5e-05  |g|p99 1.34  (8s)
+  epoch   7  train loss 0.03328  val CRPS 240.427 kW (raw 253.833)  lr 5.5e-05  |g|p99 1.30  (8s)
+  epoch   8  train loss 0.03228  val CRPS 242.261 kW (raw 268.982)  lr 4.5e-05  |g|p99 1.19  (8s)
+[csi] fold 2 done: best epoch 3  RMSE sunny 171.024 (pers 235.299)  cloudy 511.529 (pers 629.262)  overall 497.857 (pers 612.980)
+[csi] fold 3: val 
+  initialised from experiments\E9\v1\A2\csi\seed123\fold_3\best.pt
+  epoch   1  train loss 0.05055  val CRPS 291.645 kW (raw 295.478)  *  lr 9.9e-05  |g|p99 1.57  (8s)
+  epoch   2  train loss 0.04341  val CRPS 292.233 kW (raw 300.204)  lr 9.6e-05  |g|p99 0.79  (8s)
+  epoch   3  train loss 0.04170  val CRPS 291.320 kW (raw 281.107)  *  lr 9.0e-05  |g|p99 0.83  (8s)
+  epoch   4  train loss 0.04034  val CRPS 293.692 kW (raw 310.311)  lr 8.3e-05  |g|p99 0.70  (8s)
+  epoch   5  train loss 0.03892  val CRPS 290.550 kW (raw 306.859)  *  lr 7.5e-05  |g|p99 0.86  (8s)
+  epoch   6  train loss 0.03820  val CRPS 292.635 kW (raw 285.613)  lr 6.5e-05  |g|p99 1.03  (8s)
+  epoch   7  train loss 0.03695  val CRPS 293.312 kW (raw 293.601)  lr 5.5e-05  |g|p99 0.86  (8s)
+  epoch   8  train loss 0.03605  val CRPS 292.220 kW (raw 283.894)  lr 4.5e-05  |g|p99 0.97  (8s)
+  epoch   9  train loss 0.03496  val CRPS 292.370 kW (raw 288.118)  lr 3.5e-05  |g|p99 0.87  (8s)
+  epoch  10  train loss 0.03414  val CRPS 291.617 kW (raw 304.490)  lr 2.5e-05  |g|p99 0.98  (8s)
+[csi] fold 3 done: best epoch 5  RMSE sunny 403.508 (pers 22.697)  cloudy 504.014 (pers 466.102)  overall 498.061 (pers 450.639)
+[csi] fold 4: val 
+  initialised from experiments\E9\v1\A2\csi\seed123\fold_4\best.pt
+  epoch   1  train loss 0.05401  val CRPS 150.995 kW (raw 139.290)  *  lr 9.9e-05  |g|p99 1.54  (8s)
+  epoch   2  train loss 0.04624  val CRPS 183.250 kW (raw 182.885)  lr 9.6e-05  |g|p99 0.96  (8s)
+  epoch   3  train loss 0.04408  val CRPS 176.716 kW (raw 170.147)  lr 9.0e-05  |g|p99 1.12  (8s)
+  epoch   4  train loss 0.04254  val CRPS 183.375 kW (raw 213.573)  lr 8.3e-05  |g|p99 1.16  (8s)
+  epoch   5  train loss 0.04104  val CRPS 192.029 kW (raw 225.773)  lr 7.5e-05  |g|p99 1.01  (8s)
+  epoch   6  train loss 0.04008  val CRPS 196.761 kW (raw 248.012)  lr 6.5e-05  |g|p99 1.11  (8s)
+[csi] fold 4 done: best epoch 1  RMSE sunny 179.141 (pers 21.156)  cloudy 302.458 (pers 324.780)  overall 296.221 (pers 314.449)
