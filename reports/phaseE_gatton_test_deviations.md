@@ -20,4 +20,4 @@
    - analysis (report, E5 lag analysis) starts only after that commit.
 
 ## Deviations
-*(none so far)*
+**None.** The official run (token `GATTON-FINAL-20261024`, HEAD `9f5164e`) completed on the first and only attempt in 372.6 s. No failure, no retry, no change to models, settings or scoring. Raw outputs were committed unchanged at `59ccbcd` before any analysis.

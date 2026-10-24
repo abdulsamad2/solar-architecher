@@ -438,6 +438,6 @@ The pre-registration is `reports/phaseF_physics_prereg.md`. The code is `src/phy
 | B | Literature review and novelty positioning | **Done** (`reports/related_work.md`) |
 | C | Calibration under temporal shift and in ramp regimes (pre-registered, dev only) | **Done** (`reports/phaseC_report.md`). The primary hypothesis was not confirmed; continuous rolling/ACI beats the daily reset |
 | D | Explanatory figures (forecast example, per-day CRPS, Phase A, PV decline, camera change, coverage) | **Done**, first set (`reports/figures/`) |
-| E | External validation at a second site (Gatton, Australia) | Pre-registered; data prepared (`reports/phaseE_gatton_prereg.md`); fine-tuning next |
+| E | External validation at a second site (Gatton, Australia) | **Done (one-shot sealed test).** E1 primary confirmed: G3″-F − E4-B-fit = −46.9 kW CRPS [−57.4, −37.8]. E2 (beats persistence) not confirmed: −17.0 [−39.2, +2.5]. E4 coverage 0.864, not met. Zero-shot fails. Lag 15 min (`reports/phaseE_gatton_test_report.md`) |
 | F | Physics-informed training objective | **Done**: no material effect (`reports/phaseF_report.md`) |
 | G | Paper writing and submission (one paper) | Planned |
