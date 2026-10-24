@@ -1,0 +1,102 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 616" width="960" height="616" role="img" aria-labelledby="t d" font-family="system-ui, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif">
+<title id="t">SHADOW-MoE sealed-test results at two sites</title>
+<desc id="d">Panel A: CRPS change of G3″-F versus the direct expert (overall and ramps) and versus smart persistence, with 95% CIs, at Stanford and Gatton. Panel B: calibrated 90% interval coverage versus the 0.87-0.93 target.</desc>
+<style>
+.bg{fill:#ffffff}.title{fill:#0b0b0b;font-size:15px;font-weight:600}.sub{fill:#52514e;font-size:12px}
+.lab{fill:#0b0b0b;font-size:13.5px;font-weight:500}.tick{fill:#6e6d68;font-size:11.5px;font-variant-numeric:tabular-nums}
+.axis{fill:#52514e;font-size:12px}.colhead{fill:#6e6d68;font-size:11.5px}
+.val{fill:#0b0b0b;font-size:12.5px;font-variant-numeric:tabular-nums}.valmuted{fill:#6e6d68;font-size:12.5px;font-variant-numeric:tabular-nums}
+.leg{fill:#52514e;font-size:12.5px}.grid{stroke:#e1e0d9;stroke-width:1}.zero{stroke:#898781;stroke-width:1.5}
+.sep{stroke:#eeede8;stroke-width:1}.band{fill:#1baf7a;fill-opacity:.16}
+.s1{fill:#2a78d6}.s2{fill:#eb6834}.l1{stroke:#2a78d6;stroke-width:2;stroke-linecap:round}.l2{stroke:#eb6834;stroke-width:2;stroke-linecap:round}
+.ring{stroke:#ffffff;stroke-width:2}
+@media (prefers-color-scheme:dark){
+.bg{fill:#0d1117}.title,.lab,.val{fill:#f0efec}.sub,.axis,.leg{fill:#c3c2b7}.tick,.colhead,.valmuted{fill:#9a9890}
+.grid{stroke:#2c2c2a}.zero{stroke:#898781}.sep{stroke:#21262d}.band{fill:#199e70;fill-opacity:.22}
+.s1{fill:#3987e5}.s2{fill:#d95926}.l1{stroke:#3987e5}.l2{stroke:#d95926}.ring{stroke:#0d1117}}
+</style>
+<rect class="bg" width="960" height="616"/>
+<text x="24.0" y="34.0" class="title" text-anchor="start">A · Change in CRPS of G3″-F on the sealed tests (lower is better)</text>
+<text x="24.0" y="54.0" class="sub" text-anchor="start">Paired difference and 95% day-bootstrap CI, as % of the comparator's test CRPS</text>
+<line x1="300.0" y1="76" x2="300.0" y2="304" class="grid"/>
+<text x="300.0" y="322.0" class="tick" text-anchor="middle">−50%</text>
+<line x1="366.7" y1="76" x2="366.7" y2="304" class="grid"/>
+<text x="366.7" y="322.0" class="tick" text-anchor="middle">−40%</text>
+<line x1="433.3" y1="76" x2="433.3" y2="304" class="grid"/>
+<text x="433.3" y="322.0" class="tick" text-anchor="middle">−30%</text>
+<line x1="500.0" y1="76" x2="500.0" y2="304" class="grid"/>
+<text x="500.0" y="322.0" class="tick" text-anchor="middle">−20%</text>
+<line x1="566.7" y1="76" x2="566.7" y2="304" class="grid"/>
+<text x="566.7" y="322.0" class="tick" text-anchor="middle">−10%</text>
+<line x1="633.3" y1="76" x2="633.3" y2="304" class="zero"/>
+<text x="633.3" y="322.0" class="tick" text-anchor="middle">0%</text>
+<line x1="700.0" y1="76" x2="700.0" y2="304" class="grid"/>
+<text x="700.0" y="322.0" class="tick" text-anchor="middle">10%</text>
+<text x="466.7" y="342.0" class="axis" text-anchor="middle">← G3″-F better</text>
+<text x="666.7" y="342.0" class="axis" text-anchor="middle">worse →</text>
+<text x="724.0" y="70.0" class="colhead" text-anchor="start">Estimate [95% CI]</text>
+<text x="24.0" y="116.0" class="lab" text-anchor="start">vs direct expert E4-B-fit</text>
+<text x="24.0" y="134.0" class="sub" text-anchor="start">overall · primary, pre-registered</text>
+<line x1="544.3" y1="108.0" x2="588.4" y2="108.0" class="l1"/>
+<circle cx="567.1" cy="108.0" r="5.5" class="s1 ring"/>
+<circle cx="729.0" cy="108.0" r="5.5" class="s1 ring"/>
+<text x="742.0" y="112.5" class="val" text-anchor="start">−9.9%  [−13.4, −6.7]</text>
+<line x1="399.8" y1="130.0" x2="479.3" y2="130.0" class="l2"/>
+<rect x="437.6" y="125.0" width="10" height="10" class="s2 ring"/>
+<rect x="724.0" y="125.0" width="10" height="10" class="s2 ring"/>
+<text x="742.0" y="134.5" class="val" text-anchor="start">−28.6%  [−35.0, −23.1]</text>
+<line x1="24" y1="156.0" x2="936" y2="156.0" class="sep"/>
+<text x="24.0" y="190.0" class="lab" text-anchor="start">vs smart persistence</text>
+<text x="24.0" y="208.0" class="sub" text-anchor="start">overall · pre-registered secondary</text>
+<line x1="311.9" y1="182.0" x2="405.8" y2="182.0" class="l1"/>
+<circle cx="359.6" cy="182.0" r="5.5" class="s1 ring"/>
+<circle cx="729.0" cy="182.0" r="5.5" class="s1 ring"/>
+<text x="742.0" y="186.5" class="val" text-anchor="start">−41.1%  [−48.2, −34.1]</text>
+<line x1="438.3" y1="204.0" x2="645.9" y2="204.0" class="l2"/>
+<rect x="543.6" y="199.0" width="10" height="10" class="s2 ring"/>
+<rect x="724.0" y="199.0" width="10" height="10" class="s2 ring"/>
+<text x="742.0" y="208.5" class="valmuted" text-anchor="start">−12.7%  [−29.3, +1.9]  CI spans 0</text>
+<line x1="24" y1="230.0" x2="936" y2="230.0" class="sep"/>
+<text x="24.0" y="264.0" class="lab" text-anchor="start">vs direct expert E4-B-fit</text>
+<text x="24.0" y="282.0" class="sub" text-anchor="start">ramp samples only</text>
+<line x1="588.4" y1="256.0" x2="639.1" y2="256.0" class="l1"/>
+<circle cx="611.8" cy="256.0" r="5.5" class="s1 ring"/>
+<circle cx="729.0" cy="256.0" r="5.5" class="s1 ring"/>
+<text x="742.0" y="260.5" class="valmuted" text-anchor="start">−3.2%  [−6.7, +0.9]  CI spans 0</text>
+<line x1="634.5" y1="278.0" x2="675.9" y2="278.0" class="l2"/>
+<rect x="650.1" y="273.0" width="10" height="10" class="s2 ring"/>
+<rect x="724.0" y="273.0" width="10" height="10" class="s2 ring"/>
+<text x="742.0" y="282.5" class="val" text-anchor="start">+3.3%  [+0.2, +6.4]</text>
+<text x="24.0" y="388.0" class="title" text-anchor="start">B · Calibrated 90% prediction-interval coverage</text>
+<text x="24.0" y="408.0" class="sub" text-anchor="start">Shaded band: pre-specified target 0.90 ± 0.03 (missed at both sites, in opposite directions)</text>
+<text x="724.0" y="420.0" class="colhead" text-anchor="start">Coverage</text>
+<rect x="570.0" y="426" width="60.0" height="118" class="band"/>
+<line x1="300.0" y1="426" x2="300.0" y2="544" class="grid"/>
+<text x="300.0" y="562.0" class="tick" text-anchor="middle">0.6</text>
+<line x1="400.0" y1="426" x2="400.0" y2="544" class="grid"/>
+<text x="400.0" y="562.0" class="tick" text-anchor="middle">0.7</text>
+<line x1="500.0" y1="426" x2="500.0" y2="544" class="grid"/>
+<text x="500.0" y="562.0" class="tick" text-anchor="middle">0.8</text>
+<line x1="600.0" y1="426" x2="600.0" y2="544" class="grid"/>
+<text x="600.0" y="562.0" class="tick" text-anchor="middle">0.9</text>
+<line x1="700.0" y1="426" x2="700.0" y2="544" class="grid"/>
+<text x="700.0" y="562.0" class="tick" text-anchor="middle">1.0</text>
+<text x="24.0" y="464.0" class="lab" text-anchor="start">Overall</text>
+<circle cx="635.1" cy="451.0" r="5.5" class="s1 ring"/>
+<circle cx="729.0" cy="451.0" r="5.5" class="s1 ring"/>
+<text x="742.0" y="455.5" class="val" text-anchor="start">0.935</text>
+<rect x="558.9" y="464.0" width="10" height="10" class="s2 ring"/>
+<rect x="724.0" y="464.0" width="10" height="10" class="s2 ring"/>
+<text x="742.0" y="473.5" class="val" text-anchor="start">0.864</text>
+<text x="24.0" y="520.0" class="lab" text-anchor="start">Ramp samples</text>
+<circle cx="445.8" cy="507.0" r="5.5" class="s1 ring"/>
+<circle cx="729.0" cy="507.0" r="5.5" class="s1 ring"/>
+<text x="742.0" y="511.5" class="val" text-anchor="start">0.746</text>
+<rect x="343.9" y="520.0" width="10" height="10" class="s2 ring"/>
+<rect x="724.0" y="520.0" width="10" height="10" class="s2 ring"/>
+<text x="742.0" y="529.5" class="val" text-anchor="start">0.649</text>
+<circle cx="30" cy="592" r="5.5" class="s1 ring"/>
+<text x="42.0" y="596.0" class="leg" text-anchor="start">Stanford SKIPP'D · 20 days, 13,266 forecasts</text>
+<rect x="395" y="587" width="10" height="10" class="s2 ring"/>
+<text x="413.0" y="596.0" class="leg" text-anchor="start">Gatton · 21 days, 13,311 forecasts</text>
+</svg>

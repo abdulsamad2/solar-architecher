@@ -1,10 +1,28 @@
+<div align="center">
+
 # SHADOW-MoE
 
-**Probabilistic 15-minute-ahead solar power forecasting from ground-based sky images, using a disagreement-gated mixture of experts, evaluated on pre-registered, one-shot sealed tests at two sites.**
+**Probabilistic 15-minute solar power forecasting from ground-based sky images**
+
+A disagreement-gated mixture of sky-image experts, evaluated in pre-registered, one-shot sealed tests at two sites
 
 [![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 [![Python 3.11](https://img.shields.io/badge/python-3.11-blue.svg)](pyproject.toml)
 [![Status: research code](https://img.shields.io/badge/status-research%20code%2C%20manuscript%20in%20preparation-lightgrey.svg)](#research-status)
+
+[Results](#results-at-a-glance) · [Method](#method) · [Data](#datasets-and-preprocessing) · [Quick start](#installation-and-quick-start) · [Reports](#reports-and-figures) · [Integrity](#reproducibility-and-scientific-integrity) · [Limitations](#limitations-and-negative-results) · [Citation](#citation)
+
+</div>
+
+> [!IMPORTANT]
+> **Key finding.** At both sites the gated forecaster beat its strongest single expert on overall CRPS:
+> - Stanford: **−9.9%**, 95% CI [−13.4, −6.7]%
+> - Gatton: **−28.6%**, 95% CI [−35.0, −23.1]%
+>
+> This is not universal superiority:
+> - at Gatton it did not beat smart persistence;
+> - it was worse than the direct expert on ramps;
+> - the calibration target was missed at both sites.
 
 ## Overview
 
@@ -34,7 +52,14 @@ The final gated model G3″-F against its direct expert E4-B-fit.
 | Stanford SKIPP'D (20 days) | 13,266 | 1.006 | 1.117 | −0.111 [−0.149, −0.075] (−9.9%) | **Confirmed** |
 | Gatton (21 days) | 13,311 | 116.9 | 163.8 | −46.9 [−57.4, −37.8] (−28.6%) | **Confirmed** |
 
-CRPS is in kW and scales with plant size, so values are not comparable across sites.
+> [!NOTE]
+> CRPS is in kW and scales with plant size, so absolute values are not comparable across sites. The figure below therefore shows each difference as a percentage of the comparator's test CRPS.
+
+<p align="center">
+  <img src="docs/figures/results_summary.svg" alt="Forest plot of CRPS changes with 95% CIs at Stanford and Gatton, and a dot plot of 90% interval coverage against the 0.87–0.93 target" width="900">
+</p>
+
+The figure is generated from the committed result files by [`scripts/make_readme_figures.py`](scripts/make_readme_figures.py).
 
 ### Secondary, descriptive and exploratory results
 
@@ -53,20 +78,15 @@ CRPS is in kW and scales with plant size, so values are not comparable across si
 
 **Physics-informed losses (Phase F, development only).** Adding solar-physics terms to the ramp expert's training objective changed CRPS by ≤ 0.6%. No variant met the pre-registered selection rule, so this is a null result in practice.
 
-**What these results do and do not show.**
-- **They do show:** the gain over the direct expert replicated at a second site.
-- **They do not show** universal superiority:
-  - at Gatton a simpler component (E6-S) scored better overall, and persistence was not beaten;
-  - ramps remain the main weakness;
-  - neither site met the calibration target.
-
 Full reports:
 - [Stanford test report](reports/gate5_test_report.md)
 - [Gatton test report](reports/phaseE_gatton_test_report.md)
 
 ## Method
 
-![SHADOW-MoE G3″-F architecture](docs/figures/architecture.svg)
+<p align="center">
+  <img src="docs/figures/architecture.svg" alt="SHADOW-MoE G3″-F architecture: inputs, clear-sky normalisation, three experts, disagreement-guided gates, timestamp router with fallback, 15-member ensemble, conformal calibration" width="820">
+</p>
 
 1. **Clear-sky normalisation.**
    - A physical clear-sky model gives the power the array would produce under a clear sky, P_clear(t).
@@ -90,6 +110,16 @@ Full reports:
    - Intervals are corrected by causal rolling-window conformal prediction, which uses only outcomes observed 15 minutes later.
    - Stanford used a daily reset. Gatton used the continuous variant selected in the [Phase C calibration study](reports/phaseC_report.md).
    - No finite-sample coverage guarantee is claimed under temporal dependence.
+
+<details>
+<summary><b>Example: a cloudy Stanford test day</b> (forecast vs observed PV)</summary>
+<br>
+<p align="center">
+  <img src="reports/figures/F1_test_day_forecast.png" alt="15-minute-ahead G3″-F forecast with 20–80% and 5–95% bands against observed PV and smart persistence on the cloudy test day 2019-08-10" width="820">
+</p>
+
+The plot shows the G3″-F median with its raw 20–80% and 5–95% bands, smart persistence and observed PV. The median is smoother than persistence, and the bands widen in variable conditions. Like every model tested, it follows sharp drops and recoveries rather than anticipating them (see [Limitations](#limitations-and-negative-results)).
+</details>
 
 Training recipe, expert details, development history and equations: [docs/development_history.md](docs/development_history.md).
 
@@ -142,7 +172,12 @@ pytest -m realdata                 # opt-in real-data integrity audits
 - **Gatton paths:** the Gatton modules read a data path set as a constant at the top of each file; edit it to point at your copy.
 - **Test status:** the Gatton guard tests are skipped unless Gatton data are present. When the data are present, one of them (`test_official_run_refuses_without_recorded_token`) fails. That test was written before the official run, and the approval-token file it checks for is now committed by design.
 
-> **Sealed tests.** `src.final_execute` / `src.final_eval.run_test` (Stanford) and `src.gatton_execute official` / `src.gatton_eval.run_test` (Gatton) are one-shot evaluation commands. Both have already been executed and must not be rerun. Their guards refuse to run while results exist.
+> [!WARNING]
+> **Sealed tests: do not rerun.** These are one-shot evaluation commands:
+> - Stanford: `src.final_execute` / `src.final_eval.run_test`
+> - Gatton: `src.gatton_execute official` / `src.gatton_eval.run_test`
+>
+> Both have already been executed. Their guards refuse to run while results exist.
 
 ## Reports and figures
 
