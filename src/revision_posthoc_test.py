@@ -133,8 +133,11 @@ def c18(c):
     from src.events import event_labels, future_rows
     m = np.load("data/manifests/forecast_tol30_v2.npz")
     rec_us = c["rec_t"].astype(np.int64)
-    fr = future_rows(rec_us, c["org"])
-    k_rec = c["pv"] / np.maximum(ClearSkyPV(rd["anchor_coef"])(c["rec_t"]), 1.0)
+    # the test file is not stored chronologically and future_rows/_nearest need time-sorted records (fix 2026-11-13:
+    # the unsorted search left only 6,600 of 13,266 crossing labels valid; labels that were valid are unchanged)
+    order = np.argsort(rec_us, kind="stable")
+    fr = future_rows(rec_us[order], c["org"])
+    k_rec = (c["pv"] / np.maximum(ClearSkyPV(rd["anchor_coef"])(c["rec_t"]), 1.0))[order]
     k_fut = np.where(fr >= 0, k_rec[np.maximum(fr, 0)], np.nan)
     kn, kt = c["k_now"], c["k_now"] + c["dk"]
     ev = event_labels(kn, k_fut, kt, tau)

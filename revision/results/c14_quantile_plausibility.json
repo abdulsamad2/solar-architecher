@@ -1,0 +1,37 @@
+{
+  "label": "POST HOC (test); frozen evaluation unchanged",
+  "capacity_kw": 30.1,
+  "n": 13266,
+  "G3''-F": {
+    "share_any_quantile_negative": 0.04613297150610583,
+    "share_median_negative": 0.0,
+    "share_any_quantile_above_capacity": 0.028267752148349163,
+    "share_median_above_capacity": 0.0,
+    "min_quantile_kw": -4.503937143227519,
+    "max_quantile_kw": 38.40357589577234
+  },
+  "E4-B-fit": {
+    "share_any_quantile_negative": 0.060379918588873815,
+    "share_median_negative": 0.0008291873963515755,
+    "share_any_quantile_above_capacity": 0.0304537916478215,
+    "share_median_above_capacity": 0.0,
+    "min_quantile_kw": -3.970629155735568,
+    "max_quantile_kw": 42.127908769940674
+  },
+  "E6-S": {
+    "share_any_quantile_negative": 0.05894768581335746,
+    "share_median_negative": 0.0,
+    "share_any_quantile_above_capacity": 0.05133423790140208,
+    "share_median_above_capacity": 0.0,
+    "min_quantile_kw": -11.293914101429351,
+    "max_quantile_kw": 43.32328726298543
+  },
+  "G4": {
+    "share_any_quantile_negative": 0.04620835217850143,
+    "share_median_negative": 7.538067239559776e-05,
+    "share_any_quantile_above_capacity": 0.035579677370722144,
+    "share_median_above_capacity": 0.0,
+    "min_quantile_kw": -5.577037646557593,
+    "max_quantile_kw": 40.19116390694697
+  }
+}

@@ -12,12 +12,14 @@ Development base rates: crossing 15.5%, endpoint 10.0%.
 ## Probability scores (Brier skill vs out-of-fold climatology; AUPRC; ROC AUC)
 | Probability → label | Dev BSS (3 seeds) | Dev AUPRC | Dev ROC AUC | Test BSS | Test AUPRC |
 |---|---|---|---|---|---|
-| P_cross → crossing | 0.411–0.416 | 0.65 | 0.93 | 0.249 | 0.733 |
+| P_cross → crossing | 0.411–0.416 | 0.65 | 0.93 | 0.460 | 0.730 |
 | g → endpoint | 0.263–0.274 | 0.47 | 0.90 | 0.281 | 0.513 |
 | p_mix → endpoint | 0.265–0.275 | 0.47 | 0.91 | 0.282 | 0.513 |
 | G3″ weight w → endpoint (as a ramp score) | < 0 | 0.43–0.46 | 0.91 | – | – |
 
 Test climatology = leave-one-test-day-out base rate (development rates are on the fold thresholds, not on the frozen test threshold). Reliability tables and PR curves are in the raw outputs.
+
+**Correction (2026-11-13).** The first version of the test crossing scores searched the official test records in file-row order, but the test file is not stored chronologically and the search (`src/skippd._nearest`) requires time-sorted records. Existing future minutes were therefore reported missing, and only 6,600 of 13,266 test forecasts received a crossing label (a non-random subset with base rate 0.465). With time-sorted records (`src/revision_posthoc_test.py`, fixed), 13,224 forecasts have a valid label (base rate 0.244); where both versions were valid the labels agree exactly. Test P_cross: Brier skill 0.249 → 0.460, ROC AUC 0.791 → 0.920, AUPRC 0.733 → 0.730. The endpoint-ramp scores and all median-based ramp metrics are unchanged. The development scores were not affected (development records are stored chronologically).
 
 **Interpretation:** the event probabilities carry substantial forecast-time information (positive Brier skill, ROC AUC ≈ 0.9) even though the predictive median lags. A lagging median does not mean the distribution has no advance information (reviewer's point confirmed). The gate weight itself is not a calibrated probability (negative BSS) and should not be presented as one.
 
