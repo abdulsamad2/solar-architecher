@@ -1,6 +1,6 @@
 # E1 / E4 report: do images add information; history length × encoder
 
-Protocols: `revision/protocols/R-E1_pv_only.md`, `R-E4_history_encoder.md`. Code: `src/revision_e1_e4.py`, `src/revision_posthoc_test.py e1e4`. Raw outputs: `revision/results/e1_e4_dev.json`, `revision/results/posthoc_test_e1e4.json`. New arms trained at commit 123da81 (clean `src`).
+Protocols: `revision/protocols/R-E1_pv_only.md`, `R-E4_history_encoder.md`. Code: `src/revision_e1_e4.py`, `src/revision_posthoc_test.py e1e4`. Raw outputs: `revision/results/e1_e4_dev.json`, `revision/results/posthoc_test_e1e4.json`. New arms: P15 was trained at commit 123da81 with a clean `src`; P60 and 3D@15 min (A2-H15) at commit e252459 with uncommitted changes in the working tree (`src_dirty=True` in their `config.json`; which files were modified was not recorded). `src/train.py` and `src/models.py` are identical in the two commits. (Correction 2026-11-13, found in an independent audit.)
 
 ## E1: PV-only probabilistic baseline
 P15 / P60: same K input and target, quantile head, budget, folds, seeds and calibration hold-out as E4-B-fit / A2, without the image branch (25,673 / 26,377 parameters vs 90,761 / 213,545).
