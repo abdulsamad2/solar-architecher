@@ -44,6 +44,8 @@ F3 (90% within 0.90 ± 0.03): daily-reset, continuous and ACI met; raw (0.930) a
 ## Deviation
 The protocol listed the 3 official test days inside the evaluation window as a separate subset. They were not scored in E3 (they are part of the official test set already reported); this subset is omitted.
 
+**Resolved (2026-11-13, protocol R-E3b, committed before scoring):** the forward models, anchor, gates and initial scores of E3 were run unchanged on the three official test days (2019-08-10, 2019-10-14, 2019-10-19; 1,941 forecasts; `src/revision_e3_testdays.py` -> `revision/results/e3_testdays.json`). CRPS: G3''-F 1.449 kW; E4-B-fit 1.618, E6-S 1.535, G4 1.533, P15 1.848, persistence 2.592 (G3''-F minus: -0.170, -0.086, -0.084, -0.400, -1.144). The frozen models give 1.435 on the same forecasts, so the forward retraining did not weaken G3''-F. On these cloudier days the official-test ranking returns; the calm forward period favours E6-S and G4. 90% coverage 0.898 (daily reset), 0.899 (continuous), 0.900 (ACI). Three days: point estimates only.
+
 ## Manuscript implications (C08)
 - Add E3 as a forward-in-time evaluation, separate from the frozen benchmark, with the disclosure above.
 - Deployment statements: supported relative to the direct expert and persistence; not supported as superiority over the calm expert or G4 in calm periods.

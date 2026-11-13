@@ -46,3 +46,7 @@ Effects (per-seed paired day bootstrap; count of seeds with CI < 0):
 **Post hoc test (60-min-eligible samples):** history within 2D −0.113 ramp [−0.155, −0.079]; within 3D −0.218 [−0.299, −0.143]; encoder at 60 min −0.179 [−0.330, −0.040], at 15 min −0.074 [−0.144, −0.005]; overall differences small (CIs include 0).
 
 **Interpretation:** both factors improve ramp CRPS independently and roughly additively; neither improves overall CRPS reliably on its own, and the longer history costs a little in calm conditions. The 60-min 3D expert's ramp advantage is attributable to both the temporal-convolution encoder and the longer history; the manuscript must not attribute it to one of them alone, and must state the capacity difference.
+
+
+## Inference cost (R-E4b, added 2026-11-13; protocol committed before timing)
+Batch size 1, 15 members run sequentially, procedure and GPU of R-C22 (`src/revision_e4_latency.py` -> `revision/results/e4_latency.json`), on 500 official-test forecasts with a 60-min history: D0 32.5 ms, D2 30.3 ms, A2-H15 26.7 ms, A2 25.7 ms (medians). Neither the longer history nor the 3D encoder adds inference time (the per-frame 2D encoder processes 16 separate frames). For reference, the calm-condition expert E6-S takes 251.5 ms because of its mixture inversion, which dominates the expert time of the deployed forecaster (R-C22).

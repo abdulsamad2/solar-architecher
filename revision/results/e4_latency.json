@@ -1,0 +1,48 @@
+{
+ "protocol": "revision/protocols/R-E4b_latency.md",
+ "label": "POST HOC (test inputs; no outcome used)",
+ "gpu": "NVIDIA RTX 5000 Ada Generation",
+ "torch": "2.11.0+cu128",
+ "n_timed": 500,
+ "warm_up": 50,
+ "timed_step": "image gather/normalise + 15 member forward passes, batch size 1, members sequential",
+ "params_per_member": {
+  "D0": 92873,
+  "D2": 92873,
+  "A2-H15": 213545,
+  "A2": 213545,
+  "E6-S": 91996
+ },
+ "window": {
+  "D0": "H15e8",
+  "D2": "H60",
+  "A2-H15": "H15e8",
+  "A2": "H60",
+  "E6-S": "H15"
+ },
+ "reference_not_e4_arm": [
+  "E6-S"
+ ],
+ "latency_ms": {
+  "D0": {
+   "median": 32.53654999571154,
+   "p95": 51.28431500561418
+  },
+  "D2": {
+   "median": 30.252200005634222,
+   "p95": 45.74453999521208
+  },
+  "A2-H15": {
+   "median": 26.701450005930383,
+   "p95": 41.562285002146375
+  },
+  "A2": {
+   "median": 25.679600003059022,
+   "p95": 38.686380000581266
+  },
+  "E6-S": {
+   "median": 251.51244999142364,
+   "p95": 305.42842000795645
+  }
+ }
+}
