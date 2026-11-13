@@ -52,5 +52,11 @@
   "sha256": "3961268793AF0C822C095F5F10C34F4201BC0822B92061514E297BD3B9E4159D",
   "n_members": 15,
   "n_predicted": 13266
+ },
+ "I15": {
+  "path": "experiments\\R_posthoc\\test_members_I15.npz",
+  "sha256": "0D459C42BFD7943E88796A8CAA219A2EDFB5A748C137B51BD88A2A2C4DC504FC",
+  "n_members": 15,
+  "n_predicted": 13266
  }
 }
