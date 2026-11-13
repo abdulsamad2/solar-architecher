@@ -29,6 +29,8 @@ EXPERTS = {  # name: (run root, window kind)
     "P15": (Path("experiments/R_E1/P15/csi"), "H15"),
     "P60": (Path("experiments/R_E1/P60/csi"), "H60"),
     "A2-H15": (Path("experiments/R_E4/A2_H15/csi"), "H15e8"),
+    "I15": (Path("experiments/R_X3/I15/csi"), "H15"),  # R-X3 images-only (constant 0 history feature)
+    "I60": (Path("experiments/R_X3/I60/csi"), "H60"),
 }
 
 
@@ -44,7 +46,7 @@ def run_member(split: Split, name: str, seed: int, fold: dict, tau: float | None
     if prev is not None:  # records without an earlier record keep their own value; such samples are excluded by the caller
         k_rec = np.where(prev >= 0, k_rec[np.maximum(prev, 0)], k_rec)
     data, n = split.data, len(split.ds.sample_ids)
-    data.set_history_feature(k_rec)
+    data.set_history_feature(np.zeros(len(split.pv), np.float32) if cfg.get("input") == "none" else k_rec)  # R-X3 images-only
     data.residual = False
     data.k_now = torch.tensor(k_rec[split.ds.hist_rows[:, -1]], dtype=torch.float32, device=split.device)
     idx = np.arange(n)

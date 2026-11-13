@@ -251,9 +251,13 @@ def run_fold(ds, data, fold, target_kind, cfg, out_dir: Path, log) -> dict:
     else:
         y = clear_sky_index(y_kw, pclear_tgt, cfg["min_clear_kw"])
     y_t = torch.tensor(y, dtype=torch.float32, device=device)
-    # history input: PV/30 (E2, E3) or K from the same fold-fitted anchor (E3b); only records <= origin are used
-    data.set_history_feature(
-        clear_sky_index(ds.pv.numpy().astype(float), pclear_rec, cfg["min_clear_kw"]) if cfg["input"] == "csi" else None)
+    # history input: PV/30 (E2, E3) or K from the same fold-fitted anchor (E3b); only records <= origin are used;
+    # "none" (revision R-X3 images-only): a constant 0 history feature, so no PV value enters the network
+    if cfg["input"] == "none":
+        data.set_history_feature(np.zeros(len(ds.pv), np.float32))
+    else:
+        data.set_history_feature(
+            clear_sky_index(ds.pv.numpy().astype(float), pclear_rec, cfg["min_clear_kw"]) if cfg["input"] == "csi" else None)
 
     def to_kw(raw: np.ndarray, idx: np.ndarray) -> np.ndarray:
         """Model output -> kW. For quantiles, multiplying by a positive P_clear preserves their order."""
@@ -559,7 +563,8 @@ if __name__ == "__main__":
 
     p = argparse.ArgumentParser(description="E2 (kW) / E3 (clear-sky index) CNN-GRU on blocked folds")
     p.add_argument("--target", choices=["kw", "csi"], required=True)
-    p.add_argument("--input", choices=["pv", "csi"], default="pv", help="history input: PV/30 or clear-sky index K")
+    p.add_argument("--input", choices=["pv", "csi", "none"], default="pv",
+                   help="history input: PV/30, clear-sky index K, or none (constant 0; images-only, R-X3)")
     p.add_argument("--label", default="", help="free-text experiment label stored in config.json")
     p.add_argument("--calib-holdout", action="store_true",
                    help="hold ~20%% of training days out as calibration days (src.folds.calibration_split)")
