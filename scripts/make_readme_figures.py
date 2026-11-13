@@ -134,7 +134,8 @@ def published_comparison():
     ours_wink = EST["winkler90_from_30_samples_percentiles"]["G3''-F"]["mean"]
     pub = EST["published"]
     # (label, sublabel, CRPS, Winkler 90%, ours?) - published values as recorded in reports/phaseA_report.md
-    rows = [("G3″-F (ours)", "frozen, run once · scored like competitors", ours_crps, ours_wink, True),
+    rows = [("Xiong et al.", "Adv. Appl. Energy 2025 (Table C.1)", 2.44, 19.62, False),
+            ("G3″-F (ours)", "frozen, run once · scored like competitors", ours_crps, ours_wink, True),
             ("Real future images → U-Net", "oracle reported in the PV-MM-Diffusion paper", 2.52, 30.72, False),
             ("PV-MM-Diffusion", "Huang et al., Applied Energy 2026", pub["PV-MM-Diffusion (m=30)"], EST["winkler90_from_30_samples_percentiles"]["PV-MM-Diffusion published"], False),
             ("SkyGPT", "Nie et al., Adv. Appl. Energy 2024", pub["SkyGPT (m=100)"], EST["winkler90_from_30_samples_percentiles"]["SkyGPT published"], False),

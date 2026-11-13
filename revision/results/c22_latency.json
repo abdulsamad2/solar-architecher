@@ -1,0 +1,65 @@
+{
+ "protocol": "revision/protocols/R-C22_C21_latency_external.md",
+ "gpu": "NVIDIA RTX 5000 Ada Generation",
+ "torch": "2.11.0+cu128",
+ "n_timed": {
+  "G3''": 459,
+  "G3": 500
+ },
+ "params_per_member": {
+  "E4-B-fit": 90761,
+  "E6-S": 91996,
+  "A2": 213545
+ },
+ "resident_params_all_experts": 5944530,
+ "active_params_per_forecast": {
+  "G3''": 4583115,
+  "G3": 2741355
+ },
+ "latency_ms": {
+  "G3''": {
+   "preprocessing": {
+    "median": 51.678600000741426,
+    "p95": 56.50917000239132
+   },
+   "experts_15_members": {
+    "median": 277.30020000308286,
+    "p95": 337.79248999562697
+   },
+   "gate_ensemble": {
+    "median": 2.4052000007941388,
+    "p95": 2.6611399989633355
+   },
+   "conformal": {
+    "median": 0.05419999797595665,
+    "p95": 0.062430002435576164
+   },
+   "total": {
+    "median": 332.6833999963128,
+    "p95": 393.16120999937993
+   }
+  },
+  "G3": {
+   "preprocessing": {
+    "median": 51.463200001307996,
+    "p95": 57.180534998769865
+   },
+   "experts_15_members": {
+    "median": 275.76064999811933,
+    "p95": 342.49454000237154
+   },
+   "gate_ensemble": {
+    "median": 2.4072000014712103,
+    "p95": 2.6681049948820146
+   },
+   "conformal": {
+    "median": 0.05400000372901559,
+    "p95": 0.06021500012138857
+   },
+   "total": {
+    "median": 330.32360000288463,
+    "p95": 402.63772000216704
+   }
+  }
+ }
+}

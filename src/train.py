@@ -28,7 +28,7 @@ from src.metrics import (crps_quantile_interp, interval_coverage, interval_width
                          quantile_reliability)
 from src.events import event_labels, future_rows
 from src.models import (Conv3dGRUEncoder, ConvGRUEncoder, DiffSkyEncoder, EventMixtureHead, Forecaster,
-                        NonCrossingQuantileHead, PointHead, SmallSkyEncoder, TemporalTransformerEncoder)
+                        NonCrossingQuantileHead, PointHead, PVOnlyEncoder, SmallSkyEncoder, TemporalTransformerEncoder)
 from src.physics_losses import PhysicsConfig, total_loss
 from src.skippd import SkippdForecastDataset
 
@@ -87,6 +87,8 @@ def build_encoder(cfg):
         return ConvGRUEncoder(cfg["hidden_size"], extra)
     if kind == "transformer":  # E9 A4
         return TemporalTransformerEncoder(cfg["image_features"], cfg["hidden_size"], extra)
+    if kind == "pv_gru":  # revision E1: no image branch
+        return PVOnlyEncoder(cfg["hidden_size"], extra)
     if kind == "diff_cnn_gru":  # E9 A5
         return DiffSkyEncoder(image_features=cfg["image_features"], hidden_size=cfg["hidden_size"],
                               pool=cfg.get("pool", "avg"), extra_features=extra)
@@ -239,11 +241,7 @@ def run_fold(ds, data, fold, target_kind, cfg, out_dir: Path, log) -> dict:
     rec_times = ds.record_times
     rec_days = rec_times.astype("datetime64[D]").astype(str)
     train_rec = np.isin(rec_days, list(train_days))
-    if cfg.get("site", "skippd") == "gatton":  # Phase E: Gatton clear-sky model (frozen geometry, scale fitted here)
-        from src.gatton_clearsky import GattonClearSky
-        cs = GattonClearSky().fit(rec_times[train_rec], ds.pv.numpy()[train_rec])
-    else:
-        cs = ClearSkyPV().fit(rec_times[train_rec], ds.pv.numpy()[train_rec])
+    cs = ClearSkyPV().fit(rec_times[train_rec], ds.pv.numpy()[train_rec])
     pclear_rec = cs(rec_times)
     pclear_tgt = pclear_rec[ds.target_rows]
     pclear_now = pclear_rec[ds.hist_rows[:, -1]]
@@ -336,11 +334,6 @@ def run_fold(ds, data, fold, target_kind, cfg, out_dir: Path, log) -> dict:
         model.head.init_from_targets(dk_t[keep], cls_t[keep])
     elif quantile:  # same train-only procedure for every target representation
         _qhead(model).init_from_targets(y_t[tr_dev])
-    if cfg.get("init_from"):
-        # Phase E fine-tuning: start from the SKIPP'D member with the same seed and fold index (after head init)
-        init_ckpt = Path(cfg["init_from"]) / f"seed{cfg['seed']}" / f"fold_{fold['fold']}" / "best.pt"
-        model.load_state_dict(torch.load(init_ckpt, map_location=device))
-        log(f"  initialised from {init_ckpt}")
     opt = torch.optim.AdamW(model.parameters(), lr=cfg["lr"], weight_decay=cfg["weight_decay"])
     steps_per_epoch = -(-len(tr) // cfg["batch_size"])
     sched = (torch.optim.lr_scheduler.CosineAnnealingLR(opt, T_max=cfg["max_epochs"] * steps_per_epoch)
@@ -496,10 +489,6 @@ def main(a):
            "frozen_thresholds": a.frozen_thresholds,
            "event_components": a.event_components, "e8_window": a.e8_window, "e8_features": a.e8_features,
            "encoder": a.encoder, "loss_weight_alpha": a.loss_weight_alpha}
-    if a.site != "skippd":
-        cfg["site"] = a.site
-    if a.init_from:
-        cfg["init_from"] = a.init_from
     cfg["min_clear_kw"] = a.min_clear_kw
     if a.physics_config:
         import yaml
@@ -508,10 +497,7 @@ def main(a):
     if a.e8_window:
         from src.e8_features import FEAT, verify_frozen
 
-        if a.e8_dir:
-            FEAT = Path(a.e8_dir)  # Phase E: site-specific windows (no frozen SKIPP'D geometry check)
-        else:
-            verify_frozen()  # STOP if the frozen geometry / eligibility manifests changed
+        verify_frozen()  # STOP if the frozen geometry / eligibility manifests changed
         cfg["e8_feature_hashes"] = json.loads((FEAT / "e8_features_v1.json").read_text())
     out_root = Path(a.out) / a.target / f"seed{a.seed}"
     out_root.mkdir(parents=True, exist_ok=True)
@@ -584,13 +570,10 @@ if __name__ == "__main__":
     p.add_argument("--e8-window", choices=["H15", "H30", "H60"], default=None,
                    help="E8 history window (16 frames, stride 1/2/4 min); restricts to the common population")
     p.add_argument("--encoder", default="cnn_gru",
-                   choices=["cnn_gru", "cnn_gru_wide", "cnn3d_gru", "convgru", "transformer", "diff_cnn_gru"])
+                   choices=["cnn_gru", "cnn_gru_wide", "cnn3d_gru", "convgru", "transformer", "diff_cnn_gru", "pv_gru"])
     p.add_argument("--loss-weight-alpha", type=float, default=0.0, help="E9 L1 input-weighted pinball (0 = off)")
     p.add_argument("--physics-config", default="", help="YAML with physics_loss / ramp_loss / bound_loss / direction_loss")
-    p.add_argument("--site", choices=["skippd", "gatton"], default="skippd", help="clear-sky model (Phase E: gatton)")
-    p.add_argument("--min-clear-kw", type=float, default=1.0, help="clear-sky floor (Gatton: 108.8 kW, prereg 3.6)")
-    p.add_argument("--init-from", default="", help="Phase E fine-tuning: SKIPP'D run root with seed*/fold_*/best.pt")
-    p.add_argument("--e8-dir", default="", help="Phase E: directory with site-specific e8 windows/features")
+    p.add_argument("--min-clear-kw", type=float, default=1.0, help="clear-sky floor (kW)")
     p.add_argument("--e8-features", choices=list(E8_MASKS), default="none",
                    help="E8 per-frame features: none / P (solar) / M (motion) / PM; unused columns zero-filled")
     p.add_argument("--residual", action="store_true",

@@ -30,6 +30,19 @@ def test_parameter_counts_reported():
     print(counts)
 
 
+@pytest.mark.parametrize("window", [None, "H60"])
+def test_pv_only_encoder_ignores_images(window):
+    torch.manual_seed(0)
+    m = build_model({**BASE, "encoder": "pv_gru", "e8_window": window}).eval()
+    h = torch.rand(2, 16)
+    e = torch.rand(2, 16, 11) if window else None
+    with torch.no_grad():
+        a = m(torch.rand(2, 16, 3, 64, 64), h, e)
+        b = m(torch.rand(2, 16, 3, 64, 64), h, e)
+        c = m(torch.rand(2, 16, 3, 64, 64), h + 0.5, e)
+    assert a.shape == (2, 1, 9) and torch.equal(a, b) and not torch.allclose(a, c)
+
+
 def test_diff_encoder_oldest_frame_has_zero_difference():
     enc = DiffSkyEncoder(image_features=8, hidden_size=8)
     captured = {}

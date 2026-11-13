@@ -88,6 +88,22 @@ class Conv3dGRUEncoder(nn.Module):
         return h[-1]
 
 
+class PVOnlyEncoder(nn.Module):
+    """Revision E1: PV/K-history-only baseline. Same GRU width as the image encoders; the images are ignored."""
+
+    def __init__(self, hidden_size: int = 64, extra_features: int = 0, embed: int = 64):
+        super().__init__()
+        self.embed = nn.Sequential(nn.Linear(1 + extra_features, embed), nn.ReLU(inplace=True))
+        self.gru = nn.GRU(embed, hidden_size, batch_first=True)
+        self.hidden_size, self.extra_features, self.cnn_bf16 = hidden_size, extra_features, False
+
+    def forward(self, images, pv_history, extra=None):
+        parts = [pv_history.unsqueeze(-1)] + ([extra] if self.extra_features else [])
+        self.gru.flatten_parameters()
+        _, h = self.gru(self.embed(torch.cat(parts, -1)))
+        return h[-1]
+
+
 class ConvGRUCell(nn.Module):
     def __init__(self, cin: int, ch: int):
         super().__init__()

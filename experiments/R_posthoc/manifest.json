@@ -1,0 +1,56 @@
+{
+ "E4-B-fit": {
+  "path": "experiments\\R_posthoc\\test_members_E4-B-fit.npz",
+  "sha256": "B1C6466DB6516FD8F6F5F5EF45D54A90CF6B2A8E19F44444618E40727080762B",
+  "n_members": 15,
+  "n_predicted": 13266
+ },
+ "E6-S": {
+  "path": "experiments\\R_posthoc\\test_members_E6-S.npz",
+  "sha256": "1902AB11CF177E853F30C70E32449882EC12E606781E019121BCC4EAB0B71E79",
+  "n_members": 15,
+  "n_predicted": 13266
+ },
+ "A2": {
+  "path": "experiments\\R_posthoc\\test_members_A2.npz",
+  "sha256": "9D9A2D9A99037F2E7C89A4B5C2232D2888C1C0049174510A7399C52EFD354401",
+  "n_members": 15,
+  "n_predicted": 12355
+ },
+ "D0": {
+  "path": "experiments\\R_posthoc\\test_members_D0.npz",
+  "sha256": "0524B4B9E46EA357763976AD857F5C166F66754EC549474AD370CD4BDD9D6789",
+  "n_members": 15,
+  "n_predicted": 13266
+ },
+ "D2": {
+  "path": "experiments\\R_posthoc\\test_members_D2.npz",
+  "sha256": "93F7FD5FA56667BA034D7E298868993528A6C0022194DF474D86A6D0E3876AC9",
+  "n_members": 15,
+  "n_predicted": 12355
+ },
+ "reproduction_max_abs_kw": {
+  "E4-B-fit": 0.0,
+  "E6-S": 0.0,
+  "G4": 0.0,
+  "G3''-F": 0.0
+ },
+ "P15": {
+  "path": "experiments\\R_posthoc\\test_members_P15.npz",
+  "sha256": "BF2AC73B3AE65E3828C957ABAB4C6C608AD927931459D03525A341484B132DDA",
+  "n_members": 15,
+  "n_predicted": 13266
+ },
+ "P60": {
+  "path": "experiments\\R_posthoc\\test_members_P60.npz",
+  "sha256": "E537D9FE1AB85F93F0B5663F1B9DD66A4D5B58B9C52ADC68A62C377C6F68ABEA",
+  "n_members": 15,
+  "n_predicted": 12355
+ },
+ "A2-H15": {
+  "path": "experiments\\R_posthoc\\test_members_A2-H15.npz",
+  "sha256": "3961268793AF0C822C095F5F10C34F4201BC0822B92061514E297BD3B9E4159D",
+  "n_members": 15,
+  "n_predicted": 13266
+ }
+}

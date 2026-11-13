@@ -49,7 +49,7 @@ This page holds detail that used to sit in the main README. Each step has its ow
 
 **Data findings**
 - **Sample matching:** ±30 s matching recovers the official sample counts ([`reports/protocol_notes.md`](../reports/protocol_notes.md)).
-- **Image/PV offset:** images change about 1 minute before PV, which suggests a 1-minute pairing offset.
+- **Image/PV offset:** image changes correlate best with PV changes about 1 minute earlier, which suggests PV is logged as 1-minute averages labelled at the start of the interval ([`reports/protocol_notes.md`](../reports/protocol_notes.md)).
 - **Camera change on 2019-05-22:** the R/B colour ratio jumps from 1.30 to 2.29, and the optical centre shifts by about 2.5 px.
 - **Apparent PV decline:** the PV/clear-sky ratio declines about 2.2 %/yr (season-adjusted, ±0.3). This is more than typical module degradation, so it is not attributed to degradation alone ([`reports/e4_cal2_report.md`](../reports/e4_cal2_report.md), [`reports/related_work.md`](../reports/related_work.md), Figure F4).
 
@@ -79,6 +79,7 @@ These figures come from published point estimates, not paired tests. The protoco
 | Model | CRPS (kW) | Winkler 90% |
 |---|---|---|
 | G3″-F, 15-min configuration (competitors' 30-sample estimator) | 2.49 | 22.0 |
+| Xiong et al. 2025 (published, Adv. Appl. Energy 20:100250, Table C.1) | 2.44 | 19.62 |
 | PV-MM-Diffusion (published) | 2.63 | 21.46 |
 | SkyGPT (published) | 2.81 | 26.70 |
 | SUNSET (published) | 3.31 | 56.95 |

@@ -355,11 +355,13 @@ The Phase A protocol was pre-registered ([`reports/phaseA_comparability_prereg.m
 - **How ours was scored:** for a like-for-like CRPS, our 9 quantiles were turned into 30 samples and scored with the same estimator the competitors use ([`reports/estimator_check.json`](reports/estimator_check.json)).
 - **Oracle:** the "real future images" row is a reference from the PV-MM-Diffusion paper that is given the *actual* future sky images.
 - **Winkler score:** ours is comparable to PV-MM-Diffusion's (22.0 vs 21.5), **not better**.
+- **Lowest published values:** Xiong et al. (2025) report the lowest published CRPS on this test set (2.44 kW, Winkler 19.62). Ours is 2.455 kW with our own estimator and 2.49 kW with the competitors' estimator, so it is close to theirs, not better.
 
 | Model | CRPS (kW) | Winkler 90% | Source |
 |---|---|---|---|
 | **G3″-F (ours)**: own estimator / competitors' 30-sample estimator | **2.455 / 2.49** | 18.16 / **22.0** | one-shot run |
 | Real future images → U-Net (oracle) | 2.52 | 30.72 | PV-MM-Diffusion paper |
+| Xiong et al. (2025), diffusion + Transformer | 2.44 | 19.62 | published |
 | PV-MM-Diffusion (Huang et al., 2026) | 2.63 | 21.46 | published |
 | SkyGPT (Nie et al., 2024) | 2.81 | 26.70 | published |
 | SUNSET (Sun et al., 2019) | 3.31 | 56.95 | published |
@@ -547,6 +549,7 @@ Please cite this repository (metadata in [`CITATION.cff`](CITATION.cff)) togethe
 - Y. Sun, V. Venugopal, A. Brandt. Short-term solar power forecast with deep learning: exploring optimal input and output configuration (SUNSET). *Solar Energy* 188:730–741, 2019. [doi:10.1016/j.solener.2019.06.041](https://doi.org/10.1016/j.solener.2019.06.041).
 - Y. Nie, E. Zelikman, A. Scott, Q. Paletta, A. Brandt. SkyGPT: probabilistic ultra-short-term solar forecasting using synthetic sky images from physics-constrained VideoGPT. *Advances in Applied Energy*, 2024. [doi:10.1016/j.adapen.2024.100172](https://doi.org/10.1016/j.adapen.2024.100172).
 - Huang et al. PV-MM-Diffusion. *Applied Energy*, 2026.
+- B. Xiong, Y. Chen, X. Zhao, Z. Su, J. Fu, D. Chen, D. Zhang. Multimodal ultra-short-term probabilistic solar power forecasting with generative AI and Transformer. *Advances in Applied Energy* 20:100250, 2025. [doi:10.1016/j.adapen.2025.100250](https://doi.org/10.1016/j.adapen.2025.100250).
 - Q. Paletta, G. Arbod, J. Lasenby. Benchmarking of deep learning irradiance forecasting models from sky images: an in-depth analysis. *Solar Energy* 224:855–867, 2021. [doi:10.1016/j.solener.2021.05.056](https://doi.org/10.1016/j.solener.2021.05.056).
 
 The full literature review is in [`reports/related_work.md`](reports/related_work.md).

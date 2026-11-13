@@ -1,0 +1,13 @@
+[csi] fold 0: val ['2019-07-02', '2019-07-31']
+  epoch   1  train loss 0.04073  val CRPS 0.470 kW (raw 0.495)  *  lr 9.9e-05  |g|p99 0.61  (86s)
+  epoch   2  train loss 0.03047  val CRPS 0.379 kW (raw 0.398)  *  lr 9.6e-05  |g|p99 0.85  (85s)
+  epoch   3  train loss 0.02674  val CRPS 0.350 kW (raw 0.358)  *  lr 9.0e-05  |g|p99 0.95  (86s)
+  epoch   4  train loss 0.02495  val CRPS 0.335 kW (raw 0.338)  *  lr 8.3e-05  |g|p99 0.88  (86s)
+  epoch   5  train loss 0.02371  val CRPS 0.328 kW (raw 0.371)  *  lr 7.5e-05  |g|p99 1.05  (86s)
+  epoch   6  train loss 0.02289  val CRPS 0.323 kW (raw 0.385)  *  lr 6.5e-05  |g|p99 0.96  (85s)
+  epoch   7  train loss 0.02210  val CRPS 0.324 kW (raw 0.345)  lr 5.5e-05  |g|p99 1.00  (85s)
+  epoch   8  train loss 0.02135  val CRPS 0.330 kW (raw 0.316)  lr 4.5e-05  |g|p99 1.08  (85s)
+  epoch   9  train loss 0.02075  val CRPS 0.330 kW (raw 0.333)  lr 3.5e-05  |g|p99 1.07  (85s)
+  epoch  10  train loss 0.02023  val CRPS 0.333 kW (raw 0.387)  lr 2.5e-05  |g|p99 1.07  (80s)
+  epoch  11  train loss 0.01973  val CRPS 0.336 kW (raw 0.420)  lr 1.7e-05  |g|p99 1.02  (85s)
+[csi] fold 0 done: best epoch 6  RMSE sunny 0.372 (pers 0.422)  cloudy 1.665 (pers 2.072)  overall 1.067 (pers 1.319)

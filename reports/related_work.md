@@ -100,4 +100,4 @@
 3. **Re-word the PV decline everywhere** as an *apparent PV/clear-sky ratio decline*, not degradation.
 4. **Phase C comparators already pre-registered** (rolling, ACI, DtACI-style, Mondrian) cover the main families. Conformal PID, NexCP and weighted/similarity conformal are possible later extensions; they are not added now, to keep the pre-registration intact.
 5. **Quantify lag on SKIPP'D** (TDM or lag cross-correlation, as in Paletta 2021) as a figure that motivates the gate.
-6. **External validation candidates (Phase E):** SolarBench Gatton (the only other PV site), Folsom (CC BY 4.0, GHI), SIRTA.
+6. **External validation candidates:** Folsom (CC BY 4.0, GHI), SIRTA.

@@ -1,0 +1,4889 @@
+{
+ "protocol": "revision/protocols/R-C07_conformal_pastonly.md",
+ "W": {
+  "G3''-F": 4620,
+  "E4-B-fit": 990,
+  "E6-S": 4620,
+  "G4": 4620
+ },
+ "audit": {
+  "G3''-F": {
+   "per_day": {
+    "2017-06-24": {
+     "future_origin_share": 0.4686147186147186,
+     "immature_share": 0.4686147186147186,
+     "span_days": 20.180208333333333,
+     "latest_init_minus_start_days": 10.15613425925926
+    },
+    "2017-09-15": {
+     "future_origin_share": 0.4504329004329004,
+     "immature_share": 0.4504329004329004,
+     "span_days": 17.45138888888889,
+     "latest_init_minus_start_days": 8.46111111111111
+    },
+    "2017-09-20": {
+     "future_origin_share": 0.3735930735930736,
+     "immature_share": 0.3735930735930736,
+     "span_days": 22.304861111111112,
+     "latest_init_minus_start_days": 11.309722222222222
+    },
+    "2017-10-06": {
+     "future_origin_share": 0.580952380952381,
+     "immature_share": 0.580952380952381,
+     "span_days": 23.3,
+     "latest_init_minus_start_days": 11.427083333333334
+    },
+    "2017-10-11": {
+     "future_origin_share": 0.5298701298701298,
+     "immature_share": 0.5298701298701298,
+     "span_days": 19.054861111111112,
+     "latest_init_minus_start_days": 9.422222222222222
+    },
+    "2017-10-22": {
+     "future_origin_share": 0.4645021645021645,
+     "immature_share": 0.4645021645021645,
+     "span_days": 18.133333333333333,
+     "latest_init_minus_start_days": 9.128472222222221
+    },
+    "2018-01-25": {
+     "future_origin_share": 0.49653679653679655,
+     "immature_share": 0.49653679653679655,
+     "span_days": 20.104861111111113,
+     "latest_init_minus_start_days": 10.145138888888889
+    },
+    "2018-02-16": {
+     "future_origin_share": 0.5424242424242425,
+     "immature_share": 0.5424242424242425,
+     "span_days": 30.1,
+     "latest_init_minus_start_days": 15.150694444444444
+    },
+    "2018-03-09": {
+     "future_origin_share": 0.05411255411255411,
+     "immature_share": 0.05411255411255411,
+     "span_days": 24.106944444444444,
+     "latest_init_minus_start_days": 1.4506944444444445
+    },
+    "2018-06-12": {
+     "future_origin_share": 0.44372294372294374,
+     "immature_share": 0.44372294372294374,
+     "span_days": 14.338888888888889,
+     "latest_init_minus_start_days": 7.334722222222222
+    },
+    "2018-06-23": {
+     "future_origin_share": 0.47294372294372294,
+     "immature_share": 0.47294372294372294,
+     "span_days": 13.379166666666666,
+     "latest_init_minus_start_days": 6.506018518518519
+    },
+    "2018-10-04": {
+     "future_origin_share": 0.664069264069264,
+     "immature_share": 0.664069264069264,
+     "span_days": 21.405208333333334,
+     "latest_init_minus_start_days": 10.41712962962963
+    },
+    "2019-01-25": {
+     "future_origin_share": 0.5047619047619047,
+     "immature_share": 0.5047619047619047,
+     "span_days": 101.97337962962963,
+     "latest_init_minus_start_days": 12.367939814814815
+    },
+    "2019-05-27": {
+     "future_origin_share": 0.5110389610389611,
+     "immature_share": 0.5110389610389611,
+     "span_days": 18.070949074074075,
+     "latest_init_minus_start_days": 9.06875
+    },
+    "2019-06-23": {
+     "future_origin_share": 0.4251082251082251,
+     "immature_share": 0.4251082251082251,
+     "span_days": 13.39861111111111,
+     "latest_init_minus_start_days": 6.545949074074074
+    },
+    "2019-06-28": {
+     "future_origin_share": 0.5108225108225108,
+     "immature_share": 0.5108225108225108,
+     "span_days": 13.402430555555556,
+     "latest_init_minus_start_days": 6.532060185185185
+    },
+    "2019-07-14": {
+     "future_origin_share": 0.49393939393939396,
+     "immature_share": 0.49393939393939396,
+     "span_days": 12.933217592592593,
+     "latest_init_minus_start_days": 6.466319444444444
+    },
+    "2019-08-10": {
+     "future_origin_share": 0.48203463203463204,
+     "immature_share": 0.48203463203463204,
+     "span_days": 13.230671296296297,
+     "latest_init_minus_start_days": 6.508449074074074
+    },
+    "2019-10-14": {
+     "future_origin_share": 0.43787878787878787,
+     "immature_share": 0.43787878787878787,
+     "span_days": 17.148611111111112,
+     "latest_init_minus_start_days": 8.415046296296296
+    },
+    "2019-10-19": {
+     "future_origin_share": 0.4461038961038961,
+     "immature_share": 0.4461038961038961,
+     "span_days": 17.246180555555554,
+     "latest_init_minus_start_days": 7.408449074074074
+    }
+   },
+   "mean_future_share": 0.4676731601731602,
+   "max_future_share": 0.664069264069264
+  },
+  "E4-B-fit": {
+   "per_day": {
+    "2017-06-24": {
+     "future_origin_share": 0.39090909090909093,
+     "immature_share": 0.39090909090909093,
+     "span_days": 3.285763888888889,
+     "latest_init_minus_start_days": 1.530324074074074
+    },
+    "2017-09-15": {
+     "future_origin_share": 0.3898989898989899,
+     "immature_share": 0.3898989898989899,
+     "span_days": 4.104861111111111,
+     "latest_init_minus_start_days": 2.104861111111111
+    },
+    "2017-09-20": {
+     "future_origin_share": 0.4090909090909091,
+     "immature_share": 0.4090909090909091,
+     "span_days": 4.1618055555555555,
+     "latest_init_minus_start_days": 2.157638888888889
+    },
+    "2017-10-06": {
+     "future_origin_share": 0.4222222222222222,
+     "immature_share": 0.4222222222222222,
+     "span_days": 4.2444444444444445,
+     "latest_init_minus_start_days": 2.2423611111111112
+    },
+    "2017-10-11": {
+     "future_origin_share": 0.5494949494949495,
+     "immature_share": 0.5494949494949495,
+     "span_days": 4.41875,
+     "latest_init_minus_start_days": 2.4166666666666665
+    },
+    "2017-10-22": {
+     "future_origin_share": 0.42828282828282827,
+     "immature_share": 0.42828282828282827,
+     "span_days": 4.250694444444444,
+     "latest_init_minus_start_days": 2.2465277777777777
+    },
+    "2018-01-25": {
+     "future_origin_share": 0.4777777777777778,
+     "immature_share": 0.4777777777777778,
+     "span_days": 5.108333333333333,
+     "latest_init_minus_start_days": 2.3805555555555555
+    },
+    "2018-02-16": {
+     "future_origin_share": 0.4616161616161616,
+     "immature_share": 0.4616161616161616,
+     "span_days": 4.3277777777777775,
+     "latest_init_minus_start_days": 2.3340277777777776
+    },
+    "2018-03-09": {
+     "future_origin_share": 0.25252525252525254,
+     "immature_share": 0.25252525252525254,
+     "span_days": 4.329166666666667,
+     "latest_init_minus_start_days": 1.4506944444444445
+    },
+    "2018-06-12": {
+     "future_origin_share": 0.26262626262626265,
+     "immature_share": 0.26262626262626265,
+     "span_days": 4.360300925925926,
+     "latest_init_minus_start_days": 2.3561342592592593
+    },
+    "2018-06-23": {
+     "future_origin_share": 0.3707070707070707,
+     "immature_share": 0.3707070707070707,
+     "span_days": 3.3561342592592593,
+     "latest_init_minus_start_days": 1.505324074074074
+    },
+    "2018-10-04": {
+     "future_origin_share": 0.3838383838383838,
+     "immature_share": 0.3838383838383838,
+     "span_days": 4.081597222222222,
+     "latest_init_minus_start_days": 2.0810185185185186
+    },
+    "2019-01-25": {
+     "future_origin_share": 0.7272727272727273,
+     "immature_share": 0.7272727272727273,
+     "span_days": 7.293402777777778,
+     "latest_init_minus_start_days": 6.2935185185185185
+    },
+    "2019-05-27": {
+     "future_origin_share": 0.39090909090909093,
+     "immature_share": 0.39090909090909093,
+     "span_days": 3.319212962962963,
+     "latest_init_minus_start_days": 1.543287037037037
+    },
+    "2019-06-23": {
+     "future_origin_share": 0.4,
+     "immature_share": 0.4,
+     "span_days": 3.2731481481481484,
+     "latest_init_minus_start_days": 1.5472222222222223
+    },
+    "2019-06-28": {
+     "future_origin_share": 0.39494949494949494,
+     "immature_share": 0.39494949494949494,
+     "span_days": 3.2868055555555555,
+     "latest_init_minus_start_days": 1.5309027777777777
+    },
+    "2019-07-14": {
+     "future_origin_share": 0.39090909090909093,
+     "immature_share": 0.39090909090909093,
+     "span_days": 3.290625,
+     "latest_init_minus_start_days": 1.539236111111111
+    },
+    "2019-08-10": {
+     "future_origin_share": 0.37676767676767675,
+     "immature_share": 0.37676767676767675,
+     "span_days": 3.346875,
+     "latest_init_minus_start_days": 1.5099537037037036
+    },
+    "2019-10-14": {
+     "future_origin_share": 0.3797979797979798,
+     "immature_share": 0.3797979797979798,
+     "span_days": 4.131481481481481,
+     "latest_init_minus_start_days": 2.1300925925925926
+    },
+    "2019-10-19": {
+     "future_origin_share": 0.3929292929292929,
+     "immature_share": 0.3929292929292929,
+     "span_days": 4.128125,
+     "latest_init_minus_start_days": 2.1259259259259258
+    }
+   },
+   "mean_future_share": 0.4126262626262626,
+   "max_future_share": 0.7272727272727273
+  },
+  "E6-S": {
+   "per_day": {
+    "2017-06-24": {
+     "future_origin_share": 0.4686147186147186,
+     "immature_share": 0.4686147186147186,
+     "span_days": 20.180208333333333,
+     "latest_init_minus_start_days": 10.15613425925926
+    },
+    "2017-09-15": {
+     "future_origin_share": 0.4504329004329004,
+     "immature_share": 0.4504329004329004,
+     "span_days": 17.45138888888889,
+     "latest_init_minus_start_days": 8.46111111111111
+    },
+    "2017-09-20": {
+     "future_origin_share": 0.3735930735930736,
+     "immature_share": 0.3735930735930736,
+     "span_days": 22.304861111111112,
+     "latest_init_minus_start_days": 11.309722222222222
+    },
+    "2017-10-06": {
+     "future_origin_share": 0.580952380952381,
+     "immature_share": 0.580952380952381,
+     "span_days": 23.3,
+     "latest_init_minus_start_days": 11.427083333333334
+    },
+    "2017-10-11": {
+     "future_origin_share": 0.5298701298701298,
+     "immature_share": 0.5298701298701298,
+     "span_days": 19.054861111111112,
+     "latest_init_minus_start_days": 9.422222222222222
+    },
+    "2017-10-22": {
+     "future_origin_share": 0.4645021645021645,
+     "immature_share": 0.4645021645021645,
+     "span_days": 18.133333333333333,
+     "latest_init_minus_start_days": 9.128472222222221
+    },
+    "2018-01-25": {
+     "future_origin_share": 0.49653679653679655,
+     "immature_share": 0.49653679653679655,
+     "span_days": 20.104861111111113,
+     "latest_init_minus_start_days": 10.145138888888889
+    },
+    "2018-02-16": {
+     "future_origin_share": 0.5424242424242425,
+     "immature_share": 0.5424242424242425,
+     "span_days": 30.1,
+     "latest_init_minus_start_days": 15.150694444444444
+    },
+    "2018-03-09": {
+     "future_origin_share": 0.05411255411255411,
+     "immature_share": 0.05411255411255411,
+     "span_days": 24.106944444444444,
+     "latest_init_minus_start_days": 1.4506944444444445
+    },
+    "2018-06-12": {
+     "future_origin_share": 0.44372294372294374,
+     "immature_share": 0.44372294372294374,
+     "span_days": 14.338888888888889,
+     "latest_init_minus_start_days": 7.334722222222222
+    },
+    "2018-06-23": {
+     "future_origin_share": 0.47294372294372294,
+     "immature_share": 0.47294372294372294,
+     "span_days": 13.379166666666666,
+     "latest_init_minus_start_days": 6.506018518518519
+    },
+    "2018-10-04": {
+     "future_origin_share": 0.664069264069264,
+     "immature_share": 0.664069264069264,
+     "span_days": 21.405208333333334,
+     "latest_init_minus_start_days": 10.41712962962963
+    },
+    "2019-01-25": {
+     "future_origin_share": 0.5047619047619047,
+     "immature_share": 0.5047619047619047,
+     "span_days": 101.97337962962963,
+     "latest_init_minus_start_days": 12.367939814814815
+    },
+    "2019-05-27": {
+     "future_origin_share": 0.5110389610389611,
+     "immature_share": 0.5110389610389611,
+     "span_days": 18.070949074074075,
+     "latest_init_minus_start_days": 9.06875
+    },
+    "2019-06-23": {
+     "future_origin_share": 0.4251082251082251,
+     "immature_share": 0.4251082251082251,
+     "span_days": 13.39861111111111,
+     "latest_init_minus_start_days": 6.545949074074074
+    },
+    "2019-06-28": {
+     "future_origin_share": 0.5108225108225108,
+     "immature_share": 0.5108225108225108,
+     "span_days": 13.402430555555556,
+     "latest_init_minus_start_days": 6.532060185185185
+    },
+    "2019-07-14": {
+     "future_origin_share": 0.49393939393939396,
+     "immature_share": 0.49393939393939396,
+     "span_days": 12.933217592592593,
+     "latest_init_minus_start_days": 6.466319444444444
+    },
+    "2019-08-10": {
+     "future_origin_share": 0.48203463203463204,
+     "immature_share": 0.48203463203463204,
+     "span_days": 13.230671296296297,
+     "latest_init_minus_start_days": 6.508449074074074
+    },
+    "2019-10-14": {
+     "future_origin_share": 0.43787878787878787,
+     "immature_share": 0.43787878787878787,
+     "span_days": 17.148611111111112,
+     "latest_init_minus_start_days": 8.415046296296296
+    },
+    "2019-10-19": {
+     "future_origin_share": 0.4461038961038961,
+     "immature_share": 0.4461038961038961,
+     "span_days": 17.246180555555554,
+     "latest_init_minus_start_days": 7.408449074074074
+    }
+   },
+   "mean_future_share": 0.4676731601731602,
+   "max_future_share": 0.664069264069264
+  },
+  "G4": {
+   "per_day": {
+    "2017-06-24": {
+     "future_origin_share": 0.4686147186147186,
+     "immature_share": 0.4686147186147186,
+     "span_days": 20.180208333333333,
+     "latest_init_minus_start_days": 10.15613425925926
+    },
+    "2017-09-15": {
+     "future_origin_share": 0.4504329004329004,
+     "immature_share": 0.4504329004329004,
+     "span_days": 17.45138888888889,
+     "latest_init_minus_start_days": 8.46111111111111
+    },
+    "2017-09-20": {
+     "future_origin_share": 0.3735930735930736,
+     "immature_share": 0.3735930735930736,
+     "span_days": 22.304861111111112,
+     "latest_init_minus_start_days": 11.309722222222222
+    },
+    "2017-10-06": {
+     "future_origin_share": 0.580952380952381,
+     "immature_share": 0.580952380952381,
+     "span_days": 23.3,
+     "latest_init_minus_start_days": 11.427083333333334
+    },
+    "2017-10-11": {
+     "future_origin_share": 0.5298701298701298,
+     "immature_share": 0.5298701298701298,
+     "span_days": 19.054861111111112,
+     "latest_init_minus_start_days": 9.422222222222222
+    },
+    "2017-10-22": {
+     "future_origin_share": 0.4645021645021645,
+     "immature_share": 0.4645021645021645,
+     "span_days": 18.133333333333333,
+     "latest_init_minus_start_days": 9.128472222222221
+    },
+    "2018-01-25": {
+     "future_origin_share": 0.49653679653679655,
+     "immature_share": 0.49653679653679655,
+     "span_days": 20.104861111111113,
+     "latest_init_minus_start_days": 10.145138888888889
+    },
+    "2018-02-16": {
+     "future_origin_share": 0.5424242424242425,
+     "immature_share": 0.5424242424242425,
+     "span_days": 30.1,
+     "latest_init_minus_start_days": 15.150694444444444
+    },
+    "2018-03-09": {
+     "future_origin_share": 0.05411255411255411,
+     "immature_share": 0.05411255411255411,
+     "span_days": 24.106944444444444,
+     "latest_init_minus_start_days": 1.4506944444444445
+    },
+    "2018-06-12": {
+     "future_origin_share": 0.44372294372294374,
+     "immature_share": 0.44372294372294374,
+     "span_days": 14.338888888888889,
+     "latest_init_minus_start_days": 7.334722222222222
+    },
+    "2018-06-23": {
+     "future_origin_share": 0.47294372294372294,
+     "immature_share": 0.47294372294372294,
+     "span_days": 13.379166666666666,
+     "latest_init_minus_start_days": 6.506018518518519
+    },
+    "2018-10-04": {
+     "future_origin_share": 0.664069264069264,
+     "immature_share": 0.664069264069264,
+     "span_days": 21.405208333333334,
+     "latest_init_minus_start_days": 10.41712962962963
+    },
+    "2019-01-25": {
+     "future_origin_share": 0.5047619047619047,
+     "immature_share": 0.5047619047619047,
+     "span_days": 101.97337962962963,
+     "latest_init_minus_start_days": 12.367939814814815
+    },
+    "2019-05-27": {
+     "future_origin_share": 0.5110389610389611,
+     "immature_share": 0.5110389610389611,
+     "span_days": 18.070949074074075,
+     "latest_init_minus_start_days": 9.06875
+    },
+    "2019-06-23": {
+     "future_origin_share": 0.4251082251082251,
+     "immature_share": 0.4251082251082251,
+     "span_days": 13.39861111111111,
+     "latest_init_minus_start_days": 6.545949074074074
+    },
+    "2019-06-28": {
+     "future_origin_share": 0.5108225108225108,
+     "immature_share": 0.5108225108225108,
+     "span_days": 13.402430555555556,
+     "latest_init_minus_start_days": 6.532060185185185
+    },
+    "2019-07-14": {
+     "future_origin_share": 0.49393939393939396,
+     "immature_share": 0.49393939393939396,
+     "span_days": 12.933217592592593,
+     "latest_init_minus_start_days": 6.466319444444444
+    },
+    "2019-08-10": {
+     "future_origin_share": 0.48203463203463204,
+     "immature_share": 0.48203463203463204,
+     "span_days": 13.230671296296297,
+     "latest_init_minus_start_days": 6.508449074074074
+    },
+    "2019-10-14": {
+     "future_origin_share": 0.43787878787878787,
+     "immature_share": 0.43787878787878787,
+     "span_days": 17.148611111111112,
+     "latest_init_minus_start_days": 8.415046296296296
+    },
+    "2019-10-19": {
+     "future_origin_share": 0.4461038961038961,
+     "immature_share": 0.4461038961038961,
+     "span_days": 17.246180555555554,
+     "latest_init_minus_start_days": 7.408449074074074
+    }
+   },
+   "mean_future_share": 0.4676731601731602,
+   "max_future_share": 0.664069264069264
+  }
+ },
+ "frozen_reproduced": {
+  "G3''-F|50": true,
+  "G3''-F|80": true,
+  "G3''-F|90": true,
+  "E4-B-fit|50": true,
+  "E4-B-fit|80": true,
+  "E4-B-fit|90": true,
+  "E6-S|50": true,
+  "E6-S|80": true,
+  "E6-S|90": true,
+  "G4|50": true,
+  "G4|80": true,
+  "G4|90": true
+ },
+ "nearest_init": {
+  "G3''-F": {
+   "50": {
+    "overall": {
+     "coverage": 0.5419870345243479,
+     "width_kw": 2.026682387468557,
+     "interval_score": 4.534679793625921,
+     "below": 0.2230514096185738,
+     "above": 0.23496155585707826,
+     "n": 13266
+    },
+    "sunny": {
+     "coverage": 0.657878879180476,
+     "width_kw": 0.2388181338626638,
+     "interval_score": 0.34511188970664325,
+     "below": 0.14884001205182285,
+     "above": 0.1932811087677011,
+     "n": 6638
+    },
+    "cloudy": {
+     "coverage": 0.425920337960169,
+     "width_kw": 3.817244082615799,
+     "interval_score": 8.730568711280743,
+     "below": 0.29737477368738685,
+     "above": 0.27670488835244417,
+     "n": 6628
+    },
+    "ramp": {
+     "coverage": 0.16127348643006262,
+     "width_kw": 4.457558621808318,
+     "interval_score": 15.925251163030957,
+     "below": 0.4133611691022965,
+     "above": 0.4253653444676409,
+     "n": 1916
+    },
+    "non-ramp": {
+     "coverage": 0.6062555066079295,
+     "width_kw": 1.6163247782178976,
+     "interval_score": 2.611830917521952,
+     "below": 0.1909251101321586,
+     "above": 0.2028193832599119,
+     "n": 11350
+    },
+    "rising ramp": {
+     "coverage": 0.1346153846153846,
+     "width_kw": 4.526230765150637,
+     "interval_score": 16.977946569990277,
+     "below": 0.003205128205128205,
+     "above": 0.8621794871794872,
+     "n": 936
+    },
+    "falling ramp": {
+     "coverage": 0.186734693877551,
+     "width_kw": 4.391969717554839,
+     "interval_score": 14.919819631486131,
+     "below": 0.8051020408163265,
+     "above": 0.00816326530612245,
+     "n": 980
+    },
+    "sunrise ramp": {
+     "coverage": 0.17164179104477612,
+     "width_kw": 0.7450116806014954,
+     "interval_score": 3.663958674894138,
+     "below": 0.31343283582089554,
+     "above": 0.5149253731343284,
+     "n": 268
+    }
+   },
+   "80": {
+    "overall": {
+     "coverage": 0.8456957636062113,
+     "width_kw": 4.421802681709674,
+     "interval_score": 6.304811264771432,
+     "below": 0.06656113372531283,
+     "above": 0.0877431026684758,
+     "n": 13266
+    },
+    "sunny": {
+     "coverage": 0.9165411268454353,
+     "width_kw": 0.5350088310123512,
+     "interval_score": 0.5909971994767188,
+     "below": 0.031033443808376016,
+     "above": 0.05242542934618861,
+     "n": 6638
+    },
+    "cloudy": {
+     "coverage": 0.7747435123717562,
+     "width_kw": 8.314460735561338,
+     "interval_score": 12.02724605134752,
+     "below": 0.10214242607121303,
+     "above": 0.12311406155703078,
+     "n": 6628
+    },
+    "ramp": {
+     "coverage": 0.5062630480167014,
+     "width_kw": 9.452626286895551,
+     "interval_score": 19.956441985383076,
+     "below": 0.22755741127348644,
+     "above": 0.2661795407098121,
+     "n": 1916
+    },
+    "non-ramp": {
+     "coverage": 0.9029955947136564,
+     "width_kw": 3.5725464678298375,
+     "interval_score": 4.00027166471047,
+     "below": 0.03938325991189427,
+     "above": 0.05762114537444934,
+     "n": 11350
+    },
+    "rising ramp": {
+     "coverage": 0.4551282051282051,
+     "width_kw": 9.593255017867945,
+     "interval_score": 21.544483579768187,
+     "below": 0.0,
+     "above": 0.5448717948717948,
+     "n": 936
+    },
+    "falling ramp": {
+     "coverage": 0.5551020408163265,
+     "width_kw": 9.318311498946413,
+     "interval_score": 18.43970021768465,
+     "below": 0.4448979591836735,
+     "above": 0.0,
+     "n": 980
+    },
+    "sunrise ramp": {
+     "coverage": 0.44776119402985076,
+     "width_kw": 1.6731625047993441,
+     "interval_score": 5.028363510893043,
+     "below": 0.21641791044776118,
+     "above": 0.3358208955223881,
+     "n": 268
+    }
+   },
+   "90": {
+    "overall": {
+     "coverage": 0.9350972410673903,
+     "width_kw": 6.264536493807571,
+     "interval_score": 7.616520191428942,
+     "below": 0.021860394994723354,
+     "above": 0.043042363937886324,
+     "n": 13266
+    },
+    "sunny": {
+     "coverage": 0.967912021693281,
+     "width_kw": 0.8224714181291573,
+     "interval_score": 0.8588289519991233,
+     "below": 0.0061765592045796925,
+     "above": 0.025911419102139198,
+     "n": 6638
+    },
+    "cloudy": {
+     "coverage": 0.9022329511164756,
+     "width_kw": 11.714812289274278,
+     "interval_score": 14.384407102614087,
+     "below": 0.03756789378394689,
+     "above": 0.06019915509957755,
+     "n": 6628
+    },
+    "ramp": {
+     "coverage": 0.7458246346555324,
+     "width_kw": 12.991669182909323,
+     "interval_score": 21.070925396730054,
+     "below": 0.10647181628392484,
+     "above": 0.1477035490605428,
+     "n": 1916
+    },
+    "non-ramp": {
+     "coverage": 0.9670484581497797,
+     "width_kw": 5.128925372017356,
+     "interval_score": 5.3452743435560865,
+     "below": 0.007577092511013216,
+     "above": 0.025374449339207048,
+     "n": 11350
+    },
+    "rising ramp": {
+     "coverage": 0.6976495726495726,
+     "width_kw": 13.149742121317761,
+     "interval_score": 23.30641552374253,
+     "below": 0.0,
+     "above": 0.30235042735042733,
+     "n": 936
+    },
+    "falling ramp": {
+     "coverage": 0.7918367346938775,
+     "width_kw": 12.84069339683759,
+     "interval_score": 18.935804214195684,
+     "below": 0.20816326530612245,
+     "above": 0.0,
+     "n": 980
+    },
+    "sunrise ramp": {
+     "coverage": 0.6529850746268657,
+     "width_kw": 2.3733495598917225,
+     "interval_score": 5.426855765561784,
+     "below": 0.1455223880597015,
+     "above": 0.20149253731343283,
+     "n": 268
+    }
+   }
+  },
+  "E4-B-fit": {
+   "50": {
+    "overall": {
+     "coverage": 0.5564601236243027,
+     "width_kw": 2.255019484544884,
+     "interval_score": 4.970862536345251,
+     "below": 0.22855419870345242,
+     "above": 0.21498567767224483,
+     "n": 13266
+    },
+    "sunny": {
+     "coverage": 0.6482374209099127,
+     "width_kw": 0.6755261357836745,
+     "interval_score": 0.8644489636054521,
+     "below": 0.1758059656523049,
+     "above": 0.17595661343778246,
+     "n": 6638
+    },
+    "cloudy": {
+     "coverage": 0.46454435727217863,
+     "width_kw": 3.8368958950875682,
+     "interval_score": 9.083471663660697,
+     "below": 0.28138201569100785,
+     "above": 0.2540736270368135,
+     "n": 6628
+    },
+    "ramp": {
+     "coverage": 0.18319415448851775,
+     "width_kw": 4.332276041292084,
+     "interval_score": 16.407988122919743,
+     "below": 0.41179540709812107,
+     "above": 0.40501043841336115,
+     "n": 1916
+    },
+    "non-ramp": {
+     "coverage": 0.6194713656387665,
+     "width_kw": 1.9043566155820972,
+     "interval_score": 3.040154816179901,
+     "below": 0.19762114537444933,
+     "above": 0.18290748898678413,
+     "n": 11350
+    },
+    "rising ramp": {
+     "coverage": 0.19017094017094016,
+     "width_kw": 4.365696254238812,
+     "interval_score": 16.923256236183438,
+     "below": 0.002136752136752137,
+     "above": 0.8076923076923077,
+     "n": 936
+    },
+    "falling ramp": {
+     "coverage": 0.17653061224489797,
+     "width_kw": 4.300356327702148,
+     "interval_score": 15.915854496374008,
+     "below": 0.8030612244897959,
+     "above": 0.02040816326530612,
+     "n": 980
+    },
+    "sunrise ramp": {
+     "coverage": 0.3694029850746269,
+     "width_kw": 1.2688146191682923,
+     "interval_score": 3.3648151588639017,
+     "below": 0.26492537313432835,
+     "above": 0.3656716417910448,
+     "n": 268
+    }
+   },
+   "80": {
+    "overall": {
+     "coverage": 0.8480325644504749,
+     "width_kw": 5.284972951568319,
+     "interval_score": 7.300064388743332,
+     "below": 0.04846977235036937,
+     "above": 0.10349766319915574,
+     "n": 13266
+    },
+    "sunny": {
+     "coverage": 0.9184995480566436,
+     "width_kw": 1.985485356193606,
+     "interval_score": 2.0777395212967478,
+     "below": 0.006628502561012353,
+     "above": 0.07487194938234408,
+     "n": 6638
+    },
+    "cloudy": {
+     "coverage": 0.7774592637296318,
+     "width_kw": 8.589438651341606,
+     "interval_score": 12.530268442773268,
+     "below": 0.09037417018708509,
+     "above": 0.13216656608328303,
+     "n": 6628
+    },
+    "ramp": {
+     "coverage": 0.4838204592901879,
+     "width_kw": 9.600530492587353,
+     "interval_score": 20.792657380715156,
+     "below": 0.23277661795407098,
+     "above": 0.28340292275574114,
+     "n": 1916
+    },
+    "non-ramp": {
+     "coverage": 0.9095154185022026,
+     "width_kw": 4.556461211604225,
+     "interval_score": 5.022372038732934,
+     "below": 0.0173568281938326,
+     "above": 0.07312775330396476,
+     "n": 11350
+    },
+    "rising ramp": {
+     "coverage": 0.44017094017094016,
+     "width_kw": 9.705052244719313,
+     "interval_score": 23.29858000723714,
+     "below": 0.0,
+     "above": 0.5598290598290598,
+     "n": 936
+    },
+    "falling ramp": {
+     "coverage": 0.5255102040816326,
+     "width_kw": 9.50070155381642,
+     "interval_score": 18.3992455659962,
+     "below": 0.45510204081632655,
+     "above": 0.019387755102040816,
+     "n": 980
+    },
+    "sunrise ramp": {
+     "coverage": 0.5261194029850746,
+     "width_kw": 2.0384855823080357,
+     "interval_score": 4.7677402268845475,
+     "below": 0.16791044776119404,
+     "above": 0.30597014925373134,
+     "n": 268
+    }
+   },
+   "90": {
+    "overall": {
+     "coverage": 0.9268807477762702,
+     "width_kw": 8.202127708442303,
+     "interval_score": 9.488531818568449,
+     "below": 0.015754560530679935,
+     "above": 0.057364691693049905,
+     "n": 13266
+    },
+    "sunny": {
+     "coverage": 0.9603796324194034,
+     "width_kw": 4.101083886475059,
+     "interval_score": 4.18008274304643,
+     "below": 0.003163603495028623,
+     "above": 0.036456764085567944,
+     "n": 6638
+    },
+    "cloudy": {
+     "coverage": 0.8933313216656609,
+     "width_kw": 12.309358983369666,
+     "interval_score": 14.804990020637721,
+     "below": 0.028364514182257092,
+     "above": 0.07830416415208208,
+     "n": 6628
+    },
+    "ramp": {
+     "coverage": 0.7400835073068893,
+     "width_kw": 13.398103234730582,
+     "interval_score": 20.954667323951774,
+     "below": 0.0918580375782881,
+     "above": 0.16805845511482254,
+     "n": 1916
+    },
+    "non-ramp": {
+     "coverage": 0.9584140969162995,
+     "width_kw": 7.324992104180775,
+     "interval_score": 7.552926917395368,
+     "below": 0.002907488986784141,
+     "above": 0.0386784140969163,
+     "n": 11350
+    },
+    "rising ramp": {
+     "coverage": 0.6581196581196581,
+     "width_kw": 13.534202182707316,
+     "interval_score": 24.898332023628715,
+     "below": 0.0,
+     "above": 0.3418803418803419,
+     "n": 936
+    },
+    "falling ramp": {
+     "coverage": 0.8183673469387756,
+     "width_kw": 13.26811485176505,
+     "interval_score": 17.18806512099502,
+     "below": 0.17959183673469387,
+     "above": 0.0020408163265306124,
+     "n": 980
+    },
+    "sunrise ramp": {
+     "coverage": 0.6529850746268657,
+     "width_kw": 2.8178750015808753,
+     "interval_score": 5.219632948957941,
+     "below": 0.09328358208955224,
+     "above": 0.2537313432835821,
+     "n": 268
+    }
+   }
+  },
+  "E6-S": {
+   "50": {
+    "overall": {
+     "coverage": 0.5265339966832504,
+     "width_kw": 2.1898505273917483,
+     "interval_score": 4.919278103636992,
+     "below": 0.2464194180612091,
+     "above": 0.22704658525554047,
+     "n": 13266
+    },
+    "sunny": {
+     "coverage": 0.5968665260620669,
+     "width_kw": 0.210005311214724,
+     "interval_score": 0.3335342327619423,
+     "below": 0.19870442904489305,
+     "above": 0.20442904489304006,
+     "n": 6638
+    },
+    "cloudy": {
+     "coverage": 0.4560953530476765,
+     "width_kw": 4.172682836532227,
+     "interval_score": 9.511940719036597,
+     "below": 0.29420639710319857,
+     "above": 0.24969824984912492,
+     "n": 6628
+    },
+    "ramp": {
+     "coverage": 0.12056367432150313,
+     "width_kw": 4.969257657833036,
+     "interval_score": 19.313239528170268,
+     "below": 0.4352818371607516,
+     "above": 0.4441544885177453,
+     "n": 1916
+    },
+    "non-ramp": {
+     "coverage": 0.5950660792951542,
+     "width_kw": 1.7206572179709987,
+     "interval_score": 2.4894252323237094,
+     "below": 0.2145374449339207,
+     "above": 0.1903964757709251,
+     "n": 11350
+    },
+    "rising ramp": {
+     "coverage": 0.09081196581196581,
+     "width_kw": 5.1137017703187055,
+     "interval_score": 19.971466235638125,
+     "below": 0.0,
+     "above": 0.9091880341880342,
+     "n": 936
+    },
+    "falling ramp": {
+     "coverage": 0.1489795918367347,
+     "width_kw": 4.831298791214071,
+     "interval_score": 18.684565856547902,
+     "below": 0.8510204081632653,
+     "above": 0.0,
+     "n": 980
+    },
+    "sunrise ramp": {
+     "coverage": 0.08208955223880597,
+     "width_kw": 0.9264420261981188,
+     "interval_score": 4.042760902822381,
+     "below": 0.31343283582089554,
+     "above": 0.6044776119402985,
+     "n": 268
+    }
+   },
+   "80": {
+    "overall": {
+     "coverage": 0.8322026232473994,
+     "width_kw": 4.664661734559358,
+     "interval_score": 7.102325949209993,
+     "below": 0.09075832956429972,
+     "above": 0.07703904718830092,
+     "n": 13266
+    },
+    "sunny": {
+     "coverage": 0.8999698704429044,
+     "width_kw": 0.4740069750121581,
+     "interval_score": 0.5377628128300153,
+     "below": 0.05498644169930702,
+     "above": 0.04504368785778849,
+     "n": 6638
+    },
+    "cloudy": {
+     "coverage": 0.7643331321665661,
+     "width_kw": 8.861639147636351,
+     "interval_score": 13.67679337517413,
+     "below": 0.12658418829209414,
+     "above": 0.10908267954133977,
+     "n": 6628
+    },
+    "ramp": {
+     "coverage": 0.44363256784968685,
+     "width_kw": 10.161985255887767,
+     "interval_score": 24.84161997406424,
+     "below": 0.28235908141962424,
+     "above": 0.2740083507306889,
+     "n": 1916
+    },
+    "non-ramp": {
+     "coverage": 0.8977973568281938,
+     "width_kw": 3.736655402676959,
+     "interval_score": 4.107745565807286,
+     "below": 0.05841409691629956,
+     "above": 0.04378854625550661,
+     "n": 11350
+    },
+    "rising ramp": {
+     "coverage": 0.4391025641025641,
+     "width_kw": 10.36091258403769,
+     "interval_score": 24.284526534280474,
+     "below": 0.0,
+     "above": 0.5608974358974359,
+     "n": 936
+    },
+    "falling ramp": {
+     "coverage": 0.4479591836734694,
+     "width_kw": 9.971989358797634,
+     "interval_score": 25.373701055327093,
+     "below": 0.5520408163265306,
+     "above": 0.0,
+     "n": 980
+    },
+    "sunrise ramp": {
+     "coverage": 0.5223880597014925,
+     "width_kw": 1.929864489601965,
+     "interval_score": 5.410103026219961,
+     "below": 0.19029850746268656,
+     "above": 0.2873134328358209,
+     "n": 268
+    }
+   },
+   "90": {
+    "overall": {
+     "coverage": 0.9268053671038745,
+     "width_kw": 6.497348713824999,
+     "interval_score": 8.474331778289802,
+     "below": 0.039122568973315244,
+     "above": 0.03407206392281019,
+     "n": 13266
+    },
+    "sunny": {
+     "coverage": 0.9655016571256403,
+     "width_kw": 0.704979694081982,
+     "interval_score": 0.7453934526188587,
+     "below": 0.017475143115396205,
+     "above": 0.017023199758963544,
+     "n": 6638
+    },
+    "cloudy": {
+     "coverage": 0.888050694025347,
+     "width_kw": 12.298456974696174,
+     "interval_score": 16.214931145490123,
+     "below": 0.0608026554013277,
+     "above": 0.051146650573325285,
+     "n": 6628
+    },
+    "ramp": {
+     "coverage": 0.6811064718162839,
+     "width_kw": 13.71718577901838,
+     "interval_score": 26.32460664585609,
+     "below": 0.16910229645093947,
+     "above": 0.14979123173277661,
+     "n": 1916
+    },
+    "non-ramp": {
+     "coverage": 0.9682819383259912,
+     "width_kw": 5.278563884141253,
+     "interval_score": 5.461016655271564,
+     "below": 0.017180616740088105,
+     "above": 0.014537444933920705,
+     "n": 11350
+    },
+    "rising ramp": {
+     "coverage": 0.6933760683760684,
+     "width_kw": 13.893739396751437,
+     "interval_score": 24.6056832754608,
+     "below": 0.0,
+     "above": 0.30662393162393164,
+     "n": 936
+    },
+    "falling ramp": {
+     "coverage": 0.6693877551020408,
+     "width_kw": 13.548559058408031,
+     "interval_score": 27.96635386492751,
+     "below": 0.3306122448979592,
+     "above": 0.0,
+     "n": 980
+    },
+    "sunrise ramp": {
+     "coverage": 0.7388059701492538,
+     "width_kw": 2.6989750707463367,
+     "interval_score": 6.24208278732476,
+     "below": 0.1044776119402985,
+     "above": 0.15671641791044777,
+     "n": 268
+    }
+   }
+  },
+  "G4": {
+   "50": {
+    "overall": {
+     "coverage": 0.5398009950248757,
+     "width_kw": 1.9704406795459968,
+     "interval_score": 4.629813889216832,
+     "below": 0.22734810794512286,
+     "above": 0.2328508970300015,
+     "n": 13266
+    },
+    "sunny": {
+     "coverage": 0.6533594456161494,
+     "width_kw": 0.23243705482693588,
+     "interval_score": 0.3394201029511981,
+     "below": 0.152154263332329,
+     "above": 0.19448629105152154,
+     "n": 6638
+    },
+    "cloudy": {
+     "coverage": 0.4260712130356065,
+     "width_kw": 3.711066518544959,
+     "interval_score": 8.926680810344061,
+     "below": 0.3026554013277007,
+     "above": 0.27127338563669284,
+     "n": 6628
+    },
+    "ramp": {
+     "coverage": 0.1336116910229645,
+     "width_kw": 4.359297302520091,
+     "interval_score": 17.259045964938746,
+     "below": 0.4321503131524008,
+     "above": 0.4342379958246347,
+     "n": 1916
+    },
+    "non-ramp": {
+     "coverage": 0.6083700440528634,
+     "width_kw": 1.5671764249540703,
+     "interval_score": 2.497865989914348,
+     "below": 0.19277533039647576,
+     "above": 0.1988546255506608,
+     "n": 11350
+    },
+    "rising ramp": {
+     "coverage": 0.11217948717948718,
+     "width_kw": 4.447523457839189,
+     "interval_score": 17.91120885525092,
+     "below": 0.0,
+     "above": 0.8878205128205128,
+     "n": 936
+    },
+    "falling ramp": {
+     "coverage": 0.1540816326530612,
+     "width_kw": 4.275032321521442,
+     "interval_score": 16.63616385745692,
+     "below": 0.8448979591836735,
+     "above": 0.0010204081632653062,
+     "n": 980
+    },
+    "sunrise ramp": {
+     "coverage": 0.17537313432835822,
+     "width_kw": 0.7429534553586618,
+     "interval_score": 3.631897170133721,
+     "below": 0.31343283582089554,
+     "above": 0.5111940298507462,
+     "n": 268
+    }
+   },
+   "80": {
+    "overall": {
+     "coverage": 0.8394391677973767,
+     "width_kw": 4.4475862932564,
+     "interval_score": 6.467569380863067,
+     "below": 0.07198854213779587,
+     "above": 0.08857229006482738,
+     "n": 13266
+    },
+    "sunny": {
+     "coverage": 0.9168424224163905,
+     "width_kw": 0.5144103608508457,
+     "interval_score": 0.566112160983947,
+     "below": 0.0326905694486291,
+     "above": 0.050467008134980416,
+     "n": 6638
+    },
+    "cloudy": {
+     "coverage": 0.7619191309595654,
+     "width_kw": 8.38669640781706,
+     "interval_score": 12.377930428774592,
+     "below": 0.11134580567290284,
+     "above": 0.12673506336753168,
+     "n": 6628
+    },
+    "ramp": {
+     "coverage": 0.4535490605427975,
+     "width_kw": 9.564292986500806,
+     "interval_score": 21.35252480140561,
+     "below": 0.2640918580375783,
+     "above": 0.28235908141962424,
+     "n": 1916
+    },
+    "non-ramp": {
+     "coverage": 0.9045814977973569,
+     "width_kw": 3.583832106097256,
+     "interval_score": 3.954831531897471,
+     "below": 0.03955947136563877,
+     "above": 0.05585903083700441,
+     "n": 11350
+    },
+    "rising ramp": {
+     "coverage": 0.422008547008547,
+     "width_kw": 9.693103821518127,
+     "interval_score": 22.510036428356123,
+     "below": 0.0,
+     "above": 0.5779914529914529,
+     "n": 936
+    },
+    "falling ramp": {
+     "coverage": 0.48367346938775513,
+     "width_kw": 9.441265495096507,
+     "interval_score": 20.246983084236557,
+     "below": 0.5163265306122449,
+     "above": 0.0,
+     "n": 980
+    },
+    "sunrise ramp": {
+     "coverage": 0.4253731343283582,
+     "width_kw": 1.6401692638518268,
+     "interval_score": 5.010047169765674,
+     "below": 0.22388059701492538,
+     "above": 0.35074626865671643,
+     "n": 268
+    }
+   },
+   "90": {
+    "overall": {
+     "coverage": 0.9342680536710387,
+     "width_kw": 6.290811814791754,
+     "interval_score": 7.661008957508955,
+     "below": 0.025629428614503243,
+     "above": 0.04010251771445801,
+     "n": 13266
+    },
+    "sunny": {
+     "coverage": 0.9688159084061464,
+     "width_kw": 0.7567461099525494,
+     "interval_score": 0.7927505025519178,
+     "below": 0.0076830370593552275,
+     "above": 0.023501054534498342,
+     "n": 6638
+    },
+    "cloudy": {
+     "coverage": 0.8996680748340374,
+     "width_kw": 11.833227045437898,
+     "interval_score": 14.539629902591152,
+     "below": 0.0436028968014484,
+     "above": 0.056729028364514184,
+     "n": 6628
+    },
+    "ramp": {
+     "coverage": 0.714509394572025,
+     "width_kw": 13.166774104925848,
+     "interval_score": 21.88210376736496,
+     "below": 0.1315240083507307,
+     "above": 0.15396659707724425,
+     "n": 1916
+    },
+    "non-ramp": {
+     "coverage": 0.9713656387665198,
+     "width_kw": 5.130076682818458,
+     "interval_score": 5.260337798417844,
+     "below": 0.007753303964757709,
+     "above": 0.020881057268722466,
+     "n": 11350
+    },
+    "rising ramp": {
+     "coverage": 0.6848290598290598,
+     "width_kw": 13.29350560764636,
+     "interval_score": 23.197046320010312,
+     "below": 0.0,
+     "above": 0.31517094017094016,
+     "n": 936
+    },
+    "falling ramp": {
+     "coverage": 0.7428571428571429,
+     "width_kw": 13.04573258804177,
+     "interval_score": 20.626199451777147,
+     "below": 0.2571428571428571,
+     "above": 0.0,
+     "n": 980
+    },
+    "sunrise ramp": {
+     "coverage": 0.6529850746268657,
+     "width_kw": 2.326668561229074,
+     "interval_score": 5.332070881354189,
+     "below": 0.1455223880597015,
+     "above": 0.20149253731343283,
+     "n": 268
+    }
+   }
+  }
+ },
+ "past_only": {
+  "G3''-F": {
+   "50": {
+    "overall": {
+     "coverage": 0.5257801899592944,
+     "width_kw": 2.0281748671367104,
+     "interval_score": 4.528642415900721,
+     "below": 0.22847881803105682,
+     "above": 0.24574099200964872,
+     "n": 13266
+    },
+    "sunny": {
+     "coverage": 0.6259415486592347,
+     "width_kw": 0.22505727142914214,
+     "interval_score": 0.34403654109864273,
+     "below": 0.15848147032238627,
+     "above": 0.21557698101837902,
+     "n": 6638
+    },
+    "cloudy": {
+     "coverage": 0.42546771273385636,
+     "width_kw": 3.8340129178770295,
+     "interval_score": 8.719561817973169,
+     "below": 0.29858177429088717,
+     "above": 0.27595051297525647,
+     "n": 6628
+    },
+    "ramp": {
+     "coverage": 0.15605427974947808,
+     "width_kw": 4.478341411392528,
+     "interval_score": 15.907613664826485,
+     "below": 0.41283924843423797,
+     "above": 0.4311064718162839,
+     "n": 1916
+    },
+    "non-ramp": {
+     "coverage": 0.588193832599119,
+     "width_kw": 1.6145608496218073,
+     "interval_score": 2.6077517627780975,
+     "below": 0.1973568281938326,
+     "above": 0.21444933920704845,
+     "n": 11350
+    },
+    "rising ramp": {
+     "coverage": 0.11965811965811966,
+     "width_kw": 4.547875647288296,
+     "interval_score": 16.95603232107965,
+     "below": 0.004273504273504274,
+     "above": 0.8760683760683761,
+     "n": 936
+    },
+    "falling ramp": {
+     "coverage": 0.19081632653061226,
+     "width_kw": 4.411929120781878,
+     "interval_score": 14.906266866609172,
+     "below": 0.8030612244897959,
+     "above": 0.006122448979591836,
+     "n": 980
+    },
+    "sunrise ramp": {
+     "coverage": 0.13059701492537312,
+     "width_kw": 0.7547896118175479,
+     "interval_score": 3.6514037317912664,
+     "below": 0.30597014925373134,
+     "above": 0.5634328358208955,
+     "n": 268
+    },
+    "init_provenance": {
+     "2017-06-24": {
+      "n": 4620,
+      "first_origin": "2017-06-08T12:56:20.000000",
+      "last_origin": "2017-06-23T19:44:20.000000",
+      "gap_to_start_days": 0.4689814814814815
+     },
+     "2017-09-15": {
+      "n": 4620,
+      "first_origin": "2017-08-30T13:05:00.000000",
+      "last_origin": "2017-09-14T18:41:00.000000",
+      "gap_to_start_days": 0.53125
+     },
+     "2017-09-20": {
+      "n": 4620,
+      "first_origin": "2017-09-03T08:48:00.000000",
+      "last_origin": "2017-09-19T18:37:00.000000",
+      "gap_to_start_days": 0.5395833333333333
+     },
+     "2017-10-06": {
+      "n": 4620,
+      "first_origin": "2017-09-13T10:40:00.000000",
+      "last_origin": "2017-10-05T16:42:00.000000",
+      "gap_to_start_days": 0.6256944444444444
+     },
+     "2017-10-11": {
+      "n": 4620,
+      "first_origin": "2017-09-17T15:39:00.000000",
+      "last_origin": "2017-10-10T18:14:00.000000",
+      "gap_to_start_days": 0.5659722222222222
+     },
+     "2017-10-22": {
+      "n": 4620,
+      "first_origin": "2017-10-02T16:56:00.000000",
+      "last_origin": "2017-10-21T17:09:00.000000",
+      "gap_to_start_days": 0.6159722222222223
+     },
+     "2018-01-25": {
+      "n": 4620,
+      "first_origin": "2017-11-02T10:27:00.000000",
+      "last_origin": "2018-01-24T16:29:00.000000",
+      "gap_to_start_days": 0.6388888888888888
+     },
+     "2018-02-16": {
+      "n": 4620,
+      "first_origin": "2018-01-20T12:39:00.000000",
+      "last_origin": "2018-02-15T17:12:00.000000",
+      "gap_to_start_days": 0.5951388888888889
+     },
+     "2018-03-09": {
+      "n": 4620,
+      "first_origin": "2018-02-13T15:44:00.000000",
+      "last_origin": "2018-03-08T17:39:00.000000",
+      "gap_to_start_days": 0.5590277777777778
+     },
+     "2018-06-12": {
+      "n": 4620,
+      "first_origin": "2018-05-30T10:37:50.000000",
+      "last_origin": "2018-06-11T18:44:40.000000",
+      "gap_to_start_days": 0.4925925925925926
+     },
+     "2018-06-23": {
+      "n": 4620,
+      "first_origin": "2018-06-08T10:10:10.000000",
+      "last_origin": "2018-06-22T18:44:30.000000",
+      "gap_to_start_days": 0.49409722222222224
+     },
+     "2018-10-04": {
+      "n": 4620,
+      "first_origin": "2018-08-17T18:00:50.000000",
+      "last_origin": "2018-10-03T18:00:00.000000",
+      "gap_to_start_days": 0.5818287037037037
+     },
+     "2019-01-25": {
+      "n": 4620,
+      "first_origin": "2018-10-19T16:22:40.000000",
+      "last_origin": "2019-01-24T16:47:30.000000",
+      "gap_to_start_days": 0.6248842592592593
+     },
+     "2019-05-27": {
+      "n": 4620,
+      "first_origin": "2019-01-27T10:20:10.000000",
+      "last_origin": "2019-05-26T19:24:10.000000",
+      "gap_to_start_days": 0.4701388888888889
+     },
+     "2019-06-23": {
+      "n": 4620,
+      "first_origin": "2019-06-11T09:47:30.000000",
+      "last_origin": "2019-06-22T19:44:30.000000",
+      "gap_to_start_days": 0.4519675925925926
+     },
+     "2019-06-28": {
+      "n": 4620,
+      "first_origin": "2019-06-15T09:48:20.000000",
+      "last_origin": "2019-06-27T19:44:10.000000",
+      "gap_to_start_days": 0.4672453703703704
+     },
+     "2019-07-14": {
+      "n": 4620,
+      "first_origin": "2019-07-02T08:59:20.000000",
+      "last_origin": "2019-07-13T19:43:40.000000",
+      "gap_to_start_days": 0.4600694444444444
+     },
+     "2019-08-10": {
+      "n": 4620,
+      "first_origin": "2019-07-28T15:44:20.000000",
+      "last_origin": "2019-08-09T19:19:30.000000",
+      "gap_to_start_days": 0.4947916666666667
+     },
+     "2019-10-14": {
+      "n": 4620,
+      "first_origin": "2019-09-29T10:30:30.000000",
+      "last_origin": "2019-10-13T18:03:10.000000",
+      "gap_to_start_days": 0.5734953703703703
+     },
+     "2019-10-19": {
+      "n": 4620,
+      "first_origin": "2019-10-02T16:15:20.000000",
+      "last_origin": "2019-10-18T17:52:30.000000",
+      "gap_to_start_days": 0.5858796296296296
+     }
+    }
+   },
+   "80": {
+    "overall": {
+     "coverage": 0.8232323232323232,
+     "width_kw": 4.399589810489417,
+     "interval_score": 6.29378086482479,
+     "below": 0.07040554801748831,
+     "above": 0.10636212875018845,
+     "n": 13266
+    },
+    "sunny": {
+     "coverage": 0.8752636336245857,
+     "width_kw": 0.48747171122249877,
+     "interval_score": 0.574065258202729,
+     "below": 0.03796324194034348,
+     "above": 0.0867731244350708,
+     "n": 6638
+    },
+    "cloudy": {
+     "coverage": 0.7711225105612552,
+     "width_kw": 8.31761032088981,
+     "interval_score": 12.022126096683156,
+     "below": 0.10289680144840073,
+     "above": 0.12598068799034398,
+     "n": 6628
+    },
+    "ramp": {
+     "coverage": 0.49582463465553234,
+     "width_kw": 9.45916038762456,
+     "interval_score": 19.936869018173038,
+     "below": 0.23173277661795408,
+     "above": 0.27244258872651356,
+     "n": 1916
+    },
+    "non-ramp": {
+     "coverage": 0.8785022026431718,
+     "width_kw": 3.545480803811802,
+     "interval_score": 3.990683340435783,
+     "below": 0.04317180616740088,
+     "above": 0.07832599118942732,
+     "n": 11350
+    },
+    "rising ramp": {
+     "coverage": 0.4423076923076923,
+     "width_kw": 9.597620285095866,
+     "interval_score": 21.534358007544473,
+     "below": 0.0,
+     "above": 0.5576923076923077,
+     "n": 936
+    },
+    "falling ramp": {
+     "coverage": 0.5469387755102041,
+     "width_kw": 9.3269170569785,
+     "interval_score": 18.41110402424277,
+     "below": 0.4530612244897959,
+     "above": 0.0,
+     "n": 980
+    },
+    "sunrise ramp": {
+     "coverage": 0.4216417910447761,
+     "width_kw": 1.6727386603931673,
+     "interval_score": 4.933031610793925,
+     "below": 0.208955223880597,
+     "above": 0.3694029850746269,
+     "n": 268
+    },
+    "init_provenance": {
+     "2017-06-24": {
+      "n": 4620,
+      "first_origin": "2017-06-08T12:56:20.000000",
+      "last_origin": "2017-06-23T19:44:20.000000",
+      "gap_to_start_days": 0.4689814814814815
+     },
+     "2017-09-15": {
+      "n": 4620,
+      "first_origin": "2017-08-30T13:05:00.000000",
+      "last_origin": "2017-09-14T18:41:00.000000",
+      "gap_to_start_days": 0.53125
+     },
+     "2017-09-20": {
+      "n": 4620,
+      "first_origin": "2017-09-03T08:48:00.000000",
+      "last_origin": "2017-09-19T18:37:00.000000",
+      "gap_to_start_days": 0.5395833333333333
+     },
+     "2017-10-06": {
+      "n": 4620,
+      "first_origin": "2017-09-13T10:40:00.000000",
+      "last_origin": "2017-10-05T16:42:00.000000",
+      "gap_to_start_days": 0.6256944444444444
+     },
+     "2017-10-11": {
+      "n": 4620,
+      "first_origin": "2017-09-17T15:39:00.000000",
+      "last_origin": "2017-10-10T18:14:00.000000",
+      "gap_to_start_days": 0.5659722222222222
+     },
+     "2017-10-22": {
+      "n": 4620,
+      "first_origin": "2017-10-02T16:56:00.000000",
+      "last_origin": "2017-10-21T17:09:00.000000",
+      "gap_to_start_days": 0.6159722222222223
+     },
+     "2018-01-25": {
+      "n": 4620,
+      "first_origin": "2017-11-02T10:27:00.000000",
+      "last_origin": "2018-01-24T16:29:00.000000",
+      "gap_to_start_days": 0.6388888888888888
+     },
+     "2018-02-16": {
+      "n": 4620,
+      "first_origin": "2018-01-20T12:39:00.000000",
+      "last_origin": "2018-02-15T17:12:00.000000",
+      "gap_to_start_days": 0.5951388888888889
+     },
+     "2018-03-09": {
+      "n": 4620,
+      "first_origin": "2018-02-13T15:44:00.000000",
+      "last_origin": "2018-03-08T17:39:00.000000",
+      "gap_to_start_days": 0.5590277777777778
+     },
+     "2018-06-12": {
+      "n": 4620,
+      "first_origin": "2018-05-30T10:37:50.000000",
+      "last_origin": "2018-06-11T18:44:40.000000",
+      "gap_to_start_days": 0.4925925925925926
+     },
+     "2018-06-23": {
+      "n": 4620,
+      "first_origin": "2018-06-08T10:10:10.000000",
+      "last_origin": "2018-06-22T18:44:30.000000",
+      "gap_to_start_days": 0.49409722222222224
+     },
+     "2018-10-04": {
+      "n": 4620,
+      "first_origin": "2018-08-17T18:00:50.000000",
+      "last_origin": "2018-10-03T18:00:00.000000",
+      "gap_to_start_days": 0.5818287037037037
+     },
+     "2019-01-25": {
+      "n": 4620,
+      "first_origin": "2018-10-19T16:22:40.000000",
+      "last_origin": "2019-01-24T16:47:30.000000",
+      "gap_to_start_days": 0.6248842592592593
+     },
+     "2019-05-27": {
+      "n": 4620,
+      "first_origin": "2019-01-27T10:20:10.000000",
+      "last_origin": "2019-05-26T19:24:10.000000",
+      "gap_to_start_days": 0.4701388888888889
+     },
+     "2019-06-23": {
+      "n": 4620,
+      "first_origin": "2019-06-11T09:47:30.000000",
+      "last_origin": "2019-06-22T19:44:30.000000",
+      "gap_to_start_days": 0.4519675925925926
+     },
+     "2019-06-28": {
+      "n": 4620,
+      "first_origin": "2019-06-15T09:48:20.000000",
+      "last_origin": "2019-06-27T19:44:10.000000",
+      "gap_to_start_days": 0.4672453703703704
+     },
+     "2019-07-14": {
+      "n": 4620,
+      "first_origin": "2019-07-02T08:59:20.000000",
+      "last_origin": "2019-07-13T19:43:40.000000",
+      "gap_to_start_days": 0.4600694444444444
+     },
+     "2019-08-10": {
+      "n": 4620,
+      "first_origin": "2019-07-28T15:44:20.000000",
+      "last_origin": "2019-08-09T19:19:30.000000",
+      "gap_to_start_days": 0.4947916666666667
+     },
+     "2019-10-14": {
+      "n": 4620,
+      "first_origin": "2019-09-29T10:30:30.000000",
+      "last_origin": "2019-10-13T18:03:10.000000",
+      "gap_to_start_days": 0.5734953703703703
+     },
+     "2019-10-19": {
+      "n": 4620,
+      "first_origin": "2019-10-02T16:15:20.000000",
+      "last_origin": "2019-10-18T17:52:30.000000",
+      "gap_to_start_days": 0.5858796296296296
+     }
+    }
+   },
+   "90": {
+    "overall": {
+     "coverage": 0.9259007990351273,
+     "width_kw": 6.227811276869001,
+     "interval_score": 7.596187459057667,
+     "below": 0.021483491632745363,
+     "above": 0.052615709332127246,
+     "n": 13266
+    },
+    "sunny": {
+     "coverage": 0.9498342874359746,
+     "width_kw": 0.7622784568867017,
+     "interval_score": 0.828472536290809,
+     "below": 0.006628502561012353,
+     "above": 0.04353721000301296,
+     "n": 6638
+    },
+    "cloudy": {
+     "coverage": 0.9019312009656005,
+     "width_kw": 11.701590223616511,
+     "interval_score": 14.374113176819646,
+     "below": 0.03636089318044659,
+     "above": 0.06170790585395293,
+     "n": 6628
+    },
+    "ramp": {
+     "coverage": 0.7463465553235908,
+     "width_kw": 12.977276932430714,
+     "interval_score": 21.065559928462235,
+     "below": 0.10490605427974947,
+     "above": 0.1487473903966597,
+     "n": 1916
+    },
+    "non-ramp": {
+     "coverage": 0.9562114537444933,
+     "width_kw": 5.088430114220873,
+     "interval_score": 5.3224149787599435,
+     "below": 0.0074008810572687225,
+     "above": 0.036387665198237884,
+     "n": 11350
+    },
+    "rising ramp": {
+     "coverage": 0.6955128205128205,
+     "width_kw": 13.130139496581826,
+     "interval_score": 23.293693551171682,
+     "below": 0.0,
+     "above": 0.30448717948717946,
+     "n": 936
+    },
+    "falling ramp": {
+     "coverage": 0.7948979591836735,
+     "width_kw": 12.831277585445571,
+     "interval_score": 18.937464958200977,
+     "below": 0.20510204081632652,
+     "above": 0.0,
+     "n": 980
+    },
+    "sunrise ramp": {
+     "coverage": 0.6865671641791045,
+     "width_kw": 2.3657445586201966,
+     "interval_score": 5.189022928146569,
+     "below": 0.11567164179104478,
+     "above": 0.19776119402985073,
+     "n": 268
+    },
+    "init_provenance": {
+     "2017-06-24": {
+      "n": 4620,
+      "first_origin": "2017-06-08T12:56:20.000000",
+      "last_origin": "2017-06-23T19:44:20.000000",
+      "gap_to_start_days": 0.4689814814814815
+     },
+     "2017-09-15": {
+      "n": 4620,
+      "first_origin": "2017-08-30T13:05:00.000000",
+      "last_origin": "2017-09-14T18:41:00.000000",
+      "gap_to_start_days": 0.53125
+     },
+     "2017-09-20": {
+      "n": 4620,
+      "first_origin": "2017-09-03T08:48:00.000000",
+      "last_origin": "2017-09-19T18:37:00.000000",
+      "gap_to_start_days": 0.5395833333333333
+     },
+     "2017-10-06": {
+      "n": 4620,
+      "first_origin": "2017-09-13T10:40:00.000000",
+      "last_origin": "2017-10-05T16:42:00.000000",
+      "gap_to_start_days": 0.6256944444444444
+     },
+     "2017-10-11": {
+      "n": 4620,
+      "first_origin": "2017-09-17T15:39:00.000000",
+      "last_origin": "2017-10-10T18:14:00.000000",
+      "gap_to_start_days": 0.5659722222222222
+     },
+     "2017-10-22": {
+      "n": 4620,
+      "first_origin": "2017-10-02T16:56:00.000000",
+      "last_origin": "2017-10-21T17:09:00.000000",
+      "gap_to_start_days": 0.6159722222222223
+     },
+     "2018-01-25": {
+      "n": 4620,
+      "first_origin": "2017-11-02T10:27:00.000000",
+      "last_origin": "2018-01-24T16:29:00.000000",
+      "gap_to_start_days": 0.6388888888888888
+     },
+     "2018-02-16": {
+      "n": 4620,
+      "first_origin": "2018-01-20T12:39:00.000000",
+      "last_origin": "2018-02-15T17:12:00.000000",
+      "gap_to_start_days": 0.5951388888888889
+     },
+     "2018-03-09": {
+      "n": 4620,
+      "first_origin": "2018-02-13T15:44:00.000000",
+      "last_origin": "2018-03-08T17:39:00.000000",
+      "gap_to_start_days": 0.5590277777777778
+     },
+     "2018-06-12": {
+      "n": 4620,
+      "first_origin": "2018-05-30T10:37:50.000000",
+      "last_origin": "2018-06-11T18:44:40.000000",
+      "gap_to_start_days": 0.4925925925925926
+     },
+     "2018-06-23": {
+      "n": 4620,
+      "first_origin": "2018-06-08T10:10:10.000000",
+      "last_origin": "2018-06-22T18:44:30.000000",
+      "gap_to_start_days": 0.49409722222222224
+     },
+     "2018-10-04": {
+      "n": 4620,
+      "first_origin": "2018-08-17T18:00:50.000000",
+      "last_origin": "2018-10-03T18:00:00.000000",
+      "gap_to_start_days": 0.5818287037037037
+     },
+     "2019-01-25": {
+      "n": 4620,
+      "first_origin": "2018-10-19T16:22:40.000000",
+      "last_origin": "2019-01-24T16:47:30.000000",
+      "gap_to_start_days": 0.6248842592592593
+     },
+     "2019-05-27": {
+      "n": 4620,
+      "first_origin": "2019-01-27T10:20:10.000000",
+      "last_origin": "2019-05-26T19:24:10.000000",
+      "gap_to_start_days": 0.4701388888888889
+     },
+     "2019-06-23": {
+      "n": 4620,
+      "first_origin": "2019-06-11T09:47:30.000000",
+      "last_origin": "2019-06-22T19:44:30.000000",
+      "gap_to_start_days": 0.4519675925925926
+     },
+     "2019-06-28": {
+      "n": 4620,
+      "first_origin": "2019-06-15T09:48:20.000000",
+      "last_origin": "2019-06-27T19:44:10.000000",
+      "gap_to_start_days": 0.4672453703703704
+     },
+     "2019-07-14": {
+      "n": 4620,
+      "first_origin": "2019-07-02T08:59:20.000000",
+      "last_origin": "2019-07-13T19:43:40.000000",
+      "gap_to_start_days": 0.4600694444444444
+     },
+     "2019-08-10": {
+      "n": 4620,
+      "first_origin": "2019-07-28T15:44:20.000000",
+      "last_origin": "2019-08-09T19:19:30.000000",
+      "gap_to_start_days": 0.4947916666666667
+     },
+     "2019-10-14": {
+      "n": 4620,
+      "first_origin": "2019-09-29T10:30:30.000000",
+      "last_origin": "2019-10-13T18:03:10.000000",
+      "gap_to_start_days": 0.5734953703703703
+     },
+     "2019-10-19": {
+      "n": 4620,
+      "first_origin": "2019-10-02T16:15:20.000000",
+      "last_origin": "2019-10-18T17:52:30.000000",
+      "gap_to_start_days": 0.5858796296296296
+     }
+    }
+   }
+  },
+  "E4-B-fit": {
+   "50": {
+    "overall": {
+     "coverage": 0.5782451379466305,
+     "width_kw": 2.390102834118586,
+     "interval_score": 4.990186183609511,
+     "below": 0.22259912558420022,
+     "above": 0.19915573646916931,
+     "n": 13266
+    },
+    "sunny": {
+     "coverage": 0.6664658029526966,
+     "width_kw": 0.6909899826102254,
+     "interval_score": 0.8670238152340536,
+     "below": 0.17701114793612535,
+     "above": 0.15652304911117806,
+     "n": 6638
+    },
+    "cloudy": {
+     "coverage": 0.489891369945685,
+     "width_kw": 4.091779223423428,
+     "interval_score": 9.119569376318667,
+     "below": 0.26825588412794205,
+     "above": 0.24185274592637296,
+     "n": 6628
+    },
+    "ramp": {
+     "coverage": 0.20250521920668058,
+     "width_kw": 4.589276904287054,
+     "interval_score": 16.242125631429595,
+     "below": 0.3966597077244259,
+     "above": 0.40083507306889354,
+     "n": 1916
+    },
+    "non-ramp": {
+     "coverage": 0.6416740088105727,
+     "width_kw": 2.018858999894552,
+     "interval_score": 3.0907398415810285,
+     "below": 0.19321585903083702,
+     "above": 0.1651101321585903,
+     "n": 11350
+    },
+    "rising ramp": {
+     "coverage": 0.1997863247863248,
+     "width_kw": 4.632637266816367,
+     "interval_score": 16.719553861764776,
+     "below": 0.002136752136752137,
+     "above": 0.7980769230769231,
+     "n": 936
+    },
+    "falling ramp": {
+     "coverage": 0.20510204081632652,
+     "width_kw": 4.54786333354477,
+     "interval_score": 15.786132954293134,
+     "below": 0.773469387755102,
+     "above": 0.02142857142857143,
+     "n": 980
+    },
+    "sunrise ramp": {
+     "coverage": 0.3805970149253731,
+     "width_kw": 1.3275023167243332,
+     "interval_score": 3.296642311506221,
+     "below": 0.27238805970149255,
+     "above": 0.34701492537313433,
+     "n": 268
+    },
+    "init_provenance": {
+     "2017-06-24": {
+      "n": 990,
+      "first_origin": "2017-06-21T13:12:50.000000",
+      "last_origin": "2017-06-23T19:44:20.000000",
+      "gap_to_start_days": 0.4689814814814815
+     },
+     "2017-09-15": {
+      "n": 990,
+      "first_origin": "2017-09-11T13:39:00.000000",
+      "last_origin": "2017-09-14T18:41:00.000000",
+      "gap_to_start_days": 0.53125
+     },
+     "2017-09-20": {
+      "n": 990,
+      "first_origin": "2017-09-16T14:23:00.000000",
+      "last_origin": "2017-09-19T18:37:00.000000",
+      "gap_to_start_days": 0.5395833333333333
+     },
+     "2017-10-06": {
+      "n": 990,
+      "first_origin": "2017-10-02T13:34:00.000000",
+      "last_origin": "2017-10-05T16:42:00.000000",
+      "gap_to_start_days": 0.6256944444444444
+     },
+     "2017-10-11": {
+      "n": 990,
+      "first_origin": "2017-10-07T08:07:00.000000",
+      "last_origin": "2017-10-10T18:14:00.000000",
+      "gap_to_start_days": 0.5659722222222222
+     },
+     "2017-10-22": {
+      "n": 990,
+      "first_origin": "2017-10-18T12:05:00.000000",
+      "last_origin": "2017-10-21T17:09:00.000000",
+      "gap_to_start_days": 0.6159722222222223
+     },
+     "2018-01-25": {
+      "n": 990,
+      "first_origin": "2018-01-20T14:55:00.000000",
+      "last_origin": "2018-01-24T16:29:00.000000",
+      "gap_to_start_days": 0.6388888888888888
+     },
+     "2018-02-16": {
+      "n": 990,
+      "first_origin": "2018-02-12T10:03:00.000000",
+      "last_origin": "2018-02-15T17:12:00.000000",
+      "gap_to_start_days": 0.5951388888888889
+     },
+     "2018-03-09": {
+      "n": 990,
+      "first_origin": "2018-03-05T11:51:00.000000",
+      "last_origin": "2018-03-08T17:39:00.000000",
+      "gap_to_start_days": 0.5590277777777778
+     },
+     "2018-06-12": {
+      "n": 990,
+      "first_origin": "2018-06-09T10:02:40.000000",
+      "last_origin": "2018-06-11T18:44:40.000000",
+      "gap_to_start_days": 0.4925925925925926
+     },
+     "2018-06-23": {
+      "n": 990,
+      "first_origin": "2018-06-20T10:06:50.000000",
+      "last_origin": "2018-06-22T18:44:30.000000",
+      "gap_to_start_days": 0.49409722222222224
+     },
+     "2018-10-04": {
+      "n": 990,
+      "first_origin": "2018-09-24T16:05:40.000000",
+      "last_origin": "2018-10-03T18:00:00.000000",
+      "gap_to_start_days": 0.5818287037037037
+     },
+     "2019-01-25": {
+      "n": 990,
+      "first_origin": "2018-11-01T12:40:30.000000",
+      "last_origin": "2019-01-24T16:47:30.000000",
+      "gap_to_start_days": 0.6248842592592593
+     },
+     "2019-05-27": {
+      "n": 990,
+      "first_origin": "2019-05-24T11:54:10.000000",
+      "last_origin": "2019-05-26T19:24:10.000000",
+      "gap_to_start_days": 0.4701388888888889
+     },
+     "2019-06-23": {
+      "n": 990,
+      "first_origin": "2019-06-20T13:17:30.000000",
+      "last_origin": "2019-06-22T19:44:30.000000",
+      "gap_to_start_days": 0.4519675925925926
+     },
+     "2019-06-28": {
+      "n": 990,
+      "first_origin": "2019-06-25T12:47:10.000000",
+      "last_origin": "2019-06-27T19:44:10.000000",
+      "gap_to_start_days": 0.4672453703703704
+     },
+     "2019-07-14": {
+      "n": 990,
+      "first_origin": "2019-07-11T12:49:30.000000",
+      "last_origin": "2019-07-13T19:43:40.000000",
+      "gap_to_start_days": 0.4600694444444444
+     },
+     "2019-08-10": {
+      "n": 990,
+      "first_origin": "2019-08-07T11:09:10.000000",
+      "last_origin": "2019-08-09T19:19:30.000000",
+      "gap_to_start_days": 0.4947916666666667
+     },
+     "2019-10-14": {
+      "n": 990,
+      "first_origin": "2019-10-10T15:54:30.000000",
+      "last_origin": "2019-10-13T18:03:10.000000",
+      "gap_to_start_days": 0.5734953703703703
+     },
+     "2019-10-19": {
+      "n": 990,
+      "first_origin": "2019-10-15T13:17:20.000000",
+      "last_origin": "2019-10-18T17:52:30.000000",
+      "gap_to_start_days": 0.5858796296296296
+     }
+    }
+   },
+   "80": {
+    "overall": {
+     "coverage": 0.8536861148801448,
+     "width_kw": 5.4164992538359895,
+     "interval_score": 7.3664833539781425,
+     "below": 0.047188300919644204,
+     "above": 0.09912558420021107,
+     "n": 13266
+    },
+    "sunny": {
+     "coverage": 0.9263332329014764,
+     "width_kw": 2.045289388809494,
+     "interval_score": 2.1343652404949927,
+     "below": 0.0067791503464899065,
+     "above": 0.06688761675203375,
+     "n": 6638
+    },
+    "cloudy": {
+     "coverage": 0.7809293904646952,
+     "width_kw": 8.792795434289502,
+     "interval_score": 12.60649542961199,
+     "below": 0.08765841882920941,
+     "above": 0.13141219070609536,
+     "n": 6628
+    },
+    "ramp": {
+     "coverage": 0.4932150313152401,
+     "width_kw": 9.794583894385914,
+     "interval_score": 20.555708192651537,
+     "below": 0.2291231732776618,
+     "above": 0.2776617954070981,
+     "n": 1916
+    },
+    "non-ramp": {
+     "coverage": 0.9145374449339208,
+     "width_kw": 4.677432278391614,
+     "interval_score": 5.140002755661118,
+     "below": 0.01647577092511013,
+     "above": 0.06898678414096916,
+     "n": 11350
+    },
+    "rising ramp": {
+     "coverage": 0.4519230769230769,
+     "width_kw": 9.900669705752394,
+     "interval_score": 22.955241106925506,
+     "below": 0.0,
+     "above": 0.5480769230769231,
+     "n": 936
+    },
+    "falling ramp": {
+     "coverage": 0.5326530612244897,
+     "width_kw": 9.693261119448133,
+     "interval_score": 18.26390940922252,
+     "below": 0.4479591836734694,
+     "above": 0.019387755102040816,
+     "n": 980
+    },
+    "sunrise ramp": {
+     "coverage": 0.5559701492537313,
+     "width_kw": 2.08695481794641,
+     "interval_score": 4.602147366029281,
+     "below": 0.16417910447761194,
+     "above": 0.2798507462686567,
+     "n": 268
+    },
+    "init_provenance": {
+     "2017-06-24": {
+      "n": 990,
+      "first_origin": "2017-06-21T13:12:50.000000",
+      "last_origin": "2017-06-23T19:44:20.000000",
+      "gap_to_start_days": 0.4689814814814815
+     },
+     "2017-09-15": {
+      "n": 990,
+      "first_origin": "2017-09-11T13:39:00.000000",
+      "last_origin": "2017-09-14T18:41:00.000000",
+      "gap_to_start_days": 0.53125
+     },
+     "2017-09-20": {
+      "n": 990,
+      "first_origin": "2017-09-16T14:23:00.000000",
+      "last_origin": "2017-09-19T18:37:00.000000",
+      "gap_to_start_days": 0.5395833333333333
+     },
+     "2017-10-06": {
+      "n": 990,
+      "first_origin": "2017-10-02T13:34:00.000000",
+      "last_origin": "2017-10-05T16:42:00.000000",
+      "gap_to_start_days": 0.6256944444444444
+     },
+     "2017-10-11": {
+      "n": 990,
+      "first_origin": "2017-10-07T08:07:00.000000",
+      "last_origin": "2017-10-10T18:14:00.000000",
+      "gap_to_start_days": 0.5659722222222222
+     },
+     "2017-10-22": {
+      "n": 990,
+      "first_origin": "2017-10-18T12:05:00.000000",
+      "last_origin": "2017-10-21T17:09:00.000000",
+      "gap_to_start_days": 0.6159722222222223
+     },
+     "2018-01-25": {
+      "n": 990,
+      "first_origin": "2018-01-20T14:55:00.000000",
+      "last_origin": "2018-01-24T16:29:00.000000",
+      "gap_to_start_days": 0.6388888888888888
+     },
+     "2018-02-16": {
+      "n": 990,
+      "first_origin": "2018-02-12T10:03:00.000000",
+      "last_origin": "2018-02-15T17:12:00.000000",
+      "gap_to_start_days": 0.5951388888888889
+     },
+     "2018-03-09": {
+      "n": 990,
+      "first_origin": "2018-03-05T11:51:00.000000",
+      "last_origin": "2018-03-08T17:39:00.000000",
+      "gap_to_start_days": 0.5590277777777778
+     },
+     "2018-06-12": {
+      "n": 990,
+      "first_origin": "2018-06-09T10:02:40.000000",
+      "last_origin": "2018-06-11T18:44:40.000000",
+      "gap_to_start_days": 0.4925925925925926
+     },
+     "2018-06-23": {
+      "n": 990,
+      "first_origin": "2018-06-20T10:06:50.000000",
+      "last_origin": "2018-06-22T18:44:30.000000",
+      "gap_to_start_days": 0.49409722222222224
+     },
+     "2018-10-04": {
+      "n": 990,
+      "first_origin": "2018-09-24T16:05:40.000000",
+      "last_origin": "2018-10-03T18:00:00.000000",
+      "gap_to_start_days": 0.5818287037037037
+     },
+     "2019-01-25": {
+      "n": 990,
+      "first_origin": "2018-11-01T12:40:30.000000",
+      "last_origin": "2019-01-24T16:47:30.000000",
+      "gap_to_start_days": 0.6248842592592593
+     },
+     "2019-05-27": {
+      "n": 990,
+      "first_origin": "2019-05-24T11:54:10.000000",
+      "last_origin": "2019-05-26T19:24:10.000000",
+      "gap_to_start_days": 0.4701388888888889
+     },
+     "2019-06-23": {
+      "n": 990,
+      "first_origin": "2019-06-20T13:17:30.000000",
+      "last_origin": "2019-06-22T19:44:30.000000",
+      "gap_to_start_days": 0.4519675925925926
+     },
+     "2019-06-28": {
+      "n": 990,
+      "first_origin": "2019-06-25T12:47:10.000000",
+      "last_origin": "2019-06-27T19:44:10.000000",
+      "gap_to_start_days": 0.4672453703703704
+     },
+     "2019-07-14": {
+      "n": 990,
+      "first_origin": "2019-07-11T12:49:30.000000",
+      "last_origin": "2019-07-13T19:43:40.000000",
+      "gap_to_start_days": 0.4600694444444444
+     },
+     "2019-08-10": {
+      "n": 990,
+      "first_origin": "2019-08-07T11:09:10.000000",
+      "last_origin": "2019-08-09T19:19:30.000000",
+      "gap_to_start_days": 0.4947916666666667
+     },
+     "2019-10-14": {
+      "n": 990,
+      "first_origin": "2019-10-10T15:54:30.000000",
+      "last_origin": "2019-10-13T18:03:10.000000",
+      "gap_to_start_days": 0.5734953703703703
+     },
+     "2019-10-19": {
+      "n": 990,
+      "first_origin": "2019-10-15T13:17:20.000000",
+      "last_origin": "2019-10-18T17:52:30.000000",
+      "gap_to_start_days": 0.5858796296296296
+     }
+    }
+   },
+   "90": {
+    "overall": {
+     "coverage": 0.9327604402231268,
+     "width_kw": 8.259411531832184,
+     "interval_score": 9.550789959039392,
+     "below": 0.01552841851349314,
+     "above": 0.05171114126338007,
+     "n": 13266
+    },
+    "sunny": {
+     "coverage": 0.9745405242542935,
+     "width_kw": 4.169437275990296,
+     "interval_score": 4.211510512014461,
+     "below": 0.002862307924073516,
+     "above": 0.022597167821633023,
+     "n": 6638
+    },
+    "cloudy": {
+     "coverage": 0.8909173204586602,
+     "width_kw": 12.35555653941795,
+     "interval_score": 14.898125047957842,
+     "below": 0.028213639106819552,
+     "above": 0.08086904043452021,
+     "n": 6628
+    },
+    "ramp": {
+     "coverage": 0.7473903966597077,
+     "width_kw": 13.420488055209834,
+     "interval_score": 20.974346310764616,
+     "below": 0.09081419624217119,
+     "above": 0.1617954070981211,
+     "n": 1916
+    },
+    "non-ramp": {
+     "coverage": 0.9640528634361234,
+     "width_kw": 7.3881672482382115,
+     "interval_score": 7.622372869179873,
+     "below": 0.0028193832599118945,
+     "above": 0.03312775330396476,
+     "n": 11350
+    },
+    "rising ramp": {
+     "coverage": 0.6709401709401709,
+     "width_kw": 13.55859918104238,
+     "interval_score": 24.949117275719715,
+     "below": 0.0,
+     "above": 0.32905982905982906,
+     "n": 936
+    },
+    "falling ramp": {
+     "coverage": 0.8204081632653061,
+     "width_kw": 13.288577837067729,
+     "interval_score": 17.17803445035852,
+     "below": 0.17755102040816326,
+     "above": 0.0020408163265306124,
+     "n": 980
+    },
+    "sunrise ramp": {
+     "coverage": 0.6791044776119403,
+     "width_kw": 2.808010924445818,
+     "interval_score": 5.1292210122010555,
+     "below": 0.08582089552238806,
+     "above": 0.23507462686567165,
+     "n": 268
+    },
+    "init_provenance": {
+     "2017-06-24": {
+      "n": 990,
+      "first_origin": "2017-06-21T13:12:50.000000",
+      "last_origin": "2017-06-23T19:44:20.000000",
+      "gap_to_start_days": 0.4689814814814815
+     },
+     "2017-09-15": {
+      "n": 990,
+      "first_origin": "2017-09-11T13:39:00.000000",
+      "last_origin": "2017-09-14T18:41:00.000000",
+      "gap_to_start_days": 0.53125
+     },
+     "2017-09-20": {
+      "n": 990,
+      "first_origin": "2017-09-16T14:23:00.000000",
+      "last_origin": "2017-09-19T18:37:00.000000",
+      "gap_to_start_days": 0.5395833333333333
+     },
+     "2017-10-06": {
+      "n": 990,
+      "first_origin": "2017-10-02T13:34:00.000000",
+      "last_origin": "2017-10-05T16:42:00.000000",
+      "gap_to_start_days": 0.6256944444444444
+     },
+     "2017-10-11": {
+      "n": 990,
+      "first_origin": "2017-10-07T08:07:00.000000",
+      "last_origin": "2017-10-10T18:14:00.000000",
+      "gap_to_start_days": 0.5659722222222222
+     },
+     "2017-10-22": {
+      "n": 990,
+      "first_origin": "2017-10-18T12:05:00.000000",
+      "last_origin": "2017-10-21T17:09:00.000000",
+      "gap_to_start_days": 0.6159722222222223
+     },
+     "2018-01-25": {
+      "n": 990,
+      "first_origin": "2018-01-20T14:55:00.000000",
+      "last_origin": "2018-01-24T16:29:00.000000",
+      "gap_to_start_days": 0.6388888888888888
+     },
+     "2018-02-16": {
+      "n": 990,
+      "first_origin": "2018-02-12T10:03:00.000000",
+      "last_origin": "2018-02-15T17:12:00.000000",
+      "gap_to_start_days": 0.5951388888888889
+     },
+     "2018-03-09": {
+      "n": 990,
+      "first_origin": "2018-03-05T11:51:00.000000",
+      "last_origin": "2018-03-08T17:39:00.000000",
+      "gap_to_start_days": 0.5590277777777778
+     },
+     "2018-06-12": {
+      "n": 990,
+      "first_origin": "2018-06-09T10:02:40.000000",
+      "last_origin": "2018-06-11T18:44:40.000000",
+      "gap_to_start_days": 0.4925925925925926
+     },
+     "2018-06-23": {
+      "n": 990,
+      "first_origin": "2018-06-20T10:06:50.000000",
+      "last_origin": "2018-06-22T18:44:30.000000",
+      "gap_to_start_days": 0.49409722222222224
+     },
+     "2018-10-04": {
+      "n": 990,
+      "first_origin": "2018-09-24T16:05:40.000000",
+      "last_origin": "2018-10-03T18:00:00.000000",
+      "gap_to_start_days": 0.5818287037037037
+     },
+     "2019-01-25": {
+      "n": 990,
+      "first_origin": "2018-11-01T12:40:30.000000",
+      "last_origin": "2019-01-24T16:47:30.000000",
+      "gap_to_start_days": 0.6248842592592593
+     },
+     "2019-05-27": {
+      "n": 990,
+      "first_origin": "2019-05-24T11:54:10.000000",
+      "last_origin": "2019-05-26T19:24:10.000000",
+      "gap_to_start_days": 0.4701388888888889
+     },
+     "2019-06-23": {
+      "n": 990,
+      "first_origin": "2019-06-20T13:17:30.000000",
+      "last_origin": "2019-06-22T19:44:30.000000",
+      "gap_to_start_days": 0.4519675925925926
+     },
+     "2019-06-28": {
+      "n": 990,
+      "first_origin": "2019-06-25T12:47:10.000000",
+      "last_origin": "2019-06-27T19:44:10.000000",
+      "gap_to_start_days": 0.4672453703703704
+     },
+     "2019-07-14": {
+      "n": 990,
+      "first_origin": "2019-07-11T12:49:30.000000",
+      "last_origin": "2019-07-13T19:43:40.000000",
+      "gap_to_start_days": 0.4600694444444444
+     },
+     "2019-08-10": {
+      "n": 990,
+      "first_origin": "2019-08-07T11:09:10.000000",
+      "last_origin": "2019-08-09T19:19:30.000000",
+      "gap_to_start_days": 0.4947916666666667
+     },
+     "2019-10-14": {
+      "n": 990,
+      "first_origin": "2019-10-10T15:54:30.000000",
+      "last_origin": "2019-10-13T18:03:10.000000",
+      "gap_to_start_days": 0.5734953703703703
+     },
+     "2019-10-19": {
+      "n": 990,
+      "first_origin": "2019-10-15T13:17:20.000000",
+      "last_origin": "2019-10-18T17:52:30.000000",
+      "gap_to_start_days": 0.5858796296296296
+     }
+    }
+   }
+  },
+  "E6-S": {
+   "50": {
+    "overall": {
+     "coverage": 0.5042213176541535,
+     "width_kw": 2.1739373557151294,
+     "interval_score": 4.919708954323812,
+     "below": 0.25772651892054876,
+     "above": 0.23805216342529775,
+     "n": 13266
+    },
+    "sunny": {
+     "coverage": 0.5533293160590539,
+     "width_kw": 0.18512260624692145,
+     "interval_score": 0.3358331158588029,
+     "below": 0.22205483579391383,
+     "above": 0.22461584814703223,
+     "n": 6638
+    },
+    "cloudy": {
+     "coverage": 0.4550392275196138,
+     "width_kw": 4.16575273093691,
+     "interval_score": 9.510500718918067,
+     "below": 0.29345202172601087,
+     "above": 0.2515087507543754,
+     "n": 6628
+    },
+    "ramp": {
+     "coverage": 0.11899791231732777,
+     "width_kw": 4.962306066109759,
+     "interval_score": 19.318777592241112,
+     "below": 0.43580375782881003,
+     "above": 0.4451983298538622,
+     "n": 1916
+    },
+    "non-ramp": {
+     "coverage": 0.5692511013215859,
+     "width_kw": 1.7032312368502736,
+     "interval_score": 2.4889939313943352,
+     "below": 0.22766519823788547,
+     "above": 0.20308370044052865,
+     "n": 11350
+    },
+    "rising ramp": {
+     "coverage": 0.08867521367521368,
+     "width_kw": 5.106092004318953,
+     "interval_score": 19.97785902396157,
+     "below": 0.0,
+     "above": 0.9113247863247863,
+     "n": 936
+    },
+    "falling ramp": {
+     "coverage": 0.14795918367346939,
+     "width_kw": 4.8249758230854685,
+     "interval_score": 18.68928757174076,
+     "below": 0.8520408163265306,
+     "above": 0.0,
+     "n": 980
+    },
+    "sunrise ramp": {
+     "coverage": 0.07835820895522388,
+     "width_kw": 0.9186807215419533,
+     "interval_score": 4.052794261561577,
+     "below": 0.31343283582089554,
+     "above": 0.6082089552238806,
+     "n": 268
+    },
+    "init_provenance": {
+     "2017-06-24": {
+      "n": 4620,
+      "first_origin": "2017-06-08T12:56:20.000000",
+      "last_origin": "2017-06-23T19:44:20.000000",
+      "gap_to_start_days": 0.4689814814814815
+     },
+     "2017-09-15": {
+      "n": 4620,
+      "first_origin": "2017-08-30T13:05:00.000000",
+      "last_origin": "2017-09-14T18:41:00.000000",
+      "gap_to_start_days": 0.53125
+     },
+     "2017-09-20": {
+      "n": 4620,
+      "first_origin": "2017-09-03T08:48:00.000000",
+      "last_origin": "2017-09-19T18:37:00.000000",
+      "gap_to_start_days": 0.5395833333333333
+     },
+     "2017-10-06": {
+      "n": 4620,
+      "first_origin": "2017-09-13T10:40:00.000000",
+      "last_origin": "2017-10-05T16:42:00.000000",
+      "gap_to_start_days": 0.6256944444444444
+     },
+     "2017-10-11": {
+      "n": 4620,
+      "first_origin": "2017-09-17T15:39:00.000000",
+      "last_origin": "2017-10-10T18:14:00.000000",
+      "gap_to_start_days": 0.5659722222222222
+     },
+     "2017-10-22": {
+      "n": 4620,
+      "first_origin": "2017-10-02T16:56:00.000000",
+      "last_origin": "2017-10-21T17:09:00.000000",
+      "gap_to_start_days": 0.6159722222222223
+     },
+     "2018-01-25": {
+      "n": 4620,
+      "first_origin": "2017-11-02T10:27:00.000000",
+      "last_origin": "2018-01-24T16:29:00.000000",
+      "gap_to_start_days": 0.6388888888888888
+     },
+     "2018-02-16": {
+      "n": 4620,
+      "first_origin": "2018-01-20T12:39:00.000000",
+      "last_origin": "2018-02-15T17:12:00.000000",
+      "gap_to_start_days": 0.5951388888888889
+     },
+     "2018-03-09": {
+      "n": 4620,
+      "first_origin": "2018-02-13T15:44:00.000000",
+      "last_origin": "2018-03-08T17:39:00.000000",
+      "gap_to_start_days": 0.5590277777777778
+     },
+     "2018-06-12": {
+      "n": 4620,
+      "first_origin": "2018-05-30T10:37:50.000000",
+      "last_origin": "2018-06-11T18:44:40.000000",
+      "gap_to_start_days": 0.4925925925925926
+     },
+     "2018-06-23": {
+      "n": 4620,
+      "first_origin": "2018-06-08T10:10:10.000000",
+      "last_origin": "2018-06-22T18:44:30.000000",
+      "gap_to_start_days": 0.49409722222222224
+     },
+     "2018-10-04": {
+      "n": 4620,
+      "first_origin": "2018-08-17T18:00:50.000000",
+      "last_origin": "2018-10-03T18:00:00.000000",
+      "gap_to_start_days": 0.5818287037037037
+     },
+     "2019-01-25": {
+      "n": 4620,
+      "first_origin": "2018-10-19T16:22:40.000000",
+      "last_origin": "2019-01-24T16:47:30.000000",
+      "gap_to_start_days": 0.6248842592592593
+     },
+     "2019-05-27": {
+      "n": 4620,
+      "first_origin": "2019-01-27T10:20:10.000000",
+      "last_origin": "2019-05-26T19:24:10.000000",
+      "gap_to_start_days": 0.4701388888888889
+     },
+     "2019-06-23": {
+      "n": 4620,
+      "first_origin": "2019-06-11T09:47:30.000000",
+      "last_origin": "2019-06-22T19:44:30.000000",
+      "gap_to_start_days": 0.4519675925925926
+     },
+     "2019-06-28": {
+      "n": 4620,
+      "first_origin": "2019-06-15T09:48:20.000000",
+      "last_origin": "2019-06-27T19:44:10.000000",
+      "gap_to_start_days": 0.4672453703703704
+     },
+     "2019-07-14": {
+      "n": 4620,
+      "first_origin": "2019-07-02T08:59:20.000000",
+      "last_origin": "2019-07-13T19:43:40.000000",
+      "gap_to_start_days": 0.4600694444444444
+     },
+     "2019-08-10": {
+      "n": 4620,
+      "first_origin": "2019-07-28T15:44:20.000000",
+      "last_origin": "2019-08-09T19:19:30.000000",
+      "gap_to_start_days": 0.4947916666666667
+     },
+     "2019-10-14": {
+      "n": 4620,
+      "first_origin": "2019-09-29T10:30:30.000000",
+      "last_origin": "2019-10-13T18:03:10.000000",
+      "gap_to_start_days": 0.5734953703703703
+     },
+     "2019-10-19": {
+      "n": 4620,
+      "first_origin": "2019-10-02T16:15:20.000000",
+      "last_origin": "2019-10-18T17:52:30.000000",
+      "gap_to_start_days": 0.5858796296296296
+     }
+    }
+   },
+   "80": {
+    "overall": {
+     "coverage": 0.8121513643901703,
+     "width_kw": 4.651593951811761,
+     "interval_score": 7.104810167979574,
+     "below": 0.09965324890698025,
+     "above": 0.08819538670284939,
+     "n": 13266
+    },
+    "sunny": {
+     "coverage": 0.8594456161494426,
+     "width_kw": 0.4279966447721871,
+     "interval_score": 0.533248147203582,
+     "below": 0.07457065381138897,
+     "above": 0.06598373003916842,
+     "n": 6638
+    },
+    "cloudy": {
+     "coverage": 0.7647857573928787,
+     "width_kw": 8.881563614474508,
+     "interval_score": 13.686287037911836,
+     "below": 0.12477368738684369,
+     "above": 0.11044055522027761,
+     "n": 6628
+    },
+    "ramp": {
+     "coverage": 0.44780793319415446,
+     "width_kw": 10.179929202338496,
+     "interval_score": 24.823049930211035,
+     "below": 0.2802713987473904,
+     "above": 0.2719206680584551,
+     "n": 1916
+    },
+    "non-ramp": {
+     "coverage": 0.8736563876651983,
+     "width_kw": 3.718352512163371,
+     "interval_score": 4.113783966707725,
+     "below": 0.06916299559471366,
+     "above": 0.057180616740088105,
+     "n": 11350
+    },
+    "rising ramp": {
+     "coverage": 0.44337606837606836,
+     "width_kw": 10.377338411515487,
+     "interval_score": 24.28000742381729,
+     "below": 0.0,
+     "above": 0.5566239316239316,
+     "n": 936
+    },
+    "falling ramp": {
+     "coverage": 0.4520408163265306,
+     "width_kw": 9.991383263777617,
+     "interval_score": 25.34171093631772,
+     "below": 0.5479591836734694,
+     "above": 0.0,
+     "n": 980
+    },
+    "sunrise ramp": {
+     "coverage": 0.5298507462686567,
+     "width_kw": 1.9473493937510602,
+     "interval_score": 5.352303019362554,
+     "below": 0.1791044776119403,
+     "above": 0.291044776119403,
+     "n": 268
+    },
+    "init_provenance": {
+     "2017-06-24": {
+      "n": 4620,
+      "first_origin": "2017-06-08T12:56:20.000000",
+      "last_origin": "2017-06-23T19:44:20.000000",
+      "gap_to_start_days": 0.4689814814814815
+     },
+     "2017-09-15": {
+      "n": 4620,
+      "first_origin": "2017-08-30T13:05:00.000000",
+      "last_origin": "2017-09-14T18:41:00.000000",
+      "gap_to_start_days": 0.53125
+     },
+     "2017-09-20": {
+      "n": 4620,
+      "first_origin": "2017-09-03T08:48:00.000000",
+      "last_origin": "2017-09-19T18:37:00.000000",
+      "gap_to_start_days": 0.5395833333333333
+     },
+     "2017-10-06": {
+      "n": 4620,
+      "first_origin": "2017-09-13T10:40:00.000000",
+      "last_origin": "2017-10-05T16:42:00.000000",
+      "gap_to_start_days": 0.6256944444444444
+     },
+     "2017-10-11": {
+      "n": 4620,
+      "first_origin": "2017-09-17T15:39:00.000000",
+      "last_origin": "2017-10-10T18:14:00.000000",
+      "gap_to_start_days": 0.5659722222222222
+     },
+     "2017-10-22": {
+      "n": 4620,
+      "first_origin": "2017-10-02T16:56:00.000000",
+      "last_origin": "2017-10-21T17:09:00.000000",
+      "gap_to_start_days": 0.6159722222222223
+     },
+     "2018-01-25": {
+      "n": 4620,
+      "first_origin": "2017-11-02T10:27:00.000000",
+      "last_origin": "2018-01-24T16:29:00.000000",
+      "gap_to_start_days": 0.6388888888888888
+     },
+     "2018-02-16": {
+      "n": 4620,
+      "first_origin": "2018-01-20T12:39:00.000000",
+      "last_origin": "2018-02-15T17:12:00.000000",
+      "gap_to_start_days": 0.5951388888888889
+     },
+     "2018-03-09": {
+      "n": 4620,
+      "first_origin": "2018-02-13T15:44:00.000000",
+      "last_origin": "2018-03-08T17:39:00.000000",
+      "gap_to_start_days": 0.5590277777777778
+     },
+     "2018-06-12": {
+      "n": 4620,
+      "first_origin": "2018-05-30T10:37:50.000000",
+      "last_origin": "2018-06-11T18:44:40.000000",
+      "gap_to_start_days": 0.4925925925925926
+     },
+     "2018-06-23": {
+      "n": 4620,
+      "first_origin": "2018-06-08T10:10:10.000000",
+      "last_origin": "2018-06-22T18:44:30.000000",
+      "gap_to_start_days": 0.49409722222222224
+     },
+     "2018-10-04": {
+      "n": 4620,
+      "first_origin": "2018-08-17T18:00:50.000000",
+      "last_origin": "2018-10-03T18:00:00.000000",
+      "gap_to_start_days": 0.5818287037037037
+     },
+     "2019-01-25": {
+      "n": 4620,
+      "first_origin": "2018-10-19T16:22:40.000000",
+      "last_origin": "2019-01-24T16:47:30.000000",
+      "gap_to_start_days": 0.6248842592592593
+     },
+     "2019-05-27": {
+      "n": 4620,
+      "first_origin": "2019-01-27T10:20:10.000000",
+      "last_origin": "2019-05-26T19:24:10.000000",
+      "gap_to_start_days": 0.4701388888888889
+     },
+     "2019-06-23": {
+      "n": 4620,
+      "first_origin": "2019-06-11T09:47:30.000000",
+      "last_origin": "2019-06-22T19:44:30.000000",
+      "gap_to_start_days": 0.4519675925925926
+     },
+     "2019-06-28": {
+      "n": 4620,
+      "first_origin": "2019-06-15T09:48:20.000000",
+      "last_origin": "2019-06-27T19:44:10.000000",
+      "gap_to_start_days": 0.4672453703703704
+     },
+     "2019-07-14": {
+      "n": 4620,
+      "first_origin": "2019-07-02T08:59:20.000000",
+      "last_origin": "2019-07-13T19:43:40.000000",
+      "gap_to_start_days": 0.4600694444444444
+     },
+     "2019-08-10": {
+      "n": 4620,
+      "first_origin": "2019-07-28T15:44:20.000000",
+      "last_origin": "2019-08-09T19:19:30.000000",
+      "gap_to_start_days": 0.4947916666666667
+     },
+     "2019-10-14": {
+      "n": 4620,
+      "first_origin": "2019-09-29T10:30:30.000000",
+      "last_origin": "2019-10-13T18:03:10.000000",
+      "gap_to_start_days": 0.5734953703703703
+     },
+     "2019-10-19": {
+      "n": 4620,
+      "first_origin": "2019-10-02T16:15:20.000000",
+      "last_origin": "2019-10-18T17:52:30.000000",
+      "gap_to_start_days": 0.5858796296296296
+     }
+    }
+   },
+   "90": {
+    "overall": {
+     "coverage": 0.9166289763304689,
+     "width_kw": 6.4845272228885795,
+     "interval_score": 8.47333998865264,
+     "below": 0.04560530679933665,
+     "above": 0.037765716870194484,
+     "n": 13266
+    },
+    "sunny": {
+     "coverage": 0.943657728231395,
+     "width_kw": 0.6449048851388753,
+     "interval_score": 0.7268144344142604,
+     "below": 0.032389273877674,
+     "above": 0.023952997890931003,
+     "n": 6638
+    },
+    "cloudy": {
+     "coverage": 0.8895594447797224,
+     "width_kw": 12.332960095245628,
+     "interval_score": 16.231553119164765,
+     "below": 0.05884127942063971,
+     "above": 0.0515992757996379,
+     "n": 6628
+    },
+    "ramp": {
+     "coverage": 0.68580375782881,
+     "width_kw": 13.746227598098443,
+     "interval_score": 26.284389133611366,
+     "below": 0.16440501043841335,
+     "above": 0.14979123173277661,
+     "n": 1916
+    },
+    "non-ramp": {
+     "coverage": 0.9555947136563877,
+     "width_kw": 5.258675423866369,
+     "interval_score": 5.466646582331855,
+     "below": 0.02555066079295154,
+     "above": 0.018854625550660795,
+     "n": 11350
+    },
+    "rising ramp": {
+     "coverage": 0.6933760683760684,
+     "width_kw": 13.921552641254136,
+     "interval_score": 24.593259422716415,
+     "below": 0.0,
+     "above": 0.30662393162393164,
+     "n": 936
+    },
+    "falling ramp": {
+     "coverage": 0.6785714285714286,
+     "width_kw": 13.578774291574229,
+     "interval_score": 27.89959057177225,
+     "below": 0.32142857142857145,
+     "above": 0.0,
+     "n": 980
+    },
+    "sunrise ramp": {
+     "coverage": 0.7761194029850746,
+     "width_kw": 2.7503159197986795,
+     "interval_score": 6.031177956450273,
+     "below": 0.07462686567164178,
+     "above": 0.14925373134328357,
+     "n": 268
+    },
+    "init_provenance": {
+     "2017-06-24": {
+      "n": 4620,
+      "first_origin": "2017-06-08T12:56:20.000000",
+      "last_origin": "2017-06-23T19:44:20.000000",
+      "gap_to_start_days": 0.4689814814814815
+     },
+     "2017-09-15": {
+      "n": 4620,
+      "first_origin": "2017-08-30T13:05:00.000000",
+      "last_origin": "2017-09-14T18:41:00.000000",
+      "gap_to_start_days": 0.53125
+     },
+     "2017-09-20": {
+      "n": 4620,
+      "first_origin": "2017-09-03T08:48:00.000000",
+      "last_origin": "2017-09-19T18:37:00.000000",
+      "gap_to_start_days": 0.5395833333333333
+     },
+     "2017-10-06": {
+      "n": 4620,
+      "first_origin": "2017-09-13T10:40:00.000000",
+      "last_origin": "2017-10-05T16:42:00.000000",
+      "gap_to_start_days": 0.6256944444444444
+     },
+     "2017-10-11": {
+      "n": 4620,
+      "first_origin": "2017-09-17T15:39:00.000000",
+      "last_origin": "2017-10-10T18:14:00.000000",
+      "gap_to_start_days": 0.5659722222222222
+     },
+     "2017-10-22": {
+      "n": 4620,
+      "first_origin": "2017-10-02T16:56:00.000000",
+      "last_origin": "2017-10-21T17:09:00.000000",
+      "gap_to_start_days": 0.6159722222222223
+     },
+     "2018-01-25": {
+      "n": 4620,
+      "first_origin": "2017-11-02T10:27:00.000000",
+      "last_origin": "2018-01-24T16:29:00.000000",
+      "gap_to_start_days": 0.6388888888888888
+     },
+     "2018-02-16": {
+      "n": 4620,
+      "first_origin": "2018-01-20T12:39:00.000000",
+      "last_origin": "2018-02-15T17:12:00.000000",
+      "gap_to_start_days": 0.5951388888888889
+     },
+     "2018-03-09": {
+      "n": 4620,
+      "first_origin": "2018-02-13T15:44:00.000000",
+      "last_origin": "2018-03-08T17:39:00.000000",
+      "gap_to_start_days": 0.5590277777777778
+     },
+     "2018-06-12": {
+      "n": 4620,
+      "first_origin": "2018-05-30T10:37:50.000000",
+      "last_origin": "2018-06-11T18:44:40.000000",
+      "gap_to_start_days": 0.4925925925925926
+     },
+     "2018-06-23": {
+      "n": 4620,
+      "first_origin": "2018-06-08T10:10:10.000000",
+      "last_origin": "2018-06-22T18:44:30.000000",
+      "gap_to_start_days": 0.49409722222222224
+     },
+     "2018-10-04": {
+      "n": 4620,
+      "first_origin": "2018-08-17T18:00:50.000000",
+      "last_origin": "2018-10-03T18:00:00.000000",
+      "gap_to_start_days": 0.5818287037037037
+     },
+     "2019-01-25": {
+      "n": 4620,
+      "first_origin": "2018-10-19T16:22:40.000000",
+      "last_origin": "2019-01-24T16:47:30.000000",
+      "gap_to_start_days": 0.6248842592592593
+     },
+     "2019-05-27": {
+      "n": 4620,
+      "first_origin": "2019-01-27T10:20:10.000000",
+      "last_origin": "2019-05-26T19:24:10.000000",
+      "gap_to_start_days": 0.4701388888888889
+     },
+     "2019-06-23": {
+      "n": 4620,
+      "first_origin": "2019-06-11T09:47:30.000000",
+      "last_origin": "2019-06-22T19:44:30.000000",
+      "gap_to_start_days": 0.4519675925925926
+     },
+     "2019-06-28": {
+      "n": 4620,
+      "first_origin": "2019-06-15T09:48:20.000000",
+      "last_origin": "2019-06-27T19:44:10.000000",
+      "gap_to_start_days": 0.4672453703703704
+     },
+     "2019-07-14": {
+      "n": 4620,
+      "first_origin": "2019-07-02T08:59:20.000000",
+      "last_origin": "2019-07-13T19:43:40.000000",
+      "gap_to_start_days": 0.4600694444444444
+     },
+     "2019-08-10": {
+      "n": 4620,
+      "first_origin": "2019-07-28T15:44:20.000000",
+      "last_origin": "2019-08-09T19:19:30.000000",
+      "gap_to_start_days": 0.4947916666666667
+     },
+     "2019-10-14": {
+      "n": 4620,
+      "first_origin": "2019-09-29T10:30:30.000000",
+      "last_origin": "2019-10-13T18:03:10.000000",
+      "gap_to_start_days": 0.5734953703703703
+     },
+     "2019-10-19": {
+      "n": 4620,
+      "first_origin": "2019-10-02T16:15:20.000000",
+      "last_origin": "2019-10-18T17:52:30.000000",
+      "gap_to_start_days": 0.5858796296296296
+     }
+    }
+   }
+  },
+  "G4": {
+   "50": {
+    "overall": {
+     "coverage": 0.5260063319764813,
+     "width_kw": 1.981776773844888,
+     "interval_score": 4.6239854978707235,
+     "below": 0.23051409618573798,
+     "above": 0.2434795718377808,
+     "n": 13266
+    },
+    "sunny": {
+     "coverage": 0.622476649593251,
+     "width_kw": 0.21859356079355347,
+     "interval_score": 0.3374523583561284,
+     "below": 0.16194636938836998,
+     "above": 0.21557698101837902,
+     "n": 6638
+    },
+    "cloudy": {
+     "coverage": 0.42939046469523234,
+     "width_kw": 3.747620190899015,
+     "interval_score": 8.916985947493217,
+     "below": 0.2991852745926373,
+     "above": 0.2714242607121304,
+     "n": 6628
+    },
+    "ramp": {
+     "coverage": 0.13100208768267224,
+     "width_kw": 4.403580542474195,
+     "interval_score": 17.223993051692762,
+     "below": 0.4290187891440501,
+     "above": 0.43997912317327764,
+     "n": 1916
+    },
+    "non-ramp": {
+     "coverage": 0.5926872246696036,
+     "width_kw": 1.5729506927264956,
+     "interval_score": 2.4969710068466684,
+     "below": 0.1970044052863436,
+     "above": 0.21030837004405287,
+     "n": 11350
+    },
+    "rising ramp": {
+     "coverage": 0.10256410256410256,
+     "width_kw": 4.493600411553608,
+     "interval_score": 17.868930484205055,
+     "below": 0.0,
+     "above": 0.8974358974358975,
+     "n": 936
+    },
+    "falling ramp": {
+     "coverage": 0.15816326530612246,
+     "width_kw": 4.31760238180243,
+     "interval_score": 16.608011993701435,
+     "below": 0.8387755102040816,
+     "above": 0.003061224489795918,
+     "n": 980
+    },
+    "sunrise ramp": {
+     "coverage": 0.1455223880597015,
+     "width_kw": 0.7660220221764524,
+     "interval_score": 3.6036644191157174,
+     "below": 0.30223880597014924,
+     "above": 0.5522388059701493,
+     "n": 268
+    },
+    "init_provenance": {
+     "2017-06-24": {
+      "n": 4620,
+      "first_origin": "2017-06-08T12:56:20.000000",
+      "last_origin": "2017-06-23T19:44:20.000000",
+      "gap_to_start_days": 0.4689814814814815
+     },
+     "2017-09-15": {
+      "n": 4620,
+      "first_origin": "2017-08-30T13:05:00.000000",
+      "last_origin": "2017-09-14T18:41:00.000000",
+      "gap_to_start_days": 0.53125
+     },
+     "2017-09-20": {
+      "n": 4620,
+      "first_origin": "2017-09-03T08:48:00.000000",
+      "last_origin": "2017-09-19T18:37:00.000000",
+      "gap_to_start_days": 0.5395833333333333
+     },
+     "2017-10-06": {
+      "n": 4620,
+      "first_origin": "2017-09-13T10:40:00.000000",
+      "last_origin": "2017-10-05T16:42:00.000000",
+      "gap_to_start_days": 0.6256944444444444
+     },
+     "2017-10-11": {
+      "n": 4620,
+      "first_origin": "2017-09-17T15:39:00.000000",
+      "last_origin": "2017-10-10T18:14:00.000000",
+      "gap_to_start_days": 0.5659722222222222
+     },
+     "2017-10-22": {
+      "n": 4620,
+      "first_origin": "2017-10-02T16:56:00.000000",
+      "last_origin": "2017-10-21T17:09:00.000000",
+      "gap_to_start_days": 0.6159722222222223
+     },
+     "2018-01-25": {
+      "n": 4620,
+      "first_origin": "2017-11-02T10:27:00.000000",
+      "last_origin": "2018-01-24T16:29:00.000000",
+      "gap_to_start_days": 0.6388888888888888
+     },
+     "2018-02-16": {
+      "n": 4620,
+      "first_origin": "2018-01-20T12:39:00.000000",
+      "last_origin": "2018-02-15T17:12:00.000000",
+      "gap_to_start_days": 0.5951388888888889
+     },
+     "2018-03-09": {
+      "n": 4620,
+      "first_origin": "2018-02-13T15:44:00.000000",
+      "last_origin": "2018-03-08T17:39:00.000000",
+      "gap_to_start_days": 0.5590277777777778
+     },
+     "2018-06-12": {
+      "n": 4620,
+      "first_origin": "2018-05-30T10:37:50.000000",
+      "last_origin": "2018-06-11T18:44:40.000000",
+      "gap_to_start_days": 0.4925925925925926
+     },
+     "2018-06-23": {
+      "n": 4620,
+      "first_origin": "2018-06-08T10:10:10.000000",
+      "last_origin": "2018-06-22T18:44:30.000000",
+      "gap_to_start_days": 0.49409722222222224
+     },
+     "2018-10-04": {
+      "n": 4620,
+      "first_origin": "2018-08-17T18:00:50.000000",
+      "last_origin": "2018-10-03T18:00:00.000000",
+      "gap_to_start_days": 0.5818287037037037
+     },
+     "2019-01-25": {
+      "n": 4620,
+      "first_origin": "2018-10-19T16:22:40.000000",
+      "last_origin": "2019-01-24T16:47:30.000000",
+      "gap_to_start_days": 0.6248842592592593
+     },
+     "2019-05-27": {
+      "n": 4620,
+      "first_origin": "2019-01-27T10:20:10.000000",
+      "last_origin": "2019-05-26T19:24:10.000000",
+      "gap_to_start_days": 0.4701388888888889
+     },
+     "2019-06-23": {
+      "n": 4620,
+      "first_origin": "2019-06-11T09:47:30.000000",
+      "last_origin": "2019-06-22T19:44:30.000000",
+      "gap_to_start_days": 0.4519675925925926
+     },
+     "2019-06-28": {
+      "n": 4620,
+      "first_origin": "2019-06-15T09:48:20.000000",
+      "last_origin": "2019-06-27T19:44:10.000000",
+      "gap_to_start_days": 0.4672453703703704
+     },
+     "2019-07-14": {
+      "n": 4620,
+      "first_origin": "2019-07-02T08:59:20.000000",
+      "last_origin": "2019-07-13T19:43:40.000000",
+      "gap_to_start_days": 0.4600694444444444
+     },
+     "2019-08-10": {
+      "n": 4620,
+      "first_origin": "2019-07-28T15:44:20.000000",
+      "last_origin": "2019-08-09T19:19:30.000000",
+      "gap_to_start_days": 0.4947916666666667
+     },
+     "2019-10-14": {
+      "n": 4620,
+      "first_origin": "2019-09-29T10:30:30.000000",
+      "last_origin": "2019-10-13T18:03:10.000000",
+      "gap_to_start_days": 0.5734953703703703
+     },
+     "2019-10-19": {
+      "n": 4620,
+      "first_origin": "2019-10-02T16:15:20.000000",
+      "last_origin": "2019-10-18T17:52:30.000000",
+      "gap_to_start_days": 0.5858796296296296
+     }
+    }
+   },
+   "80": {
+    "overall": {
+     "coverage": 0.8171264887682799,
+     "width_kw": 4.431238276009919,
+     "interval_score": 6.460082964125167,
+     "below": 0.07613447911955375,
+     "above": 0.10673903211216644,
+     "n": 13266
+    },
+    "sunny": {
+     "coverage": 0.8704429044893041,
+     "width_kw": 0.4642336477537994,
+     "interval_score": 0.5565155280022089,
+     "below": 0.04278397107562519,
+     "above": 0.0867731244350708,
+     "n": 6638
+    },
+    "cloudy": {
+     "coverage": 0.7637296318648159,
+     "width_kw": 8.40422812549153,
+     "interval_score": 12.37255741207088,
+     "below": 0.10953530476765239,
+     "above": 0.12673506336753168,
+     "n": 6628
+    },
+    "ramp": {
+     "coverage": 0.4514613778705637,
+     "width_kw": 9.583231923513674,
+     "interval_score": 21.304101561038248,
+     "below": 0.2630480167014614,
+     "above": 0.28549060542797494,
+     "n": 1916
+    },
+    "non-ramp": {
+     "coverage": 0.8788546255506607,
+     "width_kw": 3.561527277893867,
+     "interval_score": 3.9542556838004557,
+     "below": 0.04458149779735683,
+     "above": 0.07656387665198237,
+     "n": 11350
+    },
+    "rising ramp": {
+     "coverage": 0.4155982905982906,
+     "width_kw": 9.710140092250192,
+     "interval_score": 22.47398445380506,
+     "below": 0.0,
+     "above": 0.5844017094017094,
+     "n": 936
+    },
+    "falling ramp": {
+     "coverage": 0.4857142857142857,
+     "width_kw": 9.462021672557157,
+     "interval_score": 20.18674402264056,
+     "below": 0.5142857142857142,
+     "above": 0.0,
+     "n": 980
+    },
+    "sunrise ramp": {
+     "coverage": 0.41044776119402987,
+     "width_kw": 1.6507413582575239,
+     "interval_score": 4.922236754748122,
+     "below": 0.2126865671641791,
+     "above": 0.376865671641791,
+     "n": 268
+    },
+    "init_provenance": {
+     "2017-06-24": {
+      "n": 4620,
+      "first_origin": "2017-06-08T12:56:20.000000",
+      "last_origin": "2017-06-23T19:44:20.000000",
+      "gap_to_start_days": 0.4689814814814815
+     },
+     "2017-09-15": {
+      "n": 4620,
+      "first_origin": "2017-08-30T13:05:00.000000",
+      "last_origin": "2017-09-14T18:41:00.000000",
+      "gap_to_start_days": 0.53125
+     },
+     "2017-09-20": {
+      "n": 4620,
+      "first_origin": "2017-09-03T08:48:00.000000",
+      "last_origin": "2017-09-19T18:37:00.000000",
+      "gap_to_start_days": 0.5395833333333333
+     },
+     "2017-10-06": {
+      "n": 4620,
+      "first_origin": "2017-09-13T10:40:00.000000",
+      "last_origin": "2017-10-05T16:42:00.000000",
+      "gap_to_start_days": 0.6256944444444444
+     },
+     "2017-10-11": {
+      "n": 4620,
+      "first_origin": "2017-09-17T15:39:00.000000",
+      "last_origin": "2017-10-10T18:14:00.000000",
+      "gap_to_start_days": 0.5659722222222222
+     },
+     "2017-10-22": {
+      "n": 4620,
+      "first_origin": "2017-10-02T16:56:00.000000",
+      "last_origin": "2017-10-21T17:09:00.000000",
+      "gap_to_start_days": 0.6159722222222223
+     },
+     "2018-01-25": {
+      "n": 4620,
+      "first_origin": "2017-11-02T10:27:00.000000",
+      "last_origin": "2018-01-24T16:29:00.000000",
+      "gap_to_start_days": 0.6388888888888888
+     },
+     "2018-02-16": {
+      "n": 4620,
+      "first_origin": "2018-01-20T12:39:00.000000",
+      "last_origin": "2018-02-15T17:12:00.000000",
+      "gap_to_start_days": 0.5951388888888889
+     },
+     "2018-03-09": {
+      "n": 4620,
+      "first_origin": "2018-02-13T15:44:00.000000",
+      "last_origin": "2018-03-08T17:39:00.000000",
+      "gap_to_start_days": 0.5590277777777778
+     },
+     "2018-06-12": {
+      "n": 4620,
+      "first_origin": "2018-05-30T10:37:50.000000",
+      "last_origin": "2018-06-11T18:44:40.000000",
+      "gap_to_start_days": 0.4925925925925926
+     },
+     "2018-06-23": {
+      "n": 4620,
+      "first_origin": "2018-06-08T10:10:10.000000",
+      "last_origin": "2018-06-22T18:44:30.000000",
+      "gap_to_start_days": 0.49409722222222224
+     },
+     "2018-10-04": {
+      "n": 4620,
+      "first_origin": "2018-08-17T18:00:50.000000",
+      "last_origin": "2018-10-03T18:00:00.000000",
+      "gap_to_start_days": 0.5818287037037037
+     },
+     "2019-01-25": {
+      "n": 4620,
+      "first_origin": "2018-10-19T16:22:40.000000",
+      "last_origin": "2019-01-24T16:47:30.000000",
+      "gap_to_start_days": 0.6248842592592593
+     },
+     "2019-05-27": {
+      "n": 4620,
+      "first_origin": "2019-01-27T10:20:10.000000",
+      "last_origin": "2019-05-26T19:24:10.000000",
+      "gap_to_start_days": 0.4701388888888889
+     },
+     "2019-06-23": {
+      "n": 4620,
+      "first_origin": "2019-06-11T09:47:30.000000",
+      "last_origin": "2019-06-22T19:44:30.000000",
+      "gap_to_start_days": 0.4519675925925926
+     },
+     "2019-06-28": {
+      "n": 4620,
+      "first_origin": "2019-06-15T09:48:20.000000",
+      "last_origin": "2019-06-27T19:44:10.000000",
+      "gap_to_start_days": 0.4672453703703704
+     },
+     "2019-07-14": {
+      "n": 4620,
+      "first_origin": "2019-07-02T08:59:20.000000",
+      "last_origin": "2019-07-13T19:43:40.000000",
+      "gap_to_start_days": 0.4600694444444444
+     },
+     "2019-08-10": {
+      "n": 4620,
+      "first_origin": "2019-07-28T15:44:20.000000",
+      "last_origin": "2019-08-09T19:19:30.000000",
+      "gap_to_start_days": 0.4947916666666667
+     },
+     "2019-10-14": {
+      "n": 4620,
+      "first_origin": "2019-09-29T10:30:30.000000",
+      "last_origin": "2019-10-13T18:03:10.000000",
+      "gap_to_start_days": 0.5734953703703703
+     },
+     "2019-10-19": {
+      "n": 4620,
+      "first_origin": "2019-10-02T16:15:20.000000",
+      "last_origin": "2019-10-18T17:52:30.000000",
+      "gap_to_start_days": 0.5858796296296296
+     }
+    }
+   },
+   "90": {
+    "overall": {
+     "coverage": 0.9259007990351273,
+     "width_kw": 6.2624317771966105,
+     "interval_score": 7.649413187617107,
+     "below": 0.024800241218151668,
+     "above": 0.04929895974672094,
+     "n": 13266
+    },
+    "sunny": {
+     "coverage": 0.9505875263633624,
+     "width_kw": 0.7131041937902646,
+     "interval_score": 0.779476078420953,
+     "below": 0.00783368484483278,
+     "above": 0.04157878879180476,
+     "n": 6638
+    },
+    "cloudy": {
+     "coverage": 0.9011768255884128,
+     "width_kw": 11.820131912780699,
+     "interval_score": 14.52971531960927,
+     "below": 0.041792395896197945,
+     "above": 0.057030778515389256,
+     "n": 6628
+    },
+    "ramp": {
+     "coverage": 0.7176409185803758,
+     "width_kw": 13.153656530660406,
+     "interval_score": 21.866858685030937,
+     "below": 0.1278705636743215,
+     "above": 0.1544885177453027,
+     "n": 1916
+    },
+    "non-ramp": {
+     "coverage": 0.961057268722467,
+     "width_kw": 5.099120180048009,
+     "interval_score": 5.249358071049274,
+     "below": 0.0074008810572687225,
+     "above": 0.03154185022026432,
+     "n": 11350
+    },
+    "rising ramp": {
+     "coverage": 0.6837606837606838,
+     "width_kw": 13.276524416940894,
+     "interval_score": 23.19856658972652,
+     "below": 0.0,
+     "above": 0.3162393162393162,
+     "n": 936
+    },
+    "falling ramp": {
+     "coverage": 0.75,
+     "width_kw": 13.036305161723126,
+     "interval_score": 20.594941747484953,
+     "below": 0.25,
+     "above": 0.0,
+     "n": 980
+    },
+    "sunrise ramp": {
+     "coverage": 0.6753731343283582,
+     "width_kw": 2.3331376744538326,
+     "interval_score": 5.073033425927964,
+     "below": 0.12313432835820895,
+     "above": 0.20149253731343283,
+     "n": 268
+    },
+    "init_provenance": {
+     "2017-06-24": {
+      "n": 4620,
+      "first_origin": "2017-06-08T12:56:20.000000",
+      "last_origin": "2017-06-23T19:44:20.000000",
+      "gap_to_start_days": 0.4689814814814815
+     },
+     "2017-09-15": {
+      "n": 4620,
+      "first_origin": "2017-08-30T13:05:00.000000",
+      "last_origin": "2017-09-14T18:41:00.000000",
+      "gap_to_start_days": 0.53125
+     },
+     "2017-09-20": {
+      "n": 4620,
+      "first_origin": "2017-09-03T08:48:00.000000",
+      "last_origin": "2017-09-19T18:37:00.000000",
+      "gap_to_start_days": 0.5395833333333333
+     },
+     "2017-10-06": {
+      "n": 4620,
+      "first_origin": "2017-09-13T10:40:00.000000",
+      "last_origin": "2017-10-05T16:42:00.000000",
+      "gap_to_start_days": 0.6256944444444444
+     },
+     "2017-10-11": {
+      "n": 4620,
+      "first_origin": "2017-09-17T15:39:00.000000",
+      "last_origin": "2017-10-10T18:14:00.000000",
+      "gap_to_start_days": 0.5659722222222222
+     },
+     "2017-10-22": {
+      "n": 4620,
+      "first_origin": "2017-10-02T16:56:00.000000",
+      "last_origin": "2017-10-21T17:09:00.000000",
+      "gap_to_start_days": 0.6159722222222223
+     },
+     "2018-01-25": {
+      "n": 4620,
+      "first_origin": "2017-11-02T10:27:00.000000",
+      "last_origin": "2018-01-24T16:29:00.000000",
+      "gap_to_start_days": 0.6388888888888888
+     },
+     "2018-02-16": {
+      "n": 4620,
+      "first_origin": "2018-01-20T12:39:00.000000",
+      "last_origin": "2018-02-15T17:12:00.000000",
+      "gap_to_start_days": 0.5951388888888889
+     },
+     "2018-03-09": {
+      "n": 4620,
+      "first_origin": "2018-02-13T15:44:00.000000",
+      "last_origin": "2018-03-08T17:39:00.000000",
+      "gap_to_start_days": 0.5590277777777778
+     },
+     "2018-06-12": {
+      "n": 4620,
+      "first_origin": "2018-05-30T10:37:50.000000",
+      "last_origin": "2018-06-11T18:44:40.000000",
+      "gap_to_start_days": 0.4925925925925926
+     },
+     "2018-06-23": {
+      "n": 4620,
+      "first_origin": "2018-06-08T10:10:10.000000",
+      "last_origin": "2018-06-22T18:44:30.000000",
+      "gap_to_start_days": 0.49409722222222224
+     },
+     "2018-10-04": {
+      "n": 4620,
+      "first_origin": "2018-08-17T18:00:50.000000",
+      "last_origin": "2018-10-03T18:00:00.000000",
+      "gap_to_start_days": 0.5818287037037037
+     },
+     "2019-01-25": {
+      "n": 4620,
+      "first_origin": "2018-10-19T16:22:40.000000",
+      "last_origin": "2019-01-24T16:47:30.000000",
+      "gap_to_start_days": 0.6248842592592593
+     },
+     "2019-05-27": {
+      "n": 4620,
+      "first_origin": "2019-01-27T10:20:10.000000",
+      "last_origin": "2019-05-26T19:24:10.000000",
+      "gap_to_start_days": 0.4701388888888889
+     },
+     "2019-06-23": {
+      "n": 4620,
+      "first_origin": "2019-06-11T09:47:30.000000",
+      "last_origin": "2019-06-22T19:44:30.000000",
+      "gap_to_start_days": 0.4519675925925926
+     },
+     "2019-06-28": {
+      "n": 4620,
+      "first_origin": "2019-06-15T09:48:20.000000",
+      "last_origin": "2019-06-27T19:44:10.000000",
+      "gap_to_start_days": 0.4672453703703704
+     },
+     "2019-07-14": {
+      "n": 4620,
+      "first_origin": "2019-07-02T08:59:20.000000",
+      "last_origin": "2019-07-13T19:43:40.000000",
+      "gap_to_start_days": 0.4600694444444444
+     },
+     "2019-08-10": {
+      "n": 4620,
+      "first_origin": "2019-07-28T15:44:20.000000",
+      "last_origin": "2019-08-09T19:19:30.000000",
+      "gap_to_start_days": 0.4947916666666667
+     },
+     "2019-10-14": {
+      "n": 4620,
+      "first_origin": "2019-09-29T10:30:30.000000",
+      "last_origin": "2019-10-13T18:03:10.000000",
+      "gap_to_start_days": 0.5734953703703703
+     },
+     "2019-10-19": {
+      "n": 4620,
+      "first_origin": "2019-10-02T16:15:20.000000",
+      "last_origin": "2019-10-18T17:52:30.000000",
+      "gap_to_start_days": 0.5858796296296296
+     }
+    }
+   }
+  }
+ },
+ "raw": {
+  "G3''-F": {
+   "50": {
+    "overall": {
+     "coverage": 0.49125584200211064,
+     "width_kw": 1.9589337930984523,
+     "interval_score": 4.530540271719847,
+     "below": 0.2363937886325946,
+     "above": 0.2723503693652947,
+     "n": 13266
+    },
+    "sunny": {
+     "coverage": 0.5766797228080747,
+     "width_kw": 0.19089125702915008,
+     "interval_score": 0.3282044829059267,
+     "below": 0.16661645073817416,
+     "above": 0.2567038264537511,
+     "n": 6638
+    },
+    "cloudy": {
+     "coverage": 0.4057030778515389,
+     "width_kw": 3.729643864677817,
+     "interval_score": 8.73921633782528,
+     "below": 0.3062764031382016,
+     "above": 0.2880205190102595,
+     "n": 6628
+    },
+    "ramp": {
+     "coverage": 0.15083507306889352,
+     "width_kw": 4.381198211926846,
+     "interval_score": 15.979727320954067,
+     "below": 0.41597077244258873,
+     "above": 0.4331941544885177,
+     "n": 1916
+    },
+    "non-ramp": {
+     "coverage": 0.5487224669603524,
+     "width_kw": 1.550029949356144,
+     "interval_score": 2.5977964491354624,
+     "below": 0.20607929515418502,
+     "above": 0.24519823788546255,
+     "n": 11350
+    },
+    "rising ramp": {
+     "coverage": 0.11965811965811966,
+     "width_kw": 4.449390960065069,
+     "interval_score": 17.039974185425386,
+     "below": 0.003205128205128205,
+     "above": 0.8771367521367521,
+     "n": 936
+    },
+    "falling ramp": {
+     "coverage": 0.18061224489795918,
+     "width_kw": 4.316067179011154,
+     "interval_score": 14.967083376928398,
+     "below": 0.810204081632653,
+     "above": 0.009183673469387756,
+     "n": 980
+    },
+    "sunrise ramp": {
+     "coverage": 0.11940298507462686,
+     "width_kw": 0.6745136561964322,
+     "interval_score": 3.7107157465060316,
+     "below": 0.31343283582089554,
+     "above": 0.5671641791044776,
+     "n": 268
+    }
+   },
+   "80": {
+    "overall": {
+     "coverage": 0.824212271973466,
+     "width_kw": 4.2994190631866,
+     "interval_score": 6.283740432685116,
+     "below": 0.06716417910447761,
+     "above": 0.10862354892205639,
+     "n": 13266
+    },
+    "sunny": {
+     "coverage": 0.8844531485387165,
+     "width_kw": 0.42911071773031084,
+     "interval_score": 0.5175960366540486,
+     "below": 0.028020488098824948,
+     "above": 0.08752636336245857,
+     "n": 6638
+    },
+    "cloudy": {
+     "coverage": 0.7638805069402534,
+     "width_kw": 8.17556673927876,
+     "interval_score": 12.058584503423534,
+     "below": 0.10636692818346409,
+     "above": 0.12975256487628245,
+     "n": 6628
+    },
+    "ramp": {
+     "coverage": 0.4848643006263048,
+     "width_kw": 9.338803939180782,
+     "interval_score": 20.146851315465476,
+     "below": 0.2359081419624217,
+     "above": 0.2792275574112735,
+     "n": 1916
+    },
+    "non-ramp": {
+     "coverage": 0.8814977973568282,
+     "width_kw": 3.448717616278684,
+     "interval_score": 3.943500745336467,
+     "below": 0.0386784140969163,
+     "above": 0.0798237885462555,
+     "n": 11350
+    },
+    "rising ramp": {
+     "coverage": 0.4284188034188034,
+     "width_kw": 9.478375100200184,
+     "interval_score": 21.779476151550384,
+     "below": 0.0,
+     "above": 0.5715811965811965,
+     "n": 936
+    },
+    "falling ramp": {
+     "coverage": 0.5387755102040817,
+     "width_kw": 9.205499238452044,
+     "interval_score": 18.58752800263336,
+     "below": 0.46122448979591835,
+     "above": 0.0,
+     "n": 980
+    },
+    "sunrise ramp": {
+     "coverage": 0.3843283582089552,
+     "width_kw": 1.5663943991035743,
+     "interval_score": 5.236079473311342,
+     "below": 0.22761194029850745,
+     "above": 0.3880597014925373,
+     "n": 268
+    }
+   },
+   "90": {
+    "overall": {
+     "coverage": 0.9298205939996985,
+     "width_kw": 6.121750646523091,
+     "interval_score": 7.575104126432545,
+     "below": 0.02125734961555857,
+     "above": 0.04892205638474295,
+     "n": 13266
+    },
+    "sunny": {
+     "coverage": 0.9561614944260319,
+     "width_kw": 0.699200809218091,
+     "interval_score": 0.7588388947621685,
+     "below": 0.004971376920759264,
+     "above": 0.0388671286532088,
+     "n": 6638
+    },
+    "cloudy": {
+     "coverage": 0.9034399517199758,
+     "width_kw": 11.552481759985762,
+     "interval_score": 14.401653403413224,
+     "below": 0.03756789378394689,
+     "above": 0.05899215449607725,
+     "n": 6628
+    },
+    "ramp": {
+     "coverage": 0.7395615866388309,
+     "width_kw": 12.87884827072663,
+     "interval_score": 21.36174732172032,
+     "below": 0.1080375782881002,
+     "above": 0.1524008350730689,
+     "n": 1916
+    },
+    "non-ramp": {
+     "coverage": 0.9619383259911894,
+     "width_kw": 4.981081126877806,
+     "interval_score": 5.247772993201587,
+     "below": 0.006607929515418502,
+     "above": 0.03145374449339207,
+     "n": 11350
+    },
+    "rising ramp": {
+     "coverage": 0.688034188034188,
+     "width_kw": 13.040365587053776,
+     "interval_score": 23.655119304332043,
+     "below": 0.0,
+     "above": 0.31196581196581197,
+     "n": 936
+    },
+    "falling ramp": {
+     "coverage": 0.7887755102040817,
+     "width_kw": 12.724582752275401,
+     "interval_score": 19.17134306077687,
+     "below": 0.21122448979591837,
+     "above": 0.0,
+     "n": 980
+    },
+    "sunrise ramp": {
+     "coverage": 0.6417910447761194,
+     "width_kw": 2.2442805107614934,
+     "interval_score": 5.640017687433627,
+     "below": 0.1417910447761194,
+     "above": 0.21641791044776118,
+     "n": 268
+    }
+   }
+  },
+  "E4-B-fit": {
+   "50": {
+    "overall": {
+     "coverage": 0.38489371325192223,
+     "width_kw": 1.7502385604668902,
+     "interval_score": 4.99946518552988,
+     "below": 0.27400874415799786,
+     "above": 0.3410975425900799,
+     "n": 13266
+    },
+    "sunny": {
+     "coverage": 0.433865622175354,
+     "width_kw": 0.36609757927425546,
+     "interval_score": 0.8315792751272968,
+     "below": 0.2137692075926484,
+     "above": 0.3523651702319976,
+     "n": 6638
+    },
+    "cloudy": {
+     "coverage": 0.33584791792395896,
+     "width_kw": 3.1364678654090605,
+     "interval_score": 9.173639396943935,
+     "below": 0.33433916716958356,
+     "above": 0.3298129149064575,
+     "n": 6628
+    },
+    "ramp": {
+     "coverage": 0.11899791231732777,
+     "width_kw": 3.6700067783832426,
+     "interval_score": 16.848646743835758,
+     "below": 0.43997912317327764,
+     "above": 0.4410229645093946,
+     "n": 1916
+    },
+    "non-ramp": {
+     "coverage": 0.4297797356828194,
+     "width_kw": 1.4261613881736976,
+     "interval_score": 2.999198060797363,
+     "below": 0.24599118942731277,
+     "above": 0.32422907488986785,
+     "n": 11350
+    },
+    "rising ramp": {
+     "coverage": 0.12072649572649573,
+     "width_kw": 3.692442106313699,
+     "interval_score": 17.349290009085124,
+     "below": 0.002136752136752137,
+     "above": 0.8771367521367521,
+     "n": 936
+    },
+    "falling ramp": {
+     "coverage": 0.11734693877551021,
+     "width_kw": 3.648578750890481,
+     "interval_score": 16.370481339475145,
+     "below": 0.8581632653061224,
+     "above": 0.024489795918367346,
+     "n": 980
+    },
+    "sunrise ramp": {
+     "coverage": 0.16417910447761194,
+     "width_kw": 0.5163841544748311,
+     "interval_score": 3.5876870250065855,
+     "below": 0.3246268656716418,
+     "above": 0.5111940298507462,
+     "n": 268
+    }
+   },
+   "80": {
+    "overall": {
+     "coverage": 0.7612694105231419,
+     "width_kw": 4.923878335282225,
+     "interval_score": 7.365162214173872,
+     "below": 0.05495251017639077,
+     "above": 0.18377807930046736,
+     "n": 13266
+    },
+    "sunny": {
+     "coverage": 0.8040072310937029,
+     "width_kw": 1.7775354682590745,
+     "interval_score": 2.1175362585805306,
+     "below": 0.004368785778849051,
+     "above": 0.19162398312744802,
+     "n": 6638
+    },
+    "cloudy": {
+     "coverage": 0.7184671092335546,
+     "width_kw": 8.07496824947952,
+     "interval_score": 12.620705529386393,
+     "below": 0.1056125528062764,
+     "above": 0.17592033796016898,
+     "n": 6628
+    },
+    "ramp": {
+     "coverage": 0.42849686847599167,
+     "width_kw": 9.069017884332997,
+     "interval_score": 21.522479250478078,
+     "below": 0.26356993736951984,
+     "above": 0.3079331941544885,
+     "n": 1916
+    },
+    "non-ramp": {
+     "coverage": 0.8174449339207048,
+     "width_kw": 4.2241349541385,
+     "interval_score": 4.975257417560757,
+     "below": 0.01973568281938326,
+     "above": 0.16281938325991188,
+     "n": 11350
+    },
+    "rising ramp": {
+     "coverage": 0.37606837606837606,
+     "width_kw": 9.139112676811576,
+     "interval_score": 24.171180526458137,
+     "below": 0.0,
+     "above": 0.6239316239316239,
+     "n": 936
+    },
+    "falling ramp": {
+     "coverage": 0.4785714285714286,
+     "width_kw": 9.002070204986106,
+     "interval_score": 18.992699256276712,
+     "below": 0.5153061224489796,
+     "above": 0.006122448979591836,
+     "n": 980
+    },
+    "sunrise ramp": {
+     "coverage": 0.34328358208955223,
+     "width_kw": 1.397198791641821,
+     "interval_score": 5.286520117114732,
+     "below": 0.23507462686567165,
+     "above": 0.4216417910447761,
+     "n": 268
+    }
+   },
+   "90": {
+    "overall": {
+     "coverage": 0.8906226443539876,
+     "width_kw": 7.859729109108871,
+     "interval_score": 9.464650553134907,
+     "below": 0.01794060003015227,
+     "above": 0.0914367556158601,
+     "n": 13266
+    },
+    "sunny": {
+     "coverage": 0.9061464296474842,
+     "width_kw": 3.91620759742683,
+     "interval_score": 4.1269874337387895,
+     "below": 0.0016571256402530884,
+     "above": 0.09219644471226272,
+     "n": 6638
+    },
+    "cloudy": {
+     "coverage": 0.8750754375377188,
+     "width_kw": 11.809200411846557,
+     "interval_score": 14.810366875789013,
+     "below": 0.03424864212432106,
+     "above": 0.09067592033796017,
+     "n": 6628
+    },
+    "ramp": {
+     "coverage": 0.7019832985386222,
+     "width_kw": 12.830175227401012,
+     "interval_score": 21.673411899187887,
+     "below": 0.10908141962421712,
+     "above": 0.18893528183716074,
+     "n": 1916
+    },
+    "non-ramp": {
+     "coverage": 0.9224669603524229,
+     "width_kw": 7.020665253368983,
+     "interval_score": 7.403682558506051,
+     "below": 0.002555066079295154,
+     "above": 0.07497797356828194,
+     "n": 11350
+    },
+    "rising ramp": {
+     "coverage": 0.6132478632478633,
+     "width_kw": 12.94010988362383,
+     "interval_score": 26.02054743445714,
+     "below": 0.0,
+     "above": 0.38675213675213677,
+     "n": 936
+    },
+    "falling ramp": {
+     "coverage": 0.786734693877551,
+     "width_kw": 12.725176412886158,
+     "interval_score": 17.52145387774704,
+     "below": 0.21326530612244898,
+     "above": 0.0,
+     "n": 980
+    },
+    "sunrise ramp": {
+     "coverage": 0.5335820895522388,
+     "width_kw": 2.081252830425586,
+     "interval_score": 5.8153758138357885,
+     "below": 0.13432835820895522,
+     "above": 0.332089552238806,
+     "n": 268
+    }
+   }
+  },
+  "E6-S": {
+   "50": {
+    "overall": {
+     "coverage": 0.49841700587969245,
+     "width_kw": 2.165393749286099,
+     "interval_score": 4.9165873905661295,
+     "below": 0.2592341323684607,
+     "above": 0.24234886175184683,
+     "n": 13266
+    },
+    "sunny": {
+     "coverage": 0.5462488701416089,
+     "width_kw": 0.18651085047409238,
+     "interval_score": 0.32690993765691423,
+     "below": 0.2228080747213016,
+     "above": 0.2309430551370895,
+     "n": 6638
+    },
+    "cloudy": {
+     "coverage": 0.45051297525648765,
+     "width_kw": 4.147262289164509,
+     "interval_score": 9.51318952279476,
+     "below": 0.2957151478575739,
+     "above": 0.25377187688593844,
+     "n": 6628
+    },
+    "ramp": {
+     "coverage": 0.11899791231732777,
+     "width_kw": 4.952806050564556,
+     "interval_score": 19.325556762385126,
+     "below": 0.43475991649269313,
+     "above": 0.4462421711899791,
+     "n": 1916
+    },
+    "non-ramp": {
+     "coverage": 0.5624669603524229,
+     "width_kw": 1.6948490823918676,
+     "interval_score": 2.4842010190766843,
+     "below": 0.2296035242290749,
+     "above": 0.20792951541850221,
+     "n": 11350
+    },
+    "rising ramp": {
+     "coverage": 0.08653846153846154,
+     "width_kw": 5.09729345393874,
+     "interval_score": 19.98517566149128,
+     "below": 0.0,
+     "above": 0.9134615384615384,
+     "n": 936
+    },
+    "falling ramp": {
+     "coverage": 0.15,
+     "width_kw": 4.814805836729621,
+     "interval_score": 18.695553405687814,
+     "below": 0.85,
+     "above": 0.0,
+     "n": 980
+    },
+    "sunrise ramp": {
+     "coverage": 0.07462686567164178,
+     "width_kw": 0.9132147045108094,
+     "interval_score": 4.054035958352733,
+     "below": 0.30970149253731344,
+     "above": 0.6156716417910447,
+     "n": 268
+    }
+   },
+   "80": {
+    "overall": {
+     "coverage": 0.8019749736167646,
+     "width_kw": 4.559103708897314,
+     "interval_score": 7.090597106309208,
+     "below": 0.10545756068144128,
+     "above": 0.09256746570179405,
+     "n": 13266
+    },
+    "sunny": {
+     "coverage": 0.8445314853871648,
+     "width_kw": 0.3766039182109133,
+     "interval_score": 0.48353473430931493,
+     "below": 0.08119915637240133,
+     "above": 0.07426935824043386,
+     "n": 6638
+    },
+    "cloudy": {
+     "coverage": 0.7593542546771274,
+     "width_kw": 8.747913849298087,
+     "interval_score": 13.70762788864706,
+     "below": 0.12975256487628245,
+     "above": 0.11089318044659022,
+     "n": 6628
+    },
+    "ramp": {
+     "coverage": 0.4342379958246347,
+     "width_kw": 10.077783651660138,
+     "interval_score": 25.025083716607163,
+     "below": 0.28757828810020875,
+     "above": 0.2781837160751566,
+     "n": 1916
+    },
+    "non-ramp": {
+     "coverage": 0.8640528634361233,
+     "width_kw": 3.6274921872820216,
+     "interval_score": 4.063066150773446,
+     "below": 0.0747136563876652,
+     "above": 0.061233480176211455,
+     "n": 11350
+    },
+    "rising ramp": {
+     "coverage": 0.4305555555555556,
+     "width_kw": 10.277306677207395,
+     "interval_score": 24.482375057087534,
+     "below": 0.0,
+     "above": 0.5694444444444444,
+     "n": 936
+    },
+    "falling ramp": {
+     "coverage": 0.4377551020408163,
+     "width_kw": 9.887218802770098,
+     "interval_score": 25.543425864883062,
+     "below": 0.5622448979591836,
+     "above": 0.0,
+     "n": 980
+    },
+    "sunrise ramp": {
+     "coverage": 0.4962686567164179,
+     "width_kw": 1.8499635236436989,
+     "interval_score": 5.584964139615166,
+     "below": 0.1865671641791045,
+     "above": 0.31716417910447764,
+     "n": 268
+    }
+   },
+   "90": {
+    "overall": {
+     "coverage": 0.9049449721091513,
+     "width_kw": 6.303518836132404,
+     "interval_score": 8.443100231238065,
+     "below": 0.0505804311774461,
+     "above": 0.04447459671340268,
+     "n": 13266
+    },
+    "sunny": {
+     "coverage": 0.931153962036758,
+     "width_kw": 0.5416584659897169,
+     "interval_score": 0.6303174467597791,
+     "below": 0.034498342874359746,
+     "above": 0.03434769508888219,
+     "n": 6638
+    },
+    "cloudy": {
+     "coverage": 0.8786964393482197,
+     "width_kw": 12.074072417455147,
+     "interval_score": 16.2676705576362,
+     "below": 0.06668678334339168,
+     "above": 0.05461677730838865,
+     "n": 6628
+    },
+    "ramp": {
+     "coverage": 0.6664926931106472,
+     "width_kw": 13.55059263905791,
+     "interval_score": 26.852683171966028,
+     "below": 0.17588726513569938,
+     "above": 0.15762004175365343,
+     "n": 1916
+    },
+    "non-ramp": {
+     "coverage": 0.9451982378854625,
+     "width_kw": 5.080136157153965,
+     "interval_score": 5.3353679920808155,
+     "below": 0.029427312775330398,
+     "above": 0.025374449339207048,
+     "n": 11350
+    },
+    "rising ramp": {
+     "coverage": 0.6773504273504274,
+     "width_kw": 13.733350682474192,
+     "interval_score": 25.12246020565451,
+     "below": 0.0,
+     "above": 0.32264957264957267,
+     "n": 936
+    },
+    "falling ramp": {
+     "coverage": 0.6561224489795918,
+     "width_kw": 13.376040058815414,
+     "interval_score": 28.505222658157443,
+     "below": 0.3438775510204082,
+     "above": 0.0,
+     "n": 980
+    },
+    "sunrise ramp": {
+     "coverage": 0.7276119402985075,
+     "width_kw": 2.5307276343321226,
+     "interval_score": 6.606205584307261,
+     "below": 0.11194029850746269,
+     "above": 0.16044776119402984,
+     "n": 268
+    }
+   }
+  },
+  "G4": {
+   "50": {
+    "overall": {
+     "coverage": 0.48092868988391374,
+     "width_kw": 1.9006817642358633,
+     "interval_score": 4.626541990270097,
+     "below": 0.24755012814714308,
+     "above": 0.27152118196894315,
+     "n": 13266
+    },
+    "sunny": {
+     "coverage": 0.5584513407652908,
+     "width_kw": 0.1856796481012046,
+     "interval_score": 0.32339900208626154,
+     "below": 0.18499548056643567,
+     "above": 0.2565531786682736,
+     "n": 6638
+    },
+    "cloudy": {
+     "coverage": 0.40328907664453834,
+     "width_kw": 3.618271391106996,
+     "interval_score": 8.93617734868354,
+     "below": 0.3101991550995776,
+     "above": 0.28651176825588415,
+     "n": 6628
+    },
+    "ramp": {
+     "coverage": 0.12265135699373696,
+     "width_kw": 4.274825645339637,
+     "interval_score": 17.32183325106395,
+     "below": 0.43475991649269313,
+     "above": 0.44258872651356995,
+     "n": 1916
+    },
+    "non-ramp": {
+     "coverage": 0.541409691629956,
+     "width_kw": 1.4999011760248648,
+     "interval_score": 2.483442602104368,
+     "below": 0.21594713656387665,
+     "above": 0.2426431718061674,
+     "n": 11350
+    },
+    "rising ramp": {
+     "coverage": 0.10042735042735043,
+     "width_kw": 4.362696650749935,
+     "interval_score": 17.978608747966092,
+     "below": 0.0,
+     "above": 0.8995726495726496,
+     "n": 936
+    },
+    "falling ramp": {
+     "coverage": 0.14387755102040817,
+     "width_kw": 4.190899868743679,
+     "interval_score": 16.694545633614556,
+     "below": 0.85,
+     "above": 0.006122448979591836,
+     "n": 980
+    },
+    "sunrise ramp": {
+     "coverage": 0.13432835820895522,
+     "width_kw": 0.6678072366112908,
+     "interval_score": 3.679140009430008,
+     "below": 0.31343283582089554,
+     "above": 0.5522388059701493,
+     "n": 268
+    }
+   },
+   "80": {
+    "overall": {
+     "coverage": 0.816146540027137,
+     "width_kw": 4.331106196665607,
+     "interval_score": 6.4520178844719815,
+     "below": 0.07620985979194934,
+     "above": 0.10764360018091361,
+     "n": 13266
+    },
+    "sunny": {
+     "coverage": 0.8781259415486592,
+     "width_kw": 0.41649649372438735,
+     "interval_score": 0.5022132724420496,
+     "below": 0.03630611630009039,
+     "above": 0.08556794215125038,
+     "n": 6638
+    },
+    "cloudy": {
+     "coverage": 0.7540736270368135,
+     "width_kw": 8.251622069949223,
+     "interval_score": 12.410799268698698,
+     "below": 0.11617380808690404,
+     "above": 0.12975256487628245,
+     "n": 6628
+    },
+    "ramp": {
+     "coverage": 0.4384133611691023,
+     "width_kw": 9.45809936277332,
+     "interval_score": 21.55446942734803,
+     "below": 0.27139874739039666,
+     "above": 0.29018789144050106,
+     "n": 1916
+    },
+    "non-ramp": {
+     "coverage": 0.8799118942731278,
+     "width_kw": 3.4656155441314755,
+     "interval_score": 3.902564390538015,
+     "below": 0.043259911894273126,
+     "above": 0.07682819383259912,
+     "n": 11350
+    },
+    "rising ramp": {
+     "coverage": 0.405982905982906,
+     "width_kw": 9.588692136745893,
+     "interval_score": 22.751318771895384,
+     "below": 0.0,
+     "above": 0.594017094017094,
+     "n": 936
+    },
+    "falling ramp": {
+     "coverage": 0.46938775510204084,
+     "width_kw": 9.333369937836249,
+     "interval_score": 20.411356175821172,
+     "below": 0.5306122448979592,
+     "above": 0.0,
+     "n": 980
+    },
+    "sunrise ramp": {
+     "coverage": 0.3843283582089552,
+     "width_kw": 1.5389269626258428,
+     "interval_score": 5.220731895097977,
+     "below": 0.22761194029850745,
+     "above": 0.3880597014925373,
+     "n": 268
+    }
+   },
+   "90": {
+    "overall": {
+     "coverage": 0.9266546057590833,
+     "width_kw": 6.157532973269666,
+     "interval_score": 7.622695736717374,
+     "below": 0.025780189959294438,
+     "above": 0.04756520428162219,
+     "n": 13266
+    },
+    "sunny": {
+     "coverage": 0.9572160289243749,
+     "width_kw": 0.645084820625962,
+     "interval_score": 0.7061196185599601,
+     "below": 0.0061765592045796925,
+     "above": 0.0366074118710455,
+     "n": 6638
+    },
+    "cloudy": {
+     "coverage": 0.8960470730235365,
+     "width_kw": 11.678298036222126,
+     "interval_score": 14.549707244310754,
+     "below": 0.04541339770669885,
+     "above": 0.058539529269764634,
+     "n": 6628
+    },
+    "ramp": {
+     "coverage": 0.704070981210856,
+     "width_kw": 13.052711137288918,
+     "interval_score": 22.183900362399253,
+     "below": 0.13413361169102297,
+     "above": 0.1617954070981211,
+     "n": 1916
+    },
+    "non-ramp": {
+     "coverage": 0.9642290748898679,
+     "width_kw": 4.993553998621129,
+     "interval_score": 5.16461044484015,
+     "below": 0.007488986784140969,
+     "above": 0.02828193832599119,
+     "n": 11350
+    },
+    "rising ramp": {
+     "coverage": 0.6688034188034188,
+     "width_kw": 13.180844589371691,
+     "interval_score": 23.56739998291709,
+     "below": 0.0,
+     "above": 0.3311965811965812,
+     "n": 936
+    },
+    "falling ramp": {
+     "coverage": 0.7377551020408163,
+     "width_kw": 12.930330615707822,
+     "interval_score": 20.862517051374052,
+     "below": 0.26224489795918365,
+     "above": 0.0,
+     "n": 980
+    },
+    "sunrise ramp": {
+     "coverage": 0.6268656716417911,
+     "width_kw": 2.2088316053337618,
+     "interval_score": 5.593986466312818,
+     "below": 0.1455223880597015,
+     "above": 0.22761194029850745,
+     "n": 268
+    }
+   }
+  }
+ },
+ "window_composition": {
+  "G3''-F": {
+   "2017-06-24": {
+    "start": 1.0,
+    "median": 0.9205627705627706,
+    "end": 0.8383116883116883,
+    "n_forecasts": 762
+   },
+   "2017-09-15": {
+    "start": 1.0,
+    "median": 0.9297619047619048,
+    "end": 0.8564935064935065,
+    "n_forecasts": 678
+   },
+   "2017-09-20": {
+    "start": 1.0,
+    "median": 0.9327922077922077,
+    "end": 0.8625541125541125,
+    "n_forecasts": 650
+   },
+   "2017-10-06": {
+    "start": 1.0,
+    "median": 0.9352813852813853,
+    "end": 0.8675324675324675,
+    "n_forecasts": 627
+   },
+   "2017-10-11": {
+    "start": 1.0,
+    "median": 0.9387445887445888,
+    "end": 0.8744588744588745,
+    "n_forecasts": 595
+   },
+   "2017-10-22": {
+    "start": 1.0,
+    "median": 0.9391774891774892,
+    "end": 0.8753246753246753,
+    "n_forecasts": 591
+   },
+   "2018-01-25": {
+    "start": 1.0,
+    "median": 0.946969696969697,
+    "end": 0.8906926406926406,
+    "n_forecasts": 519
+   },
+   "2018-02-16": {
+    "start": 1.0,
+    "median": 0.9404761904761905,
+    "end": 0.8777056277056277,
+    "n_forecasts": 579
+   },
+   "2018-03-09": {
+    "start": 1.0,
+    "median": 0.93495670995671,
+    "end": 0.8668831168831169,
+    "n_forecasts": 630
+   },
+   "2018-06-12": {
+    "start": 1.0,
+    "median": 0.9243506493506493,
+    "end": 0.8456709956709957,
+    "n_forecasts": 728
+   },
+   "2018-06-23": {
+    "start": 1.0,
+    "median": 0.9246753246753247,
+    "end": 0.8463203463203464,
+    "n_forecasts": 725
+   },
+   "2018-10-04": {
+    "start": 1.0,
+    "median": 0.9372294372294372,
+    "end": 0.8714285714285714,
+    "n_forecasts": 609
+   },
+   "2019-01-25": {
+    "start": 1.0,
+    "median": 0.9446969696969696,
+    "end": 0.8863636363636364,
+    "n_forecasts": 540
+   },
+   "2019-05-27": {
+    "start": 1.0,
+    "median": 0.9201298701298701,
+    "end": 0.8372294372294372,
+    "n_forecasts": 767
+   },
+   "2019-06-23": {
+    "start": 1.0,
+    "median": 0.918073593073593,
+    "end": 0.8331168831168831,
+    "n_forecasts": 786
+   },
+   "2019-06-28": {
+    "start": 1.0,
+    "median": 0.9204545454545454,
+    "end": 0.8378787878787879,
+    "n_forecasts": 764
+   },
+   "2019-07-14": {
+    "start": 1.0,
+    "median": 0.9192640692640692,
+    "end": 0.8354978354978355,
+    "n_forecasts": 775
+   },
+   "2019-08-10": {
+    "start": 1.0,
+    "median": 0.9234848484848486,
+    "end": 0.843939393939394,
+    "n_forecasts": 736
+   },
+   "2019-10-14": {
+    "start": 1.0,
+    "median": 0.9372294372294372,
+    "end": 0.8714285714285714,
+    "n_forecasts": 609
+   },
+   "2019-10-19": {
+    "start": 1.0,
+    "median": 0.9386363636363637,
+    "end": 0.8729437229437229,
+    "n_forecasts": 596
+   }
+  },
+  "E4-B-fit": {
+   "2017-06-24": {
+    "start": 1.0,
+    "median": 0.6292929292929292,
+    "end": 0.24545454545454545,
+    "n_forecasts": 762
+   },
+   "2017-09-15": {
+    "start": 1.0,
+    "median": 0.6722222222222223,
+    "end": 0.3303030303030303,
+    "n_forecasts": 678
+   },
+   "2017-09-20": {
+    "start": 1.0,
+    "median": 0.6863636363636363,
+    "end": 0.35858585858585856,
+    "n_forecasts": 650
+   },
+   "2017-10-06": {
+    "start": 1.0,
+    "median": 0.697979797979798,
+    "end": 0.38181818181818183,
+    "n_forecasts": 627
+   },
+   "2017-10-11": {
+    "start": 1.0,
+    "median": 0.7141414141414142,
+    "end": 0.41414141414141414,
+    "n_forecasts": 595
+   },
+   "2017-10-22": {
+    "start": 1.0,
+    "median": 0.7161616161616161,
+    "end": 0.41818181818181815,
+    "n_forecasts": 591
+   },
+   "2018-01-25": {
+    "start": 1.0,
+    "median": 0.7525252525252525,
+    "end": 0.4898989898989899,
+    "n_forecasts": 519
+   },
+   "2018-02-16": {
+    "start": 1.0,
+    "median": 0.7222222222222222,
+    "end": 0.4292929292929293,
+    "n_forecasts": 579
+   },
+   "2018-03-09": {
+    "start": 1.0,
+    "median": 0.6964646464646465,
+    "end": 0.3787878787878788,
+    "n_forecasts": 630
+   },
+   "2018-06-12": {
+    "start": 1.0,
+    "median": 0.646969696969697,
+    "end": 0.2797979797979798,
+    "n_forecasts": 728
+   },
+   "2018-06-23": {
+    "start": 1.0,
+    "median": 0.6484848484848484,
+    "end": 0.2828282828282828,
+    "n_forecasts": 725
+   },
+   "2018-10-04": {
+    "start": 1.0,
+    "median": 0.7070707070707071,
+    "end": 0.4,
+    "n_forecasts": 609
+   },
+   "2019-01-25": {
+    "start": 1.0,
+    "median": 0.7419191919191919,
+    "end": 0.4696969696969697,
+    "n_forecasts": 540
+   },
+   "2019-05-27": {
+    "start": 1.0,
+    "median": 0.6272727272727273,
+    "end": 0.2404040404040404,
+    "n_forecasts": 767
+   },
+   "2019-06-23": {
+    "start": 1.0,
+    "median": 0.6176767676767676,
+    "end": 0.22121212121212122,
+    "n_forecasts": 786
+   },
+   "2019-06-28": {
+    "start": 1.0,
+    "median": 0.6287878787878789,
+    "end": 0.24343434343434345,
+    "n_forecasts": 764
+   },
+   "2019-07-14": {
+    "start": 1.0,
+    "median": 0.6232323232323232,
+    "end": 0.23232323232323232,
+    "n_forecasts": 775
+   },
+   "2019-08-10": {
+    "start": 1.0,
+    "median": 0.6429292929292929,
+    "end": 0.2717171717171717,
+    "n_forecasts": 736
+   },
+   "2019-10-14": {
+    "start": 1.0,
+    "median": 0.7070707070707071,
+    "end": 0.4,
+    "n_forecasts": 609
+   },
+   "2019-10-19": {
+    "start": 1.0,
+    "median": 0.7136363636363636,
+    "end": 0.4070707070707071,
+    "n_forecasts": 596
+   }
+  },
+  "E6-S": {
+   "2017-06-24": {
+    "start": 1.0,
+    "median": 0.9205627705627706,
+    "end": 0.8383116883116883,
+    "n_forecasts": 762
+   },
+   "2017-09-15": {
+    "start": 1.0,
+    "median": 0.9297619047619048,
+    "end": 0.8564935064935065,
+    "n_forecasts": 678
+   },
+   "2017-09-20": {
+    "start": 1.0,
+    "median": 0.9327922077922077,
+    "end": 0.8625541125541125,
+    "n_forecasts": 650
+   },
+   "2017-10-06": {
+    "start": 1.0,
+    "median": 0.9352813852813853,
+    "end": 0.8675324675324675,
+    "n_forecasts": 627
+   },
+   "2017-10-11": {
+    "start": 1.0,
+    "median": 0.9387445887445888,
+    "end": 0.8744588744588745,
+    "n_forecasts": 595
+   },
+   "2017-10-22": {
+    "start": 1.0,
+    "median": 0.9391774891774892,
+    "end": 0.8753246753246753,
+    "n_forecasts": 591
+   },
+   "2018-01-25": {
+    "start": 1.0,
+    "median": 0.946969696969697,
+    "end": 0.8906926406926406,
+    "n_forecasts": 519
+   },
+   "2018-02-16": {
+    "start": 1.0,
+    "median": 0.9404761904761905,
+    "end": 0.8777056277056277,
+    "n_forecasts": 579
+   },
+   "2018-03-09": {
+    "start": 1.0,
+    "median": 0.93495670995671,
+    "end": 0.8668831168831169,
+    "n_forecasts": 630
+   },
+   "2018-06-12": {
+    "start": 1.0,
+    "median": 0.9243506493506493,
+    "end": 0.8456709956709957,
+    "n_forecasts": 728
+   },
+   "2018-06-23": {
+    "start": 1.0,
+    "median": 0.9246753246753247,
+    "end": 0.8463203463203464,
+    "n_forecasts": 725
+   },
+   "2018-10-04": {
+    "start": 1.0,
+    "median": 0.9372294372294372,
+    "end": 0.8714285714285714,
+    "n_forecasts": 609
+   },
+   "2019-01-25": {
+    "start": 1.0,
+    "median": 0.9446969696969696,
+    "end": 0.8863636363636364,
+    "n_forecasts": 540
+   },
+   "2019-05-27": {
+    "start": 1.0,
+    "median": 0.9201298701298701,
+    "end": 0.8372294372294372,
+    "n_forecasts": 767
+   },
+   "2019-06-23": {
+    "start": 1.0,
+    "median": 0.918073593073593,
+    "end": 0.8331168831168831,
+    "n_forecasts": 786
+   },
+   "2019-06-28": {
+    "start": 1.0,
+    "median": 0.9204545454545454,
+    "end": 0.8378787878787879,
+    "n_forecasts": 764
+   },
+   "2019-07-14": {
+    "start": 1.0,
+    "median": 0.9192640692640692,
+    "end": 0.8354978354978355,
+    "n_forecasts": 775
+   },
+   "2019-08-10": {
+    "start": 1.0,
+    "median": 0.9234848484848486,
+    "end": 0.843939393939394,
+    "n_forecasts": 736
+   },
+   "2019-10-14": {
+    "start": 1.0,
+    "median": 0.9372294372294372,
+    "end": 0.8714285714285714,
+    "n_forecasts": 609
+   },
+   "2019-10-19": {
+    "start": 1.0,
+    "median": 0.9386363636363637,
+    "end": 0.8729437229437229,
+    "n_forecasts": 596
+   }
+  },
+  "G4": {
+   "2017-06-24": {
+    "start": 1.0,
+    "median": 0.9205627705627706,
+    "end": 0.8383116883116883,
+    "n_forecasts": 762
+   },
+   "2017-09-15": {
+    "start": 1.0,
+    "median": 0.9297619047619048,
+    "end": 0.8564935064935065,
+    "n_forecasts": 678
+   },
+   "2017-09-20": {
+    "start": 1.0,
+    "median": 0.9327922077922077,
+    "end": 0.8625541125541125,
+    "n_forecasts": 650
+   },
+   "2017-10-06": {
+    "start": 1.0,
+    "median": 0.9352813852813853,
+    "end": 0.8675324675324675,
+    "n_forecasts": 627
+   },
+   "2017-10-11": {
+    "start": 1.0,
+    "median": 0.9387445887445888,
+    "end": 0.8744588744588745,
+    "n_forecasts": 595
+   },
+   "2017-10-22": {
+    "start": 1.0,
+    "median": 0.9391774891774892,
+    "end": 0.8753246753246753,
+    "n_forecasts": 591
+   },
+   "2018-01-25": {
+    "start": 1.0,
+    "median": 0.946969696969697,
+    "end": 0.8906926406926406,
+    "n_forecasts": 519
+   },
+   "2018-02-16": {
+    "start": 1.0,
+    "median": 0.9404761904761905,
+    "end": 0.8777056277056277,
+    "n_forecasts": 579
+   },
+   "2018-03-09": {
+    "start": 1.0,
+    "median": 0.93495670995671,
+    "end": 0.8668831168831169,
+    "n_forecasts": 630
+   },
+   "2018-06-12": {
+    "start": 1.0,
+    "median": 0.9243506493506493,
+    "end": 0.8456709956709957,
+    "n_forecasts": 728
+   },
+   "2018-06-23": {
+    "start": 1.0,
+    "median": 0.9246753246753247,
+    "end": 0.8463203463203464,
+    "n_forecasts": 725
+   },
+   "2018-10-04": {
+    "start": 1.0,
+    "median": 0.9372294372294372,
+    "end": 0.8714285714285714,
+    "n_forecasts": 609
+   },
+   "2019-01-25": {
+    "start": 1.0,
+    "median": 0.9446969696969696,
+    "end": 0.8863636363636364,
+    "n_forecasts": 540
+   },
+   "2019-05-27": {
+    "start": 1.0,
+    "median": 0.9201298701298701,
+    "end": 0.8372294372294372,
+    "n_forecasts": 767
+   },
+   "2019-06-23": {
+    "start": 1.0,
+    "median": 0.918073593073593,
+    "end": 0.8331168831168831,
+    "n_forecasts": 786
+   },
+   "2019-06-28": {
+    "start": 1.0,
+    "median": 0.9204545454545454,
+    "end": 0.8378787878787879,
+    "n_forecasts": 764
+   },
+   "2019-07-14": {
+    "start": 1.0,
+    "median": 0.9192640692640692,
+    "end": 0.8354978354978355,
+    "n_forecasts": 775
+   },
+   "2019-08-10": {
+    "start": 1.0,
+    "median": 0.9234848484848486,
+    "end": 0.843939393939394,
+    "n_forecasts": 736
+   },
+   "2019-10-14": {
+    "start": 1.0,
+    "median": 0.9372294372294372,
+    "end": 0.8714285714285714,
+    "n_forecasts": 609
+   },
+   "2019-10-19": {
+    "start": 1.0,
+    "median": 0.9386363636363637,
+    "end": 0.8729437229437229,
+    "n_forecasts": 596
+   }
+  }
+ }
+}

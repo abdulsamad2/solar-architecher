@@ -20,7 +20,7 @@
 ## Data use: the official test set is NOT used
 - The official 20-day SKIPP'D test set and SkyGPT's external days have each been used once. Using them to compare loss variants would be test-set reuse.
 - **All comparisons in Phase F are made on held-out development data:** 3-member out-of-fold forecasts, each sample predicted only by members that never trained on it. The procedure is the same as the ablation ladder and Phase C.
-- A one-shot test of the selected variant is possible only on the **sealed Gatton test** (Phase E) or another unused set. It requires a separate pre-registration.
+- A one-shot test of the selected variant would require an unused test set and a separate pre-registration.
 
 ## Staged hyperparameter search (seed 42; search folds 1 and 3 only; development validation days)
 Arm A0 is the existing A2 run (seed 42, folds 1 and 3), so it costs no extra training. Metrics are the A2 expert's validation CRPS in kW from `metrics.json`, on the common population.

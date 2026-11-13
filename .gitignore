@@ -13,3 +13,7 @@ reference-skippd/
 # keep small run records (configs, metrics, histories, logs)
 !experiments/**/*.json
 !experiments/**/*.log
+
+# release bundles are built artefacts
+SHADOW-MoE_*_package_*.zip
+node_modules/

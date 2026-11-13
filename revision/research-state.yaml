@@ -1,0 +1,29 @@
+﻿project: SHADOW-MoE v5 review revision (Stanford SKIPP'D only; Gatton is out of scope)
+branch: revision/v5-review
+baseline_tag: pre-v5-revision
+decisions:
+  scope: SKIPP'D only. No Gatton work, results or mentions in the revision or manuscript (author instruction 2026-11-13).
+  binaries: git-lfs (paper/, manuscript/, revision/ binaries)
+  test_use: post hoc analyses allowed, labelled exploratory
+  e3: SKIPP'D chronological retrain only
+  e4: full 2x2, 3 seeds
+  declarations: placeholders (author to complete)
+items:
+  setup: done
+  C07_C19: done
+  C06: done
+  E2: done
+  E1: done
+  E4: done
+  E3: done
+  C15_C18: done
+  C16_C17_C20: done
+  C22: done
+  C21: done
+  C02_literature: done
+  C24_reproducibility: done (lock file, hash inventory); declarations = author placeholders
+  manuscript_v6: in_progress
+  response_to_reviewer: in_progress
+  final_review: pending
+deviations:
+  - "E3: the 3 official test days inside the evaluation window were not scored as a separate subset (revision/reports/E3_forward.md)."

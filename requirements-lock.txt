@@ -1,0 +1,14 @@
+# Exact environment of the experiments and the one-shot test (Python 3.11.16, CUDA 12.8; matches
+# reports/test_execution_manifest.json). Install torch/torchvision from the CUDA index first:
+#   pip install torch==2.11.0+cu128 torchvision==0.26.0+cu128 --index-url https://download.pytorch.org/whl/cu128
+torch==2.11.0+cu128
+torchvision==0.26.0+cu128
+numpy==2.4.6
+pvlib==0.16.1
+scipy==1.17.1
+h5py==3.16.0
+pandas==3.0.6
+PyYAML==6.0.3
+pytest==9.1.1
+pillow==12.3.0
+matplotlib==3.11.2
