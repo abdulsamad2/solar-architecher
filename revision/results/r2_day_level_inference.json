@@ -1,0 +1,210 @@
+{
+ "protocol": "revision/protocols/R-R2_day_level_inference.md",
+ "contrasts": {
+  "1 overall CRPS vs direct expert (H1)": {
+   "n": 13266,
+   "days": 20,
+   "pooled_mean": -0.11093067522569212,
+   "bootstrap_percentile": [
+    -0.11093067522569212,
+    -0.14910867347942075,
+    -0.0752750117639668
+   ],
+   "sign_flip_p_two_sided": 2.86102294921875e-05,
+   "t_interval_day_means": [
+    -0.11288221901541817,
+    -0.1566394057188093,
+    -0.06912503231202706
+   ],
+   "t_df": 18,
+   "days_proposed_better": 19,
+   "largest_single_day_share": 0.12833228768944593,
+   "bootstrap_excludes_zero": true,
+   "sign_flip_and_t_exclude_zero": true,
+   "robust": true
+  },
+  "2 ramp CRPS vs direct expert (H3, margin 0.02)": {
+   "n": 1916,
+   "days": 20,
+   "pooled_mean": -0.11705048425675404,
+   "bootstrap_percentile": [
+    -0.11705048425675404,
+    -0.24422133550948993,
+    0.03147473855860093
+   ],
+   "sign_flip_p_two_sided": 0.1992473602294922,
+   "t_interval_day_means": [
+    -0.01461747899163195,
+    -0.12061168671856747,
+    0.09137672873530357
+   ],
+   "t_df": 18,
+   "days_proposed_better": 9,
+   "largest_single_day_share": 0.24724308420809737,
+   "margin": 0.02,
+   "sign_flip_p_noninferiority": 0.07914257049560547,
+   "t_upper_below_margin": false,
+   "bootstrap_excludes_zero": false,
+   "sign_flip_and_t_exclude_zero": false,
+   "robust": true
+  },
+  "3 overall CRPS vs calm expert": {
+   "n": 13266,
+   "days": 20,
+   "pooled_mean": -0.0835779923545323,
+   "bootstrap_percentile": [
+    -0.0835779923545323,
+    -0.10846019233225464,
+    -0.060257736077338135
+   ],
+   "sign_flip_p_two_sided": 0.0014667510986328125,
+   "t_interval_day_means": [
+    -0.08284760882405012,
+    -0.1089113348772945,
+    -0.056783882770805746
+   ],
+   "t_df": 18,
+   "days_proposed_better": 18,
+   "largest_single_day_share": 0.16918685240219042,
+   "bootstrap_excludes_zero": true,
+   "sign_flip_and_t_exclude_zero": true,
+   "robust": true
+  },
+  "4 overall CRPS vs G4": {
+   "n": 13266,
+   "days": 20,
+   "pooled_mean": -0.01772588911173197,
+   "bootstrap_percentile": [
+    -0.01772588911173197,
+    -0.03947240874307354,
+    0.0020356621323429753
+   ],
+   "sign_flip_p_two_sided": 0.163330078125,
+   "t_interval_day_means": [
+    -0.016776998734931964,
+    -0.040269378240319495,
+    0.006715380770455571
+   ],
+   "t_df": 18,
+   "days_proposed_better": 10,
+   "largest_single_day_share": 0.27256664173504397,
+   "bootstrap_excludes_zero": false,
+   "sign_flip_and_t_exclude_zero": false,
+   "robust": true
+  },
+  "5 non-ramp CRPS vs G4": {
+   "n": 11350,
+   "days": 20,
+   "pooled_mean": 0.0250799659030505,
+   "bootstrap_percentile": [
+    0.0250799659030505,
+    0.007140579617274582,
+    0.044834421962973596
+   ],
+   "sign_flip_p_two_sided": 0.04119873046875,
+   "t_interval_day_means": [
+    0.034734961215763624,
+    0.005900743180762488,
+    0.06356917925076476
+   ],
+   "t_df": 18,
+   "days_proposed_better": 8,
+   "largest_single_day_share": 0.20633611912187724,
+   "bootstrap_excludes_zero": true,
+   "sign_flip_and_t_exclude_zero": true,
+   "robust": true
+  },
+  "6 ramp CRPS vs G4": {
+   "n": 1916,
+   "days": 20,
+   "pooled_mean": -0.27129919517529205,
+   "bootstrap_percentile": [
+    -0.27129919517529205,
+    -0.36428685578016484,
+    -0.172507399358548
+   ],
+   "sign_flip_p_two_sided": 0.003559112548828125,
+   "t_interval_day_means": [
+    -0.12438342021356018,
+    -0.18443789768375857,
+    -0.0643289427433618
+   ],
+   "t_df": 18,
+   "days_proposed_better": 14,
+   "largest_single_day_share": 0.27830497411194466,
+   "bootstrap_excludes_zero": true,
+   "sign_flip_and_t_exclude_zero": true,
+   "robust": true
+  },
+  "7 ramp-region twCRPS vs direct expert": {
+   "n": 13266,
+   "days": 20,
+   "pooled_mean": -0.0034991989011750884,
+   "bootstrap_percentile": [
+    -0.0034991989011750884,
+    -0.014729173031299947,
+    0.006758965693508981
+   ],
+   "sign_flip_p_two_sided": 0.5661296844482422,
+   "t_interval_day_means": [
+    -0.0029244840664939967,
+    -0.015698783613091447,
+    0.009849815480103455
+   ],
+   "t_df": 18,
+   "days_proposed_better": 8,
+   "largest_single_day_share": 0.2708301601952353,
+   "bootstrap_excludes_zero": false,
+   "sign_flip_and_t_exclude_zero": false,
+   "robust": true
+  },
+  "8 ramp-region twCRPS vs calm expert": {
+   "n": 13266,
+   "days": 20,
+   "pooled_mean": -0.029667385069955032,
+   "bootstrap_percentile": [
+    -0.029667385069955032,
+    -0.04218160424557966,
+    -0.018308651921615873
+   ],
+   "sign_flip_p_two_sided": 0.0004825592041015625,
+   "t_interval_day_means": [
+    -0.03002568471355216,
+    -0.043292513544128844,
+    -0.016758855882975474
+   ],
+   "t_df": 18,
+   "days_proposed_better": 19,
+   "largest_single_day_share": 0.23405374322360373,
+   "bootstrap_excludes_zero": true,
+   "sign_flip_and_t_exclude_zero": true,
+   "robust": true
+  },
+  "9 ramp-region twCRPS vs G4": {
+   "n": 13266,
+   "days": 20,
+   "pooled_mean": -0.004916550641744381,
+   "bootstrap_percentile": [
+    -0.004916550641744381,
+    -0.01427804487489105,
+    0.002885406685704883
+   ],
+   "sign_flip_p_two_sided": 0.36481666564941406,
+   "t_interval_day_means": [
+    -0.004361619206757467,
+    -0.014186491325056994,
+    0.0054632529115420615
+   ],
+   "t_df": 18,
+   "days_proposed_better": 13,
+   "largest_single_day_share": 0.37009206907883097,
+   "bootstrap_excludes_zero": false,
+   "sign_flip_and_t_exclude_zero": false,
+   "robust": true
+  }
+ },
+ "holm": {
+  "H1 (two-sided)": 5.7220458984375e-05,
+  "H3 (non-inferiority)": 0.07914257049560547
+ }
+}
