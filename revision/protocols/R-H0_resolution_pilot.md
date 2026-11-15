@@ -166,3 +166,17 @@ than the base network by more than 2% in CRPS, this is reported as a limitation 
 
 ## Not computed in the pilot
 Ramp recall by onset-lead bin and the patchy-cloud subset (left to the full study).
+
+---
+
+# Note (2026-11-16, during the Amendment 2 runs): the planned confirmatory holdout does not exist
+
+The protocol and both amendments name a frozen confirmatory evaluation on raw days of November-December 2019. A
+metadata check (no forecast or outcome evaluated) shows that this is not possible with the public release:
+- the public raw PV file of 2019 ends on 2019-10-27 09:00, so the raw image days of November-December 2019 have no
+  PV record (the only PV for that period is in the five-day external test file of SkyGPT, already used);
+- in the twelve pilot months the raw archives contain 164 image days, of which 157 are benchmark days and the other
+  seven have too few frames or PV minutes; the benchmark therefore already contains practically every usable raw day.
+Consequence: no untouched raw day with PV is available. A GO in this pilot could only be followed by a refit study on
+benchmark days (development and forward evaluation), which would be exploratory, or by a study on another data set.
+This is stated in any report of the pilot.
