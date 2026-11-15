@@ -1,0 +1,117 @@
+{
+ "protocol": "revision/protocols/R-Z3_outcome_class_conformal.md",
+ "W_class": {
+  "ramp": 660,
+  "non-ramp": 3960
+ },
+ "dev_excluded": 140,
+ "dev_ramp_share": 0.1007173216743189,
+ "U": {
+  "overall": {
+   "coverage": 0.9259007990351273,
+   "mean_size_kw": 6.227811276869001,
+   "n": 13266
+  },
+  "ramp": {
+   "coverage": 0.7463465553235908,
+   "mean_size_kw": 12.977276932430714,
+   "n": 1916
+  },
+  "rising ramp": {
+   "coverage": 0.6955128205128205,
+   "mean_size_kw": 13.130139496581826,
+   "n": 936
+  },
+  "falling ramp": {
+   "coverage": 0.7948979591836735,
+   "mean_size_kw": 12.831277585445571,
+   "n": 980
+  },
+  "non-ramp": {
+   "coverage": 0.9562114537444933,
+   "mean_size_kw": 5.088430114220873,
+   "n": 11350
+  },
+  "sunny": {
+   "coverage": 0.9498342874359746,
+   "mean_size_kw": 0.7622784568867017,
+   "n": 6638
+  },
+  "cloudy": {
+   "coverage": 0.9019312009656005,
+   "mean_size_kw": 11.701590223616511,
+   "n": 6628
+  }
+ },
+ "class_conditional": {
+  "overall": {
+   "coverage": 0.9345695763606211,
+   "mean_size_kw": 7.177322822116731,
+   "n": 13266
+  },
+  "ramp": {
+   "coverage": 0.9018789144050104,
+   "mean_size_kw": 14.738831170868291,
+   "n": 1916
+  },
+  "rising ramp": {
+   "coverage": 0.8814102564102564,
+   "mean_size_kw": 14.70390299656515,
+   "n": 936
+  },
+  "falling ramp": {
+   "coverage": 0.9214285714285714,
+   "mean_size_kw": 14.77219114142721,
+   "n": 980
+  },
+  "non-ramp": {
+   "coverage": 0.9400881057268723,
+   "mean_size_kw": 5.900860267384748,
+   "n": 11350
+  },
+  "sunny": {
+   "coverage": 0.9332630310334438,
+   "mean_size_kw": 0.9619244994277507,
+   "n": 6638
+  },
+  "cloudy": {
+   "coverage": 0.9358780929390464,
+   "mean_size_kw": 13.402098631713809,
+   "n": 6628
+  }
+ },
+ "hull_kw": {
+  "overall": 7.453544575587759,
+  "ramp": 14.936222833267509,
+  "rising ramp": 14.877219322265582,
+  "falling ramp": 14.99257720704078,
+  "non-ramp": 6.190389373674597,
+  "sunny": 1.1811172304857815,
+  "cloudy": 13.735435450178425
+ },
+ "share_not_an_interval": 0.261797075229911,
+ "share_empty": 0.0,
+ "mean_class_quantile_kw": {
+  "ramp": 1.4192448231408723,
+  "non-ramp": -0.04031973906103698
+ },
+ "size_minus_U": {
+  "overall": [
+   0.9495115452477301,
+   0.6341772550667425,
+   1.2606980422610636
+  ],
+  "ramp": [
+   1.7615542384375777,
+   1.2315007684873214,
+   2.2551001432030224
+  ],
+  "non-ramp": [
+   0.8124301531638755,
+   0.5237493690378894,
+   1.1086116772530055
+  ]
+ },
+ "size_ratio_to_U": 1.1524631211569232,
+ "decision": "ramp protection attained"
+}
