@@ -52,3 +52,67 @@ the overall CRPS is not worse by more than 1%. Otherwise **NO-GO** for that arm.
 - On NO-GO for both arms: the pilot is reported as a negative finding (resolution was not shown to be the bottleneck
   at a 15-min lead) and no further resolution training is done.
 Pilot numbers are never reported as confirmatory.
+
+---
+
+# Amendment 1 (2026-11-15, before any training run; no model output has been seen)
+
+Reason: a literature review made after the original text (three independent searches) changed the design. It replaces
+the sections "Data" (derived inputs), "Arms", and the hypothesis; metrics, bootstrap and the GO threshold are unchanged.
+
+## What the review established
+- No study was found that crosses image information with lead time under matched controls and a proper ramp score.
+  Closest: Feng et al. 2022 (NREL irradiance, 64/128/256 x 10-60 min, average error only, capacity not matched;
+  128 best, 256 "redundant"); Paletta et al. (SPIN, arXiv:2111.14507: a sun close-up helps at 2 min but loses to a wide
+  sun-centred view by 10 min); Wang & You 2026 (arXiv:2605.03165: SKIPP'D ramp detection by lead bin with a
+  real-future-image oracle, raw frames downscaled to 128, own ramp-filtered split); SolarBench 2026
+  (arXiv:2609.06187: names the attribution of the ramp deficit as open).
+- The default explanation of the lag in the literature is a model limit (loss smoothing, reactive mapping: Paletta
+  et al. 2021, 2022; SkyGPT locates the error in the image-to-power mapping). The information-limit argument is made
+  physically by Julian et al. (arXiv:2409.12162: fisheye compression near the horizon) and by the field-of-view
+  geometry of Schmidt et al. 2015 and Wang, Kurtz and Kleissl 2016, without a matched test.
+
+## Hypothesis (fixed now)
+If the ramp deficit is an **information limit set by viewing geometry**, added image information should help where the
+relevant cloud is: near the sun for short leads and near the horizon for long leads. Prediction (double dissociation):
+the gain of sun-region detail is larger at 5 min than at 15 min, and the gain of horizon detail is larger at 15 min
+than at 5 min. If the deficit is a **model limit**, added information should help similarly at both leads or not at
+all. Both outcomes are reported.
+
+## Lead times
+15 min (the benchmark task) and 5 min. The 5-min samples use the same forecast origins, histories and folds, with the
+target record at origin + 5 min (within 30 s); the 5-min ramp threshold is derived by the frozen rule of the 15-min
+thresholds applied to 5-min changes on the fit days of each fold. Models are trained separately per lead.
+
+## Inputs derived from raw frames (information levels; tensor sizes fixed so that each network sees one size)
+- **FULL:** the full frame as a 256 x 256 tensor at three information levels: I64 (benchmark frame, bilinear
+  upsampling; control), I128 (raw frame area-averaged to 128, then upsampled), I256 (raw frame area-averaged to 256).
+- **SUN:** a 512 x 512 raw window centred on the sun position from solar geometry, as a 64 x 64 tensor: high (from
+  the raw frame) or control (the same window cut from the benchmark frame and upsampled).
+- **RING:** the outer sky ring, zenith angles 55-88 degrees, unwrapped to azimuth x zenith (256 x 32 tensor, azimuth
+  measured from the sun's azimuth): high (from the raw frame) or control (from the benchmark frame). The fisheye model
+  is fitted once on clear-sky frames of several seasons before any training.
+
+## Arms (direct expert; same target, quantile head and pinball loss, PV inputs, optimiser, epochs, early stopping, folds;
+seed 42; five folds; pilot months only)
+- **B64:** benchmark frames, the E4-B-fit network (reference, not a control).
+- **N-FULL** x {I64, I128, I256}: one network for 256 x 256 input (E4-B-fit encoder with extra stride so that the
+  feature map entering the head is unchanged).
+- **N-SUN** x {control, high}: B64 plus a second encoder branch on the SUN tensor.
+- **N-RING** x {control, high}: B64 plus a second encoder branch on the RING tensor.
+Within each network family the arms differ only in the information content of the input. The quantile (pinball)
+objective is probabilistic, so the loss-smoothing explanation of the literature applies less than to MSE training;
+ramp-aware objectives and a real-future-frame oracle are left to the full study.
+
+## Contrasts and decision rule
+Treatment minus control at each lead: I128 - I64, I256 - I64, SUN high - control, RING high - control (eight
+contrasts). **GO** for an arm if at either lead the ramp-region twCRPS difference has a 95% CI below 0, the relative
+improvement is at least 3% of the control, and the overall CRPS is not worse by more than 1%. The dissociation is
+assessed by the paired bootstrap of the difference in relative gains between the two leads (SUN and RING separately).
+Eight contrasts are tested without multiplicity correction because the pilot only selects what enters the
+confirmatory study (R-H1, frozen holdout of November-December 2019). On NO-GO for every arm the pilot is reported as a
+negative finding and no further resolution training is done.
+
+## Additional secondary metrics
+Skill against smart persistence, ramp recall of the median by ramp-onset lead bin, and results for patchy-cloud
+samples (high within-hour variability of the clear-sky index), as expected by recent benchmarks.
