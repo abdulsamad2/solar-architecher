@@ -116,3 +116,53 @@ negative finding and no further resolution training is done.
 ## Additional secondary metrics
 Skill against smart persistence, ramp recall of the median by ramp-onset lead bin, and results for patchy-cloud
 samples (high within-hour variability of the clear-sky index), as expected by recent benchmarks.
+
+---
+
+# Amendment 2 (2026-11-16, after a partial run of Amendment 1; committed before any run of the amended design)
+
+## What was run and seen under Amendment 1 (reported in full; nothing is discarded)
+- Folds: only folds 0, 1 and 3 have validation days in the pilot months (together they contain all 147 pilot days once);
+  folds 2 and 4 are not trained. Controls are the same raw frame area-averaged to 64 x 64 (stricter than the benchmark
+  frame named above; fixed before training). Raw file names are local wall-clock time.
+- Completed cold-start runs (seed 42, folds 0, 1, 3): B64 and SUN-control at both leads, SUN-high at 15 min (and two of
+  three folds at 5 min). The queue was then stopped; RING and FULL arms were not trained.
+- One contrast was computed (interim): SUN-high minus SUN-control at 15 min, ramp-region twCRPS -0.0006 kW
+  [-0.0138, +0.0111] (0.1% of the control), CRPS -0.021 kW [-0.057, +0.013]: no-go for that contrast.
+- Reason for stopping (independent of that contrast): the arms are far weaker than the frozen expert on identical
+  validation samples. Median absolute error of B64 (pilot-trained) against E4-B-fit seed 42 of the same fold
+  (trained on all development months): fold 0 1.79 vs 1.44 kW, fold 1 2.22 vs 1.86, fold 3 2.76 vs 2.09 (clear days
+  of fold 3: 1.51 vs 0.38); out-of-fold CRPS 1.67 kW at 15 min, above the absolute error of smart persistence
+  (skill -9%; -23% at 5 min). Targets and persistence values are identical between the two runs, so the cause is
+  the training set (12 months, mostly winter), not the evaluation. A contrast between two networks that both lose to
+  persistence does not answer whether image information limits a competent forecaster.
+
+## Amended design: a strong base network plus one extra image branch
+- **Base network (per fold and lead):** the E4-B-fit network trained on all development samples of the fold's fit
+  days. At 15 min this is the existing frozen E4-B-fit seed 42 checkpoint of the fold (not retrained). At 5 min it is
+  trained now with the identical recipe on all development samples that have a 5-min target.
+- **Arms:** base network + a second image branch whose features enter the recurrent layer next to the base features.
+  The base weights are loaded from the base network; the recurrent input weights of the new features start at zero,
+  so every arm starts as exactly the base forecaster (checked numerically before training) and the quantile head is
+  not re-initialised. All weights are then trained on the pilot samples (those with raw frames) with the same loss,
+  optimiser, schedule, early stopping and folds, at learning rate 3e-5 (one third of the base rate, because the
+  network starts from a trained state). Seed 42.
+  - **SUN** x {control, high}: second branch = E4-B-fit frame CNN on the 64 x 64 sun window.
+  - **RING** x {control, high}: second branch = the same CNN on the 256 x 32 ring tensor.
+  - **FULL** x {I64, I128, I256}: second branch = the 256 x 256 CNN of Amendment 1 on the whole frame at the three
+    information levels (I64 is the control). The family is now a two-branch network like the others.
+  Within a family the arms differ only in the information content of the second branch's input.
+- **Reference (not a control):** the base network itself on the pilot validation samples.
+- Validation days of a fold are never seen by its base network (same folds, same calibration split).
+
+## Unchanged
+Pilot months, common sample population, leads, thresholds, primary metric (ramp-region twCRPS), bootstrap, the eight
+contrasts (treatment minus control within family and lead), the GO rule (95% CI below 0, at least 3% of the control,
+overall CRPS not worse by more than 1%), the dissociation test, and the consequences of GO / NO-GO.
+
+## Added validity check (reported with the results)
+The skill of every arm against smart persistence and against the base network. If the fine-tuned controls are worse
+than the base network by more than 2% in CRPS, this is reported as a limitation of the pilot.
+
+## Not computed in the pilot
+Ramp recall by onset-lead bin and the patchy-cloud subset (left to the full study).

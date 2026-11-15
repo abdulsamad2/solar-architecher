@@ -26,10 +26,11 @@ from PIL import Image
 from scipy.ndimage import map_coordinates
 from scipy.optimize import least_squares
 
-LAT, LON = 37.427, -122.174  # Stanford; raw frame names are fixed PST (UTC-8)
+LAT, LON = 37.427, -122.174  # Stanford; raw frame names are local wall-clock time (checked per day against the sun)
 PILOT_MONTHS = ("2017-05", "2017-09", "2017-10", "2017-11", "2017-12", "2018-01", "2018-02", "2018-03", "2018-11", "2019-01", "2019-02", "2019-05")
 RING_ZEN, RING_SHAPE, SUN_WIN = (55.0, 88.0), (32, 256), 512
 OFFSETS = (0, 3600, -3600)
+BASE_UNTIL = "2018-03"  # last month of the first camera-orientation epoch (sun residuals rise afterwards)
 
 
 def raw_files(root, day):
@@ -39,8 +40,9 @@ def raw_files(root, day):
     return fs, t
 
 
-def solar(day, sec):
-    t = pd.Timestamp(str(day)).tz_localize("Etc/GMT+8") + pd.to_timedelta(np.atleast_1d(sec), unit="s")
+def solar(day, sec, shift_s=0):
+    """Solar zenith and azimuth for local wall-clock seconds of a day (plus a clock correction in seconds)."""
+    t = pd.Timestamp(str(day)).tz_localize("America/Los_Angeles") + pd.to_timedelta(np.atleast_1d(sec) + shift_s, unit="s")
     sp = pvlib.solarposition.get_solarposition(t, LAT, LON)
     return sp.apparent_zenith.to_numpy(), sp.azimuth.to_numpy()
 
@@ -57,6 +59,16 @@ def project(cal, zen, az):
     thc, phc = np.arccos(np.clip(c[..., 2], -1, 1)), np.arctan2(c[..., 0], c[..., 1])
     r = f * thc + k * thc ** 3
     return cal["cx"] + cal["mirror"] * r * np.sin(phc), cal["cy"] - r * np.cos(phc)
+
+
+def for_day(cal, day):
+    """Calibration valid on a day: the base epoch, or the orientation of the nearest later month that was refitted."""
+    mth = str(day)[:7]
+    pm = cal.get("p_by_month", {})
+    if mth <= BASE_UNTIL or not pm:
+        return cal
+    near = min(pm, key=lambda k: abs((pd.Timestamp(k + "-15") - pd.Timestamp(mth + "-15")).days))
+    return cal | {"p": pm[near]}
 
 
 def _sun_obs(args):
@@ -82,23 +94,75 @@ def calibrate(root, days, workers):
     ys, xs = np.nonzero(mx)
     cal = {"cx": float(xs.mean() * 8), "cy": float(ys.mean() * 8), "radius": float(np.sqrt(mx.sum() / np.pi) * 8)}
     obs = [o for r, _ in res for o in r]
-    zen, az = map(np.concatenate, zip(*[solar(d, [s]) for d, s, _, _ in obs]))
+    oday = np.array([o[0] for o in obs])
+    osec = np.array([o[1] for o in obs])
     x, y = np.array([o[2] for o in obs]), np.array([o[3] for o in obs])
+
+    def angles(shift):  # per-observation clock correction (seconds)
+        zen, az = np.empty(len(obs)), np.empty(len(obs))
+        for d in np.unique(oday):
+            m = oday == d
+            for sh in np.unique(shift[m]):
+                mm = m & (shift == sh)
+                zen[mm], az[mm] = solar(d, osec[mm], int(sh))
+        return zen, az
+
+    def fit(zen, az):
+        keep, best = zen < 75, None
+        for mirror in (1, -1):
+            for yaw0 in np.radians([0, 90, 180, 270]):
+                c = cal | {"mirror": mirror}
+                fun = lambda p: np.concatenate([project(c | {"p": p}, zen[keep], az[keep])[0] - x[keep], project(c | {"p": p}, zen[keep], az[keep])[1] - y[keep]])
+                r = least_squares(fun, [cal["radius"] / (np.pi / 2), 0.0, yaw0, 0.0, 0.0], loss="soft_l1", f_scale=15)
+                e = np.hypot(*(np.array(project(c | {"p": r.x}, zen, az)) - np.array([x, y])))
+                if best is None or np.median(e[keep]) < best[0]:
+                    best = (float(np.median(e[keep])), mirror, r.x.tolist())
+        return best
+
+    shift = np.zeros(len(obs), int)
+    for _ in range(3):  # alternate: fit the lens, then pick each day's clock correction (0 or +-1 h) by the sun error
+        zen, az = angles(shift)
+        err, mirror, p = fit(zen, az)
+        c = cal | {"mirror": mirror, "p": p}
+        new = shift.copy()
+        for d in np.unique(oday):
+            m = oday == d
+            if m.sum() < 5:
+                continue
+            es = {}
+            for sh in OFFSETS:
+                z2, a2 = solar(d, osec[m], sh)
+                es[sh] = np.median(np.hypot(*(np.array(project(c, z2, a2)) - np.array([x[m], y[m]]))))
+            new[m] = min(es, key=es.get)
+        if np.array_equal(new, shift):
+            break
+        shift = new
+    zen, az = angles(shift)
     keep = zen < 75
-    best = None
-    for mirror in (1, -1):
-        for yaw0 in np.radians([0, 90, 180, 270]):
-            c = cal | {"mirror": mirror}
-            fun = lambda p: np.concatenate([project(c | {"p": p}, zen[keep], az[keep])[0] - x[keep], project(c | {"p": p}, zen[keep], az[keep])[1] - y[keep]])
-            r = least_squares(fun, [cal["radius"] / (np.pi / 2), 0.0, yaw0, 0.0, 0.0], loss="soft_l1", f_scale=15)
-            px, py = project(c | {"p": r.x}, zen, az)
-            e = np.hypot(px - x, py - y)
-            if best is None or np.median(e[keep]) < best[0]:
-                best = (float(np.median(e[keep])), mirror, r.x.tolist(), e)
-    err, mirror, p, e = best
-    month = np.array([o[0][:7] for o in obs])
-    cal |= {"mirror": mirror, "p": p, "n_sun_obs": int(keep.sum()), "median_err_px": err,
-            "median_err_px_by_month": {m: float(np.median(e[(month == m) & keep])) for m in sorted(set(month)) if ((month == m) & keep).sum() >= 5}}
+    month = np.array([d[:7] for d in oday])
+    # the camera orientation changed over the years: lens law (f, k) and mirror from the first epoch (<= BASE_UNTIL),
+    # orientation (yaw, two tilts) refitted for every later month with enough sun observations
+    base = month <= BASE_UNTIL
+    xa, ya, keep_all = x, y, keep
+    x, y = xa[base], ya[base]
+    err, mirror, p = fit(zen[base], az[base])
+    x, y = xa, ya
+    c = cal | {"mirror": mirror}
+    by_month = {}
+    for mth in sorted(set(month)):
+        mm = (month == mth) & keep
+        if mth <= BASE_UNTIL or mm.sum() < 30:
+            continue
+        fun = lambda o: np.concatenate([project(c | {"p": [p[0], p[1], *o]}, zen[mm], az[mm])[0] - x[mm], project(c | {"p": [p[0], p[1], *o]}, zen[mm], az[mm])[1] - y[mm]])
+        by_month[str(mth)] = [p[0], p[1], *least_squares(fun, p[2:], loss="soft_l1", f_scale=15).x.tolist()]
+    cal |= {"mirror": mirror, "p": p, "p_by_month": by_month}
+    e = np.empty(len(x))
+    for mth in set(month):
+        mm = month == mth
+        e[mm] = np.hypot(*(np.array(project(for_day(cal, mth + "-15"), zen[mm], az[mm])) - np.array([x[mm], y[mm]])))
+    cal |= {"n_sun_obs": int(keep.sum()), "median_err_px": float(np.median(e[keep])),
+            "median_err_px_by_month": {str(m): float(np.median(e[(month == m) & keep])) for m in sorted(set(month)) if ((month == m) & keep).sum() >= 5},
+            "day_clock_shift_s": {str(d): int(shift[oday == d][0]) for d in np.unique(oday) if (oday == d).sum() >= 5}}
     return cal
 
 
@@ -116,6 +180,7 @@ def sample(img, x, y):
 
 def _day(args):
     root, day, rows, tb, bench, cal = args
+    cal = for_day(cal, day)
     fs, tr = raw_files(root, day)
     if not len(fs):
         return day, None
@@ -137,7 +202,10 @@ def _day(args):
     out = {k: [] for k in ("row", "raw_sec", "lag_s", "full256", "sun_hi", "sun_ctl", "ring_hi", "ring_ctl", "zen", "az")}
     j_all = np.searchsorted(tr, tb + off, side="right") - 1
     ok = (j_all >= 0) & (tb + off - tr[np.maximum(j_all, 0)] <= 60)
-    zen, az = solar(day, tr[np.maximum(j_all, 0)])
+    known = cal["day_clock_shift_s"]
+    near = min(known, key=lambda d: abs((pd.Timestamp(d) - pd.Timestamp(str(day))).days)) if known else None
+    clock = known.get(str(day), known[near] if near else 0)
+    zen, az = solar(day, tr[np.maximum(j_all, 0)], clock)
     half = SUN_WIN // 2
     for i in np.flatnonzero(ok):
         im = Image.open(fs[j_all[i]])
@@ -158,7 +226,7 @@ def _day(args):
         out["full256"].append(np.asarray(im.resize((256, 256), Image.BOX)))
         out["row"].append(rows[i]); out["raw_sec"].append(tr[j_all[i]]); out["lag_s"].append(tb[i] + off - tr[j_all[i]])
         out["zen"].append(zen[i]); out["az"].append(az[i])
-    return day, {"offset_s": off, "offset_scores": score, "n_bench": int(len(tb)), "n_matched": int(ok.sum()),
+    return day, {"offset_s": off, "offset_scores": score, "n_bench": int(len(tb)), "n_matched": int(ok.sum()), "clock_shift_s": int(clock),
                  "arrays": {k: np.asarray(v) for k, v in out.items()}}
 
 
@@ -181,8 +249,10 @@ def main():
     else:
         cal = calibrate(a.raw, days, a.workers)
         cp.write_text(json.dumps(cal, indent=1))
+    sh = np.array(list(cal["day_clock_shift_s"].values()))
     print("fisheye calibration: median sun error", round(cal["median_err_px"], 1), "px of 2048;", cal["n_sun_obs"], "sun observations; by month",
-          {k: round(v, 1) for k, v in cal["median_err_px_by_month"].items()}, flush=True)
+          {k: round(v, 1) for k, v in cal["median_err_px_by_month"].items()}, "| days with clock shift 0 / +1 h / -1 h:",
+          int((sh == 0).sum()), int((sh == 3600).sum()), int((sh == -3600).sum()), flush=True)
     h5 = h5py.File("data/raw/2017_2019_images_pv_processed.hdf5", "r")["trainval/images_log"]
     Path(a.out).parent.mkdir(parents=True, exist_ok=True)
     shapes = {"full256": (256, 256, 3), "sun_hi": (64, 64, 3), "sun_ctl": (64, 64, 3), "ring_hi": (*RING_SHAPE, 3), "ring_ctl": (*RING_SHAPE, 3)}
