@@ -1,0 +1,192 @@
+{
+ "protocol": "revision/protocols/R-R10_external_days_full_method.md",
+ "n": 2582,
+ "records": 2683,
+ "share_with_60min_history": 0.9136328427575523,
+ "n_with_60min_history_by_day": {
+  "2019-11-12": 509,
+  "2019-11-13": 498,
+  "2019-11-29": 457,
+  "2019-12-08": 448,
+  "2019-12-23": 447
+ },
+ "phaseA2_reproduction_max_abs_kw": 0.015413129696627337,
+ "days": [
+  "2019-11-12",
+  "2019-11-13",
+  "2019-11-29",
+  "2019-12-08",
+  "2019-12-23"
+ ],
+ "n_ramp": 782,
+ "published": {
+  "SkyGPT (m = 100)": 2.81,
+  "PV-MM-Diffusion (m = 30)": 2.63,
+  "SUNSET, SkyGPT paper (m = 10)": 3.31,
+  "smart persistence, SkyGPT paper": 3.67
+ },
+ "scores": {
+  "frozen rule, fallback only": {
+   "crps_exact": 2.4554640687634683,
+   "ramp": 5.160510698524123,
+   "non_ramp": 1.2802715885007845,
+   "with_60min_history": 2.605064019296761,
+   "without": 0.8729246817319107,
+   "standard_m10": 2.602771673714393,
+   "standard_m30": 2.486746582803449,
+   "standard_m100": 2.4564450140408645,
+   "fair": 2.440967114286294
+  },
+  "frozen rule, routed": {
+   "crps_exact": 2.3030996497535923,
+   "ramp": 4.554352903631357,
+   "non_ramp": 1.3250551805689192,
+   "with_60min_history": 2.4382963508425433,
+   "without": 0.8729246817319107,
+   "standard_m10": 2.4530248137618544,
+   "standard_m30": 2.345272491314806,
+   "standard_m100": 2.3072388326657984,
+   "fair": 2.2915120694985043
+  },
+  "method v2, fallback only": {
+   "crps_exact": 2.417874438114251,
+   "ramp": 5.141919518493389,
+   "non_ramp": 1.234428186527314,
+   "with_60min_history": 2.56549930297923,
+   "without": 0.8562284461120699,
+   "standard_m10": 2.56887022729443,
+   "standard_m30": 2.4577426679198666,
+   "standard_m100": 2.418053573385195,
+   "fair": 2.4017764633720398
+  },
+  "method v2, routed": {
+   "crps_exact": 2.2678375049274475,
+   "ramp": 4.543896740838445,
+   "non_ramp": 1.2790162146594473,
+   "with_60min_history": 2.4012791412631103,
+   "without": 0.8562284461120699,
+   "standard_m10": 2.4286552460143054,
+   "standard_m30": 2.316648662976593,
+   "standard_m100": 2.272188580835143,
+   "fair": 2.2587787401895776
+  },
+  "G4": {
+   "crps_exact": 2.468572914634951,
+   "ramp": 5.206677405453785,
+   "non_ramp": 1.2790186302903241,
+   "with_60min_history": 2.6190936102647346,
+   "without": 0.8762934483091183,
+   "standard_m10": 2.6082624376185493,
+   "standard_m30": 2.503061100788411,
+   "standard_m100": 2.466133753377221,
+   "fair": 2.450051207847942
+  },
+  "calm expert": {
+   "crps_exact": 2.4331904851642823,
+   "ramp": 5.60345074962333,
+   "non_ramp": 1.0558885258270732,
+   "with_60min_history": 2.5756552142276377,
+   "without": 0.9261308624716504,
+   "standard_m10": 2.58684463223768,
+   "standard_m30": 2.476501623296477,
+   "standard_m100": 2.4324750270962947,
+   "fair": 2.4157154334125517
+  },
+  "direct expert": {
+   "crps_exact": 2.5705409591490134,
+   "ramp": 5.064109573566605,
+   "non_ramp": 1.4872239277742598,
+   "with_60min_history": 2.7283095799312953,
+   "without": 0.9015894953579754,
+   "standard_m10": 2.7021824877913945,
+   "standard_m30": 2.597326888620718,
+   "standard_m100": 2.565486093044368,
+   "fair": 2.5516992953738518
+  }
+ },
+ "paired": {
+  "method v2, routed - method v2, fallback only": [
+   -0.15003693318680336,
+   -0.2939074018214292,
+   -0.0346178033005319
+  ],
+  "frozen rule, routed - frozen rule, fallback only": [
+   -0.152364419009876,
+   -0.3000377245507892,
+   -0.033449725114563796
+  ],
+  "method v2, routed - frozen rule, routed": [
+   -0.03526214482614507,
+   -0.0740146318036755,
+   -0.00016125608369454302
+  ],
+  "method v2, routed - G4": [
+   -0.2007354097075035,
+   -0.400698652992747,
+   -0.058398036835489234
+  ],
+  "method v2, routed - calm expert": [
+   -0.16535298023683453,
+   -0.31271228638476234,
+   -0.04129449134042491
+  ],
+  "method v2, routed - direct expert": [
+   -0.30270345422156597,
+   -0.5001354332031334,
+   -0.15989460159565452
+  ]
+ },
+ "coverage90": {
+  "method v2, routed": {
+   "raw": {
+    "coverage": 0.801704105344694,
+    "ramp_coverage": 0.5383631713554987,
+    "width_kw": 9.808061137623593
+   },
+   "continuous rolling": {
+    "coverage": 0.7931835786212239,
+    "ramp_coverage": 0.5281329923273658,
+    "width_kw": 9.701552582434896
+   },
+   "ACI": {
+    "coverage": 0.8694810224632068,
+    "ramp_coverage": 0.6726342710997443,
+    "width_kw": 10.946507527941002
+   }
+  },
+  "frozen rule, routed": {
+   "raw": {
+    "coverage": 0.7974438419829589,
+    "ramp_coverage": 0.5677749360613811,
+    "width_kw": 10.01860609510914
+   },
+   "continuous rolling": {
+    "coverage": 0.7916343919442292,
+    "ramp_coverage": 0.5639386189258312,
+    "width_kw": 9.909422866351694
+   },
+   "ACI": {
+    "coverage": 0.867157242447715,
+    "ramp_coverage": 0.6892583120204604,
+    "width_kw": 11.189060496252901
+   }
+  },
+  "frozen rule, fallback only": {
+   "raw": {
+    "coverage": 0.7869868319132456,
+    "ramp_coverage": 0.4782608695652174,
+    "width_kw": 9.949603224252373
+   },
+   "continuous rolling": {
+    "coverage": 0.7815646785437645,
+    "ramp_coverage": 0.4680306905370844,
+    "width_kw": 9.866527055695746
+   },
+   "ACI": {
+    "coverage": 0.8505034856700232,
+    "ramp_coverage": 0.6176470588235294,
+    "width_kw": 11.367422015912439
+   }
+  }
+ }
+}
