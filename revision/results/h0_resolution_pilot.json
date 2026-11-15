@@ -1,0 +1,242 @@
+{
+ "protocol": "revision/protocols/R-H0_resolution_pilot.md (amendment 2)",
+ "label": "development out-of-fold, pilot months, seed 42",
+ "tau": {
+  "fold0_lead5": 0.1474539068236574,
+  "fold0_lead15": 0.28147157474521634,
+  "fold1_lead5": 0.13156410999959398,
+  "fold1_lead15": 0.2623552451598105,
+  "fold3_lead5": 0.138530345537469,
+  "fold3_lead15": 0.2720974185109377
+ },
+ "arms": {
+  "BASE|lead5": {
+   "n": 40922,
+   "ramp_share": 0.16558330482381114,
+   "crps": 0.960079247940038,
+   "tw_ramp": 0.40971933244986697,
+   "tw_calm": 0.550359915490171,
+   "crps_skill_vs_smart_persistence": 0.0749728831671217,
+   "crps_change_vs_base": 0.0,
+   "median_lag_min": 6,
+   "ramp_recall_of_median": 0.38931523022432113,
+   "ramp_magnitude_ratio": 0.375389147381106
+  },
+  "BASE|lead15": {
+   "n": 40922,
+   "ramp_share": 0.15505107277259175,
+   "crps": 1.3414143751112708,
+   "tw_ramp": 0.40396288125705965,
+   "tw_calm": 0.9374514938542111,
+   "crps_skill_vs_smart_persistence": 0.12769150355590264,
+   "crps_change_vs_base": 0.0,
+   "median_lag_min": 16,
+   "ramp_recall_of_median": 0.3182033096926714,
+   "ramp_magnitude_ratio": 0.3874763248398497
+  },
+  "RING-ctl|lead5": {
+   "n": 40922,
+   "ramp_share": 0.16558330482381114,
+   "crps": 0.970790834297162,
+   "tw_ramp": 0.4090003344869073,
+   "tw_calm": 0.5617904998102546,
+   "crps_skill_vs_smart_persistence": 0.06465237278644564,
+   "crps_change_vs_base": 0.011156981447215886,
+   "median_lag_min": 6,
+   "ramp_recall_of_median": 0.3915289256198347,
+   "ramp_magnitude_ratio": 0.3741068988877152
+  },
+  "RING-ctl|lead15": {
+   "n": 40922,
+   "ramp_share": 0.15505107277259175,
+   "crps": 1.3670060944282816,
+   "tw_ramp": 0.4056847074624644,
+   "tw_calm": 0.961321386965817,
+   "crps_skill_vs_smart_persistence": 0.11104946168350271,
+   "crps_change_vs_base": 0.019078160926140342,
+   "median_lag_min": 16,
+   "ramp_recall_of_median": 0.3125295508274232,
+   "ramp_magnitude_ratio": 0.38333177282991493
+  },
+  "RING-hi|lead5": {
+   "n": 40922,
+   "ramp_share": 0.16558330482381114,
+   "crps": 0.9708147705067238,
+   "tw_ramp": 0.40907959341769956,
+   "tw_calm": 0.5617351770890241,
+   "crps_skill_vs_smart_persistence": 0.06462931047886389,
+   "crps_change_vs_base": 0.01118191294074955,
+   "median_lag_min": 6,
+   "ramp_recall_of_median": 0.39359504132231404,
+   "ramp_magnitude_ratio": 0.37570659994997446
+  },
+  "RING-hi|lead15": {
+   "n": 40922,
+   "ramp_share": 0.15505107277259175,
+   "crps": 1.3648060906518844,
+   "tw_ramp": 0.4056706455777254,
+   "tw_calm": 0.959135445074159,
+   "crps_skill_vs_smart_persistence": 0.11248010237288786,
+   "crps_change_vs_base": 0.017438098155667436,
+   "median_lag_min": 16,
+   "ramp_recall_of_median": 0.31048069345941687,
+   "ramp_magnitude_ratio": 0.38309944963901105
+  },
+  "SUN-ctl|lead5": {
+   "n": 40922,
+   "ramp_share": 0.16558330482381114,
+   "crps": 0.9724663755871316,
+   "tw_ramp": 0.40983527191547486,
+   "tw_calm": 0.5626311036716567,
+   "crps_skill_vs_smart_persistence": 0.063038004876796,
+   "crps_change_vs_base": 0.012902192890505315,
+   "median_lag_min": 6,
+   "ramp_recall_of_median": 0.39433293978748524,
+   "ramp_magnitude_ratio": 0.3772378492160976
+  },
+  "SUN-ctl|lead15": {
+   "n": 40922,
+   "ramp_share": 0.15505107277259175,
+   "crps": 1.3676905543659266,
+   "tw_ramp": 0.4056063113082939,
+   "tw_calm": 0.9620842430576325,
+   "crps_skill_vs_smart_persistence": 0.1106043641579646,
+   "crps_change_vs_base": 0.019588413351002032,
+   "median_lag_min": 16,
+   "ramp_recall_of_median": 0.30890464933018125,
+   "ramp_magnitude_ratio": 0.3830688846301382
+  },
+  "SUN-hi|lead5": {
+   "n": 40922,
+   "ramp_share": 0.16558330482381114,
+   "crps": 0.9716519186890299,
+   "tw_ramp": 0.40961673237431157,
+   "tw_calm": 0.5620351863147183,
+   "crps_skill_vs_smart_persistence": 0.06382272626084018,
+   "crps_change_vs_base": 0.012053870317291437,
+   "median_lag_min": 6,
+   "ramp_recall_of_median": 0.3949232585596222,
+   "ramp_magnitude_ratio": 0.3774279297774208
+  },
+  "SUN-hi|lead15": {
+   "n": 40922,
+   "ramp_share": 0.15505107277259175,
+   "crps": 1.3636772511192288,
+   "tw_ramp": 0.40540079753892216,
+   "tw_calm": 0.9582764535803067,
+   "crps_skill_vs_smart_persistence": 0.11321417555245683,
+   "crps_change_vs_base": 0.01659656883139582,
+   "median_lag_min": 16,
+   "ramp_recall_of_median": 0.30937746256895193,
+   "ramp_magnitude_ratio": 0.38297556949643197
+  }
+ },
+ "contrasts": {
+  "SUN-hi - SUN-ctl|lead5": {
+   "tw_ramp": [
+    -0.00021853954116327957,
+    -0.00037338904996146277,
+    -7.68337394565035e-05
+   ],
+   "tw_calm": [
+    -0.0005959173569384588,
+    -0.0012566177060086758,
+    5.792880258293534e-05
+   ],
+   "crps": [
+    -0.0008144568981017331,
+    -0.0015513256055814705,
+    -0.00010108055714911027
+   ],
+   "relative_ramp_gain": 0.0005332375130668391,
+   "relative_crps_change": -0.0008375167702945006,
+   "go": false
+  },
+  "SUN-hi - SUN-ctl|lead15": {
+   "tw_ramp": [
+    -0.00020551376937168032,
+    -0.0005307064007848033,
+    8.166050471034988e-06
+   ],
+   "tw_calm": [
+    -0.0038077894773260747,
+    -0.005074107669482402,
+    -0.002385901233688975
+   ],
+   "crps": [
+    -0.0040133032466977536,
+    -0.005492312443157023,
+    -0.0024735971245709175
+   ],
+   "relative_ramp_gain": 0.0005066828686880887,
+   "relative_crps_change": -0.0029343649657347795,
+   "go": false
+  },
+  "RING-hi - RING-ctl|lead5": {
+   "tw_ramp": [
+    7.925893079214569e-05,
+    -0.00022181301968610245,
+    0.000382133193895936
+   ],
+   "tw_calm": [
+    -5.532272123032628e-05,
+    -0.0018589549874105434,
+    0.001630340719954325
+   ],
+   "crps": [
+    2.3936209561826004e-05,
+    -0.0018655384865660007,
+    0.0018347821855065898
+   ],
+   "relative_ramp_gain": -0.00019378695836905942,
+   "relative_crps_change": 2.4656402508327618e-05,
+   "go": false
+  },
+  "RING-hi - RING-ctl|lead15": {
+   "tw_ramp": [
+    -1.4061884738937643e-05,
+    -0.001053581219194975,
+    0.00089162413875229
+   ],
+   "tw_calm": [
+    -0.0021859418916580966,
+    -0.006665725154971649,
+    0.0022795530082902436
+   ],
+   "crps": [
+    -0.002200003776397031,
+    -0.007301755227890727,
+    0.002787542171253964
+   ],
+   "relative_ramp_gain": 3.466210207156676e-05,
+   "relative_crps_change": -0.0016093591574784685,
+   "go": false
+  }
+ },
+ "dissociation": {
+  "SUN-hi": {
+   "gain5_minus_gain15": [
+    2.6554644378750368e-05,
+    -0.0008054010422615979,
+    0.0006236450945460491
+   ]
+  },
+  "RING-hi": {
+   "gain5_minus_gain15": [
+    -0.00022844906044062617,
+    -0.0030813890054338317,
+    0.0021403673143012072
+   ]
+  }
+ },
+ "decision": {
+  "SUN-hi": "NO-GO",
+  "RING-hi": "NO-GO"
+ },
+ "deviations": [
+  "controls are the same raw frame area-averaged to 64 x 64 (stricter than the benchmark frame named in the protocol; fixed before training)",
+  "amendment 2: arms are the base network plus one extra image branch; the cold-start runs of amendment 1 are described in the protocol",
+  "ramp recall by onset-lead bin and the patchy-cloud subset are not computed in this evaluation",
+  "out-of-fold forecasts come from folds 0, 1 and 3, which contain all 147 pilot days as validation days; folds 2 and 4 have no validation day in the pilot months and are not trained (found at the first training run, before any contrast was computed)"
+ ]
+}
