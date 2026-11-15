@@ -1,9 +1,13 @@
-"""Revision R-H0 (pilot): train the direct expert with added image information at two lead times
-(protocol revision/protocols/R-H0_resolution_pilot.md, amendment 1). Reuses src.train.run_fold unchanged (same
-target, quantile head, pinball loss, optimiser, EMA, early stopping, folds and calibration split as E4-B-fit); only
-the encoder input differs between arms. Outputs go outside the repository (default D:/skippd_hires/runs).
+"""Revision R-H0 (pilot): the direct expert with added image information at two lead times
+(protocol revision/protocols/R-H0_resolution_pilot.md, amendment 2). Reuses src.train.run_fold unchanged (same
+target, quantile head, pinball loss, optimiser, EMA, early stopping, folds and calibration split as E4-B-fit).
 
-Arms: B64 | FULL-I64, FULL-I128, FULL-I256 | SUN-ctl, SUN-hi | RING-ctl, RING-hi
+BASE: the E4-B-fit network on all development samples (needed at 5 min only; at 15 min the frozen E4-B-fit seed 42
+checkpoints are the base). Every other arm is the base network plus a second image branch, started as exactly the
+base forecaster (base weights loaded, recurrent input weights of the new features zero) and trained on the pilot
+samples. Outputs go outside the repository (default D:/skippd_hires/runs2).
+
+Arms: BASE | FULL-I64, FULL-I128, FULL-I256 | SUN-ctl, SUN-hi | RING-ctl, RING-hi
 """
 from __future__ import annotations
 
@@ -24,33 +28,33 @@ import src.train as T
 from src.models import Forecaster, NonCrossingQuantileHead, SmallSkyEncoder
 from src.skippd import SkippdForecastDataset
 
-ARMS = ("B64", "FULL-I64", "FULL-I128", "FULL-I256", "SUN-ctl", "SUN-hi", "RING-ctl", "RING-hi")
+ARMS = ("BASE", "FULL-I64", "FULL-I128", "FULL-I256", "SUN-ctl", "SUN-hi", "RING-ctl", "RING-hi")
 CFG = {"lr": 1e-4, "weight_decay": 1e-4, "batch_size": 128, "max_epochs": 15, "patience": 5, "image_features": 64, "hidden_size": 64,
        "min_clear_kw": 1.0, "cnn_bf16": True, "schedule": "cosine", "clip": 1.0, "ema_decay": 0.999, "pool": "avg", "input": "csi",
        "head": "quantile", "calib_holdout": True, "residual": False}
+ARM_LR = 3e-5  # arms start from the trained base network
+FROZEN15 = "experiments/E4_calib/v1/csi/seed42"  # base network at 15 min
+INIT = None  # base checkpoint of the fold being trained (set in main before run_fold)
 
 
 def _block(cin, cout):
     return nn.Sequential(nn.Conv2d(cin, cout, 3, padding=1), nn.BatchNorm2d(cout), nn.ReLU(inplace=True), nn.MaxPool2d(2))
 
 
-class FullEncoder(SmallSkyEncoder):
-    """E4-B-fit encoder behind a stem that reduces 256 x 256 frames to 64 x 64 (stride-2 conv, then conv + pool)."""
-
-    def __init__(self):
-        super().__init__(in_channels=8)
-        stem = nn.Sequential(nn.Conv2d(3, 8, 3, stride=2, padding=1), nn.BatchNorm2d(8), nn.ReLU(inplace=True), _block(8, 8))
-        self.cnn = nn.Sequential(stem, *self.cnn)
+def full_cnn():
+    """E4-B-fit frame CNN behind a stem that reduces 256 x 256 frames to 64 x 64 (stride-2 conv, then conv + pool)."""
+    stem = nn.Sequential(nn.Conv2d(3, 8, 3, stride=2, padding=1), nn.BatchNorm2d(8), nn.ReLU(inplace=True), _block(8, 8))
+    return nn.Sequential(stem, *SmallSkyEncoder(in_channels=8).cnn)
 
 
 class DualEncoder(nn.Module):
-    """E4-B-fit frame CNN on the benchmark frames plus a second CNN of the same design on an extra image tensor."""
+    """E4-B-fit frame CNN on the benchmark frames plus a second CNN on an extra image tensor."""
 
-    def __init__(self):
+    def __init__(self, full=False):
         super().__init__()
         base = SmallSkyEncoder()
         self.cnn = base.cnn
-        self.cnn2 = SmallSkyEncoder().cnn
+        self.cnn2 = full_cnn() if full else SmallSkyEncoder().cnn
         self.gru = nn.GRU(64 + 64 + 1, 64, batch_first=True)
         self.hidden_size, self.cnn_bf16 = 64, False
 
@@ -74,9 +78,8 @@ class PilotData:
         rowmap[torch.from_numpy(hires["row"][:].astype(np.int64))] = torch.arange(len(hires["row"]))
         self.rowmap = rowmap.to(device)
         fam = arm.split("-")[0]
-        if fam != "FULL":
-            self.images = ds.images.to(device)
-        if fam != "B64":
+        self.images = ds.images.to(device)
+        if fam != "BASE":
             key = {"FULL": "full256", "SUN-ctl": "sun_ctl", "SUN-hi": "sun_hi", "RING-ctl": "ring_ctl", "RING-hi": "ring_hi"}[arm if fam != "FULL" else "FULL"]
             n = hires[key].shape[0]
             self.table = torch.empty((n, *hires[key].shape[1:]), dtype=torch.uint8, device=device)
@@ -96,17 +99,31 @@ class PilotData:
 
     def __call__(self, idx):
         rows = self.hist[idx]
-        if self.arm.startswith("FULL"):
-            return self._extra(rows), self.hist_feat[rows]
         x = self.images[rows].permute(0, 1, 4, 2, 3).float().div_(255.0)
-        if self.arm == "B64":
+        if self.arm == "BASE":
             return x, self.hist_feat[rows]
         return x, self.hist_feat[rows], self._extra(rows)
 
 
 def build_model(arm, cfg):
-    enc = SmallSkyEncoder() if arm == "B64" else FullEncoder() if arm.startswith("FULL") else DualEncoder()
-    return Forecaster(enc, NonCrossingQuantileHead(enc.hidden_size, 1, T.QUANTILES))
+    enc = SmallSkyEncoder() if arm == "BASE" else DualEncoder(full=arm.startswith("FULL"))
+    model = Forecaster(enc, NonCrossingQuantileHead(enc.hidden_size, 1, T.QUANTILES))
+    if arm != "BASE" and INIT is not None:
+        warm_start(model, INIT)
+    return model
+
+
+def warm_start(model, path):
+    """Load the base network; the new features' recurrent input weights start at zero (the arm equals the base)."""
+    sd = torch.load(path, map_location="cpu")
+    w = sd.pop("encoder.gru.weight_ih_l0")  # [3 * 64, 64 + 1]: base image features, then the PV history value
+    r = model.load_state_dict(sd, strict=False)
+    assert not r.unexpected_keys and all(k.startswith("encoder.cnn2.") or k == "encoder.gru.weight_ih_l0" for k in r.missing_keys), r
+    with torch.no_grad():
+        g = model.encoder.gru.weight_ih_l0
+        g.zero_()
+        g[:, :64], g[:, 128] = w[:, :64], w[:, 64]
+    model.head.init_from_targets = lambda *a, **k: None  # keep the base head (run_fold would reset it to climatology)
 
 
 def lead_targets(rec_us, origin_us, lead_min, tol_us=30_000_000):
@@ -131,6 +148,8 @@ def pilot_dataset(a, hires):
     assert np.array_equal(t15, ds.target_rows), "STOP: 15-min targets differ from the frozen manifest"
     keep = have[ds.hist_rows].all(1) & (t5 >= 0)  # common population of every arm and both leads
     tgt = t5 if a.lead == 5 else ds.target_rows
+    if a.arm == "BASE":  # base network: all development samples with a target at this lead
+        keep = tgt >= 0
     out = SimpleNamespace(pv=ds.pv, images=ds.images, record_times=rec, day=ds.day[keep], hist_rows=ds.hist_rows[keep], target_rows=tgt[keep],
                           origin_time=ds.origin_time[keep], target_time=rec[tgt[keep]], sample_ids=ds.sample_ids[keep])
     return out, int(keep.sum()), int(have[ds.hist_rows].all(1).sum())
@@ -143,12 +162,14 @@ def main():
     ap.add_argument("--seed", type=int, default=42)
     ap.add_argument("--fold-ids", type=int, nargs="*", default=[0, 1, 2, 3, 4])
     ap.add_argument("--hires", default="D:/skippd_hires/pilot_v1.h5")
-    ap.add_argument("--out", default="D:/skippd_hires/runs")
+    ap.add_argument("--out", default="D:/skippd_hires/runs2")
     ap.add_argument("--h5", default="data/raw/2017_2019_images_pv_processed.hdf5")
     ap.add_argument("--manifest", default="data/manifests/forecast_tol30_v2.npz")
     ap.add_argument("--folds", default="data/manifests/folds_blocked5_v1.json")
     a = ap.parse_args()
-    cfg = {**CFG, "seed": a.seed, "arm": a.arm, "lead_min": a.lead}
+    global INIT
+    cfg = {**CFG, "seed": a.seed, "arm": a.arm, "lead_min": a.lead, **({} if a.arm == "BASE" else {"lr": ARM_LR})}
+    base_root = Path(FROZEN15) if a.lead == 15 else Path(a.out) / "BASE" / "lead5" / f"seed{a.seed}"
     out_root = Path(a.out) / a.arm / f"lead{a.lead}" / f"seed{a.seed}"
     out_root.mkdir(parents=True, exist_ok=True)
     log_f = open(out_root / "train.log", "a", encoding="utf-8")
@@ -164,7 +185,7 @@ def main():
     hires = h5py.File(a.hires, "r")
     ds, n_keep, n_hist = pilot_dataset(a, hires)
     data = PilotData(ds, a.arm, hires, device)
-    T.build_model = functools.partial(build_model, a.arm)  # run_fold builds the arm's model; nothing else changes
+    T.build_model = lambda c: build_model(a.arm, c)  # run_fold builds the arm's model; nothing else changes
     if a.arm.startswith("FULL"):
         T.predict_raw = functools.partial(T.predict_raw, batch=128)  # 256 x 256 frames: memory
     folds_doc = json.loads(Path(a.folds).read_text())
@@ -183,6 +204,9 @@ def main():
         fold_dir = out_root / f"fold_{k}"
         fold_dir.mkdir(exist_ok=True)
         t0 = time.time()
+        if a.arm != "BASE":
+            INIT = base_root / f"fold_{k}" / "best.pt"
+            assert INIT.exists(), f"STOP: base network missing ({INIT})"
         s = T.run_fold(ds, data, fold, "csi", cfg, fold_dir, log)
         summary[k] = {"best_epoch": s["best_epoch"], "val_crps_kw": s["probabilistic"]["overall"]["crps_kw"], "minutes": (time.time() - t0) / 60}
         log(f"[{a.arm} lead {a.lead}] fold {k} done: best epoch {s['best_epoch']}  val CRPS {summary[k]['val_crps_kw']:.4f} kW  ({summary[k]['minutes']:.1f} min)")

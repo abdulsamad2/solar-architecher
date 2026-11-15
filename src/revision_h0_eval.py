@@ -1,5 +1,5 @@
 """Revision R-H0 (pilot): evaluate the arms on development out-of-fold forecasts
-(protocol revision/protocols/R-H0_resolution_pilot.md, amendment 1). CPU only.
+(protocol revision/protocols/R-H0_resolution_pilot.md, amendment 2). CPU only.
 
 Primary: ramp-region threshold-weighted CRPS (R-Z2 definition) of treatment minus control at each lead, paired
 day-block bootstrap; GO rule and the lead-time dissociation of the relative gains.
@@ -14,7 +14,7 @@ import numpy as np
 
 from src.clear_sky import ClearSkyPV
 from src.revision_common import save
-from src.revision_h0_train import lead_targets
+from src.revision_h0_train import FROZEN15, lead_targets
 from src.revision_z2_ramp_weighted_crps import tw_crps
 from src.skippd import SkippdForecastDataset
 
@@ -36,7 +36,7 @@ def thresholds(runs):
     day = ds.day.astype(str)
     tau = {}
     for k in FOLDS:
-        fd = runs / "B64" / "lead15" / "seed42" / f"fold_{k}"
+        fd = Path(FROZEN15) / f"fold_{k}"  # base network at 15 min (same fit days and clear-sky anchor in every arm)
         coef = json.loads((fd / "metrics.json").read_text())["clear_sky_coef"]
         fit = np.isin(day, json.loads((fd / "calibration_split.json").read_text())["fit_days"])
         kk = pv / np.maximum(ClearSkyPV(coef)(rec), 1.0)
@@ -47,10 +47,15 @@ def thresholds(runs):
     return tau
 
 
-def load(runs, arm, L, tau):
+def load(runs, arm, L, tau, sids=None):
+    """Out-of-fold forecasts of an arm; BASE is the base network restricted to the pilot samples (sids)."""
     parts = []
     for k in FOLDS:
-        d = dict(np.load(runs / arm / f"lead{L}" / "seed42" / f"fold_{k}" / "preds_val.npz"))
+        root = (Path(FROZEN15) if L == 15 else runs / "BASE" / "lead5" / "seed42") if arm == "BASE" else runs / arm / f"lead{L}" / "seed42"
+        d = dict(np.load(root / f"fold_{k}" / "preds_val.npz"))
+        if sids is not None:
+            m = np.isin(d["sample_ids"], sids)
+            d = {key: v[m] if getattr(v, "shape", ()) and len(v) == len(m) else v for key, v in d.items()}
         pc, kn = np.maximum(d["pclear_target_kw"], 1.0), d["pv_now_kw"] / np.maximum(d["pclear_now_kw"], 1.0)
         t = tau[(k, L)]
         crps, twr, twc = tw_crps(d["pred_q"], d["target"], (kn - t) * pc, (kn + t) * pc)
@@ -91,27 +96,30 @@ def lag_minutes(a, max_steps=10):
 
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument("--runs", default="D:/skippd_hires/runs")
+    ap.add_argument("--runs", default="D:/skippd_hires/runs2")
     a = ap.parse_args()
     runs = Path(a.runs)
     tau = thresholds(runs)
-    arms = sorted({x for c in CONTRASTS for x in c} | {"B64"})
-    res = {"protocol": "revision/protocols/R-H0_resolution_pilot.md (amendment 1)", "label": "development out-of-fold, pilot months, seed 42",
+    arms = sorted({x for c in CONTRASTS for x in c})
+    res = {"protocol": "revision/protocols/R-H0_resolution_pilot.md (amendment 2)", "label": "development out-of-fold, pilot months, seed 42",
            "tau": {f"fold{k}_lead{L}": v for (k, L), v in tau.items()}, "arms": {}, "contrasts": {}, "dissociation": {}, "decision": {},
            "deviations": ["controls are the same raw frame area-averaged to 64 x 64 (stricter than the benchmark frame named in the protocol; fixed before training)",
+                          "amendment 2: arms are the base network plus one extra image branch; the cold-start runs of amendment 1 are described in the protocol",
                           "ramp recall by onset-lead bin and the patchy-cloud subset are not computed in this evaluation",
                           "out-of-fold forecasts come from folds 0, 1 and 3, which contain all 147 pilot days as validation days; folds 2 and 4 "
                           "have no validation day in the pilot months and are not trained (found at the first training run, before any contrast was computed)"]}
-    data = {(arm, L): load(runs, arm, L, tau) for arm in arms for L in LEADS if (runs / arm / f"lead{L}" / "seed42" / "fold_3" / "preds_val.npz").exists()}
-    ref = next(iter(data.values()))
-    for key, d in data.items():
+    data = {(arm, L): load(runs, arm, L, tau) for arm in arms for L in LEADS if (runs / arm / f"lead{L}" / "seed42" / "fold_3" / "metrics.json").exists()}
+    for L in {k[1] for k in data}:  # reference: the base network on the same samples
+        data[("BASE", L)] = load(runs, "BASE", L, tau, sids=next(d["sid"] for k, d in data.items() if k[1] == L))
+    for key, d in sorted(data.items()):
         same = [k for k in data if k[1] == key[1]][0]
         assert np.array_equal(d["sid"], data[same]["sid"]), f"STOP: samples differ between arms ({key})"
         lag, curve = lag_minutes(d)
         r = d["ramp"]
         res["arms"][f"{key[0]}|lead{key[1]}"] = {
             "n": int(len(r)), "ramp_share": float(r.mean()), "crps": float(d["crps"].mean()), "tw_ramp": float(d["tw_ramp"].mean()), "tw_calm": float(d["tw_calm"].mean()),
-            "crps_skill_vs_smart_persistence": float(1 - d["crps"].mean() / d["pers"].mean()), "median_lag_min": lag,
+            "crps_skill_vs_smart_persistence": float(1 - d["crps"].mean() / d["pers"].mean()),
+            "crps_change_vs_base": float(d["crps"].mean() / data[("BASE", key[1])]["crps"].mean() - 1), "median_lag_min": lag,
             "ramp_recall_of_median": float(d["med_ramp"][r].mean()), "ramp_magnitude_ratio": float(np.abs(d["dk_med"][r]).mean() / np.abs(d["dk"][r]).mean())}
     for trt, ctl in CONTRASTS:
         gains = {}
@@ -130,6 +138,8 @@ def main():
             out |= {"relative_ramp_gain": float(rel), "relative_crps_change": float(out["crps"][0] / c["crps"].mean()), "go": bool(go)}
             res["contrasts"][f"{trt} - {ctl}|lead{L}"] = out
             gains[L] = (t["tw_ramp"] - c["tw_ramp"], c["tw_ramp"], t["day"], t["clear"])
+        if not any(f"{trt} - {ctl}|lead{L}" in res["contrasts"] for L in LEADS):
+            continue
         res["decision"][trt] = "GO" if any(res["contrasts"].get(f"{trt} - {ctl}|lead{L}", {}).get("go") for L in LEADS) else "NO-GO"
         if len(gains) == 2:  # relative gain at 5 min minus relative gain at 15 min (same samples and days at both leads)
             d5, c5, day, clear = gains[5]
@@ -139,7 +149,7 @@ def main():
             stat = lambda ii: -S[0][ii].sum() / S[1][ii].sum() + S[2][ii].sum() / S[3][ii].sum()
             res["dissociation"][trt] = {"gain5_minus_gain15": boot(stat, day, clear)[0]}
     for k, v in res["arms"].items():
-        print(f"{k:18s} CRPS {v['crps']:.4f}  ramp region {v['tw_ramp']:.4f}  calm {v['tw_calm']:.4f}  skill {v['crps_skill_vs_smart_persistence']:.3f}  lag {v['median_lag_min']} min  recall {v['ramp_recall_of_median']:.3f}")
+        print(f"{k:18s} CRPS {v['crps']:.4f}  ramp region {v['tw_ramp']:.4f}  calm {v['tw_calm']:.4f}  skill {v['crps_skill_vs_smart_persistence']:+.3f}  vs base {v['crps_change_vs_base']:+.1%}  lag {v['median_lag_min']} min  recall {v['ramp_recall_of_median']:.3f}")
     f = lambda v: f"{v[0]:+.4f} [{v[1]:+.4f}, {v[2]:+.4f}]"
     for k, v in res["contrasts"].items():
         print(f"{k:28s} ramp region {f(v['tw_ramp'])} ({v['relative_ramp_gain']:+.1%})  CRPS {f(v['crps'])}  => {'GO' if v['go'] else 'no-go'}")
