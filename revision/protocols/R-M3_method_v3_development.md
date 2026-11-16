@@ -63,3 +63,49 @@ data afterwards.
 
 ## Reporting
 All candidates and both outcomes of every stage are reported, including the case that method v2 stays.
+
+---
+
+## Amendment 1 (2026-11-16, after Stage A, before Stage C and before any evaluation): Stage B is not run
+**Stage A outcome** (results/m3_stage_a.json): the three-way mixture M-R'RC was selected by the rule (seed-mean CRPS
+0.5737 against 0.5796 for method v2, a gain of 1.02% with the interval below zero in 3 of 3 seeds and the calm region
+not worse). R' alone (0.636) and M-R'C (0.615) were worse than method v2; the gain of M-R'RC is in the calm region
+only.
+
+**Decision.** Stage B (joint fine-tuning) is dropped. Reasons, all known before any evaluation of method v3 on the
+test set, the forward period or the external days: (i) the selected design has three networks, two with 60-min
+windows, so joint fine-tuning is the costliest step of the protocol; (ii) its expected gain is small against a
+Stage A gain that only just clears the 1% threshold; (iii) Stage A showed that the mixture depends on the experts
+being different, which joint training on one loss does not obviously preserve. No fine-tuned variant will be
+evaluated on the test set, the forward period or the external days. "Method v3" below means M-R'RC of Stage A with
+the fallback M-DC, before calibration.
+
+## Amendment 2 (2026-11-16, before Stage C): specification of Stage C
+**Data.** Development validation forecasts of method v3 (common population; one member per seed and fold, as in
+Stage A), in chronological order per seed. Intervals: 50%, 80% and 90% (base_interval on the nine quantiles).
+**Reference (U).** Continuous rolling conformal prediction with the frozen window W = 4620: for every forecast, Q is
+the ceil((n + 1)(1 - alpha))-th smallest of the n <= W most recent scores whose target time is not later than the
+issue time; with n < 30 the raw interval is issued.
+**Candidate (G).** The same procedure run separately in four classes of the calm expert's forecast-time ramp
+probability g (the gate feature): g < 0.1, 0.1-0.3, 0.3-0.5 and >= 0.5, each class with its own window of the W most
+recent matured scores of that class; while a class has fewer than 200 matured scores, the pooled window U is used.
+The class edges are fixed here and are not tuned.
+**Acceptance (all three, at the 90% level, on the development validation folds).** (a) Coverage on ramp outcomes is
+closer to 0.90 under G than under U in 3 of 3 seeds; (b) the mean width over all forecasts is at most 5% larger
+(seed mean); (c) the interval (Winkler) score over all forecasts is not worse in any seed. Coverage, width and
+score are also reported per class and for the 50% and 80% intervals. If accepted, G replaces continuous pooled
+calibration in method v3 and is used in the evaluation; otherwise U stays. CRPS is unaffected.
+
+## Amendment 3 (2026-11-16, before the evaluation): details of the single evaluation
+- **Official test set.** Members of R' are run on the test set with the inputs of the other 60-min expert
+  (src/revision_posthoc_dump.py); per member, the three-way gate is fitted on that member's calibration-day
+  predictions (common population) and the fallback gate as in R-R9; forecasts without a 60-min history use M-DC.
+  Scores, contrasts, day-level tests and the reading rule are those of R-R9, with method v3 in place of method v2
+  and method v2 added to the comparators.
+- **Forward period.** R' is trained on the forward fit days with the settings of Stage A and the forward manifest
+  (five seeds, as the other forward experts; early stopping on the selection days); gates are fitted on the
+  selection days; everything else as R-R7.
+- **External days.** As R-R10, with R' members added to the 60-min branch.
+- Calibration in all three: the outcome of Stage C.
+- Method v2 keeps its already published numbers; both methods are reported side by side whichever is lower, and the
+  article states which evaluations each was run on and in which order.
