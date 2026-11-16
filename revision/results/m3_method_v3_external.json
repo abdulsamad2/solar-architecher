@@ -1,0 +1,120 @@
+{
+ "protocol": "revision/protocols/R-M3_method_v3_development.md (Amendment 3)",
+ "n": 2582,
+ "records": 2683,
+ "share_with_60min_history": 0.9136328427575523,
+ "n_with_60min_history_by_day": {
+  "2019-11-12": 509,
+  "2019-11-13": 498,
+  "2019-11-29": 457,
+  "2019-12-08": 448,
+  "2019-12-23": 447
+ },
+ "n_ramp": 782,
+ "published": {
+  "SkyGPT (m = 100)": 2.81,
+  "PV-MM-Diffusion (m = 30)": 2.63,
+  "SUNSET, SkyGPT paper (m = 10)": 3.31,
+  "smart persistence, SkyGPT paper": 3.67
+ },
+ "scores": {
+  "method v3, routed": {
+   "crps_exact": 2.2574360942621756,
+   "ramp": 4.603361763908551,
+   "non_ramp": 1.2382617200046953,
+   "with_60min_history": 2.389894468801164,
+   "standard_m10": 2.4187575724128068,
+   "standard_m30": 2.3070235259473106,
+   "standard_m100": 2.264572123624815
+  },
+  "method v2, routed": {
+   "crps_exact": 2.2678375049274475,
+   "ramp": 4.543896740838445,
+   "non_ramp": 1.2790162146594473,
+   "with_60min_history": 2.4012791412631103,
+   "standard_m10": 2.4235202400309146,
+   "standard_m30": 2.3117472671215973,
+   "standard_m100": 2.2726307949381797
+  },
+  "frozen rule, routed": {
+   "crps_exact": 2.3030996497535923,
+   "ramp": 4.554352903631357,
+   "non_ramp": 1.3250551805689192,
+   "with_60min_history": 2.4382963508425433,
+   "standard_m10": 2.455052128868221,
+   "standard_m30": 2.344552367024629,
+   "standard_m100": 2.3076594362852236
+  },
+  "G4": {
+   "crps_exact": 2.468572914634951,
+   "ramp": 5.206677405453785,
+   "non_ramp": 1.2790186302903241,
+   "with_60min_history": 2.6190936102647346,
+   "standard_m10": 2.6079340224901224,
+   "standard_m30": 2.5034189906479667,
+   "standard_m100": 2.4665261911675422
+  },
+  "calm expert": {
+   "crps_exact": 2.4331904851642823,
+   "ramp": 5.60345074962333,
+   "non_ramp": 1.0558885258270732,
+   "with_60min_history": 2.5756552142276377,
+   "standard_m10": 2.58608965215944,
+   "standard_m30": 2.473418348589257,
+   "standard_m100": 2.4325614851848574
+  },
+  "direct expert": {
+   "crps_exact": 2.5705409591490134,
+   "ramp": 5.064109573566605,
+   "non_ramp": 1.4872239277742598,
+   "with_60min_history": 2.7283095799312953,
+   "standard_m10": 2.698979075042372,
+   "standard_m30": 2.600158443763736,
+   "standard_m100": 2.566408456580368
+  }
+ },
+ "paired": {
+  "method v3, routed - method v2, routed": [
+   -0.010401410665271456,
+   -0.018467385556836035,
+   -0.004103927736097667
+  ],
+  "method v3, routed - frozen rule, routed": [
+   -0.04566355549141652,
+   -0.09160584550690576,
+   -0.005378452765034551
+  ],
+  "method v3, routed - G4": [
+   -0.21113682037277498,
+   -0.4200554209450728,
+   -0.06521668997534727
+  ],
+  "method v3, routed - calm expert": [
+   -0.17575439090210587,
+   -0.32895866442327026,
+   -0.05002597424006541
+  ],
+  "method v3, routed - direct expert": [
+   -0.31310486488683764,
+   -0.5160623035245222,
+   -0.1673992050946139
+  ]
+ },
+ "coverage90": {
+  "raw": {
+   "coverage": 0.8175832687838884,
+   "ramp_coverage": 0.5332480818414322,
+   "width_kw": 10.120936133504417
+  },
+  "continuous rolling": {
+   "coverage": 0.8086754453911696,
+   "ramp_coverage": 0.5217391304347826,
+   "width_kw": 9.967472073292726
+  },
+  "ACI": {
+   "coverage": 0.8718048024786987,
+   "ramp_coverage": 0.6611253196930946,
+   "width_kw": 11.234138705437612
+  }
+ }
+}
