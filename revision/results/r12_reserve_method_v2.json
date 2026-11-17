@@ -1,0 +1,473 @@
+{
+ "protocol": "revision/protocols/R-R12_warnings_reserve_method_v2.md",
+ "forecaster": "method v2",
+ "target_reliability": 0.95,
+ "methods": {
+  "method v2": {
+   "delta_kw": -0.06997361921909917,
+   "by_stratum": {
+    "overall": {
+     "reliability": 0.9500226142017186,
+     "mean_reserve_kw": 2.777151874978294,
+     "mean_reserve_pct_capacity": 9.226418189296659,
+     "mean_shortfall_when_short_kw": 0.7091567580490029,
+     "p95_shortfall_kw": 0.0
+    },
+    "cloudy": {
+     "reliability": 0.9521726010863005,
+     "mean_reserve_kw": 5.230668357968267,
+     "mean_reserve_pct_capacity": 17.37763574075836,
+     "mean_shortfall_when_short_kw": 1.420581370364529,
+     "p95_shortfall_kw": 0.0
+    },
+    "falling ramp": {
+     "reliability": 0.7510204081632653,
+     "mean_reserve_kw": 6.127904636313943,
+     "mean_reserve_pct_capacity": 20.358487163833694,
+     "mean_shortfall_when_short_kw": 1.590419270337573,
+     "p95_shortfall_kw": 2.924120452241729
+    },
+    "rising ramp": {
+     "reliability": 1.0,
+     "mean_reserve_kw": 5.864816836782779,
+     "mean_reserve_pct_capacity": 19.484441318215215,
+     "mean_shortfall_when_short_kw": 0.0,
+     "p95_shortfall_kw": 0.0
+    },
+    "non-ramp": {
+     "reliability": 0.9630837004405286,
+     "mean_reserve_kw": 2.2332054335370666,
+     "mean_reserve_pct_capacity": 7.419287154608194,
+     "mean_shortfall_when_short_kw": 0.19596331413871365,
+     "p95_shortfall_kw": 0.0
+    }
+   }
+  },
+  "G3''-F": {
+   "delta_kw": -0.14478542964148788,
+   "by_stratum": {
+    "overall": {
+     "reliability": 0.9500226142017186,
+     "mean_reserve_kw": 2.816762540313214,
+     "mean_reserve_pct_capacity": 9.358015084097055,
+     "mean_shortfall_when_short_kw": 0.6368840704082642,
+     "p95_shortfall_kw": 0.0
+    },
+    "cloudy": {
+     "reliability": 0.9551901025950513,
+     "mean_reserve_kw": 5.348921448052737,
+     "mean_reserve_pct_capacity": 17.770503149676866,
+     "mean_shortfall_when_short_kw": 1.3494979899373352,
+     "p95_shortfall_kw": 0.0
+    },
+    "falling ramp": {
+     "reliability": 0.7663265306122449,
+     "mean_reserve_kw": 6.191538378063037,
+     "mean_reserve_pct_capacity": 20.56989494373102,
+     "mean_shortfall_when_short_kw": 1.5165795460915392,
+     "p95_shortfall_kw": 2.572342371200256
+    },
+    "rising ramp": {
+     "reliability": 1.0,
+     "mean_reserve_kw": 5.834545308387926,
+     "mean_reserve_pct_capacity": 19.383871456438293,
+     "mean_shortfall_when_short_kw": 0.0,
+     "p95_shortfall_kw": 0.0
+    },
+    "non-ramp": {
+     "reliability": 0.961762114537445,
+     "mean_reserve_kw": 2.276504831774645,
+     "mean_reserve_pct_capacity": 7.563138975995497,
+     "mean_shortfall_when_short_kw": 0.1727129553587942,
+     "p95_shortfall_kw": 0.0
+    }
+   }
+  },
+  "E4-B-fit": {
+   "delta_kw": -0.5376761971658558,
+   "by_stratum": {
+    "overall": {
+     "reliability": 0.9500226142017186,
+     "mean_reserve_kw": 4.252318657202662,
+     "mean_reserve_pct_capacity": 14.127304508978941,
+     "mean_shortfall_when_short_kw": 0.6769237623833332,
+     "p95_shortfall_kw": 0.0
+    },
+    "cloudy": {
+     "reliability": 0.9290887145443573,
+     "mean_reserve_kw": 5.688380978620291,
+     "mean_reserve_pct_capacity": 18.898275676479372,
+     "mean_shortfall_when_short_kw": 0.9014191622927281,
+     "p95_shortfall_kw": 0.2306037046065959
+    },
+    "falling ramp": {
+     "reliability": 0.6081632653061224,
+     "mean_reserve_kw": 5.961707671015831,
+     "mean_reserve_pct_capacity": 19.806337777461234,
+     "mean_shortfall_when_short_kw": 1.0061655942938164,
+     "p95_shortfall_kw": 2.1442557028538127
+    },
+    "rising ramp": {
+     "reliability": 0.9871794871794872,
+     "mean_reserve_kw": 5.674182789101318,
+     "mean_reserve_pct_capacity": 18.851105611632285,
+     "mean_shortfall_when_short_kw": 0.015266858644918243,
+     "p95_shortfall_kw": 0.0
+    },
+    "non-ramp": {
+     "reliability": 0.9764757709251102,
+     "mean_reserve_kw": 3.9874670218727895,
+     "mean_reserve_pct_capacity": 13.247398743763421,
+     "mean_shortfall_when_short_kw": 0.23314480879245442,
+     "p95_shortfall_kw": 0.0
+    }
+   }
+  },
+  "E6-S": {
+   "delta_kw": 0.0023945643896947505,
+   "by_stratum": {
+    "overall": {
+     "reliability": 0.9500226142017186,
+     "mean_reserve_kw": 2.8414936082412194,
+     "mean_reserve_pct_capacity": 9.440178100469168,
+     "mean_shortfall_when_short_kw": 1.2595455042325376,
+     "p95_shortfall_kw": 0.0
+    },
+    "cloudy": {
+     "reliability": 0.9334640917320459,
+     "mean_reserve_kw": 5.403827410996711,
+     "mean_reserve_pct_capacity": 17.952914986700033,
+     "mean_shortfall_when_short_kw": 1.8596857934724171,
+     "p95_shortfall_kw": 0.371655389102021
+    },
+    "falling ramp": {
+     "reliability": 0.6571428571428571,
+     "mean_reserve_kw": 6.654051865663893,
+     "mean_reserve_pct_capacity": 22.10648460353453,
+     "mean_shortfall_when_short_kw": 2.203941367361122,
+     "p95_shortfall_kw": 4.311721790141753
+    },
+    "rising ramp": {
+     "reliability": 1.0,
+     "mean_reserve_kw": 5.962958168491957,
+     "mean_reserve_pct_capacity": 19.810492254126103,
+     "mean_shortfall_when_short_kw": 0.0,
+     "p95_shortfall_kw": 0.0
+    },
+    "non-ramp": {
+     "reliability": 0.9711894273127754,
+     "mean_reserve_kw": 2.2548858619267778,
+     "mean_reserve_pct_capacity": 7.4913151559029165,
+     "mean_shortfall_when_short_kw": 0.28915709441234133,
+     "p95_shortfall_kw": 0.0
+    }
+   }
+  },
+  "G4": {
+   "delta_kw": -0.09564792986197235,
+   "by_stratum": {
+    "overall": {
+     "reliability": 0.9500226142017186,
+     "mean_reserve_kw": 2.8631216787806073,
+     "mean_reserve_pct_capacity": 9.5120321554173,
+     "mean_shortfall_when_short_kw": 0.7132570277963783,
+     "p95_shortfall_kw": 0.0
+    },
+    "cloudy": {
+     "reliability": 0.9488533494266748,
+     "mean_reserve_kw": 5.440775664209262,
+     "mean_reserve_pct_capacity": 18.07566665850253,
+     "mean_shortfall_when_short_kw": 1.3388025818754465,
+     "p95_shortfall_kw": 0.017766245936916253
+    },
+    "falling ramp": {
+     "reliability": 0.7142857142857143,
+     "mean_reserve_kw": 6.414382569505644,
+     "mean_reserve_pct_capacity": 21.310241094703137,
+     "mean_shortfall_when_short_kw": 1.4799914100200298,
+     "p95_shortfall_kw": 2.8564649882131206
+    },
+    "rising ramp": {
+     "reliability": 1.0,
+     "mean_reserve_kw": 5.863845359177191,
+     "mean_reserve_pct_capacity": 19.48121381786442,
+     "mean_shortfall_when_short_kw": 0.0,
+     "p95_shortfall_kw": 0.0
+    },
+    "non-ramp": {
+     "reliability": 0.9662555066079295,
+     "mean_reserve_kw": 2.3090324243522606,
+     "mean_reserve_pct_capacity": 7.671204067615484,
+     "mean_shortfall_when_short_kw": 0.15272014261981862,
+     "p95_shortfall_kw": 0.0
+    }
+   }
+  },
+  "PV-only P15": {
+   "delta_kw": 0.35750054717063906,
+   "by_stratum": {
+    "overall": {
+     "reliability": 0.9500226142017186,
+     "mean_reserve_kw": 4.319984845860489,
+     "mean_reserve_pct_capacity": 14.352109122460096,
+     "mean_shortfall_when_short_kw": 2.9560394975313975,
+     "p95_shortfall_kw": 0.0
+    },
+    "cloudy": {
+     "reliability": 0.9047978273989137,
+     "mean_reserve_kw": 4.970445182204828,
+     "mean_reserve_pct_capacity": 16.513106917624015,
+     "mean_shortfall_when_short_kw": 3.0976883816832226,
+     "p95_shortfall_kw": 1.7016425639771413
+    },
+    "falling ramp": {
+     "reliability": 0.386734693877551,
+     "mean_reserve_kw": 5.002114252574794,
+     "mean_reserve_pct_capacity": 16.618319775995992,
+     "mean_shortfall_when_short_kw": 3.144060020449201,
+     "p95_shortfall_kw": 9.001044225709943
+    },
+    "rising ramp": {
+     "reliability": 1.0,
+     "mean_reserve_kw": 4.2598382035315145,
+     "mean_reserve_pct_capacity": 14.152286390470147,
+     "mean_shortfall_when_short_kw": 0.0,
+     "p95_shortfall_kw": 0.0
+    },
+    "non-ramp": {
+     "reliability": 0.9945374449339207,
+     "mean_reserve_kw": 4.2660474395732555,
+     "mean_reserve_pct_capacity": 14.17291508163872,
+     "mean_shortfall_when_short_kw": 1.1334534608604296,
+     "p95_shortfall_kw": 0.0
+    }
+   }
+  },
+  "smart persistence, dressed (120 min)": {
+   "delta_kw": 0.3137055227507257,
+   "by_stratum": {
+    "overall": {
+     "reliability": 0.9500226142017186,
+     "mean_reserve_kw": 3.344115018086071,
+     "mean_reserve_pct_capacity": 11.110016671382294,
+     "mean_shortfall_when_short_kw": 2.049831204686475,
+     "p95_shortfall_kw": 0.0
+    },
+    "cloudy": {
+     "reliability": 0.9126433313216656,
+     "mean_reserve_kw": 6.079976764855168,
+     "mean_reserve_pct_capacity": 20.199258355000556,
+     "mean_shortfall_when_short_kw": 2.3056518572008855,
+     "p95_shortfall_kw": 0.9919496606870921
+    },
+    "falling ramp": {
+     "reliability": 0.47653061224489796,
+     "mean_reserve_kw": 7.136013271071655,
+     "mean_reserve_pct_capacity": 23.70768528595234,
+     "mean_shortfall_when_short_kw": 2.4791829339417824,
+     "p95_shortfall_kw": 6.917481355579231
+    },
+    "rising ramp": {
+     "reliability": 1.0,
+     "mean_reserve_kw": 5.4903772816119165,
+     "mean_reserve_pct_capacity": 18.240456085089424,
+     "mean_shortfall_when_short_kw": 0.0,
+     "p95_shortfall_kw": 0.0
+    },
+    "non-ramp": {
+     "reliability": 0.986784140969163,
+     "mean_reserve_kw": 2.839713100325184,
+     "mean_reserve_pct_capacity": 9.43426279177802,
+     "mean_shortfall_when_short_kw": 0.5814482906333249,
+     "p95_shortfall_kw": 0.0
+    }
+   }
+  },
+  "constant reserve, official smart persistence": {
+   "delta_kw": 5.025974412075409,
+   "by_stratum": {
+    "overall": {
+     "reliability": 0.9500226142017186,
+     "mean_reserve_kw": 5.025974412075407,
+     "mean_reserve_pct_capacity": 16.697589408888394,
+     "mean_shortfall_when_short_kw": 4.974923156220075,
+     "p95_shortfall_kw": 0.0
+    },
+    "cloudy": {
+     "reliability": 0.8999698249849125,
+     "mean_reserve_kw": 5.025974412075407,
+     "mean_reserve_pct_capacity": 16.697589408888394,
+     "mean_shortfall_when_short_kw": 4.974923156220075,
+     "p95_shortfall_kw": 4.085482528267745
+    },
+    "falling ramp": {
+     "reliability": 0.4204081632653061,
+     "mean_reserve_kw": 5.025974412075409,
+     "mean_reserve_pct_capacity": 16.6975894088884,
+     "mean_shortfall_when_short_kw": 5.701511471607354,
+     "p95_shortfall_kw": 11.906093100551466
+    },
+    "rising ramp": {
+     "reliability": 1.0,
+     "mean_reserve_kw": 5.025974412075409,
+     "mean_reserve_pct_capacity": 16.6975894088884,
+     "mean_shortfall_when_short_kw": 0.0,
+     "p95_shortfall_kw": 0.0
+    },
+    "non-ramp": {
+     "reliability": 0.9916299559471365,
+     "mean_reserve_kw": 5.025974412075408,
+     "mean_reserve_pct_capacity": 16.697589408888398,
+     "mean_shortfall_when_short_kw": 0.6306898600098121,
+     "p95_shortfall_kw": 0.0
+    }
+   }
+  },
+  "constant reserve, forecaster median": {
+   "delta_kw": 4.383787316559724,
+   "by_stratum": {
+    "overall": {
+     "reliability": 0.9500226142017186,
+     "mean_reserve_kw": 4.383787316559726,
+     "mean_reserve_pct_capacity": 14.564077463653575,
+     "mean_shortfall_when_short_kw": 3.000525555348168,
+     "p95_shortfall_kw": 0.0
+    },
+    "cloudy": {
+     "reliability": 0.8999698249849125,
+     "mean_reserve_kw": 4.383787316559726,
+     "mean_reserve_pct_capacity": 14.564077463653575,
+     "mean_shortfall_when_short_kw": 3.000525555348168,
+     "p95_shortfall_kw": 2.4388002204180106
+    },
+    "falling ramp": {
+     "reliability": 0.5346938775510204,
+     "mean_reserve_kw": 4.383787316559726,
+     "mean_reserve_pct_capacity": 14.564077463653575,
+     "mean_shortfall_when_short_kw": 3.68648876390137,
+     "p95_shortfall_kw": 7.049680295841336
+    },
+    "rising ramp": {
+     "reliability": 1.0,
+     "mean_reserve_kw": 4.383787316559725,
+     "mean_reserve_pct_capacity": 14.56407746365357,
+     "mean_shortfall_when_short_kw": 0.0,
+     "p95_shortfall_kw": 0.0
+    },
+    "non-ramp": {
+     "reliability": 0.9817621145374449,
+     "mean_reserve_kw": 4.383787316559726,
+     "mean_reserve_pct_capacity": 14.564077463653575,
+     "mean_shortfall_when_short_kw": 1.4894181973758973,
+     "p95_shortfall_kw": 0.0
+    }
+   }
+  }
+ },
+ "forecaster_minus": {
+  "G3''-F": {
+   "overall": [
+    -0.039610665334919706,
+    -0.06528345212261695,
+    -0.009386591893265146
+   ],
+   "cloudy": [
+    -0.11825309008447094,
+    -0.14250163202291113,
+    -0.0958614443060568
+   ],
+   "sign_flip_p": 0.10678291320800781
+  },
+  "E4-B-fit": {
+   "overall": [
+    -1.475166782224367,
+    -1.648472485517722,
+    -1.2870093424078066
+   ],
+   "cloudy": [
+    -0.45771262065202367,
+    -0.8277242168799976,
+    -0.06454184381973722
+   ],
+   "sign_flip_p": 7.43865966796875e-05
+  },
+  "E6-S": {
+   "overall": [
+    -0.06434173326292512,
+    -0.17750709674378667,
+    0.04687161402145291
+   ],
+   "cloudy": [
+    -0.1731590530284444,
+    -0.3963085486935355,
+    0.027658281261158615
+   ],
+   "sign_flip_p": 0.3271923065185547
+  },
+  "G4": {
+   "overall": [
+    -0.08596980380231313,
+    -0.12625981894708552,
+    -0.040520519030379135
+   ],
+   "cloudy": [
+    -0.2101073062409954,
+    -0.2759909339465097,
+    -0.1391095808242411
+   ],
+   "sign_flip_p": 0.030124664306640625
+  },
+  "PV-only P15": {
+   "overall": [
+    -1.5428329708821946,
+    -1.9822636630877004,
+    -1.0974372221078237
+   ],
+   "cloudy": [
+    0.26022317576343823,
+    -0.6451162841905201,
+    1.1769093577557923
+   ],
+   "sign_flip_p": 0.0062808990478515625
+  },
+  "smart persistence, dressed (120 min)": {
+   "overall": [
+    -0.5669631431077756,
+    -0.8788714464027974,
+    -0.20706816172184042
+   ],
+   "cloudy": [
+    -0.8493084068869009,
+    -1.4662031538503892,
+    -0.14641424589341956
+   ],
+   "sign_flip_p": 0.0071086883544921875
+  },
+  "constant reserve, official smart persistence": {
+   "overall": [
+    -2.2488225370971144,
+    -2.7224310777656227,
+    -1.774191243924587
+   ],
+   "cloudy": [
+    0.20469394589285758,
+    -0.7827287729432015,
+    1.1778321885638063
+   ],
+   "sign_flip_p": 0.002948760986328125
+  },
+  "constant reserve, forecaster median": {
+   "overall": [
+    -1.6066354415814288,
+    -2.080243982249936,
+    -1.1320041484089018
+   ],
+   "cloudy": [
+    0.846881041408543,
+    -0.14054167742751594,
+    1.8200192840794929
+   ],
+   "sign_flip_p": 0.020977020263671875
+  }
+ }
+}
