@@ -54,19 +54,24 @@ def dressed_q05(c):
     return np.maximum(k[now] + q05, 0) * pc[tgt], k[now] * pc[tgt]
 
 
-def main():
+def main(forecaster=None, name="method v2", out="r5_reserve_equal_reliability.json", protocol="revision/protocols/R-R5_reserve_equal_reliability.md"):
+    """forecaster: test quantiles (kW) of the forecaster compared with the others (R-R12; the frozen forecaster then
+    becomes one of the alternatives); None reproduces R-R5."""
     c = test_context()
     q = frozen_test_predictions(c["sample_ids"])
     q["PV-only P15"] = np.nanmean(members("P15")["pred_q"], 0)
+    pp, others = PP, ("E4-B-fit", "E6-S", "G4", "PV-only P15")
+    if forecaster is not None:
+        q[name], pp, others = forecaster, name, (PP,) + others
     y, day, sunny, dk, tau = c["y"], c["day"], c["sunny"], c["dk"], c["tau"]
     pers = official_persistence(c["ds"].origin_time.astype(object), c["pv"][c["ds"].hist_rows[:, -1]])
     sp05, spf = dressed_q05(c)
-    spec = {m: (q[m][:, MED], q[m][:, MED] - q[m][:, 0]) for m in (PP, "E4-B-fit", "E6-S", "G4", "PV-only P15")}
+    spec = {m: (q[m][:, MED], q[m][:, MED] - q[m][:, 0]) for m in (pp,) + others}
     spec["smart persistence, dressed (120 min)"] = (spf, spf - sp05)
     spec["constant reserve, official smart persistence"] = (pers, np.zeros(len(y)))
-    spec["constant reserve, forecaster median"] = (q[PP][:, MED], np.zeros(len(y)))
+    spec["constant reserve, forecaster median"] = (q[pp][:, MED], np.zeros(len(y)))
     strata = {"overall": np.ones(len(y), bool), "cloudy": ~sunny, "falling ramp": dk <= -tau, "rising ramp": dk >= tau, "non-ramp": np.abs(dk) < tau}
-    res = {"protocol": "revision/protocols/R-R5_reserve_equal_reliability.md", "target_reliability": 0.95, "methods": {}, "forecaster_minus": {}}
+    res = {"protocol": protocol, "forecaster": pp, "target_reliability": 0.95, "methods": {}, "forecaster_minus": {}}
     r = {}
     for m, (f, base) in spec.items():
         delta = equalise(base, f, y)
@@ -78,9 +83,9 @@ def main():
                 "p95_shortfall_kw": float(np.quantile(short[v], 0.95))} for g, v in strata.items()}}
     days, inv = np.unique(day, return_inverse=True)
     for m in spec:
-        if m == PP:
+        if m == pp:
             continue
-        d = r[PP] - r[m]
+        d = r[pp] - r[m]
         res["forecaster_minus"][m] = {"overall": day_bootstrap(d, day, sunny), "cloudy": day_bootstrap(d[~sunny], day[~sunny], sunny[~sunny]),
                                       "sign_flip_p": sign_flip(np.bincount(inv, weights=d), np.bincount(inv).astype(float))[0]}
     for m, v in res["methods"].items():
@@ -89,7 +94,9 @@ def main():
         extra = f" | forecaster minus this {dd['overall'][0]:+.2f} [{dd['overall'][1]:+.2f}, {dd['overall'][2]:+.2f}] p {dd['sign_flip_p']:.4f}" if dd else ""
         print(f"{m:46s} reserve {o['mean_reserve_kw']:.2f} kW ({o['mean_reserve_pct_capacity']:.1f}% cap), cloudy {v['by_stratum']['cloudy']['mean_reserve_kw']:.2f}; "
               f"reliability overall {o['reliability']:.3f}, falling ramps {fr['reliability']:.3f} (shortfall when short {fr['mean_shortfall_when_short_kw']:.2f} kW){extra}")
-    print("saved", save("r5_reserve_equal_reliability.json", res))
+    if out:
+        print("saved", save(out, res))
+    return res
 
 
 if __name__ == "__main__":

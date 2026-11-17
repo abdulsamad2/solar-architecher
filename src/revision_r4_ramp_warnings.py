@@ -52,10 +52,13 @@ def boot_idx(sunny_day, n_boot=2000, seed=20261022):
     return [np.concatenate([rng.choice(g, len(g)) for g in groups if len(g)]) for _ in range(n_boot)]
 
 
-def main():
+def main(forecaster=None, out="r4_ramp_warnings.json", protocol="revision/protocols/R-R4_ramp_warnings.md"):
+    """forecaster: test quantiles (kW) that take the place of the frozen forecaster (R-R12); None reproduces R-R4."""
     c = test_context()
     q = frozen_test_predictions(c["sample_ids"])
     q["PV-only P15"] = np.nanmean(members("P15")["pred_q"], 0)
+    if forecaster is not None:
+        q["frozen"], q[PP] = q[PP], forecaster
     y, day, sunny, kn, dk = c["y"], c["day"], c["sunny"], c["k_now"], c["dk"]
     tau = c["tau"]
     days, inv = np.unique(day, return_inverse=True)
@@ -65,6 +68,11 @@ def main():
     pv_now = c["pv"][c["ds"].hist_rows[:, -1]]
     labels = {"any ramp": np.abs(dk) >= tau, "falling ramp": dk <= -tau, "power drop >= 20% of capacity": y <= pv_now - CAP_DROP}
     names = {"calm expert": "E6-S", "forecaster": PP, "direct expert": "E4-B-fit", "PV-only": "PV-only P15"}
+    pairs = [("probability, forecaster", "median, forecaster"), ("probability, forecaster", "probability, PV-only"),
+             ("probability, forecaster", "probability, calm expert"), ("probability, forecaster", "probability, direct expert")]
+    if forecaster is not None:
+        names["frozen forecaster"] = "frozen"
+        pairs.append(("probability, forecaster", "probability, frozen forecaster"))
     qk = {n: test_k(c, q[m]) for n, m in names.items()}
     prob = {ev: {} for ev in labels}
     for n in names:
@@ -80,7 +88,7 @@ def main():
     medw = {"any ramp": {n: np.abs(v) >= tau for n, v in med.items()}, "falling ramp": {n: v <= -tau for n, v in med.items()},
             "power drop >= 20% of capacity": {n: q[names[n]][:, MED] <= pv_now - CAP_DROP for n in med}}
 
-    res = {"protocol": "revision/protocols/R-R4_ramp_warnings.md", "alphas": ALPHAS.tolist(), "events": {}}
+    res = {"protocol": protocol, "alphas": ALPHAS.tolist(), "events": {}}
     for ev, lab in labels.items():
         s = float(lab.mean())
         src = {f"probability, {n}": (lambda a, p=p: p >= a) for n, p in prob[ev].items()} | {f"median, {n}": (lambda a, w=w: w) for n, w in medw[ev].items()}
@@ -105,8 +113,7 @@ def main():
             pt = [value(cs[a_][j], a) - value(cs[b_][j], a) for j, a in enumerate(ALPHAS)]
             return {"diff": pt, "lo": np.quantile(d, 0.025, 0).tolist(), "hi": np.quantile(d, 0.975, 0).tolist()}
 
-        for a_, b_ in (("probability, forecaster", "median, forecaster"), ("probability, forecaster", "probability, PV-only"),
-                       ("probability, forecaster", "probability, calm expert"), ("probability, forecaster", "probability, direct expert")):
+        for a_, b_ in pairs:
             out["differences"][f"{a_} - {b_}"] = diff(a_, b_)
         res["events"][ev] = out
         ab = int(np.argmin(np.abs(ALPHAS - s)))
@@ -153,7 +160,9 @@ def main():
         "episodes": int(ep.sum()), "episodes_warned": float(warn[ep].mean()),
         "false_alarm_episodes_per_cloudy_day": float(fa_ep[~sunny].sum() / len(np.unique(day[~sunny])))}
     print("\ntiming (falling ramps, forecaster probability >= base rate):", json.dumps(res["timing_falling_ramps"], indent=1))
-    print("saved", save("r4_ramp_warnings.json", res))
+    if out:
+        print("saved", save(out, res))
+    return res
 
 
 if __name__ == "__main__":
