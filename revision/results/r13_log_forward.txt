@@ -1,0 +1,13 @@
+﻿forward seed 42 done
+forward seed 123 done
+forward seed 456 done
+forward seed 789 done
+forward seed 1011 done
+A forward method v2 - M-DC all: CRPS +0.0012 [-0.0036, +0.0061] blocks p 0.7666 rel +0.32% | ramp region -0.0006 [-0.0023, +0.0013] | calm +0.0018 [-0.0021, +0.0056] | 60-min forecasts +0.0012 [-0.0039, +0.0066]
+A forward M-DC all - G4: CRPS -0.0032 [-0.0045, -0.0020] blocks p 0.0034 rel -0.87% | ramp region -0.0008 [-0.0011, -0.0004] | calm -0.0025 [-0.0039, -0.0012] | 60-min forecasts -0.0031 [-0.0044, -0.0018]
+A forward M-DC all - G3''-F: CRPS -0.0100 [-0.0169, -0.0033] blocks p 0.1133 rel -2.66% | ramp region -0.0000 [-0.0018, +0.0016] | calm -0.0099 [-0.0160, -0.0041] | 60-min forecasts -0.0104 [-0.0178, -0.0032]
+A forward method v2 - G4: CRPS -0.0021 [-0.0071, +0.0030] blocks p 0.6006 rel -0.56% | ramp region -0.0013 [-0.0033, +0.0008] | calm -0.0007 [-0.0047, +0.0033] | 60-min forecasts -0.0018 [-0.0072, +0.0036]
+E forward 50%: ramps observed 0.106, reference 0.301, gap -0.195 [-0.226, -0.164] | falling 0.058 rising 0.156
+E forward 80%: ramps observed 0.345, reference 0.600, gap -0.255 [-0.302, -0.208] | falling 0.270 rising 0.421
+E forward 90%: ramps observed 0.535, reference 0.765, gap -0.230 [-0.275, -0.183] | falling 0.495 rising 0.577
+saved revision\results\r13_explanatory_analyses_method_v2.json keys: A_forward, E_coverage_forward
