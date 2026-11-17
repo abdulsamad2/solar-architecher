@@ -23,7 +23,8 @@ def quant(x):
     return np.quantile(x, LEVELS)
 
 
-def main():
+def main(return_q=False):
+    """return_q: return the reference quantiles (kW) and the test context without scoring or saving (used by R-R13)."""
     c = test_context()
     ds, pv, rec_t, y, day, sunny = c["ds"], c["pv"], c["rec_t"], c["y"], c["day"], c["sunny"]
     rd = json.loads(Path("reports/test_ramp_definition_frozen.json").read_text())
@@ -75,6 +76,8 @@ def main():
             n_fallback += 1
         q["CH-PeEn"][i] = ch[hour_t[i]] if hour_t[i] in ch else quant(k_dev)
     q = {k: np.maximum(v, 0.0) * pc_t[:, None] for k, v in q.items()}
+    if return_q:
+        return q, c
 
     fz = frozen_test_predictions(c["sample_ids"])
     crps = {k: crps_quantile_interp(v, y, LEVELS) for k, v in q.items()}
