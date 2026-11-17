@@ -1,0 +1,56 @@
+﻿seed 42 fold 0 done
+seed 42 fold 1 done
+seed 42 fold 2 done
+seed 42 fold 3 done
+seed 42 fold 4 done
+seed 42: single calm expert (E6-S, real images): 0.6101 (ramp 0.1868, calm 0.4233) | calm expert, images shuffled (C-shuf): 0.7414 (ramp 0.2111, calm 0.5303) | calm expert, PV-only encoder (C-pv): 0.6744 (ramp 0.1967, calm 0.4776) | direct expert (E4-B-fit): 0.7529 (ramp 0.1788, calm 0.5741) | direct expert, images shuffled (R-R8): 0.7279 (ramp 0.2009, calm 0.5270)
+seed 42: mixture calm expert (E6-S, real images): 0.5771 | calm expert, images shuffled (C-shuf): 0.6475 | calm expert, PV-only encoder (C-pv): 0.6212
+seed 123 fold 0 done
+seed 123 fold 1 done
+seed 123 fold 2 done
+seed 123 fold 3 done
+seed 123 fold 4 done
+seed 123: single calm expert (E6-S, real images): 0.6104 (ramp 0.1876, calm 0.4227) | calm expert, images shuffled (C-shuf): 0.7459 (ramp 0.2113, calm 0.5346) | calm expert, PV-only encoder (C-pv): 0.6855 (ramp 0.1984, calm 0.4871) | direct expert (E4-B-fit): 0.7480 (ramp 0.1782, calm 0.5698) | direct expert, images shuffled (R-R8): 0.7536 (ramp 0.2048, calm 0.5488)
+seed 123: mixture calm expert (E6-S, real images): 0.5821 | calm expert, images shuffled (C-shuf): 0.6665 | calm expert, PV-only encoder (C-pv): 0.6339
+seed 456 fold 0 done
+seed 456 fold 1 done
+seed 456 fold 2 done
+seed 456 fold 3 done
+seed 456 fold 4 done
+seed 456: single calm expert (E6-S, real images): 0.6110 (ramp 0.1875, calm 0.4235) | calm expert, images shuffled (C-shuf): 0.7349 (ramp 0.2107, calm 0.5242) | calm expert, PV-only encoder (C-pv): 0.6704 (ramp 0.1950, calm 0.4754) | direct expert (E4-B-fit): 0.7507 (ramp 0.1803, calm 0.5704) | direct expert, images shuffled (R-R8): 0.7477 (ramp 0.2040, calm 0.5437)
+seed 456: mixture calm expert (E6-S, real images): 0.5795 | calm expert, images shuffled (C-shuf): 0.6462 | calm expert, PV-only encoder (C-pv): 0.6223
+calm expert (E6-S, real images) - calm expert, images shuffled (C-shuf)
+   seed 42: overall -0.1313 [-0.1420, -0.1212]  ramp region -0.0243 [-0.0286, -0.0203]  calm region -0.1070 [-0.1141, -0.1001]
+   seed 123: overall -0.1355 [-0.1462, -0.1256]  ramp region -0.0237 [-0.0279, -0.0198]  calm region -0.1118 [-0.1189, -0.1053]
+   seed 456: overall -0.1240 [-0.1345, -0.1141]  ramp region -0.0232 [-0.0275, -0.0194]  calm region -0.1007 [-0.1078, -0.0942]
+calm expert, images shuffled (C-shuf) - calm expert, PV-only encoder (C-pv)
+   seed 42: overall +0.0670 [+0.0577, +0.0768]  ramp region +0.0144 [+0.0109, +0.0180]  calm region +0.0526 [+0.0464, +0.0591]
+   seed 123: overall +0.0604 [+0.0531, +0.0681]  ramp region +0.0129 [+0.0103, +0.0158]  calm region +0.0474 [+0.0424, +0.0526]
+   seed 456: overall +0.0645 [+0.0552, +0.0743]  ramp region +0.0157 [+0.0122, +0.0193]  calm region +0.0488 [+0.0427, +0.0553]
+calm expert (E6-S, real images) - calm expert, PV-only encoder (C-pv)
+   seed 42: overall -0.0642 [-0.0724, -0.0567]  ramp region -0.0099 [-0.0124, -0.0076]  calm region -0.0544 [-0.0606, -0.0486]
+   seed 123: overall -0.0751 [-0.0823, -0.0684]  ramp region -0.0107 [-0.0132, -0.0084]  calm region -0.0644 [-0.0698, -0.0592]
+   seed 456: overall -0.0595 [-0.0670, -0.0522]  ramp region -0.0075 [-0.0098, -0.0053]  calm region -0.0519 [-0.0577, -0.0464]
+direct expert (E4-B-fit) - direct expert, images shuffled (R-R8)
+   seed 42: overall +0.0250 [+0.0092, +0.0411]  ramp region -0.0221 [-0.0263, -0.0183]  calm region +0.0471 [+0.0328, +0.0615]
+   seed 123: overall -0.0056 [-0.0228, +0.0111]  ramp region -0.0266 [-0.0319, -0.0217]  calm region +0.0210 [+0.0061, +0.0362]
+   seed 456: overall +0.0029 [-0.0144, +0.0204]  ramp region -0.0237 [-0.0288, -0.0187]  calm region +0.0267 [+0.0120, +0.0418]
+mixture with calm expert (E6-S, real images) - mixture with calm expert, images shuffled (C-shuf)
+   seed 42: overall -0.0704 [-0.0755, -0.0655]  ramp region -0.0029 [-0.0038, -0.0020]  calm region -0.0675 [-0.0723, -0.0629]
+   seed 123: overall -0.0844 [-0.0906, -0.0785]  ramp region -0.0032 [-0.0043, -0.0021]  calm region -0.0812 [-0.0871, -0.0756]
+   seed 456: overall -0.0667 [-0.0717, -0.0619]  ramp region -0.0023 [-0.0033, -0.0015]  calm region -0.0644 [-0.0691, -0.0598]
+mixture with calm expert (E6-S, real images) - mixture with calm expert, PV-only encoder (C-pv)
+   seed 42: overall -0.0441 [-0.0490, -0.0393]  ramp region -0.0015 [-0.0023, -0.0008]  calm region -0.0426 [-0.0471, -0.0382]
+   seed 123: overall -0.0518 [-0.0567, -0.0469]  ramp region -0.0011 [-0.0020, -0.0002]  calm region -0.0507 [-0.0552, -0.0462]
+   seed 456: overall -0.0428 [-0.0481, -0.0376]  ramp region -0.0005 [-0.0015, +0.0005]  calm region -0.0423 [-0.0472, -0.0376]
+{
+ "calm expert, real - shuffled, calm region: seeds with interval above zero (images hurt)": 0,
+ "calm expert, real - shuffled, calm region: seeds with interval below zero (images help)": 3,
+ "calm expert, real - shuffled, ramp region: seeds with interval below zero (uses image information on ramps)": 3,
+ "mixture with real-image calm expert better than with C-shuf / C-pv: seeds with interval below zero": [
+  3,
+  3
+ ],
+ "the calm expert needs the camera as a component (3/3 seeds against both controls)": true
+}
+saved revision\results\r14_calm_expert_image_controls.json
