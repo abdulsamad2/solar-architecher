@@ -52,7 +52,7 @@ def boot_idx(sunny_day, n_boot=2000, seed=20261022):
     return [np.concatenate([rng.choice(g, len(g)) for g in groups if len(g)]) for _ in range(n_boot)]
 
 
-def main(forecaster=None, out="r4_ramp_warnings.json", protocol="revision/protocols/R-R4_ramp_warnings.md"):
+def main(forecaster=None, out_name="r4_ramp_warnings.json", protocol="revision/protocols/R-R4_ramp_warnings.md"):
     """forecaster: test quantiles (kW) that take the place of the frozen forecaster (R-R12); None reproduces R-R4."""
     c = test_context()
     q = frozen_test_predictions(c["sample_ids"])
@@ -160,8 +160,8 @@ def main(forecaster=None, out="r4_ramp_warnings.json", protocol="revision/protoc
         "episodes": int(ep.sum()), "episodes_warned": float(warn[ep].mean()),
         "false_alarm_episodes_per_cloudy_day": float(fa_ep[~sunny].sum() / len(np.unique(day[~sunny])))}
     print("\ntiming (falling ramps, forecaster probability >= base rate):", json.dumps(res["timing_falling_ramps"], indent=1))
-    if out:
-        print("saved", save(out, res))
+    if out_name:
+        print("saved", save(out_name, res))
     return res
 
 

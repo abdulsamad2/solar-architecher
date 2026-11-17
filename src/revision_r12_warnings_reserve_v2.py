@@ -44,12 +44,12 @@ def main():
     assert abs(crps_quantile_interp(v2, c["y"], LEVELS).mean() - r9["scores"]["method v2"]["crps"]) < 1e-9, "STOP: method v2 (R-R9) not reproduced"
 
     print("=== check: the scripts with their defaults reproduce R-R4 and R-R5", flush=True)
-    close(json.loads(json.dumps(r4.main(out=None))), json.loads((RES / "r4_ramp_warnings.json").read_text()))
+    close(json.loads(json.dumps(r4.main(out_name=None))), json.loads((RES / "r4_ramp_warnings.json").read_text()))
     close(json.loads(json.dumps(r5.main(out=None))), json.loads((RES / "r5_reserve_equal_reliability.json").read_text()))
     print("=== reproduced", flush=True)
 
     print("\n=== R-R12 warnings, method v2 as the forecaster", flush=True)
-    r4.main(forecaster=v2, out="r12_ramp_warnings_method_v2.json", protocol=PROTOCOL)
+    r4.main(forecaster=v2, out_name="r12_ramp_warnings_method_v2.json", protocol=PROTOCOL)
     print("\n=== R-R12 reserve, method v2 as the forecaster", flush=True)
     r5.main(forecaster=v2, out="r12_reserve_method_v2.json", protocol=PROTOCOL)
 
