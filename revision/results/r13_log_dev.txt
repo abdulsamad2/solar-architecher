@@ -1,0 +1,28 @@
+﻿development seed 42 fold 0 done
+development seed 42 fold 1 done
+development seed 42 fold 2 done
+development seed 42 fold 3 done
+development seed 42 fold 4 done
+seed 42: D0 (2D, 15 min) 0.5885  D2 (2D, 60 min) 0.5908  A2-H15 (3D, 15 min) 0.5755  A2 (3D, 60 min) 0.5771  constant weight 0.5970  gate on g only 0.5798  gate on d only 0.5787  gate on g and d 0.5771
+development seed 123 fold 0 done
+development seed 123 fold 1 done
+development seed 123 fold 2 done
+development seed 123 fold 3 done
+development seed 123 fold 4 done
+seed 123: D0 (2D, 15 min) 0.5861  D2 (2D, 60 min) 0.5877  A2-H15 (3D, 15 min) 0.5802  A2 (3D, 60 min) 0.5821  constant weight 0.6026  gate on g only 0.5834  gate on d only 0.5854  gate on g and d 0.5821
+development seed 456 fold 0 done
+development seed 456 fold 1 done
+development seed 456 fold 2 done
+development seed 456 fold 3 done
+development seed 456 fold 4 done
+seed 456: D0 (2D, 15 min) 0.5916  D2 (2D, 60 min) 0.5899  A2-H15 (3D, 15 min) 0.5846  A2 (3D, 60 min) 0.5795  constant weight 0.6017  gate on g only 0.5811  gate on d only 0.5826  gate on g and d 0.5795
+B history within 3D (A2 - A2-H15)    seed 42: +0.0016 [-0.0020, +0.0050] ramp +0.0008 [-0.0004, +0.0020] calm +0.0008 [-0.0020, +0.0034] | seed 123: +0.0019 [-0.0014, +0.0054] ramp +0.0005 [-0.0010, +0.0022] calm +0.0015 [-0.0007, +0.0036] | seed 456: -0.0051 [-0.0087, -0.0017] ramp -0.0016 [-0.0032, -0.0002] calm -0.0034 [-0.0059, -0.0011]
+B history within 2D (D2 - D0)        seed 42: +0.0023 [-0.0002, +0.0048] ramp -0.0002 [-0.0011, +0.0007] calm +0.0024 [+0.0006, +0.0043] | seed 123: +0.0016 [-0.0005, +0.0038] ramp +0.0002 [-0.0006, +0.0009] calm +0.0015 [-0.0002, +0.0031] | seed 456: -0.0018 [-0.0040, +0.0003] ramp -0.0005 [-0.0013, +0.0002] calm -0.0013 [-0.0030, +0.0003]
+B encoder at 60 min (A2 - D2)        seed 42: -0.0137 [-0.0180, -0.0097] ramp -0.0031 [-0.0047, -0.0017] calm -0.0106 [-0.0138, -0.0076] | seed 123: -0.0056 [-0.0102, -0.0006] ramp -0.0017 [-0.0040, +0.0011] calm -0.0040 [-0.0066, -0.0013] | seed 456: -0.0104 [-0.0140, -0.0069] ramp -0.0036 [-0.0052, -0.0022] calm -0.0067 [-0.0092, -0.0043]
+B encoder at 15 min (A2-H15 - D0)    seed 42: -0.0130 [-0.0177, -0.0088] ramp -0.0041 [-0.0058, -0.0025] calm -0.0090 [-0.0124, -0.0056] | seed 123: -0.0059 [-0.0094, -0.0025] ramp -0.0020 [-0.0034, -0.0005] calm -0.0039 [-0.0064, -0.0016] | seed 456: -0.0071 [-0.0105, -0.0037] ramp -0.0025 [-0.0038, -0.0013] calm -0.0046 [-0.0072, -0.0020]
+C gate(g,d) - constant weight    seed 42: -0.0200 [-0.0230, -0.0169] | seed 123: -0.0204 [-0.0253, -0.0147] | seed 456: -0.0222 [-0.0257, -0.0188]
+C gate(g,d) - gate on g only     seed 42: -0.0028 [-0.0038, -0.0018] | seed 123: -0.0013 [-0.0031, +0.0010] | seed 456: -0.0016 [-0.0027, -0.0005]
+C gate(g,d) - gate on d only     seed 42: -0.0016 [-0.0028, -0.0005] | seed 123: -0.0033 [-0.0052, -0.0017] | seed 456: -0.0031 [-0.0047, -0.0016]
+B seed mean: {'D0 (2D, 15 min)': 0.5887, 'D2 (2D, 60 min)': 0.5895, 'A2-H15 (3D, 15 min)': 0.5801, 'A2 (3D, 60 min)': 0.5796} {'gain credited to the 60-min history (>= 2/3 seeds within both encoders)': False, 'gain credited to the 3D encoder (>= 2/3 seeds at both history lengths)': True}
+C seed mean: {'constant weight': 0.6004, 'gate on g only': 0.5815, 'gate on d only': 0.5823, 'gate on g and d': 0.5796} {'42': {'gate on g only': 0.86121036276298, 'gate on d only': 0.9173124731055183}, '123': {'gate on g only': 0.9361585091206432, 'gate on d only': 0.8380200246894919}, '456': {'gate on g only': 0.9276930267856712, 'gate on d only': 0.8601359390878237}} {'gate beats constant weight (3/3 seeds)': True, 'g-only gate not shown worse (seeds with interval below zero)': 2, 'd-only gate not shown worse (seeds with interval below zero)': 3}
+saved revision\results\r13_explanatory_analyses_method_v2.json keys: B_partner_development, C_gate_development

@@ -1,0 +1,73 @@
+﻿member 1/15 (seed 42, fold 0) done
+member 2/15 (seed 42, fold 1) done
+member 3/15 (seed 42, fold 2) done
+member 4/15 (seed 42, fold 3) done
+member 5/15 (seed 42, fold 4) done
+member 6/15 (seed 123, fold 0) done
+member 7/15 (seed 123, fold 1) done
+member 8/15 (seed 123, fold 2) done
+member 9/15 (seed 123, fold 3) done
+member 10/15 (seed 123, fold 4) done
+member 11/15 (seed 456, fold 0) done
+member 12/15 (seed 456, fold 1) done
+member 13/15 (seed 456, fold 2) done
+member 14/15 (seed 456, fold 3) done
+member 15/15 (seed 456, fold 4) done
+A method v2 - M-DC all: CRPS -0.0229 [-0.0432, -0.0032] p 0.0606 (15/20 days) rel -2.24% | ramp region -0.0059 [-0.0156, +0.0024] | calm -0.0170 [-0.0280, -0.0051] | 60-min forecasts -0.0246 [-0.0464, -0.0035] p 0.0606
+A M-DC all - G4: CRPS -0.0012 [-0.0052, +0.0027] p 0.6259 (9/20 days) rel -0.12% | ramp region -0.0016 [-0.0028, -0.0005] | calm +0.0004 [-0.0031, +0.0037] | 60-min forecasts -0.0012 [-0.0055, +0.0029] p 0.6365
+A M-DC all - G3''-F: CRPS +0.0165 [-0.0025, +0.0370] p 0.1580 (6/20 days) rel +1.64% | ramp region +0.0033 [-0.0050, +0.0125] | calm +0.0132 [+0.0016, +0.0249] | 60-min forecasts +0.0180 [-0.0024, +0.0399] p 0.1540
+A method v2 - G4: CRPS -0.0241 [-0.0456, -0.0033] p 0.0714 (11/20 days) rel -2.35% | ramp region -0.0075 [-0.0174, +0.0005] | calm -0.0166 [-0.0294, -0.0031] | 60-min forecasts -0.0258 [-0.0489, -0.0035] p 0.0711
+B test history within 3D (A2 - A2-H15)    -0.0148 [-0.0278, -0.0023] p 0.0632 | ramp region -0.0034 [-0.0090, +0.0015] | calm -0.0114 [-0.0196, -0.0031]
+B test history within 2D (D2 - D0)        -0.0051 [-0.0099, -0.0006] p 0.0720 | ramp region -0.0012 [-0.0030, +0.0004] | calm -0.0039 [-0.0074, -0.0006]
+B test encoder at 60 min (A2 - D2)        -0.0157 [-0.0339, +0.0015] p 0.1406 | ramp region -0.0028 [-0.0113, +0.0049] | calm -0.0129 [-0.0235, -0.0025]
+B test encoder at 15 min (A2-H15 - D0)    -0.0060 [-0.0140, +0.0043] p 0.2485 | ramp region -0.0006 [-0.0041, +0.0035] | calm -0.0054 [-0.0107, +0.0013]
+C test gate(g,d) - constant weight    -0.0267 [-0.0369, -0.0170] p 0.0001
+C test gate(g,d) - gate on g only     -0.0005 [-0.0038, +0.0027] p 0.7664
+C test gate(g,d) - gate on d only     -0.0052 [-0.0102, +0.0003] p 0.0725
+B test scores: {'D0 (2D, 15 min)': np.float64(1.0679), 'D2 (2D, 60 min)': np.float64(1.0628), 'A2-H15 (3D, 15 min)': np.float64(1.0619), 'A2 (3D, 60 min)': np.float64(1.0471)} | C test scores: {'constant weight': np.float64(1.0738), 'gate on g only': np.float64(1.0476), 'gate on d only': np.float64(1.0523), 'gate on g and d': np.float64(1.0471)} {'gate on g only': 0.9798269344844314, 'gate on d only': 0.8069699189503305}
+D lag: {'method v2': (15.0, 0.002, 0.854, 10), 'M-DC all': (15.0, -0.015, 0.896, 10), "G3''-F": (15.0, 0.0, 0.866, 10), 'E4-B-fit': (15.0, -0.02, 0.579, 10), 'E6-S': (15.0, -0.02, 0.965, 10), 'smart persistence': (15.0, -0.022, 0.975, 10)}
+E 50%: ramps observed 0.171, reference 0.275, gap -0.103 [-0.158, -0.041] | falling 0.203 rising 0.138
+E 80%: ramps observed 0.495, reference 0.607, gap -0.111 [-0.170, -0.038] | falling 0.542 rising 0.447
+E 90%: ramps observed 0.720, reference 0.786, gap -0.067 [-0.134, +0.007] | falling 0.765 rising 0.672
+development seed 42 fold 0 done
+development seed 42 fold 1 done
+development seed 42 fold 2 done
+development seed 42 fold 3 done
+development seed 42 fold 4 done
+development seed 123 fold 0 done
+development seed 123 fold 1 done
+development seed 123 fold 2 done
+development seed 123 fold 3 done
+development seed 123 fold 4 done
+development seed 456 fold 0 done
+development seed 456 fold 1 done
+development seed 456 fold 2 done
+development seed 456 fold 3 done
+development seed 456 fold 4 done
+E 50% continuous across test days: coverage 0.480 (ramps 0.164, cloudy 0.437) width 2.15 | daily initialisation: 0.511 (ramps 0.171) width 2.19
+E 80% continuous across test days: coverage 0.781 (ramps 0.483, cloudy 0.765) width 4.42 | daily initialisation: 0.822 (ramps 0.495) width 4.51
+E 90% continuous across test days: coverage 0.895 (ramps 0.696, cloudy 0.879) width 5.82 | daily initialisation: 0.920 (ramps 0.720) width 6.00
+F v2 - PeEn-120                     -0.5110 [-0.5954, -0.4364] p 0.00000 skill 33.8%
+F v2 - PeEn-60                      -0.3757 [-0.4463, -0.3142] p 0.00000 skill 27.3%
+F v2 - PeEn-30                      -0.3355 [-0.4213, -0.2622] p 0.00000 skill 25.1%
+F v2 - SP-dressed static            -0.4440 [-0.5529, -0.3445] p 0.00000 skill 30.8%
+F v2 - SP-dressed adaptive          -0.3497 [-0.4230, -0.2826] p 0.00000 skill 25.9%
+F v2 - CH-PeEn                      -1.0660 [-1.4521, -0.7332] p 0.00000 skill 51.6%
+F v2 - smart persistence (point)    -0.7073 [-0.8295, -0.5890] p 0.00000 skill 41.4%
+F abs error of the median, v2 - G3''-F: -0.0026 [-0.0091, +0.0037] p 0.4548
+F 90% interval score, v2 - G3''-F: -0.1108 [-0.1856, -0.0308] p 0.0197
+F abs error of the median, v2 - G4: -0.0205 [-0.0506, +0.0089] p 0.2313
+F 90% interval score, v2 - G4: -0.1641 [-0.3375, +0.0300] p 0.1449
+F external: {'exact': 2.2678375049274475, 'm=10': {'standard': 2.427304276613625, 'fair': 2.260820675567325}, 'm=30': {'standard': 2.3112411923095975, 'fair': 2.255907584869198}, 'm=100': {'standard': 2.275398031371685, 'fair': 2.258753100253108}}
+G probability >= base rate   under warning 0.256 (cloudy 0.476) precision 0.271 hit 0.937 episodes/cloudy day 22.8 (median length 7) false-alarm episodes 37.0
+G probability >= 0.2         under warning 0.123 (cloudy 0.226) precision 0.451 hit 0.753 episodes/cloudy day 23.7 (median length 3) false-alarm episodes 24.2
+G probability >= 0.3         under warning 0.089 (cloudy 0.161) precision 0.532 hit 0.643 episodes/cloudy day 21.4 (median length 3) false-alarm episodes 17.3
+G probability >= 0.5         under warning 0.039 (cloudy 0.067) precision 0.647 hit 0.344 episodes/cloudy day 12.4 (median length 2) false-alarm episodes 5.8
+G median                     under warning 0.039 (cloudy 0.067) precision 0.647 hit 0.344 episodes/cloudy day 12.4 (median length 2) false-alarm episodes 5.8
+H method v2                                      out of sample: reliability 0.932 reserve 9.2% | cloudy days at 95%: 17.3% (falling ramps 0.74)
+H G3''-F                                         out of sample: reliability 0.938 reserve 9.3% | cloudy days at 95%: 17.7% (falling ramps 0.76) v2 - this -0.1156 [-0.1398, -0.0932] p 0.0020
+H G4                                             out of sample: reliability 0.941 reserve 9.5% | cloudy days at 95%: 18.1% (falling ramps 0.71) v2 - this -0.2615 [-0.3274, -0.1905] p 0.0020
+H E6-S                                           out of sample: reliability 0.948 reserve 9.4% | cloudy days at 95%: 19.2% (falling ramps 0.71) v2 - this -0.5776 [-0.8008, -0.3768] p 0.0020
+H smart persistence, dressed (120 min)           out of sample: reliability 0.950 reserve 11.1% | cloudy days at 95%: 23.5% (falling ramps 0.67) v2 - this -1.8746 [-2.4914, -1.1718] p 0.0059
+H constant reserve, official smart persistence   out of sample: reliability 0.950 reserve 16.6% | cloudy days at 95%: 30.3% (falling ramps 0.64) v2 - this -3.9218 [-4.9092, -2.9487] p 0.0020
+saved revision\results\r13_explanatory_analyses_method_v2.json keys: A_test, B_partner_test, C_gate_test, D_median_lag, E_coverage_test, F_secondary, G_warning_operator_quantities, H_reserve
